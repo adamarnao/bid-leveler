@@ -1,0 +1,885 @@
+"use client";
+
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import Link from "next/link";
+import AppShell from "@/components/layout/AppShell";
+import Panel from "@/components/ui/Panel";
+import { mockCsiDivisions } from "@/data/mockCsiDivisions";
+import { mockCsiSections } from "@/data/mockCsiSections";
+import {
+  DivisionSubcontractorGroup,
+  getBadgeClassName,
+  getCombinedStatus,
+  getComplianceAlerts,
+  getDivisionLabel,
+  getMergedSubcontractors,
+  getPrimaryContact,
+  getPrimaryPhone,
+  getSectionLabel,
+  groupSubcontractorsByDivisionAndSection,
+  subcontractorsStorageKey,
+} from "@/lib/subcontractors";
+import {
+  PrequalificationStatus,
+  RelationshipStatus,
+  Subcontractor,
+} from "@/types/Subcontractor";
+
+const subcontractorListUiStateKey = "subcontractorListUiState";
+
+type SubcontractorListUiState = {
+  expandedDivisionIds: string[];
+  expandedSectionIds: string[];
+  scrollY: number;
+  lastClickedSubcontractorId?: string;
+  lastClickedSectionId?: string;
+  restoreOnNextListVisit: boolean;
+};
+
+type PrequalificationFilter =
+  | "ALL"
+  | PrequalificationStatus
+  | "COMPLIANT"
+  | "HAS_ALERTS";
+
+const relationshipStatuses: RelationshipStatus[] = [
+  "PREFERRED",
+  "APPROVED",
+  "CONDITIONAL",
+  "INACTIVE",
+  "DO_NOT_USE",
+];
+
+const prequalificationFilters: PrequalificationFilter[] = [
+  "ALL",
+  "QUALIFIED",
+  "CONDITIONAL",
+  "IN_PROGRESS",
+  "EXPIRED",
+  "REJECTED",
+  "NOT_STARTED",
+  "COMPLIANT",
+  "HAS_ALERTS",
+];
+
+const minimumVpiOptions = ["", "3", "4", "4.5"];
+const currentDivisions = mockCsiDivisions.filter(
+  (division) => division.version === "MASTERFORMAT_CURRENT"
+);
+
+export default function SubcontractorsPage() {
+  const subcontractorsSnapshot = useSubcontractorsSnapshot();
+  const subcontractors = useMemo(
+    () =>
+      subcontractorsSnapshot.filter((subcontractor) => !subcontractor.archived),
+    [subcontractorsSnapshot]
+  );
+  const [searchQuery, setSearchQuery] = useState("");
+  const [relationshipFilter, setRelationshipFilter] = useState<
+    "ALL" | RelationshipStatus
+  >("ALL");
+  const [prequalificationFilter, setPrequalificationFilter] =
+    useState<PrequalificationFilter>("ALL");
+  const [divisionFilter, setDivisionFilter] = useState("ALL");
+  const [sectionFilter, setSectionFilter] = useState("ALL");
+  const [preferredOnly, setPreferredOnly] = useState(false);
+  const [hideDoNotUse, setHideDoNotUse] = useState(false);
+  const [minimumVpi, setMinimumVpi] = useState("");
+  const filteredSubcontractors = useMemo(
+    () =>
+      subcontractors.filter((subcontractor) =>
+        matchesFilters(subcontractor, {
+          searchQuery,
+          relationshipFilter,
+          prequalificationFilter,
+          divisionFilter,
+          sectionFilter,
+          preferredOnly,
+          hideDoNotUse,
+          minimumVpi,
+        })
+      ),
+    [
+      divisionFilter,
+      hideDoNotUse,
+      minimumVpi,
+      preferredOnly,
+      prequalificationFilter,
+      relationshipFilter,
+      searchQuery,
+      sectionFilter,
+      subcontractors,
+    ]
+  );
+  const groupedSubcontractors = useMemo(
+    () => groupSubcontractorsByDivisionAndSection(filteredSubcontractors),
+    [filteredSubcontractors]
+  );
+  const initialUiState = getDefaultListUiState(groupedSubcontractors);
+  const [expandedDivisionIds, setExpandedDivisionIds] = useState<string[]>(
+    initialUiState.expandedDivisionIds
+  );
+  const [expandedSectionIds, setExpandedSectionIds] = useState<string[]>(
+    initialUiState.expandedSectionIds
+  );
+  const [hasLoadedUiState, setHasLoadedUiState] = useState(false);
+  const hasStartedUiStateRestore = useRef(false);
+  const hasRestoredScroll = useRef(false);
+  const shouldRestorePosition = useRef(false);
+  const isNavigatingToSubcontractorDetailRef = useRef(false);
+  const restoreScrollY = useRef(initialUiState.scrollY);
+  const restoreSubcontractorId = useRef<string | undefined>(
+    initialUiState.lastClickedSubcontractorId
+  );
+  const restoreSectionId = useRef<string | undefined>(
+    initialUiState.lastClickedSectionId
+  );
+  const availableSectionOptions = useMemo(
+    () =>
+      divisionFilter === "ALL"
+        ? mockCsiSections
+        : mockCsiSections.filter((section) => section.divisionId === divisionFilter),
+    [divisionFilter]
+  );
+
+  useEffect(() => {
+    if (hasStartedUiStateRestore.current) return;
+    if (groupedSubcontractors.length === 0) return;
+
+    const storedState = getStoredListUiState();
+    const shouldRestore = storedState?.restoreOnNextListVisit === true;
+    const nextUiState = shouldRestore
+      ? validateListUiState(storedState, groupedSubcontractors)
+      : getDefaultListUiState(groupedSubcontractors);
+
+    hasStartedUiStateRestore.current = true;
+    shouldRestorePosition.current = shouldRestore;
+    hasRestoredScroll.current = !shouldRestore;
+    restoreScrollY.current = nextUiState.scrollY;
+    restoreSubcontractorId.current = nextUiState.lastClickedSubcontractorId;
+    restoreSectionId.current = nextUiState.lastClickedSectionId;
+
+    requestAnimationFrame(() => {
+      setExpandedDivisionIds(nextUiState.expandedDivisionIds);
+      setExpandedSectionIds(nextUiState.expandedSectionIds);
+      setHasLoadedUiState(true);
+      if (!shouldRestore) {
+        saveListUiState({
+          ...nextUiState,
+          restoreOnNextListVisit: false,
+        });
+      }
+    });
+  }, [groupedSubcontractors]);
+
+  useEffect(() => {
+    if (!hasLoadedUiState) return;
+    const storedState = getStoredListUiState();
+
+    saveListUiState({
+      ...storedState,
+      expandedDivisionIds,
+      expandedSectionIds,
+      scrollY: hasRestoredScroll.current
+        ? window.scrollY
+        : restoreScrollY.current,
+      restoreOnNextListVisit:
+        storedState?.restoreOnNextListVisit === true ||
+        (shouldRestorePosition.current && !hasRestoredScroll.current),
+    });
+  }, [expandedDivisionIds, expandedSectionIds, hasLoadedUiState]);
+
+  useEffect(() => {
+    function saveScrollPosition() {
+      if (!hasLoadedUiState || !hasRestoredScroll.current) return;
+      if (isNavigatingToSubcontractorDetailRef.current) return;
+
+      const storedState = getStoredListUiState();
+
+      saveListUiState({
+        ...storedState,
+        expandedDivisionIds,
+        expandedSectionIds,
+        scrollY: window.scrollY,
+        restoreOnNextListVisit: storedState?.restoreOnNextListVisit === true,
+      });
+    }
+
+    window.addEventListener("scroll", saveScrollPosition, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", saveScrollPosition);
+    };
+  }, [expandedDivisionIds, expandedSectionIds, hasLoadedUiState]);
+
+  function restoreSavedPosition() {
+    const didScrollToRow = scrollToSubcontractorRow(
+      restoreSubcontractorId.current,
+      restoreSectionId.current
+    );
+
+    if (!didScrollToRow) {
+      window.scrollTo(0, restoreScrollY.current);
+    }
+
+    return didScrollToRow;
+  }
+
+  useEffect(() => {
+    if (!hasLoadedUiState) return;
+    if (!shouldRestorePosition.current) return;
+    if (hasRestoredScroll.current) return;
+
+    function completeRestoreAttempt() {
+      hasRestoredScroll.current = true;
+      shouldRestorePosition.current = false;
+      saveListUiState({
+        ...getStoredListUiState(),
+        expandedDivisionIds,
+        expandedSectionIds,
+        scrollY: window.scrollY,
+        restoreOnNextListVisit: false,
+      });
+    }
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        restoreSavedPosition();
+        window.setTimeout(() => {
+          restoreSavedPosition();
+          window.setTimeout(() => {
+            restoreSavedPosition();
+            completeRestoreAttempt();
+          }, 150);
+        }, 75);
+      });
+    });
+  }, [expandedDivisionIds, expandedSectionIds, hasLoadedUiState]);
+
+  function saveCurrentListUiState(subcontractorId: string, sectionId: string) {
+    isNavigatingToSubcontractorDetailRef.current = true;
+
+    saveListUiState({
+      expandedDivisionIds,
+      expandedSectionIds,
+      scrollY: window.scrollY,
+      lastClickedSubcontractorId: subcontractorId,
+      lastClickedSectionId: sectionId,
+      restoreOnNextListVisit: true,
+    });
+  }
+
+  return (
+    <AppShell title="Subcontractors">
+      <Panel title="Subcontractor Library">
+        <div style={{ marginBottom: 16 }}>
+          <Link href="/subcontractors/new">Add / Prequalify Subcontractor</Link>
+        </div>
+        <p className="muted-text">
+          Vendors are grouped by CSI division and section. Project-specific
+          invite ranking will use location, service area, VPI, and compliance
+          later.
+        </p>
+      </Panel>
+
+      <Panel title="Search and Filters">
+        <div className="form-grid">
+          <div className="form-field">
+            <label>
+              Search
+              <br />
+              <input
+                value={searchQuery}
+                onChange={(event) => setSearchQuery(event.target.value)}
+                className="form-input"
+                placeholder="Company, contact, phone, email, trade, market"
+              />
+            </label>
+          </div>
+          <SelectField
+            label="Relationship"
+            value={relationshipFilter}
+            options={["ALL", ...relationshipStatuses]}
+            onChange={(value) =>
+              setRelationshipFilter(value as "ALL" | RelationshipStatus)
+            }
+          />
+          <SelectField
+            label="Prequalification / Compliance"
+            value={prequalificationFilter}
+            options={prequalificationFilters}
+            onChange={(value) =>
+              setPrequalificationFilter(value as PrequalificationFilter)
+            }
+          />
+          <SelectField
+            label="CSI Division"
+            value={divisionFilter}
+            options={["ALL", ...currentDivisions.map((division) => division.id)]}
+            onChange={(value) => {
+              setDivisionFilter(value);
+              setSectionFilter("ALL");
+            }}
+            getOptionLabel={(value) =>
+              value === "ALL" ? "All" : getDivisionLabel(value)
+            }
+          />
+          <SelectField
+            label="CSI Section"
+            value={sectionFilter}
+            options={["ALL", ...availableSectionOptions.map((section) => section.id)]}
+            onChange={setSectionFilter}
+            getOptionLabel={(value) =>
+              value === "ALL" ? "All" : getSectionLabel(value)
+            }
+          />
+          <SelectField
+            label="Minimum VPI"
+            value={minimumVpi}
+            options={minimumVpiOptions}
+            onChange={setMinimumVpi}
+            getOptionLabel={(value) => (value ? `${value}+` : "Any")}
+          />
+          <div className="form-field">
+            <label className="radio-option">
+              <input
+                type="checkbox"
+                checked={preferredOnly}
+                onChange={(event) => setPreferredOnly(event.target.checked)}
+              />
+              Preferred only
+            </label>
+          </div>
+          <div className="form-field">
+            <label className="radio-option">
+              <input
+                type="checkbox"
+                checked={hideDoNotUse}
+                onChange={(event) => setHideDoNotUse(event.target.checked)}
+              />
+              Hide Do Not Use
+            </label>
+          </div>
+        </div>
+        <p className="muted-text">
+          Showing {filteredSubcontractors.length} of {subcontractors.length} vendors.
+        </p>
+      </Panel>
+
+      {groupedSubcontractors.length === 0 ? (
+        <Panel title="No Matching Vendors">
+          <p className="muted-text">
+            No subcontractors match the current search and filters.
+          </p>
+        </Panel>
+      ) : (
+        groupedSubcontractors.map((divisionGroup) => {
+          const isDivisionExpanded = expandedDivisionIds.includes(
+            divisionGroup.divisionId
+          );
+
+          return (
+            <Panel key={divisionGroup.divisionId}>
+              <button
+                type="button"
+                className="crm-expand-row crm-division-row"
+                aria-expanded={isDivisionExpanded}
+                onClick={() =>
+                  toggleExpanded(divisionGroup.divisionId, setExpandedDivisionIds)
+                }
+              >
+                <span className="crm-expand-button">
+                  {isDivisionExpanded ? "-" : "+"}
+                </span>
+                <span>{getDivisionLabel(divisionGroup.divisionId)}</span>
+                <span className="muted-text">
+                  {getDivisionVendorCount(divisionGroup)} vendors
+                </span>
+              </button>
+
+              {isDivisionExpanded &&
+                divisionGroup.sections.map((sectionGroup) => {
+                  const isSectionExpanded = expandedSectionIds.includes(
+                    sectionGroup.sectionId
+                  );
+
+                  return (
+                    <div key={sectionGroup.sectionId} className="crm-section">
+                      <button
+                        type="button"
+                        className="crm-expand-row crm-section-row"
+                        aria-expanded={isSectionExpanded}
+                        onClick={() =>
+                          toggleExpanded(
+                            sectionGroup.sectionId,
+                            setExpandedSectionIds
+                          )
+                        }
+                      >
+                        <span className="crm-expand-button">
+                          {isSectionExpanded ? "-" : "+"}
+                        </span>
+                        <span>{getSectionLabel(sectionGroup.sectionId)}</span>
+                        <span className="muted-text">
+                          {sectionGroup.subcontractors.length} vendors
+                        </span>
+                      </button>
+
+                      {isSectionExpanded && (
+                        <table className="crm-vendor-table">
+                          <thead>
+                            <tr>
+                              <th style={cell}>Company</th>
+                              <th style={cell}>Status</th>
+                              <th style={cell}>VPI</th>
+                              <th style={cell}>Primary Contact</th>
+                              <th style={cell}>Primary Phone</th>
+                              <th style={cell}>Primary Email</th>
+                              <th style={cell}>Compliance</th>
+                              <th style={cell}>Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {sectionGroup.subcontractors.map((subcontractor) => (
+                              <VendorRow
+                                key={`${sectionGroup.sectionId}-${subcontractor.id}`}
+                                subcontractor={subcontractor}
+                                sectionId={sectionGroup.sectionId}
+                                onNavigate={saveCurrentListUiState}
+                              />
+                            ))}
+                          </tbody>
+                        </table>
+                      )}
+                    </div>
+                  );
+                })}
+            </Panel>
+          );
+        })
+      )}
+    </AppShell>
+  );
+}
+
+function VendorRow({
+  subcontractor,
+  sectionId,
+  onNavigate,
+}: {
+  subcontractor: Subcontractor;
+  sectionId: string;
+  onNavigate: (subcontractorId: string, sectionId: string) => void;
+}) {
+  const primaryContact = getPrimaryContact(subcontractor);
+  const primaryPhone = getPrimaryPhone(primaryContact, subcontractor);
+  const combinedStatus = getCombinedStatus(subcontractor);
+  const complianceAlerts = getComplianceAlerts(subcontractor);
+
+  return (
+    <tr
+      data-subcontractor-id={subcontractor.id}
+      data-section-id={sectionId}
+    >
+      <td style={cell}>
+        <strong>{subcontractor.companyName}</strong>
+        {subcontractor.relationshipStatus === "PREFERRED" && (
+          <span className="badge badge-primary">* Preferred</span>
+        )}
+        {subcontractor.dba && (
+          <div className="muted-text">DBA: {subcontractor.dba}</div>
+        )}
+      </td>
+      <td style={cell}>
+        <span className={getBadgeClassName(combinedStatus.tone)}>
+          {combinedStatus.label}
+        </span>
+      </td>
+      <td style={cell}>{formatVpi(subcontractor)}</td>
+      <td style={cell}>
+        {primaryContact ? (
+          <>
+            <strong>{primaryContact.name}</strong>
+            <div className="muted-text">{primaryContact.title || ""}</div>
+          </>
+        ) : (
+          "No contact"
+        )}
+      </td>
+      <td style={cell}>
+        {primaryPhone ? `${primaryPhone.label}: ${primaryPhone.value}` : "No phone"}
+      </td>
+      <td style={cell}>{primaryContact?.email || "No email"}</td>
+      <td style={cell}>
+        <div className="badge-list">
+          {complianceAlerts.length === 0 ? (
+            <span className="badge badge-success">Compliant</span>
+          ) : (
+            complianceAlerts.map((alert) => (
+              <span key={alert} className="badge badge-warning">
+                {alert}
+              </span>
+            ))
+          )}
+        </div>
+      </td>
+      <td style={cell}>
+        <div className="badge-list">
+          <Link
+            href={`/subcontractors/${subcontractor.id}`}
+            onClick={() => onNavigate(subcontractor.id, sectionId)}
+          >
+            View Profile
+          </Link>
+          <Link
+            href={`/subcontractors/${subcontractor.id}/edit`}
+            onClick={() => onNavigate(subcontractor.id, sectionId)}
+          >
+            Edit
+          </Link>
+        </div>
+      </td>
+    </tr>
+  );
+}
+
+function SelectField({
+  label,
+  value,
+  options,
+  onChange,
+  getOptionLabel = formatStatus,
+}: {
+  label: string;
+  value: string;
+  options: string[];
+  onChange: (value: string) => void;
+  getOptionLabel?: (value: string) => string;
+}) {
+  return (
+    <div className="form-field">
+      <label>
+        {label}
+        <br />
+        <select
+          value={value}
+          onChange={(event) => onChange(event.target.value)}
+          className="form-input"
+        >
+          {options.map((option) => (
+            <option key={option} value={option}>
+              {getOptionLabel(option)}
+            </option>
+          ))}
+        </select>
+      </label>
+    </div>
+  );
+}
+
+const cell: React.CSSProperties = {
+  border: "1px solid var(--color-border)",
+  padding: "8px",
+  textAlign: "left",
+  verticalAlign: "top",
+};
+
+let cachedSubcontractorsStorageValue: string | undefined;
+let cachedSubcontractors: Subcontractor[] = getMergedSubcontractors();
+
+function useSubcontractorsSnapshot(): Subcontractor[] {
+  return useSyncExternalStore(
+    subscribeToSubcontractorStorage,
+    getSubcontractorsSnapshot,
+    getServerSubcontractorsSnapshot
+  );
+}
+
+function subscribeToSubcontractorStorage(onStoreChange: () => void) {
+  window.addEventListener("storage", onStoreChange);
+
+  return () => {
+    window.removeEventListener("storage", onStoreChange);
+  };
+}
+
+function getServerSubcontractorsSnapshot(): Subcontractor[] {
+  return cachedSubcontractors;
+}
+
+function getSubcontractorsSnapshot(): Subcontractor[] {
+  const storageValue = localStorage.getItem(subcontractorsStorageKey) || "[]";
+
+  if (storageValue !== cachedSubcontractorsStorageValue) {
+    cachedSubcontractorsStorageValue = storageValue;
+    cachedSubcontractors = getMergedSubcontractors(storageValue);
+  }
+
+  return cachedSubcontractors;
+}
+
+function toggleExpanded(
+  id: string,
+  setExpandedIds: React.Dispatch<React.SetStateAction<string[]>>
+) {
+  setExpandedIds((currentIds) =>
+    currentIds.includes(id)
+      ? currentIds.filter((currentId) => currentId !== id)
+      : [...currentIds, id]
+  );
+}
+
+function getDefaultListUiState(
+  groupedSubcontractors: DivisionSubcontractorGroup[]
+): SubcontractorListUiState {
+  return {
+    expandedDivisionIds: groupedSubcontractors.map((group) => group.divisionId),
+    expandedSectionIds: [],
+    scrollY: 0,
+    restoreOnNextListVisit: false,
+  };
+}
+
+function getStoredListUiState(): SubcontractorListUiState | undefined {
+  if (typeof window === "undefined") return undefined;
+
+  try {
+    const storedValue = sessionStorage.getItem(subcontractorListUiStateKey);
+    const parsedValue = storedValue ? JSON.parse(storedValue) : undefined;
+
+    if (!parsedValue || typeof parsedValue !== "object") return undefined;
+
+    return {
+      expandedDivisionIds: Array.isArray(parsedValue.expandedDivisionIds)
+        ? parsedValue.expandedDivisionIds.filter(isString)
+        : [],
+      expandedSectionIds: Array.isArray(parsedValue.expandedSectionIds)
+        ? parsedValue.expandedSectionIds.filter(isString)
+        : [],
+      scrollY:
+        typeof parsedValue.scrollY === "number" && parsedValue.scrollY > 0
+          ? parsedValue.scrollY
+          : 0,
+      lastClickedSubcontractorId: isString(parsedValue.lastClickedSubcontractorId)
+        ? parsedValue.lastClickedSubcontractorId
+        : undefined,
+      lastClickedSectionId: isString(parsedValue.lastClickedSectionId)
+        ? parsedValue.lastClickedSectionId
+        : undefined,
+      restoreOnNextListVisit: parsedValue.restoreOnNextListVisit === true,
+    };
+  } catch {
+    return undefined;
+  }
+}
+
+function validateListUiState(
+  uiState: SubcontractorListUiState,
+  groupedSubcontractors: DivisionSubcontractorGroup[]
+): SubcontractorListUiState {
+  const availableDivisionIds = new Set(
+    groupedSubcontractors.map((group) => group.divisionId)
+  );
+  const availableSectionIds = new Set(
+    groupedSubcontractors.flatMap((group) =>
+      group.sections.map((section) => section.sectionId)
+    )
+  );
+
+  return {
+    ...uiState,
+    expandedDivisionIds: uiState.expandedDivisionIds.filter((divisionId) =>
+      availableDivisionIds.has(divisionId)
+    ),
+    expandedSectionIds: uiState.expandedSectionIds.filter((sectionId) =>
+      availableSectionIds.has(sectionId)
+    ),
+  };
+}
+
+function saveListUiState(uiState: Partial<SubcontractorListUiState>) {
+  if (typeof window === "undefined") return;
+
+  const normalizedState: SubcontractorListUiState = {
+    expandedDivisionIds: uiState.expandedDivisionIds ?? [],
+    expandedSectionIds: uiState.expandedSectionIds ?? [],
+    scrollY: uiState.scrollY ?? 0,
+    lastClickedSubcontractorId: uiState.lastClickedSubcontractorId,
+    lastClickedSectionId: uiState.lastClickedSectionId,
+    restoreOnNextListVisit: uiState.restoreOnNextListVisit ?? false,
+  };
+
+  sessionStorage.setItem(
+    subcontractorListUiStateKey,
+    JSON.stringify(normalizedState)
+  );
+}
+
+function scrollToSubcontractorRow(
+  subcontractorId: string | undefined,
+  sectionId: string | undefined
+) {
+  if (!subcontractorId) return false;
+
+  const rows = Array.from(
+    document.querySelectorAll<HTMLTableRowElement>("[data-subcontractor-id]")
+  );
+  const matchingRow =
+    rows.find(
+      (row) =>
+        row.dataset.subcontractorId === subcontractorId &&
+        (!sectionId || row.dataset.sectionId === sectionId)
+    ) ??
+    rows.find((row) => row.dataset.subcontractorId === subcontractorId);
+
+  if (!matchingRow) return false;
+
+  matchingRow.scrollIntoView({ block: "center" });
+  return true;
+}
+
+function matchesFilters(
+  subcontractor: Subcontractor,
+  filters: {
+    searchQuery: string;
+    relationshipFilter: "ALL" | RelationshipStatus;
+    prequalificationFilter: PrequalificationFilter;
+    divisionFilter: string;
+    sectionFilter: string;
+    preferredOnly: boolean;
+    hideDoNotUse: boolean;
+    minimumVpi: string;
+  }
+) {
+  const complianceAlerts = getComplianceAlerts(subcontractor);
+
+  if (filters.hideDoNotUse && subcontractor.relationshipStatus === "DO_NOT_USE") {
+    return false;
+  }
+
+  if (
+    filters.preferredOnly &&
+    subcontractor.relationshipStatus !== "PREFERRED"
+  ) {
+    return false;
+  }
+
+  if (
+    filters.relationshipFilter !== "ALL" &&
+    subcontractor.relationshipStatus !== filters.relationshipFilter
+  ) {
+    return false;
+  }
+
+  if (
+    !matchesPrequalificationFilter(
+      subcontractor.prequalification.status,
+      complianceAlerts,
+      filters.prequalificationFilter
+    )
+  ) {
+    return false;
+  }
+
+  if (
+    filters.divisionFilter !== "ALL" &&
+    !subcontractor.csiCoverage.divisionIds.includes(filters.divisionFilter)
+  ) {
+    return false;
+  }
+
+  if (
+    filters.sectionFilter !== "ALL" &&
+    !subcontractor.csiCoverage.sectionIds.includes(filters.sectionFilter)
+  ) {
+    return false;
+  }
+
+  if (
+    filters.minimumVpi &&
+    (subcontractor.vpi.overall === undefined ||
+      subcontractor.vpi.overall < Number(filters.minimumVpi))
+  ) {
+    return false;
+  }
+
+  if (filters.searchQuery.trim()) {
+    return getSearchText(subcontractor).includes(normalize(filters.searchQuery));
+  }
+
+  return true;
+}
+
+function matchesPrequalificationFilter(
+  status: PrequalificationStatus,
+  complianceAlerts: string[],
+  filter: PrequalificationFilter
+) {
+  if (filter === "ALL") return true;
+  if (filter === "COMPLIANT") return complianceAlerts.length === 0;
+  if (filter === "HAS_ALERTS") return complianceAlerts.length > 0;
+
+  return status === filter;
+}
+
+function getSearchText(subcontractor: Subcontractor) {
+  const primaryContact = getPrimaryContact(subcontractor);
+  const primaryPhone = getPrimaryPhone(primaryContact, subcontractor);
+  const values = [
+    subcontractor.companyName,
+    subcontractor.dba,
+    primaryContact?.name,
+    primaryPhone?.value,
+    primaryContact?.email,
+    subcontractor.mainPhone,
+    ...subcontractor.serviceArea.states,
+    ...subcontractor.serviceArea.counties,
+    ...subcontractor.serviceArea.citiesOrMarkets,
+    ...subcontractor.csiCoverage.divisionIds.map(getDivisionLabel),
+    ...subcontractor.csiCoverage.sectionIds.map(getSectionLabel),
+    subcontractor.csiCoverage.specialtyScopeNotes,
+  ];
+
+  return normalize(values.filter(Boolean).join(" "));
+}
+
+function normalize(value: string) {
+  return value.toLowerCase().trim();
+}
+
+function isString(value: unknown): value is string {
+  return typeof value === "string";
+}
+
+function getDivisionVendorCount(group: DivisionSubcontractorGroup) {
+  const subcontractorIds = new Set<string>();
+
+  group.sections.forEach((section) => {
+    section.subcontractors.forEach((subcontractor) => {
+      subcontractorIds.add(subcontractor.id);
+    });
+  });
+
+  return subcontractorIds.size;
+}
+
+function formatVpi(subcontractor: Subcontractor) {
+  const score = subcontractor.vpi.overall;
+  const projectsText =
+    subcontractor.vpi.projectsEvaluated === 1 ? "project" : "projects";
+
+  return score === undefined
+    ? `Not rated (${subcontractor.vpi.projectsEvaluated} ${projectsText})`
+    : `${score.toFixed(1)} / 5 (${subcontractor.vpi.projectsEvaluated} ${projectsText})`;
+}
+
+function formatStatus(value: string) {
+  if (value === "ALL") return "All";
+  if (value === "COMPLIANT") return "Compliant";
+  if (value === "HAS_ALERTS") return "Has Compliance Alerts";
+
+  return value
+    .split("_")
+    .map((word) => word.charAt(0) + word.slice(1).toLowerCase())
+    .join(" ");
+}
