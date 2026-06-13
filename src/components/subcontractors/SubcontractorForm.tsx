@@ -39,6 +39,11 @@ type CsiPickerSectionOption = {
   additionalTitleCount: number;
 };
 
+type StagedCsiCoverageDraft = {
+  primaryDivisionId: string;
+  csiCoverage: Subcontractor["csiCoverage"];
+};
+
 const vendorStatusOptions: RelationshipStatus[] = [
   "APPROVED",
   "CONDITIONAL",
@@ -163,6 +168,82 @@ export default function SubcontractorForm({
     [draft, pickerDisplayVersion]
   );
   const [showUnsavedModal, setShowUnsavedModal] = useState(false);
+  const [isCsiModalOpen, setIsCsiModalOpen] = useState(false);
+  const [stagedCsiDraft, setStagedCsiDraft] =
+    useState<StagedCsiCoverageDraft | null>(null);
+  const [stagedPickerDisplayVersion, setStagedPickerDisplayVersion] =
+    useState<CsiMasterFormatVersion | null>(null);
+  const [stagedExpandedCsiDivisionIds, setStagedExpandedCsiDivisionIds] =
+    useState<string[]>([]);
+  const stagedCsiSubcontractor = useMemo(
+    () =>
+      stagedCsiDraft
+        ? {
+            ...draft,
+            primaryDivisionId: stagedCsiDraft.primaryDivisionId,
+            csiCoverage: stagedCsiDraft.csiCoverage,
+          }
+        : null,
+    [draft, stagedCsiDraft]
+  );
+  const effectiveStagedPickerDisplayVersion =
+    stagedPickerDisplayVersion ?? pickerDisplayVersion;
+  const stagedSavedCsiSourceVersion =
+    stagedCsiDraft?.csiCoverage.sourceVersion ?? "MASTERFORMAT_CURRENT";
+  const isStagedViewingEquivalentCoverage =
+    effectiveStagedPickerDisplayVersion !== stagedSavedCsiSourceVersion;
+  const stagedCsiDivisionOptions = useMemo(
+    () => getCsiDivisionOptions(effectiveStagedPickerDisplayVersion),
+    [effectiveStagedPickerDisplayVersion]
+  );
+  const stagedCsiSectionOptions = useMemo(
+    () => getCsiSectionOptions(effectiveStagedPickerDisplayVersion),
+    [effectiveStagedPickerDisplayVersion]
+  );
+  const stagedSelectedSectionIds = useMemo(
+    () =>
+      stagedCsiSubcontractor
+        ? getDisplayedSectionIds(
+            stagedCsiSubcontractor,
+            effectiveStagedPickerDisplayVersion,
+            stagedCsiSectionOptions
+          )
+        : new Set<string>(),
+    [
+      stagedCsiSubcontractor,
+      effectiveStagedPickerDisplayVersion,
+      stagedCsiSectionOptions,
+    ]
+  );
+  const stagedSelectedDivisionIds = useMemo(
+    () =>
+      stagedCsiSubcontractor
+        ? getDisplayedDivisionIds(
+            stagedCsiSubcontractor,
+            effectiveStagedPickerDisplayVersion,
+            stagedCsiDivisionOptions,
+            stagedCsiSectionOptions,
+            stagedSelectedSectionIds
+          )
+        : new Set<string>(),
+    [
+      stagedCsiSubcontractor,
+      effectiveStagedPickerDisplayVersion,
+      stagedCsiDivisionOptions,
+      stagedCsiSectionOptions,
+      stagedSelectedSectionIds,
+    ]
+  );
+  const stagedCrosswalkIssueCount = useMemo(
+    () =>
+      stagedCsiSubcontractor
+        ? getCrosswalkIssueCount(
+            stagedCsiSubcontractor,
+            effectiveStagedPickerDisplayVersion
+          )
+        : 0,
+    [stagedCsiSubcontractor, effectiveStagedPickerDisplayVersion]
+  );
 
   useEffect(() => {
     if (!isDirty) return;
@@ -323,22 +404,62 @@ export default function SubcontractorForm({
     });
   }
 
-  function toggleDivision(divisionId: string, checked: boolean) {
+  function openCsiCoverageModal() {
+    setStagedCsiDraft({
+      primaryDivisionId: draft.primaryDivisionId,
+      csiCoverage: {
+        ...draft.csiCoverage,
+        divisionIds: [...draft.csiCoverage.divisionIds],
+        sectionIds: [...draft.csiCoverage.sectionIds],
+      },
+    });
+    setStagedPickerDisplayVersion(pickerDisplayVersion);
+    setStagedExpandedCsiDivisionIds([...expandedCsiDivisionIds]);
+    setIsCsiModalOpen(true);
+  }
+
+  function closeCsiCoverageModal() {
+    setIsCsiModalOpen(false);
+    setStagedCsiDraft(null);
+    setStagedPickerDisplayVersion(null);
+    setStagedExpandedCsiDivisionIds([]);
+  }
+
+  function applyCsiCoverage() {
+    if (!stagedCsiDraft) return;
+
+    setDraft({
+      ...draft,
+      primaryDivisionId: stagedCsiDraft.primaryDivisionId,
+      csiCoverage: stagedCsiDraft.csiCoverage,
+    });
+    setPickerDisplayVersion(effectiveStagedPickerDisplayVersion);
+    setExpandedCsiDivisionIds(stagedExpandedCsiDivisionIds);
+    closeCsiCoverageModal();
+  }
+
+  function updateStagedCsiCoverage(updates: StagedCsiCoverageDraft) {
+    setStagedCsiDraft(updates);
+  }
+
+  function toggleStagedDivision(divisionId: string, checked: boolean) {
+    if (!stagedCsiDraft) return;
+
     if (
-      !isViewingEquivalentCoverage &&
+      !isStagedViewingEquivalentCoverage &&
       !checked &&
-      divisionId === draft.primaryDivisionId
+      divisionId === stagedCsiDraft.primaryDivisionId
     ) {
       return;
     }
 
-    if (isViewingEquivalentCoverage) {
-      const childSectionIds = csiSectionOptions
+    if (isStagedViewingEquivalentCoverage) {
+      const childSectionIds = stagedCsiSectionOptions
         .filter((section) => section.divisionId === divisionId)
         .map((section) => section.id);
       const nextSectionIds = checked
-        ? Array.from(selectedSectionIds)
-        : Array.from(selectedSectionIds).filter(
+        ? Array.from(stagedSelectedSectionIds)
+        : Array.from(stagedSelectedSectionIds).filter(
             (sectionId) => !childSectionIds.includes(sectionId)
           );
       const nextDivisionIds = checked
@@ -347,24 +468,23 @@ export default function SubcontractorForm({
             (id) => id !== divisionId
           );
       const nextPrimaryDivisionId = getBestPrimaryDivisionId(
-        draft.primaryDivisionId,
+        stagedCsiDraft.primaryDivisionId,
         nextDivisionIds,
         divisionId
       );
 
-      setDraft({
-        ...draft,
+      updateStagedCsiCoverage({
         primaryDivisionId: nextPrimaryDivisionId,
         csiCoverage: {
-          ...draft.csiCoverage,
-          sourceVersion: pickerDisplayVersion,
+          ...stagedCsiDraft.csiCoverage,
+          sourceVersion: effectiveStagedPickerDisplayVersion,
           divisionIds: nextDivisionIds,
           sectionIds: nextSectionIds,
         },
       });
 
       if (checked) {
-        setExpandedCsiDivisionIds((divisionIds) =>
+        setStagedExpandedCsiDivisionIds((divisionIds) =>
           divisionIds.includes(divisionId)
             ? divisionIds
             : [...divisionIds, divisionId]
@@ -375,61 +495,62 @@ export default function SubcontractorForm({
     }
 
     const nextDivisionIds = checked
-      ? Array.from(new Set([...draft.csiCoverage.divisionIds, divisionId]))
-      : draft.csiCoverage.divisionIds.filter((id) => id !== divisionId);
+      ? Array.from(new Set([...stagedCsiDraft.csiCoverage.divisionIds, divisionId]))
+      : stagedCsiDraft.csiCoverage.divisionIds.filter((id) => id !== divisionId);
     const nextSectionIds = checked
-      ? draft.csiCoverage.sectionIds
-      : draft.csiCoverage.sectionIds.filter(
+      ? stagedCsiDraft.csiCoverage.sectionIds
+      : stagedCsiDraft.csiCoverage.sectionIds.filter(
           (sectionId) => getSectionDivisionId(sectionId) !== divisionId
         );
 
-    setDraft({
-      ...draft,
+    updateStagedCsiCoverage({
+      primaryDivisionId: stagedCsiDraft.primaryDivisionId,
       csiCoverage: {
-        ...draft.csiCoverage,
+        ...stagedCsiDraft.csiCoverage,
         divisionIds: nextDivisionIds,
         sectionIds: nextSectionIds,
       },
     });
 
     if (checked) {
-      setExpandedCsiDivisionIds((divisionIds) =>
+      setStagedExpandedCsiDivisionIds((divisionIds) =>
         divisionIds.includes(divisionId) ? divisionIds : [...divisionIds, divisionId]
       );
     }
   }
 
-  function toggleSection(sectionId: string, checked: boolean) {
+  function toggleStagedSection(sectionId: string, checked: boolean) {
+    if (!stagedCsiDraft) return;
+
     const divisionId =
-      getSectionDivisionIdFromOptions(sectionId, csiSectionOptions) ??
+      getSectionDivisionIdFromOptions(sectionId, stagedCsiSectionOptions) ??
       getSectionDivisionId(sectionId);
 
-    if (isViewingEquivalentCoverage) {
+    if (isStagedViewingEquivalentCoverage) {
       const nextSectionIds = checked
-        ? Array.from(new Set([...Array.from(selectedSectionIds), sectionId]))
-        : Array.from(selectedSectionIds).filter((id) => id !== sectionId);
+        ? Array.from(new Set([...Array.from(stagedSelectedSectionIds), sectionId]))
+        : Array.from(stagedSelectedSectionIds).filter((id) => id !== sectionId);
       const nextDivisionIds = checked
         ? Array.from(new Set([...getDivisionIdsForSections(nextSectionIds), divisionId]))
         : getDivisionIdsForSections(nextSectionIds);
       const nextPrimaryDivisionId = getBestPrimaryDivisionId(
-        draft.primaryDivisionId,
+        stagedCsiDraft.primaryDivisionId,
         nextDivisionIds,
         divisionId
       );
 
-      setDraft({
-        ...draft,
+      updateStagedCsiCoverage({
         primaryDivisionId: nextPrimaryDivisionId,
         csiCoverage: {
-          ...draft.csiCoverage,
-          sourceVersion: pickerDisplayVersion,
+          ...stagedCsiDraft.csiCoverage,
+          sourceVersion: effectiveStagedPickerDisplayVersion,
           divisionIds: nextDivisionIds,
           sectionIds: nextSectionIds,
         },
       });
 
       if (checked) {
-        setExpandedCsiDivisionIds((divisionIds) =>
+        setStagedExpandedCsiDivisionIds((divisionIds) =>
           divisionIds.includes(divisionId)
             ? divisionIds
             : [...divisionIds, divisionId]
@@ -440,60 +561,60 @@ export default function SubcontractorForm({
     }
 
     const nextSectionIds = checked
-      ? Array.from(new Set([...draft.csiCoverage.sectionIds, sectionId]))
-      : draft.csiCoverage.sectionIds.filter((id) => id !== sectionId);
+      ? Array.from(new Set([...stagedCsiDraft.csiCoverage.sectionIds, sectionId]))
+      : stagedCsiDraft.csiCoverage.sectionIds.filter((id) => id !== sectionId);
     const nextDivisionIds = checked
-      ? Array.from(new Set([...draft.csiCoverage.divisionIds, divisionId]))
-      : draft.csiCoverage.divisionIds;
+      ? Array.from(new Set([...stagedCsiDraft.csiCoverage.divisionIds, divisionId]))
+      : stagedCsiDraft.csiCoverage.divisionIds;
 
-    setDraft({
-      ...draft,
+    updateStagedCsiCoverage({
+      primaryDivisionId: stagedCsiDraft.primaryDivisionId,
       csiCoverage: {
-        ...draft.csiCoverage,
+        ...stagedCsiDraft.csiCoverage,
         divisionIds: nextDivisionIds,
         sectionIds: nextSectionIds,
       },
     });
 
     if (checked) {
-      setExpandedCsiDivisionIds((divisionIds) =>
+      setStagedExpandedCsiDivisionIds((divisionIds) =>
         divisionIds.includes(divisionId) ? divisionIds : [...divisionIds, divisionId]
       );
     }
   }
 
-  function updatePrimaryDivision(divisionId: string) {
-    if (isViewingEquivalentCoverage) {
-      const nextSectionIds = Array.from(selectedSectionIds);
+  function updateStagedPrimaryDivision(divisionId: string) {
+    if (!stagedCsiDraft) return;
+
+    if (isStagedViewingEquivalentCoverage) {
+      const nextSectionIds = Array.from(stagedSelectedSectionIds);
       const nextDivisionIds = Array.from(
         new Set([...getDivisionIdsForSections(nextSectionIds), divisionId])
       );
 
-      setDraft({
-        ...draft,
+      updateStagedCsiCoverage({
         primaryDivisionId: divisionId,
         csiCoverage: {
-          ...draft.csiCoverage,
-          sourceVersion: pickerDisplayVersion,
+          ...stagedCsiDraft.csiCoverage,
+          sourceVersion: effectiveStagedPickerDisplayVersion,
           divisionIds: nextDivisionIds,
           sectionIds: nextSectionIds,
         },
       });
 
-      setExpandedCsiDivisionIds((divisionIds) =>
+      setStagedExpandedCsiDivisionIds((divisionIds) =>
         divisionIds.includes(divisionId) ? divisionIds : [...divisionIds, divisionId]
       );
 
       return;
     }
 
-    setDraft({
-      ...draft,
+    updateStagedCsiCoverage({
       primaryDivisionId: divisionId,
       csiCoverage: {
-        ...draft.csiCoverage,
+        ...stagedCsiDraft.csiCoverage,
         divisionIds: Array.from(
-          new Set([...draft.csiCoverage.divisionIds, divisionId])
+          new Set([...stagedCsiDraft.csiCoverage.divisionIds, divisionId])
         ),
       },
     });
@@ -591,6 +712,168 @@ export default function SubcontractorForm({
                 onClick={saveAndLeave}
               >
                 Save and Leave
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {isCsiModalOpen && stagedCsiDraft && (
+        <div className="modal-backdrop" role="presentation">
+          <div
+            className="modal-panel modal-panel-wide"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="csi-coverage-modal-title"
+          >
+            <div className="modal-header">
+              <div>
+                <h2 id="csi-coverage-modal-title">Edit CSI Coverage</h2>
+                <p className="muted-text">
+                  Select the divisions and sections this subcontractor performs.
+                </p>
+              </div>
+            </div>
+            <div className="modal-body-scroll">
+              <FormSelect
+                label="CSI Coverage Version"
+                value={effectiveStagedPickerDisplayVersion}
+                options={csiSourceVersions}
+                getOptionLabel={formatCsiSourceVersion}
+                onChange={(value) =>
+                  setStagedPickerDisplayVersion(
+                    value as CsiMasterFormatVersion
+                  )
+                }
+              />
+              <p className="muted-text">
+                Saved source version:{" "}
+                {formatCsiSourceVersion(stagedSavedCsiSourceVersion)}.
+              </p>
+              {isStagedViewingEquivalentCoverage && (
+                <p className="muted-text">
+                  Equivalent CSI coverage is shown using the crosswalk.
+                </p>
+              )}
+              {isStagedViewingEquivalentCoverage &&
+                stagedCrosswalkIssueCount > 0 && (
+                  <p className="badge badge-warning">
+                    Some selected CSI coverage has incomplete or ambiguous
+                    crosswalk mappings.
+                  </p>
+                )}
+              <FormSelect
+                label="Primary Division"
+                value={stagedCsiDraft.primaryDivisionId}
+                options={stagedCsiDivisionOptions.map((division) => division.id)}
+                getOptionLabel={(divisionId) => getDivisionName(divisionId)}
+                onChange={updateStagedPrimaryDivision}
+              />
+              <div className="form-field">
+                <strong>Divisions and Sections</strong>
+                <div className="csi-picker">
+                  {stagedCsiDivisionOptions.map((division) => {
+                    const sectionOptions = stagedCsiSectionOptions.filter(
+                      (section) => section.divisionId === division.id
+                    );
+                    const selectedSectionCount = sectionOptions.filter((section) =>
+                      stagedSelectedSectionIds.has(section.id)
+                    ).length;
+                    const isExpanded = stagedExpandedCsiDivisionIds.includes(
+                      division.id
+                    );
+
+                    return (
+                      <div key={division.id} className="csi-picker-division">
+                        <div className="csi-picker-division-row">
+                          <button
+                            type="button"
+                            className="crm-expand-button"
+                            aria-expanded={isExpanded}
+                            onClick={() =>
+                              toggleExpanded(
+                                division.id,
+                                setStagedExpandedCsiDivisionIds
+                              )
+                            }
+                          >
+                            {isExpanded ? "-" : "+"}
+                          </button>
+                          <label className="csi-picker-label">
+                            <input
+                              type="checkbox"
+                              checked={stagedSelectedDivisionIds.has(division.id)}
+                              onChange={(event) =>
+                                toggleStagedDivision(
+                                  division.id,
+                                  event.target.checked
+                                )
+                              }
+                            />
+                            <span>
+                              {division.number} - {division.name}
+                            </span>
+                          </label>
+                          <span className="muted-text">
+                            {selectedSectionCount} selected
+                          </span>
+                        </div>
+
+                        {isExpanded && (
+                          <div className="csi-picker-sections">
+                            {sectionOptions.length === 0 ? (
+                              <p className="muted-text">No sections available.</p>
+                            ) : (
+                              sectionOptions.map((section) => (
+                                <label
+                                  key={section.id}
+                                  className="csi-picker-section"
+                                >
+                                  <input
+                                    type="checkbox"
+                                    checked={stagedSelectedSectionIds.has(
+                                      section.id
+                                    )}
+                                    onChange={(event) =>
+                                      toggleStagedSection(
+                                        section.id,
+                                        event.target.checked
+                                      )
+                                    }
+                                  />
+                                  <span>
+                                    {section.number} - {section.name}
+                                  </span>
+                                  {section.additionalTitleCount > 0 && (
+                                    <span className="badge badge-muted">
+                                      +{section.additionalTitleCount} more titles
+                                    </span>
+                                  )}
+                                </label>
+                              ))
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+            <div className="modal-footer">
+              <button
+                type="button"
+                className="button-primary"
+                onClick={applyCsiCoverage}
+              >
+                Apply Coverage
+              </button>
+              <button
+                type="button"
+                className="button-secondary"
+                onClick={closeCsiCoverageModal}
+              >
+                Cancel
               </button>
             </div>
           </div>
@@ -1108,36 +1391,6 @@ export default function SubcontractorForm({
         </Panel>
 
         <Panel title="CSI Coverage">
-          <FormSelect
-            label="CSI Coverage Version"
-            value={pickerDisplayVersion}
-            options={csiSourceVersions}
-            getOptionLabel={formatCsiSourceVersion}
-            onChange={(value) =>
-              setPickerDisplayVersion(value as CsiMasterFormatVersion)
-            }
-          />
-          <p className="muted-text">
-            Saved source version: {formatCsiSourceVersion(savedCsiSourceVersion)}.
-          </p>
-          {isViewingEquivalentCoverage && (
-            <p className="muted-text">
-              Equivalent CSI coverage is shown using the crosswalk.
-            </p>
-          )}
-          {isViewingEquivalentCoverage && crosswalkIssueCount > 0 && (
-            <p className="badge badge-warning">
-              Some selected CSI coverage has incomplete or ambiguous crosswalk
-              mappings.
-            </p>
-          )}
-          <FormSelect
-            label="Primary Division"
-            value={draft.primaryDivisionId}
-            options={csiDivisionOptions.map((division) => division.id)}
-            getOptionLabel={(divisionId) => getDivisionName(divisionId)}
-            onChange={updatePrimaryDivision}
-          />
           <FormTextArea
             label="Specialty Scope Notes"
             value={draft.csiCoverage.specialtyScopeNotes ?? ""}
@@ -1151,79 +1404,67 @@ export default function SubcontractorForm({
               })
             }
           />
-          <div className="form-field">
-            <strong>Divisions and Sections</strong>
-            <div className="csi-picker">
-              {csiDivisionOptions.map((division) => {
-                const sectionOptions = csiSectionOptions.filter(
-                  (section) => section.divisionId === division.id
-                );
-                const selectedSectionCount = sectionOptions.filter((section) =>
-                  selectedSectionIds.has(section.id)
-                ).length;
-                const isExpanded = expandedCsiDivisionIds.includes(division.id);
-
-                return (
-                  <div key={division.id} className="csi-picker-division">
-                    <div className="csi-picker-division-row">
-                      <button
-                        type="button"
-                        className="crm-expand-button"
-                        aria-expanded={isExpanded}
-                        onClick={() =>
-                          toggleExpanded(division.id, setExpandedCsiDivisionIds)
-                        }
-                      >
-                        {isExpanded ? "-" : "+"}
-                      </button>
-                      <label className="csi-picker-label">
-                        <input
-                          type="checkbox"
-                          checked={selectedDivisionIds.has(division.id)}
-                          onChange={(event) =>
-                            toggleDivision(division.id, event.target.checked)
-                          }
-                        />
-                        <span>
-                          {division.number} - {division.name}
-                        </span>
-                      </label>
-                      <span className="muted-text">
-                        {selectedSectionCount} selected
+          <div className="coverage-summary">
+            {selectedDivisionIds.size === 0 && selectedSectionIds.size === 0 ? (
+              <p className="muted-text">No CSI coverage selected.</p>
+            ) : (
+              <>
+                <div className="coverage-summary-row">
+                  <span>Primary Division</span>
+                  <strong>{getDivisionName(draft.primaryDivisionId)}</strong>
+                </div>
+                <div className="coverage-summary-row">
+                  <span>Selected Divisions</span>
+                  <div className="coverage-badge-list">
+                    {Array.from(selectedDivisionIds).map((divisionId) => (
+                      <span key={divisionId} className="badge badge-muted">
+                        {getDivisionName(divisionId)}
                       </span>
-                    </div>
-
-                    {isExpanded && (
-                      <div className="csi-picker-sections">
-                        {sectionOptions.length === 0 ? (
-                          <p className="muted-text">No sections available.</p>
-                        ) : (
-                          sectionOptions.map((section) => (
-                            <label key={section.id} className="csi-picker-section">
-                              <input
-                                type="checkbox"
-                                checked={selectedSectionIds.has(section.id)}
-                                onChange={(event) =>
-                                  toggleSection(section.id, event.target.checked)
-                                }
-                              />
-                              <span>
-                                {section.number} - {section.name}
-                              </span>
-                              {section.additionalTitleCount > 0 && (
-                                <span className="badge badge-muted">
-                                  +{section.additionalTitleCount} more titles
-                                </span>
-                              )}
-                            </label>
-                          ))
-                        )}
-                      </div>
-                    )}
+                    ))}
                   </div>
-                );
-              })}
-            </div>
+                </div>
+                <div className="coverage-summary-row">
+                  <span>Selected Sections</span>
+                  {selectedSectionIds.size === 0 ? (
+                    <p className="muted-text">No sections selected.</p>
+                  ) : (
+                    <div className="coverage-section-groups">
+                      {getSelectedSectionGroups(
+                        csiDivisionOptions,
+                        csiSectionOptions,
+                        selectedSectionIds
+                      ).map((group) => (
+                        <div key={group.divisionId} className="coverage-section-group">
+                          <strong>{group.divisionLabel}</strong>
+                          <ul>
+                            {group.sections.map((section) => (
+                              <li key={section.id}>
+                                {section.number} - {section.name}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </>
+            )}
+          </div>
+          {isViewingEquivalentCoverage && crosswalkIssueCount > 0 && (
+            <p className="badge badge-warning">
+              Some selected CSI coverage has incomplete or ambiguous crosswalk
+              mappings.
+            </p>
+          )}
+          <div className="settings-actions">
+            <button
+              type="button"
+              className="button-secondary"
+              onClick={openCsiCoverageModal}
+            >
+              Add / Edit CSI Coverage
+            </button>
           </div>
         </Panel>
 
@@ -1822,6 +2063,23 @@ function formatContactSummary(contact: SubcontractorContact) {
   }
 
   return `${role} / ${title}`;
+}
+
+function getSelectedSectionGroups(
+  divisions: CsiDivision[],
+  sections: CsiPickerSectionOption[],
+  selectedSectionIds: Set<string>
+) {
+  return divisions
+    .map((division) => ({
+      divisionId: division.id,
+      divisionLabel: `${division.number} - ${division.name}`,
+      sections: sections.filter(
+        (section) =>
+          section.divisionId === division.id && selectedSectionIds.has(section.id)
+      ),
+    }))
+    .filter((group) => group.sections.length > 0);
 }
 
 function getDivisionName(divisionId: string) {
