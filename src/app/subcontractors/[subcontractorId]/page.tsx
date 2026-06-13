@@ -6,19 +6,36 @@ import { useParams } from "next/navigation";
 import AppShell from "@/components/layout/AppShell";
 import Panel from "@/components/ui/Panel";
 import {
+  getBadgeClassName,
+  getComplianceAlerts,
   getDivisionLabel,
   getMergedSubcontractors,
   getPrimaryDivisionId,
   getPrimaryPhone,
   getSecondaryDivisionLabels,
+  getSectionDivisionId,
   getSectionLabel,
   subcontractorsStorageKey,
 } from "@/lib/subcontractors";
 import {
   Subcontractor,
   SubcontractorContact,
+  SubcontractorContactScope,
   SubcontractorLocation,
 } from "@/types/Subcontractor";
+
+type BadgeTone = "primary" | "secondary" | "success" | "warning" | "danger" | "muted";
+
+type ContactScopeGroup = {
+  label: string;
+  contacts: SubcontractorContact[];
+};
+
+type ContactLocationGroup = {
+  locationId: string;
+  label: string;
+  contactsByScope: ContactScopeGroup[];
+};
 
 export default function SubcontractorProfilePage() {
   const params = useParams();
@@ -39,280 +56,389 @@ export default function SubcontractorProfilePage() {
     );
   }
 
+  const inviteContacts = getInviteContacts(subcontractor);
+  const contactLocationGroups = getContactLocationGroups(
+    subcontractor,
+    sortContactsForDisplay(subcontractor.contacts, inviteContacts)
+  );
+  const meaningfulLocations = getMeaningfulLocations(subcontractor);
+  const simplifiedStatus = getSimplifiedStatus(subcontractor);
+  const complianceWarnings = getComplianceAlerts(subcontractor);
+  const sectionLabels = subcontractor.csiCoverage.sectionIds.map(getSectionLabel);
+  const secondaryDivisionLabels = getSecondaryDivisionLabels(subcontractor);
+  const primaryTradeLabel = formatPrimaryTrade(subcontractor);
+
   return (
     <AppShell title={subcontractor.companyName}>
       <div className="command-nav">
         <Link href="/subcontractors" className="command-nav-link">
           {"<-"} Back to Subcontractors
         </Link>
-        <Link
-          href={`/subcontractors/${subcontractor.id}/edit`}
-          className="command-nav-link"
-        >
-          Edit Subcontractor
-        </Link>
       </div>
 
-      <Panel title="Company Information">
-        <p>
-          <strong>Company:</strong> {subcontractor.companyName}
-        </p>
-        {subcontractor.dba && (
-          <p>
-            <strong>DBA:</strong> {subcontractor.dba}
-          </p>
-        )}
-        <p>
-          <strong>Address:</strong> {formatAddress(subcontractor)}
-        </p>
-        <p>
-          <strong>Website:</strong>{" "}
-          {subcontractor.website ? (
-            <a href={subcontractor.website}>{subcontractor.website}</a>
-          ) : (
-            "Not provided"
-          )}
-        </p>
-        <p>
-          <strong>Main Phone:</strong> {subcontractor.mainPhone || "Not provided"}
-        </p>
-        <p>
-          <strong>Relationship Status:</strong>{" "}
-          {formatStatus(subcontractor.relationshipStatus)}
-        </p>
+      <Panel title="Company Summary">
+        <div className="profile-summary">
+          <div>
+            <div className="profile-title-row">
+              <h2>{subcontractor.companyName}</h2>
+              {subcontractor.relationshipStatus === "PREFERRED" && (
+                <span className="badge badge-primary">Preferred</span>
+              )}
+            </div>
+            {subcontractor.dba && (
+              <p className="muted-text">DBA: {subcontractor.dba}</p>
+            )}
+            <div className="badge-list">
+              <span className={getBadgeClassName(simplifiedStatus.tone)}>
+                {simplifiedStatus.label}
+              </span>
+              <span className="badge badge-secondary">
+                VPI: {formatVpiOverall(subcontractor)}
+              </span>
+            </div>
+          </div>
+
+          <Link
+            href={`/subcontractors/${subcontractor.id}/edit`}
+            className="button-primary profile-edit-link"
+          >
+            Edit Subcontractor
+          </Link>
+        </div>
+
+        <div className="profile-detail-grid">
+          <ProfileDetail label="Main Phone" value={subcontractor.mainPhone} />
+          <ProfileDetail
+            label="Website"
+            value={
+              subcontractor.website ? (
+                <a href={subcontractor.website}>{subcontractor.website}</a>
+              ) : undefined
+            }
+          />
+          <ProfileDetail label="Address" value={formatAddress(subcontractor)} />
+          <ProfileDetail label="Primary Trade" value={primaryTradeLabel} />
+        </div>
       </Panel>
 
-      <Panel title="Service Area">
-        <p>
-          <strong>States:</strong> {subcontractor.serviceArea.states.join(", ")}
-        </p>
-        <p>
-          <strong>Counties:</strong>{" "}
-          {subcontractor.serviceArea.counties.join(", ")}
-        </p>
-        <p>
-          <strong>Cities / Markets:</strong>{" "}
-          {subcontractor.serviceArea.citiesOrMarkets.join(", ")}
-        </p>
-        <p>
-          <strong>Travel Radius:</strong>{" "}
-          {subcontractor.serviceArea.travelRadiusMiles
-            ? `${subcontractor.serviceArea.travelRadiusMiles} miles`
-            : "Not specified"}
-        </p>
-        <p>
-          <strong>Will Travel:</strong>{" "}
-          {subcontractor.serviceArea.willTravel ? "Yes" : "No"}
-        </p>
-      </Panel>
-
-      {subcontractor.locations && subcontractor.locations.length > 0 && (
+      {meaningfulLocations.length > 0 && (
         <Panel title="Locations / Branches">
-          <table style={{ borderCollapse: "collapse", minWidth: 900 }}>
-            <thead>
-              <tr>
-                <th style={cell}>Location</th>
-                <th style={cell}>Type</th>
-                <th style={cell}>Address</th>
-                <th style={cell}>Main Phone</th>
-                <th style={cell}>Service Area</th>
-                <th style={cell}>Primary</th>
-              </tr>
-            </thead>
-            <tbody>
-              {subcontractor.locations.map((location) => (
-                <tr key={location.id}>
-                  <td style={cell}>{location.name}</td>
-                  <td style={cell}>{formatStatus(location.type)}</td>
-                  <td style={cell}>{formatLocationAddress(location)}</td>
-                  <td style={cell}>{location.mainPhone || "-"}</td>
-                  <td style={cell}>
-                    {location.serviceArea
-                      ? formatList(
-                          [
-                            ...location.serviceArea.counties,
-                            ...location.serviceArea.citiesOrMarkets,
-                          ],
-                          "Not specified"
-                        )
-                      : "Company service area"}
-                  </td>
-                  <td style={cell}>{location.isPrimary ? "Yes" : "No"}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <div className="profile-card-grid">
+            {meaningfulLocations.map((location) => (
+              <div key={location.id} className="profile-info-card">
+                <div className="profile-title-row">
+                  <strong>{location.name}</strong>
+                  {location.isPrimary && (
+                    <span className="badge badge-secondary">Primary</span>
+                  )}
+                </div>
+                <p className="muted-text">{formatStatus(location.type)}</p>
+                <p>{formatLocationAddress(location)}</p>
+                {location.mainPhone && <p>{location.mainPhone}</p>}
+                {location.email && <p>{location.email}</p>}
+                <p className="muted-text">
+                  {location.serviceArea
+                    ? formatServiceAreaSummary(location.serviceArea)
+                    : "Uses company service area"}
+                </p>
+                {location.notes && <p>{location.notes}</p>}
+              </div>
+            ))}
+          </div>
         </Panel>
       )}
 
       <Panel title="Contacts">
-        <table style={{ borderCollapse: "collapse", minWidth: 1120 }}>
-          <thead>
-            <tr>
-              <th style={cell}>Name</th>
-              <th style={cell}>Role / Title</th>
-              <th style={cell}>Email</th>
-              <th style={cell}>Office Phone</th>
-              <th style={cell}>Mobile Phone</th>
-              <th style={cell}>Primary Phone</th>
-              <th style={cell}>Location</th>
-              <th style={cell}>Primary</th>
-              <th style={cell}>Default Invite</th>
-              <th style={cell}>Status</th>
-              <th style={cell}>Responsibility</th>
-            </tr>
-          </thead>
-          <tbody>
-            {subcontractor.contacts.map((contact) => {
-              const primaryPhone = getPrimaryPhone(contact, subcontractor);
-
-              return (
-                <tr key={contact.id}>
-                  <td style={cell}>{contact.name}</td>
-                  <td style={cell}>{formatContactRoleTitle(contact)}</td>
-                  <td style={cell}>{contact.email || "-"}</td>
-                  <td style={cell}>{contact.officePhone || "-"}</td>
-                  <td style={cell}>{contact.mobilePhone || "-"}</td>
-                  <td style={cell}>
-                    {primaryPhone
-                      ? `${primaryPhone.label}: ${primaryPhone.value}`
-                      : "-"}
-                  </td>
-                  <td style={cell}>
-                    {getLocationName(subcontractor, contact.locationId)}
-                  </td>
-                  <td style={cell}>{contact.isPrimary ? "Yes" : "No"}</td>
-                  <td style={cell}>
-                    {contact.isDefaultInviteRecipient ? "Yes" : "No"}
-                  </td>
-                  <td style={cell}>{contact.active === false ? "Inactive" : "Active"}</td>
-                  <td style={cell}>{formatContactScopes(contact)}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+        {contactLocationGroups.length === 0 ? (
+          <div className="profile-empty-warning">
+            <span className="badge badge-warning">No contacts</span>
+            <p className="muted-text">
+              No contacts have been added to this subcontractor profile.
+            </p>
+          </div>
+        ) : (
+          <ContactLocationGroups
+            subcontractor={subcontractor}
+            locationGroups={contactLocationGroups}
+          />
+        )}
       </Panel>
 
-      <Panel title="CSI Coverage">
-        <p>
-          <strong>Primary Division:</strong>{" "}
-          {getDivisionLabel(getPrimaryDivisionId(subcontractor))}
-        </p>
-        <p>
-          <strong>Secondary / Cross-Trade Divisions:</strong>{" "}
-          {formatList(getSecondaryDivisionLabels(subcontractor), "None")}
-        </p>
-        <p>
-          <strong>Divisions:</strong>{" "}
-          {formatList(subcontractor.csiCoverage.divisionIds.map(getDivisionLabel))}
-        </p>
-        <p>
-          <strong>Sections:</strong>{" "}
-          {formatList(subcontractor.csiCoverage.sectionIds.map(getSectionLabel))}
-        </p>
-        <p>
-          <strong>Specialty Scope Notes:</strong>{" "}
-          {subcontractor.csiCoverage.specialtyScopeNotes || "None"}
-        </p>
+      <Panel title="Trade Coverage">
+        <div className="profile-detail-grid">
+          <ProfileDetail
+            label="Primary Trade"
+            value={primaryTradeLabel}
+          />
+          <ProfileDetail
+            label="Secondary Divisions"
+            value={formatList(secondaryDivisionLabels, "None")}
+          />
+          <ProfileDetail
+            label="Specialty Scope Notes"
+            value={subcontractor.csiCoverage.specialtyScopeNotes || "None"}
+          />
+        </div>
+
+        {subcontractor.notes && (
+          <p className="profile-note">
+            <strong>Notes:</strong> {subcontractor.notes}
+          </p>
+        )}
+
+        <div className="profile-label-list">
+          <strong>Selected Sections</strong>
+          {sectionLabels.length === 0 ? (
+            <p className="muted-text">No sections selected.</p>
+          ) : (
+            <div className="badge-list">
+              {sectionLabels.map((sectionLabel) => (
+                <span key={sectionLabel} className="badge badge-muted">
+                  {sectionLabel}
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
       </Panel>
 
-      <Panel title="Prequalification">
-        <p>
-          <strong>Status:</strong>{" "}
-          {formatStatus(subcontractor.prequalification.status)}
-        </p>
-        <p>
-          <strong>W9:</strong>{" "}
-          {subcontractor.prequalification.w9OnFile ? "On file" : "Missing"}
-        </p>
-        <p>
-          <strong>Insurance:</strong>{" "}
-          {subcontractor.prequalification.insuranceOnFile
-            ? "On file"
-            : "Missing"}
-        </p>
-        <p>
-          <strong>License:</strong>{" "}
-          {subcontractor.prequalification.licenseOnFile ? "On file" : "Missing"}
-        </p>
-        <p>
-          <strong>Bonding Capacity:</strong>{" "}
-          {subcontractor.prequalification.bondingCapacity
-            ? `$${subcontractor.prequalification.bondingCapacity.toLocaleString()}`
-            : "Not specified"}
-        </p>
-        <p>
-          <strong>Insurance Expiration:</strong>{" "}
-          {subcontractor.prequalification.insuranceExpirationDate || "Not set"}
-        </p>
-        <p>
-          <strong>License Expiration:</strong>{" "}
-          {subcontractor.prequalification.licenseExpirationDate || "Not set"}
-        </p>
+      <Panel title="Service Area">
+        <div className="profile-detail-grid">
+          <ProfileDetail
+            label="States"
+            value={formatList(subcontractor.serviceArea.states)}
+          />
+          <ProfileDetail
+            label="Counties"
+            value={formatList(subcontractor.serviceArea.counties)}
+          />
+          <ProfileDetail
+            label="Cities / Markets"
+            value={formatList(subcontractor.serviceArea.citiesOrMarkets)}
+          />
+          <ProfileDetail
+            label="Travel Radius"
+            value={
+              subcontractor.serviceArea.travelRadiusMiles
+                ? `${subcontractor.serviceArea.travelRadiusMiles} miles`
+                : "Not specified"
+            }
+          />
+          <ProfileDetail
+            label="Will Travel"
+            value={subcontractor.serviceArea.willTravel ? "Yes" : "No"}
+          />
+        </div>
       </Panel>
 
-      <Panel title="Vendor Performance Index">
-        <table style={{ borderCollapse: "collapse", minWidth: 640 }}>
-          <tbody>
-            <VpiRow label="Responsiveness" value={subcontractor.vpi.responsiveness} />
-            <VpiRow
-              label="Bid Completeness"
-              value={subcontractor.vpi.bidCompleteness}
-            />
-            <VpiRow label="Bid Accuracy" value={subcontractor.vpi.bidAccuracy} />
-            <VpiRow
-              label="Schedule Performance"
-              value={subcontractor.vpi.schedulePerformance}
-            />
-            <VpiRow label="Field Quality" value={subcontractor.vpi.fieldQuality} />
-            <VpiRow
-              label="Administrative Compliance"
-              value={subcontractor.vpi.administrativeCompliance}
-            />
-            <VpiRow label="Overall" value={subcontractor.vpi.overall} />
-            <tr>
-              <th style={cell}>Projects Evaluated</th>
-              <td style={cell}>{subcontractor.vpi.projectsEvaluated}</td>
-            </tr>
-            <tr>
-              <th style={cell}>Confidence</th>
-              <td style={cell}>
-                {formatStatus(subcontractor.vpi.confidenceLevel)}
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <Panel title="VPI / Performance">
+        <div className="profile-performance-summary">
+          <ProfileMetric label="Overall" value={formatVpiOverall(subcontractor)} />
+          <ProfileMetric
+            label="Projects Evaluated"
+            value={String(subcontractor.vpi.projectsEvaluated)}
+          />
+        </div>
+
+        <div className="profile-score-grid">
+          <ProfileDetail
+            label="Responsiveness"
+            value={formatScore(subcontractor.vpi.responsiveness)}
+          />
+          <ProfileDetail
+            label="Bid Completeness"
+            value={formatScore(subcontractor.vpi.bidCompleteness)}
+          />
+          <ProfileDetail
+            label="Bid Accuracy"
+            value={formatScore(subcontractor.vpi.bidAccuracy)}
+          />
+          <ProfileDetail
+            label="Schedule Performance"
+            value={formatScore(subcontractor.vpi.schedulePerformance)}
+          />
+          <ProfileDetail
+            label="Field Quality"
+            value={formatScore(subcontractor.vpi.fieldQuality)}
+          />
+          <ProfileDetail
+            label="Administrative Compliance"
+            value={formatScore(subcontractor.vpi.administrativeCompliance)}
+          />
+        </div>
       </Panel>
 
-      <Panel title="Notes">
-        <p>{subcontractor.notes || "No notes added yet."}</p>
+      <Panel title="Compliance / Prequalification">
+        <div className="profile-detail-grid">
+          <ProfileDetail
+            label="Status"
+            value={formatStatus(subcontractor.prequalification.status)}
+          />
+          <ProfileDetail
+            label="W-9"
+            value={subcontractor.prequalification.w9OnFile ? "On file" : "Missing"}
+          />
+          <ProfileDetail
+            label="Insurance"
+            value={
+              subcontractor.prequalification.insuranceOnFile ? "On file" : "Missing"
+            }
+          />
+          <ProfileDetail
+            label="License"
+            value={
+              subcontractor.prequalification.licenseOnFile ? "On file" : "Missing"
+            }
+          />
+          <ProfileDetail
+            label="Insurance Expiration"
+            value={subcontractor.prequalification.insuranceExpirationDate || "Not set"}
+          />
+          <ProfileDetail
+            label="License Expiration"
+            value={subcontractor.prequalification.licenseExpirationDate || "Not set"}
+          />
+          <ProfileDetail
+            label="Bonding Capacity"
+            value={
+              subcontractor.prequalification.bondingCapacity
+                ? `$${subcontractor.prequalification.bondingCapacity.toLocaleString()}`
+                : "Not specified"
+            }
+          />
+        </div>
+
+        <div className="profile-label-list">
+          <strong>Warnings</strong>
+          <div className="badge-list">
+            {complianceWarnings.length === 0 ? (
+              <span className="badge badge-success">No compliance warnings</span>
+            ) : (
+              complianceWarnings.map((warning) => (
+                <span key={warning} className="badge badge-warning">
+                  {warning}
+                </span>
+              ))
+            )}
+          </div>
+        </div>
+
         {subcontractor.prequalification.notes && (
-          <p>
-            <strong>Prequalification Notes:</strong>{" "}
-            {subcontractor.prequalification.notes}
+          <p className="profile-note">
+            <strong>Notes:</strong> {subcontractor.prequalification.notes}
           </p>
         )}
       </Panel>
+
     </AppShell>
   );
 }
 
-function VpiRow({ label, value }: { label: string; value: number | undefined }) {
+function ProfileDetail({
+  label,
+  value,
+}: {
+  label: string;
+  value?: React.ReactNode;
+}) {
   return (
-    <tr>
-      <th style={cell}>{label}</th>
-      <td style={cell}>{value === undefined ? "Not rated" : `${value} / 5`}</td>
-    </tr>
+    <div className="profile-detail">
+      <span>{label}</span>
+      <strong>{value || "Not provided"}</strong>
+    </div>
   );
 }
 
-const cell: React.CSSProperties = {
-  border: "1px solid var(--color-border)",
-  padding: "8px",
-  textAlign: "left",
-  verticalAlign: "top",
-};
+function ProfileMetric({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="profile-metric">
+      <span>{label}</span>
+      <strong>{value}</strong>
+    </div>
+  );
+}
+
+function ContactLocationGroups({
+  subcontractor,
+  locationGroups,
+}: {
+  subcontractor: Subcontractor;
+  locationGroups: ContactLocationGroup[];
+}) {
+  return (
+    <div className="profile-location-contact-list">
+      {locationGroups.map((locationGroup) => (
+        <div key={locationGroup.locationId} className="profile-info-card">
+          <h3>{locationGroup.label}</h3>
+          <div className="profile-scope-group-list">
+            {locationGroup.contactsByScope.map((scopeGroup) => (
+              <div key={`${locationGroup.locationId}-${scopeGroup.label}`}>
+                <h4>{scopeGroup.label}</h4>
+                <div className="profile-contact-grid">
+                  {scopeGroup.contacts.map((contact) => (
+                    <ContactCard
+                      key={contact.id}
+                      subcontractor={subcontractor}
+                      contact={contact}
+                      markers={getContactMarkers(contact)}
+                    />
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function ContactCard({
+  subcontractor,
+  contact,
+  markers,
+}: {
+  subcontractor: Subcontractor;
+  contact: SubcontractorContact;
+  markers: Array<string | undefined>;
+}) {
+  const primaryPhone = getPrimaryPhone(contact, subcontractor);
+  const visibleMarkers = markers.filter(Boolean);
+
+  return (
+    <div className="profile-contact-card">
+      <div className="profile-title-row">
+        <strong>{contact.name}</strong>
+        {visibleMarkers.map((marker) => (
+          <span
+            key={marker}
+            className={
+              marker === "Inactive" ? "badge badge-muted" : "badge badge-secondary"
+            }
+          >
+            {marker}
+          </span>
+        ))}
+      </div>
+      <p className="muted-text">{formatContactRoleTitle(contact)}</p>
+      <div className="profile-contact-methods">
+        <span>{contact.email || "No email"}</span>
+        {contact.officePhone && <span>Office: {contact.officePhone}</span>}
+        {contact.mobilePhone && <span>Mobile: {contact.mobilePhone}</span>}
+        {primaryPhone && <span>Primary: {primaryPhone.value}</span>}
+      </div>
+      {contact.notes && <p>{contact.notes}</p>}
+    </div>
+  );
+}
+
+function getContactMarkers(contact: SubcontractorContact) {
+  return [
+    contact.isDefaultInviteRecipient ? "Default Invite" : undefined,
+    contact.isPrimary ? "Primary" : undefined,
+    contact.active === false ? "Inactive" : undefined,
+  ];
+}
 
 let cachedSubcontractorsStorageValue: string | undefined;
 let cachedSubcontractors: Subcontractor[] = getMergedSubcontractors();
@@ -338,8 +464,7 @@ function getServerSubcontractorsSnapshot(): Subcontractor[] {
 }
 
 function getSubcontractorsSnapshot(): Subcontractor[] {
-  const storageValue =
-    localStorage.getItem(subcontractorsStorageKey) || "[]";
+  const storageValue = localStorage.getItem(subcontractorsStorageKey) || "[]";
 
   if (storageValue !== cachedSubcontractorsStorageValue) {
     cachedSubcontractorsStorageValue = storageValue;
@@ -347,6 +472,156 @@ function getSubcontractorsSnapshot(): Subcontractor[] {
   }
 
   return cachedSubcontractors;
+}
+
+function getInviteContacts(subcontractor: Subcontractor): SubcontractorContact[] {
+  const activeContactsWithEmail = subcontractor.contacts.filter(
+    (contact) => contact.active !== false && Boolean(contact.email?.trim())
+  );
+  const defaultInviteContacts = activeContactsWithEmail.filter(
+    (contact) => contact.isDefaultInviteRecipient
+  );
+
+  if (defaultInviteContacts.length > 0) return defaultInviteContacts;
+
+  const primaryContact = activeContactsWithEmail.find((contact) => contact.isPrimary);
+  if (primaryContact) return [primaryContact];
+
+  const estimatorContacts = activeContactsWithEmail.filter(
+    (contact) => contact.role === "ESTIMATOR"
+  );
+  if (estimatorContacts.length > 0) return estimatorContacts;
+
+  return activeContactsWithEmail;
+}
+
+function sortContactsForDisplay(
+  contacts: SubcontractorContact[],
+  inviteContacts: SubcontractorContact[]
+) {
+  const inviteContactIds = new Set(inviteContacts.map((contact) => contact.id));
+
+  return [...contacts].sort((contactA, contactB) => {
+    const inviteWeightA = inviteContactIds.has(contactA.id) ? 0 : 1;
+    const inviteWeightB = inviteContactIds.has(contactB.id) ? 0 : 1;
+    const activeWeightA = contactA.active === false ? 1 : 0;
+    const activeWeightB = contactB.active === false ? 1 : 0;
+
+    return (
+      inviteWeightA - inviteWeightB ||
+      activeWeightA - activeWeightB ||
+      contactA.name.localeCompare(contactB.name)
+    );
+  });
+}
+
+function getMeaningfulLocations(subcontractor: Subcontractor) {
+  const locations = subcontractor.locations ?? [];
+
+  if (locations.length > 1) return locations;
+
+  return locations.filter((location) => {
+    const duplicatesCompanyAddress =
+      formatLocationAddress(location) === formatAddress(subcontractor);
+
+    return (
+      !duplicatesCompanyAddress ||
+      Boolean(location.mainPhone) ||
+      Boolean(location.email) ||
+      Boolean(location.serviceArea) ||
+      Boolean(location.notes)
+    );
+  });
+}
+
+function getContactLocationGroups(
+  subcontractor: Subcontractor,
+  contacts: SubcontractorContact[]
+): ContactLocationGroup[] {
+  const locationGroups = new Map<string, Map<string, SubcontractorContact[]>>();
+
+  contacts.forEach((contact) => {
+    const locationId = contact.locationId ?? "company-wide";
+    const scopeLabel = getContactScopeGroupLabel(contact);
+    const scopeGroups = locationGroups.get(locationId) ?? new Map();
+    const scopeContacts = scopeGroups.get(scopeLabel) ?? [];
+
+    scopeContacts.push(contact);
+    scopeGroups.set(scopeLabel, scopeContacts);
+    locationGroups.set(locationId, scopeGroups);
+  });
+
+  return Array.from(locationGroups.entries())
+    .sort(([locationIdA], [locationIdB]) => {
+      if (locationIdA === "company-wide") return -1;
+      if (locationIdB === "company-wide") return 1;
+
+      return getLocationLabel(subcontractor, locationIdA).localeCompare(
+        getLocationLabel(subcontractor, locationIdB)
+      );
+    })
+    .map(([locationId, scopeGroups]) => ({
+      locationId,
+      label:
+        locationId === "company-wide"
+          ? "General / Company-wide Contacts"
+          : getLocationLabel(subcontractor, locationId),
+      contactsByScope: Array.from(scopeGroups.entries())
+        .sort(([labelA], [labelB]) => {
+          if (labelA === "General Contacts") return -1;
+          if (labelB === "General Contacts") return 1;
+
+          return labelA.localeCompare(labelB);
+        })
+        .map(([label, groupedContacts]) => ({
+          label,
+          contacts: groupedContacts,
+        })),
+    }));
+}
+
+function getContactScopeGroupLabel(contact: SubcontractorContact) {
+  const firstScope = contact.inviteScopes?.[0];
+
+  if (!firstScope) return "General Contacts";
+
+  return formatScopeTradeLine(firstScope) ?? "General Contacts";
+}
+
+function getSimplifiedStatus(subcontractor: Subcontractor): {
+  label: string;
+  tone: BadgeTone;
+} {
+  const complianceAlerts = getComplianceAlerts(subcontractor);
+
+  if (subcontractor.relationshipStatus === "DO_NOT_USE") {
+    return { label: "Do Not Use", tone: "danger" };
+  }
+
+  if (subcontractor.relationshipStatus === "INACTIVE") {
+    return { label: "Inactive", tone: "muted" };
+  }
+
+  if (
+    subcontractor.prequalification.status === "EXPIRED" ||
+    subcontractor.prequalification.status === "REJECTED" ||
+    complianceAlerts.length > 0
+  ) {
+    return { label: "Compliance Issue", tone: "danger" };
+  }
+
+  if (
+    subcontractor.relationshipStatus === "CONDITIONAL" ||
+    subcontractor.prequalification.status === "CONDITIONAL"
+  ) {
+    return { label: "Conditional", tone: "warning" };
+  }
+
+  if (subcontractor.prequalification.status === "QUALIFIED") {
+    return { label: "Prequalified", tone: "success" };
+  }
+
+  return { label: "Pending Review", tone: "warning" };
 }
 
 function formatAddress(subcontractor: Subcontractor) {
@@ -365,11 +640,51 @@ function formatLocationAddress(location: SubcontractorLocation) {
     .join(", ");
 }
 
-function formatContactRoleTitle(contact: SubcontractorContact) {
-  return [formatStatus(contact.role), contact.title].filter(Boolean).join(" / ");
+function formatPrimaryTrade(subcontractor: Subcontractor) {
+  const primaryDivisionId = getPrimaryDivisionId(subcontractor);
+  const primaryDivisionLabel = getDivisionLabel(primaryDivisionId);
+  const primarySectionLabels = subcontractor.csiCoverage.sectionIds
+    .filter((sectionId) => getSectionDivisionId(sectionId) === primaryDivisionId)
+    .map(getSectionLabel);
+
+  return primarySectionLabels.length === 0
+    ? primaryDivisionLabel
+    : `${primaryDivisionLabel} - ${primarySectionLabels.join(", ")}`;
 }
 
-function getLocationName(
+function formatContactRoleTitle(contact: SubcontractorContact) {
+  const roleLabel = formatStatus(contact.role);
+  const title = contact.title?.trim();
+
+  if (!title) return roleLabel;
+
+  const normalizedRole = roleLabel.toLowerCase();
+  const normalizedTitle = title.toLowerCase();
+
+  if (
+    normalizedTitle.includes(normalizedRole) ||
+    normalizedRole.includes(normalizedTitle)
+  ) {
+    return title;
+  }
+
+  return `${roleLabel} / ${title}`;
+}
+
+function formatScopeTradeLine(scope: SubcontractorContactScope) {
+  const tradeParts = [
+    scope.divisionIds?.map(getDivisionLabel).join(", "),
+    scope.sectionIds?.map(getSectionLabel).join(", "),
+  ].filter(Boolean);
+
+  if (tradeParts.length === 0) return undefined;
+
+  const context = scope.roleContext ? formatStatus(scope.roleContext) : "Scope";
+
+  return `${context}: ${tradeParts.join(" - ")}`;
+}
+
+function getLocationLabel(
   subcontractor: Subcontractor,
   locationId: string | undefined
 ) {
@@ -381,25 +696,25 @@ function getLocationName(
   );
 }
 
-function formatContactScopes(contact: SubcontractorContact) {
-  if (!contact.inviteScopes || contact.inviteScopes.length === 0) {
-    return contact.notes || "General contact";
-  }
+function formatServiceAreaSummary(
+  serviceArea: Subcontractor["serviceArea"]
+) {
+  return [
+    formatList(serviceArea.counties, ""),
+    formatList(serviceArea.citiesOrMarkets, ""),
+  ]
+    .filter(Boolean)
+    .join(" | ");
+}
 
-  return contact.inviteScopes
-    .map((scope) => {
-      const scopeParts = [
-        scope.roleContext ? formatStatus(scope.roleContext) : undefined,
-        scope.divisionIds?.map(getDivisionLabel).join(", "),
-        scope.sectionIds?.map(getSectionLabel).join(", "),
-        scope.counties?.join(", "),
-        scope.citiesOrMarkets?.join(", "),
-        scope.notes,
-      ].filter(Boolean);
+function formatVpiOverall(subcontractor: Subcontractor) {
+  return subcontractor.vpi.overall === undefined
+    ? "Not rated"
+    : `${subcontractor.vpi.overall.toFixed(1)} / 5`;
+}
 
-      return scopeParts.join(" | ");
-    })
-    .join("; ");
+function formatScore(value: number | undefined) {
+  return value === undefined ? "Not rated" : `${value} / 5`;
 }
 
 function formatStatus(value: string) {

@@ -574,6 +574,145 @@ textarea {
   white-space: normal;
 }
 
+.profile-summary {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.profile-title-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.profile-title-row h2 {
+  margin: 0;
+}
+
+.profile-edit-link {
+  flex: 0 0 auto;
+  text-decoration: none;
+}
+
+.profile-detail-grid,
+.profile-score-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(220px, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.profile-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.profile-detail span,
+.profile-metric span {
+  color: var(--color-text-muted);
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.profile-detail strong,
+.profile-metric strong {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.profile-contact-grid,
+.profile-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 12px;
+}
+
+.profile-contact-card,
+.profile-info-card,
+.profile-routing-card,
+.profile-metric {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-control);
+  background: var(--color-surface-muted);
+  padding: 12px;
+}
+
+.profile-contact-methods {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-top: 8px;
+  overflow-wrap: anywhere;
+}
+
+.profile-label-list,
+.profile-note,
+.profile-empty-warning {
+  margin-top: 16px;
+}
+
+.profile-empty-warning {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.profile-performance-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+.profile-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.profile-routing-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.profile-routing-card {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.7fr) minmax(260px, 1.3fr);
+  gap: 12px;
+  align-items: start;
+}
+
+.profile-routing-scopes {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  overflow-wrap: anywhere;
+}
+
+.profile-location-contact-list,
+.profile-scope-group-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.profile-info-card h3,
+.profile-scope-group-list h4 {
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+
+.profile-scope-group-list h4 {
+  color: var(--color-text-muted);
+  font-size: 13px;
+  text-transform: uppercase;
+}
+
 .csi-picker {
   display: flex;
   flex-direction: column;
@@ -643,5 +782,17 @@ textarea {
 
   .app-main {
     padding: 20px;
+  }
+
+  .profile-summary,
+  .profile-routing-card {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .profile-detail-grid,
+  .profile-score-grid,
+  .profile-performance-summary {
+    grid-template-columns: 1fr;
   }
 }
