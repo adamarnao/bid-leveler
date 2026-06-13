@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import AppShell from "@/components/layout/AppShell";
@@ -18,17 +19,43 @@ export default function EditSubcontractorPage() {
   const subcontractorId = Array.isArray(rawSubcontractorId)
     ? rawSubcontractorId[0]
     : rawSubcontractorId;
-  const storageValue =
-    typeof window === "undefined"
-      ? "[]"
-      : localStorage.getItem(subcontractorsStorageKey) || "[]";
-  const subcontractor = subcontractorId
-    ? getSubcontractorById(subcontractorId, storageValue)
-    : undefined;
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [subcontractor, setSubcontractor] = useState<Subcontractor | undefined>(
+    undefined
+  );
+
+  useEffect(() => {
+    let isActive = true;
+
+    queueMicrotask(() => {
+      if (!isActive) return;
+
+      const storageValue = localStorage.getItem(subcontractorsStorageKey) || "[]";
+
+      setSubcontractor(
+        subcontractorId
+          ? getSubcontractorById(subcontractorId, storageValue)
+          : undefined
+      );
+      setIsLoaded(true);
+    });
+
+    return () => {
+      isActive = false;
+    };
+  }, [subcontractorId]);
 
   function handleSubmit(updatedSubcontractor: Subcontractor) {
     saveSubcontractor(updatedSubcontractor);
     router.push(`/subcontractors/${updatedSubcontractor.id}`);
+  }
+
+  if (!isLoaded) {
+    return (
+      <AppShell title="Edit Subcontractor">
+        <p className="muted-text">Loading subcontractor...</p>
+      </AppShell>
+    );
   }
 
   if (!subcontractor) {
@@ -43,10 +70,6 @@ export default function EditSubcontractorPage() {
 
   return (
     <AppShell title={`Edit ${subcontractor.companyName}`}>
-      <Link href={`/subcontractors/${subcontractor.id}`}>
-        {"<-"} Back to Profile
-      </Link>
-
       <SubcontractorForm
         initialSubcontractor={subcontractor}
         submitLabel="Save Subcontractor"

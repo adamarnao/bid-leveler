@@ -60,6 +60,7 @@ export type SubcontractorLocation = {
   type: SubcontractorLocationType;
   address: SubcontractorAddress;
   mainPhone?: string;
+  mainPhoneExtension?: string;
   email?: string;
   serviceArea?: SubcontractorServiceArea;
   notes?: string;
@@ -85,6 +86,7 @@ export type SubcontractorContact = {
   title?: string;
   email?: string;
   officePhone?: string;
+  officePhoneExtension?: string;
   mobilePhone?: string;
   primaryPhoneType?: PhoneType;
   phone?: string;
@@ -132,6 +134,7 @@ export type Subcontractor = {
   address: SubcontractorAddress;
   website?: string;
   mainPhone?: string;
+  mainPhoneExtension?: string;
   notes?: string;
   serviceArea: SubcontractorServiceArea;
   locations?: SubcontractorLocation[];

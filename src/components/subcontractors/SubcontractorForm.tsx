@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { csiCrosswalkEntries } from "@/data/csiCrosswalk";
 import { mockCsiDivisions } from "@/data/mockCsiDivisions";
 import { mockCsiSections } from "@/data/mockCsiSections";
@@ -20,7 +20,8 @@ import {
   RelationshipStatus,
   Subcontractor,
   SubcontractorContact,
-  VpiConfidenceLevel,
+  SubcontractorLocation,
+  SubcontractorLocationType,
 } from "@/types/Subcontractor";
 import Panel from "@/components/ui/Panel";
 
@@ -38,8 +39,7 @@ type CsiPickerSectionOption = {
   additionalTitleCount: number;
 };
 
-const relationshipStatuses: RelationshipStatus[] = [
-  "PREFERRED",
+const vendorStatusOptions: RelationshipStatus[] = [
   "APPROVED",
   "CONDITIONAL",
   "INACTIVE",
@@ -64,7 +64,12 @@ const contactRoles: ContactRole[] = [
 ];
 
 const phoneTypes: PhoneType[] = ["OFFICE", "MOBILE"];
-const confidenceLevels: VpiConfidenceLevel[] = ["LOW", "MEDIUM", "HIGH"];
+const locationTypes: SubcontractorLocationType[] = [
+  "HEADQUARTERS",
+  "BRANCH",
+  "FIELD_OFFICE",
+  "BILLING",
+];
 const csiSourceVersions: CsiMasterFormatVersion[] = [
   "MASTERFORMAT_CURRENT",
   "MASTERFORMAT_1995",
@@ -79,13 +84,37 @@ export default function SubcontractorForm({
     initialSubcontractor.contacts.find((contact) => contact.isPrimary) ??
     initialSubcontractor.contacts[0] ??
     createEmptyPrimaryContact(initialSubcontractor.id);
-  const [draft, setDraft] = useState<Subcontractor>(() => ({
+  const initialDraft = useMemo<Subcontractor>(() => ({
     ...initialSubcontractor,
     contacts:
       initialSubcontractor.contacts.length > 0
         ? initialSubcontractor.contacts
         : [fallbackPrimaryContact],
-  }));
+  }), [fallbackPrimaryContact, initialSubcontractor]);
+  const [draft, setDraft] = useState<Subcontractor>(() => initialDraft);
+  const initialSnapshot = useMemo(
+    () => getSubcontractorSnapshot(initialDraft),
+    [initialDraft]
+  );
+  const draftSnapshot = useMemo(
+    () => getSubcontractorSnapshot(draft),
+    [draft]
+  );
+  const isDirty = initialSnapshot !== draftSnapshot;
+  const [expandedContactIds, setExpandedContactIds] = useState<string[]>(() => {
+    const primaryContact =
+      initialDraft.contacts.find((contact) => contact.isPrimary) ??
+      initialDraft.contacts[0];
+
+    return primaryContact ? [primaryContact.id] : [];
+  });
+  const [expandedLocationIds, setExpandedLocationIds] = useState<string[]>(() => {
+    const primaryLocation =
+      initialDraft.locations?.find((location) => location.isPrimary) ??
+      initialDraft.locations?.[0];
+
+    return primaryLocation ? [primaryLocation.id] : [];
+  });
   const savedCsiSourceVersion =
     draft.csiCoverage.sourceVersion ?? "MASTERFORMAT_CURRENT";
   const [pickerDisplayVersion, setPickerDisplayVersion] =
@@ -133,10 +162,24 @@ export default function SubcontractorForm({
     () => getCrosswalkIssueCount(draft, pickerDisplayVersion),
     [draft, pickerDisplayVersion]
   );
+  const [showUnsavedModal, setShowUnsavedModal] = useState(false);
 
-  function submitSubcontractor(event: React.FormEvent) {
-    event.preventDefault();
+  useEffect(() => {
+    if (!isDirty) return;
 
+    function handleBeforeUnload(event: BeforeUnloadEvent) {
+      event.preventDefault();
+      event.returnValue = "";
+    }
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [isDirty]);
+
+  function getNormalizedDraft() {
     const normalizedSectionIds = draft.csiCoverage.sectionIds;
     const normalizedDivisionIds = Array.from(
       new Set([
@@ -145,14 +188,21 @@ export default function SubcontractorForm({
         ...normalizedSectionIds.map(getSectionDivisionId),
       ])
     ).filter(Boolean);
+    const normalizedLocations = normalizeLocations(draft.locations ?? []);
+    const validLocationIds = new Set(
+      normalizedLocations.map((location) => location.id)
+    );
 
-    onSubmit({
+    return {
       ...draft,
       dba: emptyToUndefined(draft.dba),
       website: emptyToUndefined(draft.website),
       mainPhone: emptyToUndefined(draft.mainPhone),
+      mainPhoneExtension: emptyToUndefined(draft.mainPhoneExtension),
       notes: emptyToUndefined(draft.notes),
-      contacts: normalizeContacts(draft.contacts),
+      locations:
+        normalizedLocations.length > 0 ? normalizedLocations : undefined,
+      contacts: normalizeContacts(draft.contacts, validLocationIds),
       csiCoverage: {
         sourceVersion:
           draft.csiCoverage.sourceVersion ?? "MASTERFORMAT_CURRENT",
@@ -173,16 +223,72 @@ export default function SubcontractorForm({
         ),
         notes: emptyToUndefined(draft.prequalification.notes),
       },
-    });
+    };
+  }
+
+  function submitSubcontractor(event: React.FormEvent) {
+    event.preventDefault();
+    onSubmit(getNormalizedDraft());
   }
 
   function addContact() {
+    const nextContact = createEmptyContact(draft.id, draft.contacts.length + 1);
+
     setDraft({
       ...draft,
-      contacts: [
-        ...draft.contacts,
-        createEmptyContact(draft.id, draft.contacts.length + 1),
-      ],
+      contacts: [...draft.contacts, nextContact],
+    });
+    setExpandedContactIds((contactIds) => [...contactIds, nextContact.id]);
+  }
+
+  function addLocation() {
+    const nextLocation = createEmptyLocation(
+      draft.id,
+      (draft.locations?.length ?? 0) + 1
+    );
+    const nextLocations = [
+      ...(draft.locations ?? []),
+      nextLocation,
+    ];
+
+    setDraft({
+      ...draft,
+      locations: nextLocations,
+    });
+    setExpandedLocationIds((locationIds) => [...locationIds, nextLocation.id]);
+  }
+
+  function updateLocation(
+    locationId: string,
+    updates: Partial<SubcontractorLocation>
+  ) {
+    setDraft({
+      ...draft,
+      locations: (draft.locations ?? []).map((location) =>
+        location.id === locationId ? { ...location, ...updates } : location
+      ),
+    });
+  }
+
+  function removeLocation(locationId: string) {
+    const nextLocations = (draft.locations ?? []).filter(
+      (location) => location.id !== locationId
+    );
+
+    setDraft({
+      ...draft,
+      locations: nextLocations.length > 0 ? nextLocations : undefined,
+      contacts: draft.contacts.map((contact) => clearContactLocation(contact, locationId)),
+    });
+  }
+
+  function markPrimaryLocation(locationId: string) {
+    setDraft({
+      ...draft,
+      locations: (draft.locations ?? []).map((location) => ({
+        ...location,
+        isPrimary: location.id === locationId,
+      })),
     });
   }
 
@@ -393,254 +499,608 @@ export default function SubcontractorForm({
     });
   }
 
+  function cancelEdit() {
+    if (!isDirty) {
+      window.history.back();
+      return;
+    }
+
+    setShowUnsavedModal(true);
+  }
+
+  function saveAndLeave() {
+    onSubmit(getNormalizedDraft());
+  }
+
+  function discardAndLeave() {
+    setShowUnsavedModal(false);
+    window.history.back();
+  }
+
+  function updatePreferredVendor(isPreferred: boolean) {
+    setDraft({
+      ...draft,
+      relationshipStatus: isPreferred
+        ? "PREFERRED"
+        : draft.relationshipStatus === "PREFERRED"
+          ? "APPROVED"
+          : draft.relationshipStatus,
+    });
+  }
+
   return (
     <form onSubmit={submitSubcontractor}>
-      <div className="form-grid">
+      <div className="form-action-bar">
+        <div>
+          <strong>{draft.companyName || "Subcontractor"}</strong>
+          {isDirty && <span className="badge badge-warning">Unsaved changes</span>}
+        </div>
+        <div className="form-action-buttons">
+          <button type="submit" className="button-primary">
+            {submitLabel}
+          </button>
+          <button
+            type="button"
+            className="button-secondary"
+            onClick={cancelEdit}
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+
+      {showUnsavedModal && (
+        <div
+          className="modal-backdrop"
+          role="presentation"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) {
+              setShowUnsavedModal(false);
+            }
+          }}
+        >
+          <div
+            className="modal-panel"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="unsaved-subcontractor-title"
+          >
+            <h2 id="unsaved-subcontractor-title">Unsaved changes</h2>
+            <p>
+              You have unsaved subcontractor changes. Save before leaving,
+              discard the changes, or stay on this page.
+            </p>
+            <div className="modal-actions">
+              <button
+                type="button"
+                className="button-secondary"
+                onClick={discardAndLeave}
+              >
+                Discard Changes
+              </button>
+              <button
+                type="button"
+                className="button-primary"
+                onClick={() => setShowUnsavedModal(false)}
+              >
+                Stay Here
+              </button>
+              <button
+                type="button"
+                className="button-secondary"
+                onClick={saveAndLeave}
+              >
+                Save and Leave
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className="form-section-stack">
         <Panel title="Company Information">
-          <FormInput
-            label="Company Name"
-            value={draft.companyName}
-            onChange={(value) => setDraft({ ...draft, companyName: value })}
-            required
-          />
-          <FormInput
-            label="DBA"
-            value={draft.dba ?? ""}
-            onChange={(value) => setDraft({ ...draft, dba: value })}
-          />
-          <FormInput
-            label="Website"
-            value={draft.website ?? ""}
-            onChange={(value) => setDraft({ ...draft, website: value })}
-          />
-          <FormInput
-            label="Main Phone"
-            value={draft.mainPhone ?? ""}
-            onChange={(value) => setDraft({ ...draft, mainPhone: value })}
-          />
-          <FormTextArea
-            label="Notes"
-            value={draft.notes ?? ""}
-            onChange={(value) => setDraft({ ...draft, notes: value })}
-          />
-        </Panel>
+          <div className="form-subsection">
+            <h3>Company</h3>
+            <div className="form-compact-grid">
+              <FormInput
+                label="Company Name"
+                value={draft.companyName}
+                onChange={(value) => setDraft({ ...draft, companyName: value })}
+                required
+              />
+              <FormInput
+                label="DBA"
+                value={draft.dba ?? ""}
+                onChange={(value) => setDraft({ ...draft, dba: value })}
+              />
+              <FormInput
+                label="Website"
+                value={draft.website ?? ""}
+                onChange={(value) => setDraft({ ...draft, website: value })}
+              />
+              <FormInput
+                label="Main Phone"
+                value={draft.mainPhone ?? ""}
+                onChange={(value) => setDraft({ ...draft, mainPhone: value })}
+              />
+              <FormInput
+                label="Main Phone Extension"
+                value={draft.mainPhoneExtension ?? ""}
+                onChange={(value) =>
+                  setDraft({ ...draft, mainPhoneExtension: value })
+                }
+              />
+              <CheckboxField
+                label="Preferred Vendor"
+                checked={draft.relationshipStatus === "PREFERRED"}
+                onChange={updatePreferredVendor}
+              />
+            </div>
+          </div>
 
-        <Panel title="Address">
-          <FormInput
-            label="Address Line 1"
-            value={draft.address.line1}
-            onChange={(value) =>
-              setDraft({ ...draft, address: { ...draft.address, line1: value } })
-            }
-          />
-          <FormInput
-            label="Address Line 2"
-            value={draft.address.line2 ?? ""}
-            onChange={(value) =>
-              setDraft({ ...draft, address: { ...draft.address, line2: value } })
-            }
-          />
-          <FormInput
-            label="City"
-            value={draft.address.city}
-            onChange={(value) =>
-              setDraft({ ...draft, address: { ...draft.address, city: value } })
-            }
-          />
-          <FormInput
-            label="State"
-            value={draft.address.state}
-            onChange={(value) =>
-              setDraft({ ...draft, address: { ...draft.address, state: value } })
-            }
-          />
-          <FormInput
-            label="ZIP"
-            value={draft.address.zip}
-            onChange={(value) =>
-              setDraft({ ...draft, address: { ...draft.address, zip: value } })
-            }
-          />
-        </Panel>
+          <div className="form-subsection">
+            <h3>Address</h3>
+            <div className="form-compact-grid">
+              <FormInput
+                label="Address Line 1"
+                value={draft.address.line1}
+                onChange={(value) =>
+                  setDraft({
+                    ...draft,
+                    address: { ...draft.address, line1: value },
+                  })
+                }
+              />
+              <FormInput
+                label="Address Line 2"
+                value={draft.address.line2 ?? ""}
+                onChange={(value) =>
+                  setDraft({
+                    ...draft,
+                    address: { ...draft.address, line2: value },
+                  })
+                }
+              />
+              <FormInput
+                label="City"
+                value={draft.address.city}
+                onChange={(value) =>
+                  setDraft({
+                    ...draft,
+                    address: { ...draft.address, city: value },
+                  })
+                }
+              />
+              <FormInput
+                label="State"
+                value={draft.address.state}
+                onChange={(value) =>
+                  setDraft({
+                    ...draft,
+                    address: { ...draft.address, state: value },
+                  })
+                }
+              />
+              <FormInput
+                label="ZIP"
+                value={draft.address.zip}
+                onChange={(value) =>
+                  setDraft({
+                    ...draft,
+                    address: { ...draft.address, zip: value },
+                  })
+                }
+              />
+            </div>
+          </div>
 
-        <Panel title="Service Area">
-          <FormInput
-            label="States"
-            value={draft.serviceArea.states.join(", ")}
-            onChange={(value) =>
-              setDraft({
-                ...draft,
-                serviceArea: {
-                  ...draft.serviceArea,
-                  states: splitList(value),
-                },
-              })
-            }
-          />
-          <FormInput
-            label="Counties"
-            value={draft.serviceArea.counties.join(", ")}
-            onChange={(value) =>
-              setDraft({
-                ...draft,
-                serviceArea: {
-                  ...draft.serviceArea,
-                  counties: splitList(value),
-                },
-              })
-            }
-          />
-          <FormInput
-            label="Cities / Markets"
-            value={draft.serviceArea.citiesOrMarkets.join(", ")}
-            onChange={(value) =>
-              setDraft({
-                ...draft,
-                serviceArea: {
-                  ...draft.serviceArea,
-                  citiesOrMarkets: splitList(value),
-                },
-              })
-            }
-          />
-          <FormInput
-            label="Travel Radius"
-            type="number"
-            value={formatOptionalNumber(draft.serviceArea.travelRadiusMiles)}
-            onChange={(value) =>
-              setDraft({
-                ...draft,
-                serviceArea: {
-                  ...draft.serviceArea,
-                  travelRadiusMiles: toOptionalNumber(value),
-                },
-              })
-            }
-          />
-          <div className="form-field">
-            <label className="radio-option">
-              <input
-                type="checkbox"
-                checked={draft.serviceArea.willTravel}
-                onChange={(event) =>
+          <div className="form-subsection">
+            <h3>Service Area</h3>
+            <div className="form-compact-grid">
+              <FormInput
+                label="States"
+                value={draft.serviceArea.states.join(", ")}
+                onChange={(value) =>
                   setDraft({
                     ...draft,
                     serviceArea: {
                       ...draft.serviceArea,
-                      willTravel: event.target.checked,
+                      states: splitList(value),
                     },
                   })
                 }
               />
-              Will Travel
-            </label>
-          </div>
-        </Panel>
-
-        <Panel title="Contacts">
-          {draft.contacts.map((contact, index) => (
-            <div
-              key={contact.id}
-              style={{
-                borderBottom:
-                  index === draft.contacts.length - 1
-                    ? "0"
-                    : "1px solid var(--color-border)",
-                marginBottom: 16,
-                paddingBottom: 16,
-              }}
-            >
-              <div className="command-header" style={{ marginBottom: 12 }}>
-                <h3 style={{ margin: 0 }}>
-                  {contact.name || `Contact ${index + 1}`}
-                </h3>
-                <button
-                  type="button"
-                  className="button-secondary"
-                  onClick={() => removeContact(contact.id)}
-                  disabled={draft.contacts.length === 1}
-                >
-                  Remove
-                </button>
-              </div>
-
-              <FormSelect
-                label="Role"
-                value={contact.role}
-                options={contactRoles}
+              <FormInput
+                label="Counties"
+                value={draft.serviceArea.counties.join(", ")}
                 onChange={(value) =>
-                  updateContact(contact.id, { role: value as ContactRole })
+                  setDraft({
+                    ...draft,
+                    serviceArea: {
+                      ...draft.serviceArea,
+                      counties: splitList(value),
+                    },
+                  })
                 }
               />
               <FormInput
-                label="Name"
-                value={contact.name}
-                onChange={(value) => updateContact(contact.id, { name: value })}
-              />
-              <FormInput
-                label="Title"
-                value={contact.title ?? ""}
-                onChange={(value) => updateContact(contact.id, { title: value })}
-              />
-              <FormInput
-                label="Email"
-                type="email"
-                value={contact.email ?? ""}
-                onChange={(value) => updateContact(contact.id, { email: value })}
-              />
-              <FormInput
-                label="Office Phone"
-                value={contact.officePhone ?? ""}
+                label="Cities / Markets"
+                value={draft.serviceArea.citiesOrMarkets.join(", ")}
                 onChange={(value) =>
-                  updateContact(contact.id, { officePhone: value })
+                  setDraft({
+                    ...draft,
+                    serviceArea: {
+                      ...draft.serviceArea,
+                      citiesOrMarkets: splitList(value),
+                    },
+                  })
                 }
               />
               <FormInput
-                label="Mobile Phone"
-                value={contact.mobilePhone ?? ""}
+                label="Travel Radius"
+                type="number"
+                value={formatOptionalNumber(draft.serviceArea.travelRadiusMiles)}
                 onChange={(value) =>
-                  updateContact(contact.id, { mobilePhone: value })
-                }
-              />
-              <FormSelect
-                label="Primary Phone"
-                value={contact.primaryPhoneType ?? "OFFICE"}
-                options={phoneTypes}
-                onChange={(value) =>
-                  updateContact(contact.id, {
-                    primaryPhoneType: value as PhoneType,
+                  setDraft({
+                    ...draft,
+                    serviceArea: {
+                      ...draft.serviceArea,
+                      travelRadiusMiles: toOptionalNumber(value),
+                    },
                   })
                 }
               />
               <div className="form-field">
                 <label className="radio-option">
                   <input
-                    type="radio"
-                    name={`${draft.id}-primary-contact`}
-                    checked={contact.isPrimary === true}
-                    onChange={() => markPrimaryContact(contact.id)}
+                    type="checkbox"
+                    checked={draft.serviceArea.willTravel}
+                    onChange={(event) =>
+                      setDraft({
+                        ...draft,
+                        serviceArea: {
+                          ...draft.serviceArea,
+                          willTravel: event.target.checked,
+                        },
+                      })
+                    }
                   />
-                  Primary contact
+                  Will Travel
                 </label>
               </div>
-              <CheckboxField
-                label="Default invite recipient"
-                checked={contact.isDefaultInviteRecipient === true}
-                onChange={(checked) =>
-                  updateContact(contact.id, {
-                    isDefaultInviteRecipient: checked,
-                  })
-                }
-              />
-              <CheckboxField
-                label="Active"
-                checked={contact.active !== false}
-                onChange={(checked) =>
-                  updateContact(contact.id, { active: checked })
-                }
-              />
             </div>
-          ))}
+          </div>
+
+          <div className="form-subsection">
+            <h3>Notes</h3>
+            <FormTextArea
+              label="Notes"
+              value={draft.notes ?? ""}
+              onChange={(value) => setDraft({ ...draft, notes: value })}
+            />
+          </div>
+        </Panel>
+
+        <Panel title="Locations / Branches">
+          {!draft.locations || draft.locations.length === 0 ? (
+            <p className="muted-text">
+              This subcontractor uses the company address unless branches are added.
+            </p>
+          ) : (
+            draft.locations.map((location, index) => {
+              const isExpanded = expandedLocationIds.includes(location.id);
+
+              return (
+                <div key={location.id} className="form-record">
+                  <div className="form-record-header">
+                    <button
+                      type="button"
+                      className="crm-expand-button"
+                      aria-expanded={isExpanded}
+                      onClick={() =>
+                        toggleExpanded(location.id, setExpandedLocationIds)
+                      }
+                    >
+                      {isExpanded ? "-" : "+"}
+                    </button>
+                    <div className="form-record-summary">
+                      <strong>{location.name || `Location ${index + 1}`}</strong>
+                      <span className="muted-text">
+                        {formatStatus(location.type)}
+                      </span>
+                      {location.isPrimary === true && (
+                        <span className="badge badge-primary">Primary</span>
+                      )}
+                    </div>
+                    <button
+                      type="button"
+                      className="button-secondary"
+                      onClick={() => removeLocation(location.id)}
+                    >
+                      Remove
+                    </button>
+                  </div>
+
+                  {isExpanded && (
+                    <div className="form-record-body form-compact-grid">
+                      <FormInput
+                        label="Location Name"
+                        value={location.name}
+                        onChange={(value) =>
+                          updateLocation(location.id, { name: value })
+                        }
+                      />
+                      <FormSelect
+                        label="Location Type"
+                        value={location.type}
+                        options={locationTypes}
+                        onChange={(value) =>
+                          updateLocation(location.id, {
+                            type: value as SubcontractorLocationType,
+                          })
+                        }
+                      />
+                      <FormInput
+                        label="Address Line 1"
+                        value={location.address.line1}
+                        onChange={(value) =>
+                          updateLocation(location.id, {
+                            address: { ...location.address, line1: value },
+                          })
+                        }
+                      />
+                      <FormInput
+                        label="Address Line 2"
+                        value={location.address.line2 ?? ""}
+                        onChange={(value) =>
+                          updateLocation(location.id, {
+                            address: { ...location.address, line2: value },
+                          })
+                        }
+                      />
+                      <FormInput
+                        label="City"
+                        value={location.address.city}
+                        onChange={(value) =>
+                          updateLocation(location.id, {
+                            address: { ...location.address, city: value },
+                          })
+                        }
+                      />
+                      <FormInput
+                        label="State"
+                        value={location.address.state}
+                        onChange={(value) =>
+                          updateLocation(location.id, {
+                            address: { ...location.address, state: value },
+                          })
+                        }
+                      />
+                      <FormInput
+                        label="ZIP"
+                        value={location.address.zip}
+                        onChange={(value) =>
+                          updateLocation(location.id, {
+                            address: { ...location.address, zip: value },
+                          })
+                        }
+                      />
+                      <FormInput
+                        label="Main Phone"
+                        value={location.mainPhone ?? ""}
+                        onChange={(value) =>
+                          updateLocation(location.id, { mainPhone: value })
+                        }
+                      />
+                      <FormInput
+                        label="Main Phone Extension"
+                        value={location.mainPhoneExtension ?? ""}
+                        onChange={(value) =>
+                          updateLocation(location.id, {
+                            mainPhoneExtension: value,
+                          })
+                        }
+                      />
+                      <FormInput
+                        label="Email"
+                        type="email"
+                        value={location.email ?? ""}
+                        onChange={(value) =>
+                          updateLocation(location.id, { email: value })
+                        }
+                      />
+                      <FormTextArea
+                        label="Notes"
+                        value={location.notes ?? ""}
+                        onChange={(value) =>
+                          updateLocation(location.id, { notes: value })
+                        }
+                      />
+                      <div className="form-field">
+                        <label className="radio-option">
+                          <input
+                            type="radio"
+                            name={`${draft.id}-primary-location`}
+                            checked={location.isPrimary === true}
+                            onChange={() => markPrimaryLocation(location.id)}
+                          />
+                          Primary location
+                        </label>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            })
+          )}
+
+          <button type="button" className="button-secondary" onClick={addLocation}>
+            Add Location
+          </button>
+        </Panel>
+
+        <Panel title="Contacts">
+          {draft.contacts.map((contact, index) => {
+            const isExpanded = expandedContactIds.includes(contact.id);
+
+            return (
+              <div key={contact.id} className="form-record">
+                <div className="form-record-header">
+                  <button
+                    type="button"
+                    className="crm-expand-button"
+                    aria-expanded={isExpanded}
+                    onClick={() =>
+                      toggleExpanded(contact.id, setExpandedContactIds)
+                    }
+                  >
+                    {isExpanded ? "-" : "+"}
+                  </button>
+                  <div className="form-record-summary">
+                    <strong>{contact.name || `Contact ${index + 1}`}</strong>
+                    <span className="muted-text">
+                      {formatContactSummary(contact)}
+                    </span>
+                    {contact.locationId && (
+                      <span className="muted-text">
+                        {getLocationName(draft.locations ?? [], contact.locationId)}
+                      </span>
+                    )}
+                    {contact.isPrimary === true && (
+                      <span className="badge badge-primary">Primary</span>
+                    )}
+                    {contact.isDefaultInviteRecipient === true && (
+                      <span className="badge badge-secondary">Default Invite</span>
+                    )}
+                    {contact.active === false && (
+                      <span className="badge badge-warning">Inactive</span>
+                    )}
+                  </div>
+                  <button
+                    type="button"
+                    className="button-secondary"
+                    onClick={() => removeContact(contact.id)}
+                    disabled={draft.contacts.length === 1}
+                  >
+                    Remove
+                  </button>
+                </div>
+
+                {isExpanded && (
+                  <div className="form-record-body form-compact-grid">
+                    <FormSelect
+                      label="Role"
+                      value={contact.role}
+                      options={contactRoles}
+                      onChange={(value) =>
+                        updateContact(contact.id, { role: value as ContactRole })
+                      }
+                    />
+                    <FormInput
+                      label="Name"
+                      value={contact.name}
+                      onChange={(value) =>
+                        updateContact(contact.id, { name: value })
+                      }
+                    />
+                    <FormInput
+                      label="Title"
+                      value={contact.title ?? ""}
+                      onChange={(value) =>
+                        updateContact(contact.id, { title: value })
+                      }
+                    />
+                    <FormInput
+                      label="Email"
+                      type="email"
+                      value={contact.email ?? ""}
+                      onChange={(value) =>
+                        updateContact(contact.id, { email: value })
+                      }
+                    />
+                    <FormInput
+                      label="Office Phone"
+                      value={contact.officePhone ?? ""}
+                      onChange={(value) =>
+                        updateContact(contact.id, { officePhone: value })
+                      }
+                    />
+                    <FormInput
+                      label="Office Phone Extension"
+                      value={contact.officePhoneExtension ?? ""}
+                      onChange={(value) =>
+                        updateContact(contact.id, {
+                          officePhoneExtension: value,
+                        })
+                      }
+                    />
+                    <FormInput
+                      label="Mobile Phone"
+                      value={contact.mobilePhone ?? ""}
+                      onChange={(value) =>
+                        updateContact(contact.id, { mobilePhone: value })
+                      }
+                    />
+                    <FormSelect
+                      label="Primary Phone"
+                      value={contact.primaryPhoneType ?? "OFFICE"}
+                      options={phoneTypes}
+                      onChange={(value) =>
+                        updateContact(contact.id, {
+                          primaryPhoneType: value as PhoneType,
+                        })
+                      }
+                    />
+                    <FormSelect
+                      label="Location / Branch"
+                      value={contact.locationId ?? ""}
+                      options={[
+                        "",
+                        ...(draft.locations ?? []).map((location) => location.id),
+                      ]}
+                      getOptionLabel={(locationId) =>
+                        locationId
+                          ? getLocationName(draft.locations ?? [], locationId)
+                          : "Company-wide / no specific branch"
+                      }
+                      onChange={(value) =>
+                        updateContact(contact.id, {
+                          locationId: value || undefined,
+                        })
+                      }
+                    />
+                    <div className="form-field">
+                      <label className="radio-option">
+                        <input
+                          type="radio"
+                          name={`${draft.id}-primary-contact`}
+                          checked={contact.isPrimary === true}
+                          onChange={() => markPrimaryContact(contact.id)}
+                        />
+                        Primary contact
+                      </label>
+                    </div>
+                    <CheckboxField
+                      label="Default invite recipient"
+                      checked={contact.isDefaultInviteRecipient === true}
+                      onChange={(checked) =>
+                        updateContact(contact.id, {
+                          isDefaultInviteRecipient: checked,
+                        })
+                      }
+                    />
+                    <CheckboxField
+                      label="Active"
+                      checked={contact.active !== false}
+                      onChange={(checked) =>
+                        updateContact(contact.id, { active: checked })
+                      }
+                    />
+                  </div>
+                )}
+              </div>
+            );
+          })}
 
           <button type="button" className="button-secondary" onClick={addContact}>
             Add Contact
@@ -767,225 +1227,243 @@ export default function SubcontractorForm({
           </div>
         </Panel>
 
-        <Panel title="Relationship / Prequalification">
-          <FormSelect
-            label="Relationship Status"
-            value={draft.relationshipStatus}
-            options={relationshipStatuses}
-            onChange={(value) =>
-              setDraft({
-                ...draft,
-                relationshipStatus: value as RelationshipStatus,
-              })
-            }
-          />
-          <FormSelect
-            label="Prequalification Status"
-            value={draft.prequalification.status}
-            options={prequalificationStatuses}
-            onChange={(value) =>
-              setDraft({
-                ...draft,
-                prequalification: {
-                  ...draft.prequalification,
-                  status: value as PrequalificationStatus,
-                },
-              })
-            }
-          />
-          <FormInput
-            label="Bonding Capacity"
-            type="number"
-            value={formatOptionalNumber(draft.prequalification.bondingCapacity)}
-            onChange={(value) =>
-              setDraft({
-                ...draft,
-                prequalification: {
-                  ...draft.prequalification,
-                  bondingCapacity: toOptionalNumber(value),
-                },
-              })
-            }
-          />
-          <FormTextArea
-            label="Prequalification Notes"
-            value={draft.prequalification.notes ?? ""}
-            onChange={(value) =>
-              setDraft({
-                ...draft,
-                prequalification: {
-                  ...draft.prequalification,
-                  notes: value,
-                },
-              })
-            }
-          />
+        <Panel title="Vendor Status & Compliance">
+          <div className="form-subsection">
+            <h3>Vendor Status</h3>
+            <div className="form-compact-grid">
+              <FormSelect
+                label="Vendor Status"
+                value={
+                  draft.relationshipStatus === "PREFERRED"
+                    ? "APPROVED"
+                    : draft.relationshipStatus
+                }
+                options={vendorStatusOptions}
+                onChange={(value) =>
+                  setDraft({
+                    ...draft,
+                    relationshipStatus: value as RelationshipStatus,
+                  })
+                }
+              />
+              <FormSelect
+                label="Prequalification Status"
+                value={draft.prequalification.status}
+                options={prequalificationStatuses}
+                onChange={(value) =>
+                  setDraft({
+                    ...draft,
+                    prequalification: {
+                      ...draft.prequalification,
+                      status: value as PrequalificationStatus,
+                    },
+                  })
+                }
+              />
+              <FormInput
+                label="Bonding Capacity"
+                type="number"
+                value={formatOptionalNumber(
+                  draft.prequalification.bondingCapacity
+                )}
+                onChange={(value) =>
+                  setDraft({
+                    ...draft,
+                    prequalification: {
+                      ...draft.prequalification,
+                      bondingCapacity: toOptionalNumber(value),
+                    },
+                  })
+                }
+              />
+            </div>
+          </div>
+
+          <div className="form-subsection">
+            <h3>Compliance Documents</h3>
+            <div className="compliance-document-list">
+              <div className="compliance-document-row">
+                <strong>W-9</strong>
+                <CheckboxField
+                  label="On file"
+                  checked={draft.prequalification.w9OnFile}
+                  onChange={(checked) =>
+                    setDraft({
+                      ...draft,
+                      prequalification: {
+                        ...draft.prequalification,
+                        w9OnFile: checked,
+                      },
+                    })
+                  }
+                />
+                <span className="muted-text">No expiration</span>
+                <span className="muted-text">Document link not added yet</span>
+              </div>
+
+              <div className="compliance-document-row">
+                <strong>Insurance</strong>
+                <CheckboxField
+                  label="On file"
+                  checked={draft.prequalification.insuranceOnFile}
+                  onChange={(checked) =>
+                    setDraft({
+                      ...draft,
+                      prequalification: {
+                        ...draft.prequalification,
+                        insuranceOnFile: checked,
+                      },
+                    })
+                  }
+                />
+                <FormInput
+                  label="Expiration"
+                  type="date"
+                  value={draft.prequalification.insuranceExpirationDate ?? ""}
+                  onChange={(value) =>
+                    setDraft({
+                      ...draft,
+                      prequalification: {
+                        ...draft.prequalification,
+                        insuranceExpirationDate: value,
+                      },
+                    })
+                  }
+                />
+                <span className="muted-text">Document link not added yet</span>
+              </div>
+
+              <div className="compliance-document-row">
+                <strong>License</strong>
+                <CheckboxField
+                  label="On file"
+                  checked={draft.prequalification.licenseOnFile}
+                  onChange={(checked) =>
+                    setDraft({
+                      ...draft,
+                      prequalification: {
+                        ...draft.prequalification,
+                        licenseOnFile: checked,
+                      },
+                    })
+                  }
+                />
+                <FormInput
+                  label="Expiration"
+                  type="date"
+                  value={draft.prequalification.licenseExpirationDate ?? ""}
+                  onChange={(value) =>
+                    setDraft({
+                      ...draft,
+                      prequalification: {
+                        ...draft.prequalification,
+                        licenseExpirationDate: value,
+                      },
+                    })
+                  }
+                />
+                <span className="muted-text">Document link not added yet</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="form-subsection">
+            <h3>Notes</h3>
+            <FormTextArea
+              label="Prequalification Notes"
+              value={draft.prequalification.notes ?? ""}
+              onChange={(value) =>
+                setDraft({
+                  ...draft,
+                  prequalification: {
+                    ...draft.prequalification,
+                    notes: value,
+                  },
+                })
+              }
+            />
+          </div>
         </Panel>
 
-        <Panel title="Compliance">
-          <CheckboxField
-            label="W-9 on File"
-            checked={draft.prequalification.w9OnFile}
-            onChange={(checked) =>
-              setDraft({
-                ...draft,
-                prequalification: {
-                  ...draft.prequalification,
-                  w9OnFile: checked,
-                },
-              })
-            }
-          />
-          <CheckboxField
-            label="Insurance on File"
-            checked={draft.prequalification.insuranceOnFile}
-            onChange={(checked) =>
-              setDraft({
-                ...draft,
-                prequalification: {
-                  ...draft.prequalification,
-                  insuranceOnFile: checked,
-                },
-              })
-            }
-          />
-          <FormInput
-            label="Insurance Expiration"
-            type="date"
-            value={draft.prequalification.insuranceExpirationDate ?? ""}
-            onChange={(value) =>
-              setDraft({
-                ...draft,
-                prequalification: {
-                  ...draft.prequalification,
-                  insuranceExpirationDate: value,
-                },
-              })
-            }
-          />
-          <CheckboxField
-            label="License on File"
-            checked={draft.prequalification.licenseOnFile}
-            onChange={(checked) =>
-              setDraft({
-                ...draft,
-                prequalification: {
-                  ...draft.prequalification,
-                  licenseOnFile: checked,
-                },
-              })
-            }
-          />
-          <FormInput
-            label="License Expiration"
-            type="date"
-            value={draft.prequalification.licenseExpirationDate ?? ""}
-            onChange={(value) =>
-              setDraft({
-                ...draft,
-                prequalification: {
-                  ...draft.prequalification,
-                  licenseExpirationDate: value,
-                },
-              })
-            }
-          />
+        <Panel title="VPI / Performance">
+          <div className="form-compact-grid">
+            <VpiInput
+              label="Overall"
+              value={draft.vpi.overall}
+              onChange={(value) =>
+                setDraft({ ...draft, vpi: { ...draft.vpi, overall: value } })
+              }
+            />
+            <FormInput
+              label="Projects Evaluated"
+              type="number"
+              value={String(draft.vpi.projectsEvaluated)}
+              onChange={(value) =>
+                setDraft({
+                  ...draft,
+                  vpi: {
+                    ...draft.vpi,
+                    projectsEvaluated: toRequiredNumber(value),
+                  },
+                })
+              }
+            />
+            <VpiInput
+              label="Responsiveness"
+              value={draft.vpi.responsiveness}
+              onChange={(value) =>
+                setDraft({
+                  ...draft,
+                  vpi: { ...draft.vpi, responsiveness: value },
+                })
+              }
+            />
+            <VpiInput
+              label="Bid Completeness"
+              value={draft.vpi.bidCompleteness}
+              onChange={(value) =>
+                setDraft({
+                  ...draft,
+                  vpi: { ...draft.vpi, bidCompleteness: value },
+                })
+              }
+            />
+            <VpiInput
+              label="Bid Accuracy"
+              value={draft.vpi.bidAccuracy}
+              onChange={(value) =>
+                setDraft({ ...draft, vpi: { ...draft.vpi, bidAccuracy: value } })
+              }
+            />
+            <VpiInput
+              label="Schedule Performance"
+              value={draft.vpi.schedulePerformance}
+              onChange={(value) =>
+                setDraft({
+                  ...draft,
+                  vpi: { ...draft.vpi, schedulePerformance: value },
+                })
+              }
+            />
+            <VpiInput
+              label="Field Quality"
+              value={draft.vpi.fieldQuality}
+              onChange={(value) =>
+                setDraft({ ...draft, vpi: { ...draft.vpi, fieldQuality: value } })
+              }
+            />
+            <VpiInput
+              label="Administrative Compliance"
+              value={draft.vpi.administrativeCompliance}
+              onChange={(value) =>
+                setDraft({
+                  ...draft,
+                  vpi: { ...draft.vpi, administrativeCompliance: value },
+                })
+              }
+            />
+          </div>
         </Panel>
-
-        <Panel title="Vendor Performance Index">
-          <VpiInput
-            label="Responsiveness"
-            value={draft.vpi.responsiveness}
-            onChange={(value) =>
-              setDraft({ ...draft, vpi: { ...draft.vpi, responsiveness: value } })
-            }
-          />
-          <VpiInput
-            label="Bid Completeness"
-            value={draft.vpi.bidCompleteness}
-            onChange={(value) =>
-              setDraft({
-                ...draft,
-                vpi: { ...draft.vpi, bidCompleteness: value },
-              })
-            }
-          />
-          <VpiInput
-            label="Bid Accuracy"
-            value={draft.vpi.bidAccuracy}
-            onChange={(value) =>
-              setDraft({ ...draft, vpi: { ...draft.vpi, bidAccuracy: value } })
-            }
-          />
-          <VpiInput
-            label="Schedule Performance"
-            value={draft.vpi.schedulePerformance}
-            onChange={(value) =>
-              setDraft({
-                ...draft,
-                vpi: { ...draft.vpi, schedulePerformance: value },
-              })
-            }
-          />
-          <VpiInput
-            label="Field Quality"
-            value={draft.vpi.fieldQuality}
-            onChange={(value) =>
-              setDraft({ ...draft, vpi: { ...draft.vpi, fieldQuality: value } })
-            }
-          />
-          <VpiInput
-            label="Administrative Compliance"
-            value={draft.vpi.administrativeCompliance}
-            onChange={(value) =>
-              setDraft({
-                ...draft,
-                vpi: { ...draft.vpi, administrativeCompliance: value },
-              })
-            }
-          />
-          <VpiInput
-            label="Overall"
-            value={draft.vpi.overall}
-            onChange={(value) =>
-              setDraft({ ...draft, vpi: { ...draft.vpi, overall: value } })
-            }
-          />
-          <FormInput
-            label="Projects Evaluated"
-            type="number"
-            value={String(draft.vpi.projectsEvaluated)}
-            onChange={(value) =>
-              setDraft({
-                ...draft,
-                vpi: {
-                  ...draft.vpi,
-                  projectsEvaluated: toRequiredNumber(value),
-                },
-              })
-            }
-          />
-          <FormSelect
-            label="Confidence"
-            value={draft.vpi.confidenceLevel}
-            options={confidenceLevels}
-            onChange={(value) =>
-              setDraft({
-                ...draft,
-                vpi: {
-                  ...draft.vpi,
-                  confidenceLevel: value as VpiConfidenceLevel,
-                },
-              })
-            }
-          />
-        </Panel>
-      </div>
-
-      <div className="settings-actions">
-        <button type="submit" className="button-primary">
-          {submitLabel}
-        </button>
       </div>
     </form>
   );
@@ -1148,6 +1626,24 @@ function createEmptyContact(
   };
 }
 
+function createEmptyLocation(
+  subcontractorId: string,
+  locationNumber: number
+): SubcontractorLocation {
+  return {
+    id: `${subcontractorId}-location-${Date.now()}-${locationNumber}`,
+    name: "",
+    type: "BRANCH",
+    address: {
+      line1: "",
+      city: "",
+      state: "",
+      zip: "",
+    },
+    isPrimary: false,
+  };
+}
+
 function ensurePrimaryContact(contacts: SubcontractorContact[]) {
   if (contacts.length === 0) return contacts;
   if (contacts.some((contact) => contact.isPrimary)) return contacts;
@@ -1158,20 +1654,174 @@ function ensurePrimaryContact(contacts: SubcontractorContact[]) {
   }));
 }
 
-function normalizeContacts(contacts: SubcontractorContact[]) {
+function normalizeLocations(locations: SubcontractorLocation[]) {
+  let primaryLocationFound = false;
+
+  return locations.map((location) => {
+    const isPrimary = location.isPrimary === true && !primaryLocationFound;
+
+    if (isPrimary) primaryLocationFound = true;
+
+    return {
+      ...location,
+      name: location.name.trim(),
+      address: {
+        line1: location.address.line1.trim(),
+        line2: emptyToUndefined(location.address.line2),
+        city: location.address.city.trim(),
+        state: location.address.state.trim(),
+        zip: location.address.zip.trim(),
+      },
+      mainPhone: emptyToUndefined(location.mainPhone),
+      mainPhoneExtension: emptyToUndefined(location.mainPhoneExtension),
+      email: emptyToUndefined(location.email),
+      notes: emptyToUndefined(location.notes),
+      isPrimary,
+    };
+  });
+}
+
+function normalizeContacts(
+  contacts: SubcontractorContact[],
+  validLocationIds: Set<string>
+) {
   return ensurePrimaryContact(contacts).map((contact) => ({
     ...contact,
-    locationId: emptyToUndefined(contact.locationId),
+    locationId:
+      contact.locationId && validLocationIds.has(contact.locationId)
+        ? contact.locationId
+        : undefined,
     title: emptyToUndefined(contact.title),
     email: emptyToUndefined(contact.email),
     officePhone: emptyToUndefined(contact.officePhone),
+    officePhoneExtension: emptyToUndefined(contact.officePhoneExtension),
     mobilePhone: emptyToUndefined(contact.mobilePhone),
     phone: emptyToUndefined(contact.phone),
+    inviteScopes: normalizeContactScopes(contact, validLocationIds),
     notes: emptyToUndefined(contact.notes),
     isPrimary: contact.isPrimary === true,
     isDefaultInviteRecipient: contact.isDefaultInviteRecipient === true,
     active: contact.active !== false,
   }));
+}
+
+function normalizeContactScopes(
+  contact: SubcontractorContact,
+  validLocationIds: Set<string>
+) {
+  const normalizedScopes = contact.inviteScopes
+    ?.map((scope) => ({
+      ...scope,
+      locationIds: scope.locationIds?.filter((locationId) =>
+        validLocationIds.has(locationId)
+      ),
+    }))
+    .map((scope) => ({
+      ...scope,
+      locationIds:
+        scope.locationIds && scope.locationIds.length > 0
+          ? scope.locationIds
+          : undefined,
+    }));
+
+  return normalizedScopes && normalizedScopes.length > 0
+    ? normalizedScopes
+    : undefined;
+}
+
+function getSubcontractorSnapshot(subcontractor: Subcontractor) {
+  const normalizedSectionIds = subcontractor.csiCoverage.sectionIds;
+  const normalizedDivisionIds = Array.from(
+    new Set([
+      subcontractor.primaryDivisionId,
+      ...subcontractor.csiCoverage.divisionIds,
+      ...normalizedSectionIds.map(getSectionDivisionId),
+    ])
+  ).filter(Boolean);
+  const normalizedLocations = normalizeLocations(subcontractor.locations ?? []);
+  const validLocationIds = new Set(
+    normalizedLocations.map((location) => location.id)
+  );
+
+  return JSON.stringify({
+    companyName: subcontractor.companyName.trim(),
+    dba: emptyToUndefined(subcontractor.dba),
+    website: emptyToUndefined(subcontractor.website),
+    mainPhone: emptyToUndefined(subcontractor.mainPhone),
+    mainPhoneExtension: emptyToUndefined(subcontractor.mainPhoneExtension),
+    notes: emptyToUndefined(subcontractor.notes),
+    address: {
+      line1: subcontractor.address.line1.trim(),
+      line2: emptyToUndefined(subcontractor.address.line2),
+      city: subcontractor.address.city.trim(),
+      state: subcontractor.address.state.trim(),
+      zip: subcontractor.address.zip.trim(),
+    },
+    serviceArea: {
+      states: subcontractor.serviceArea.states,
+      counties: subcontractor.serviceArea.counties,
+      citiesOrMarkets: subcontractor.serviceArea.citiesOrMarkets,
+      travelRadiusMiles: subcontractor.serviceArea.travelRadiusMiles,
+      willTravel: subcontractor.serviceArea.willTravel,
+    },
+    locations:
+      normalizedLocations.length > 0 ? normalizedLocations : undefined,
+    contacts: normalizeContacts(subcontractor.contacts, validLocationIds),
+    primaryDivisionId: subcontractor.primaryDivisionId,
+    csiCoverage: {
+      sourceVersion:
+        subcontractor.csiCoverage.sourceVersion ?? "MASTERFORMAT_CURRENT",
+      divisionIds: normalizedDivisionIds,
+      sectionIds: normalizedSectionIds,
+      specialtyScopeNotes: emptyToUndefined(
+        subcontractor.csiCoverage.specialtyScopeNotes
+      ),
+    },
+    relationshipStatus: subcontractor.relationshipStatus,
+    prequalification: {
+      ...subcontractor.prequalification,
+      insuranceExpirationDate: emptyToUndefined(
+        subcontractor.prequalification.insuranceExpirationDate
+      ),
+      licenseExpirationDate: emptyToUndefined(
+        subcontractor.prequalification.licenseExpirationDate
+      ),
+      notes: emptyToUndefined(subcontractor.prequalification.notes),
+    },
+    vpi: subcontractor.vpi,
+  });
+}
+
+function clearContactLocation(
+  contact: SubcontractorContact,
+  removedLocationId: string
+): SubcontractorContact {
+  return {
+    ...contact,
+    locationId:
+      contact.locationId === removedLocationId ? undefined : contact.locationId,
+    inviteScopes: contact.inviteScopes?.map((scope) => ({
+      ...scope,
+      locationIds: scope.locationIds?.filter(
+        (locationId) => locationId !== removedLocationId
+      ),
+    })),
+  };
+}
+
+function getLocationName(locations: SubcontractorLocation[], locationId: string) {
+  return locations.find((location) => location.id === locationId)?.name || locationId;
+}
+
+function formatContactSummary(contact: SubcontractorContact) {
+  const role = formatStatus(contact.role);
+  const title = contact.title?.trim();
+
+  if (!title || title.toLowerCase() === role.toLowerCase()) {
+    return role;
+  }
+
+  return `${role} / ${title}`;
 }
 
 function getDivisionName(divisionId: string) {
