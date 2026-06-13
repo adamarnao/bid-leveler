@@ -8,7 +8,10 @@ import {
   defaultCompanySettings,
   getCompanySettings,
   getUserSettings,
+  SettingsPreview,
   settingsChangedEvent,
+  settingsPreviewChangedEvent,
+  settingsPreviewClearedEvent,
 } from "@/lib/settings";
 import { CompanySettings, UserSettings } from "@/types/Settings";
 
@@ -24,22 +27,28 @@ export default function AppShell({
   const [companySettings, setCompanySettings] = useState<CompanySettings>(
     defaultCompanySettings
   );
+  const [previewSettings, setPreviewSettings] = useState<SettingsPreview | null>(
+    null
+  );
+  const effectiveUserSettings = previewSettings?.userSettings ?? userSettings;
+  const effectiveCompanySettings =
+    previewSettings?.companySettings ?? companySettings;
 
   useEffect(() => {
-    if (!userSettings) return;
+    if (!effectiveUserSettings) return;
 
     const root = document.documentElement;
 
-    root.dataset.theme = userSettings.theme;
+    root.dataset.theme = effectiveUserSettings.theme;
     root.style.setProperty(
       "--color-accent-primary",
-      companySettings.primaryAccentColor
+      effectiveCompanySettings.primaryAccentColor
     );
     root.style.setProperty(
       "--color-accent-secondary",
-      companySettings.secondaryAccentColor
+      effectiveCompanySettings.secondaryAccentColor
     );
-  }, [userSettings, companySettings]);
+  }, [effectiveUserSettings, effectiveCompanySettings]);
 
   useEffect(() => {
     function loadSettings() {
@@ -57,23 +66,41 @@ export default function AppShell({
     };
   }, []);
 
+  useEffect(() => {
+    function handlePreviewChange(event: Event) {
+      setPreviewSettings((event as CustomEvent<SettingsPreview>).detail);
+    }
+
+    function handlePreviewClear() {
+      setPreviewSettings(null);
+    }
+
+    window.addEventListener(settingsPreviewChangedEvent, handlePreviewChange);
+    window.addEventListener(settingsPreviewClearedEvent, handlePreviewClear);
+
+    return () => {
+      window.removeEventListener(settingsPreviewChangedEvent, handlePreviewChange);
+      window.removeEventListener(settingsPreviewClearedEvent, handlePreviewClear);
+    };
+  }, []);
+
   return (
     <div
       className="app-shell"
-      data-theme={userSettings?.theme}
+      data-theme={effectiveUserSettings?.theme}
       style={
         {
-          "--color-accent-primary": companySettings.primaryAccentColor,
-          "--color-accent-secondary": companySettings.secondaryAccentColor,
+          "--color-accent-primary": effectiveCompanySettings.primaryAccentColor,
+          "--color-accent-secondary": effectiveCompanySettings.secondaryAccentColor,
         } as React.CSSProperties
       }
     >
       <aside className="app-sidebar">
         <div className="app-brand">
-          {companySettings.logoDataUrl && (
+          {effectiveCompanySettings.logoDataUrl && (
             <Image
-              src={companySettings.logoDataUrl}
-              alt={`${companySettings.companyName} logo`}
+              src={effectiveCompanySettings.logoDataUrl}
+              alt={`${effectiveCompanySettings.companyName} logo`}
               width={40}
               height={40}
               unoptimized
@@ -81,7 +108,7 @@ export default function AppShell({
             />
           )}
           <h2 className="app-brand-name">
-            {companySettings.companyName || "Bid Leveler"}
+            {effectiveCompanySettings.companyName || "Bid Leveler"}
           </h2>
         </div>
 

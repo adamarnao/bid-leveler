@@ -3,6 +3,13 @@ import { CompanySettings, UserSettings } from "@/types/Settings";
 export const userSettingsKey = "userSettings";
 export const companySettingsKey = "companySettings";
 export const settingsChangedEvent = "bidLevelerSettingsChanged";
+export const settingsPreviewChangedEvent = "bidLevelerSettingsPreviewChanged";
+export const settingsPreviewClearedEvent = "bidLevelerSettingsPreviewCleared";
+
+export type SettingsPreview = {
+  userSettings: UserSettings;
+  companySettings: CompanySettings;
+};
 
 export const defaultUserSettings: UserSettings = {
   theme: "light",
@@ -37,6 +44,22 @@ export function getCompanySettings(): CompanySettings {
 export function saveCompanySettings(settings: CompanySettings) {
   writeJson(companySettingsKey, settings);
   notifySettingsChanged();
+}
+
+export function dispatchSettingsPreview(preview: SettingsPreview) {
+  if (typeof window === "undefined") return;
+
+  window.dispatchEvent(
+    new CustomEvent<SettingsPreview>(settingsPreviewChangedEvent, {
+      detail: preview,
+    })
+  );
+}
+
+export function clearSettingsPreview() {
+  if (typeof window === "undefined") return;
+
+  window.dispatchEvent(new Event(settingsPreviewClearedEvent));
 }
 
 export function fileToDataUrl(file: File): Promise<string> {

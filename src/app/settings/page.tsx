@@ -1,10 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import AppShell from "@/components/layout/AppShell";
 import Panel from "@/components/ui/Panel";
 import {
+  clearSettingsPreview,
+  dispatchSettingsPreview,
   fileToDataUrl,
   getCompanySettings,
   getUserSettings,
@@ -27,6 +29,19 @@ export default function SettingsPage() {
   );
   const [saveMessage, setSaveMessage] = useState("");
 
+  useEffect(() => {
+    dispatchSettingsPreview({
+      userSettings,
+      companySettings,
+    });
+  }, [userSettings, companySettings]);
+
+  useEffect(() => {
+    return () => {
+      clearSettingsPreview();
+    };
+  }, []);
+
   async function handleLogoUpload(file: File | undefined) {
     if (!file) return;
 
@@ -47,16 +62,7 @@ export default function SettingsPage() {
 
   return (
     <AppShell title="Settings">
-      <form
-        onSubmit={saveSettings}
-        data-theme={userSettings.theme}
-        style={
-          {
-            "--color-accent-primary": companySettings.primaryAccentColor,
-            "--color-accent-secondary": companySettings.secondaryAccentColor,
-          } as React.CSSProperties
-        }
-      >
+      <form onSubmit={saveSettings}>
         <div className="form-grid">
           <Panel title="Display Preferences">
             <div className="form-field">
@@ -145,63 +151,48 @@ export default function SettingsPage() {
             </div>
 
             <div className="form-field">
-              <label>
-                Primary Accent Color
-                <br />
-                <input
-                  type="color"
-                  value={companySettings.primaryAccentColor}
-                  onChange={(event) =>
-                    setCompanySettings({
-                      ...companySettings,
-                      primaryAccentColor: event.target.value,
-                    })
-                  }
-                  onInput={() => setSaveMessage("")}
-                  className="form-input"
-                />
-              </label>
+              <ColorField
+                label="Primary Accent Color"
+                value={companySettings.primaryAccentColor}
+                onChange={(primaryAccentColor) => {
+                  setSaveMessage("");
+                  setCompanySettings({
+                    ...companySettings,
+                    primaryAccentColor,
+                  });
+                }}
+              />
             </div>
 
             <div className="form-field">
-              <label>
-                Secondary Accent Color
-                <br />
-                <input
-                  type="color"
-                  value={companySettings.secondaryAccentColor}
-                  onChange={(event) =>
-                    setCompanySettings({
-                      ...companySettings,
-                      secondaryAccentColor: event.target.value,
-                    })
-                  }
-                  onInput={() => setSaveMessage("")}
-                  className="form-input"
-                />
-              </label>
+              <ColorField
+                label="Secondary Accent Color"
+                value={companySettings.secondaryAccentColor}
+                onChange={(secondaryAccentColor) => {
+                  setSaveMessage("");
+                  setCompanySettings({
+                    ...companySettings,
+                    secondaryAccentColor,
+                  });
+                }}
+              />
             </div>
 
             <div className="form-field">
-              <label>
-                Proposal Accent Color
-                <br />
-                <input
-                  type="color"
-                  value={
-                    companySettings.proposalAccentColor ||
-                    companySettings.primaryAccentColor
-                  }
-                  onChange={(event) =>
-                    setCompanySettings({
-                      ...companySettings,
-                      proposalAccentColor: event.target.value,
-                    })
-                  }
-                  onInput={() => setSaveMessage("")}
-                  className="form-input"
-                />
-              </label>
+              <ColorField
+                label="Proposal Accent Color"
+                value={
+                  companySettings.proposalAccentColor ||
+                  companySettings.primaryAccentColor
+                }
+                onChange={(proposalAccentColor) => {
+                  setSaveMessage("");
+                  setCompanySettings({
+                    ...companySettings,
+                    proposalAccentColor,
+                  });
+                }}
+              />
             </div>
           </Panel>
 
@@ -262,4 +253,34 @@ function formatCsiVersion(version: CsiMasterFormatVersion) {
   if (version === "MASTERFORMAT_1995") return "MasterFormat 1995";
 
   return "Current MasterFormat";
+}
+
+function ColorField({
+  label,
+  value,
+  onChange,
+}: {
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+}) {
+  return (
+    <label>
+      {label}
+      <span className="color-control">
+        <span
+          className="color-swatch"
+          style={{ backgroundColor: value }}
+          aria-hidden="true"
+        />
+        <input
+          type="color"
+          value={value}
+          onChange={(event) => onChange(event.target.value)}
+          className="color-input"
+        />
+        <span className="muted-text">{value}</span>
+      </span>
+    </label>
+  );
 }
