@@ -12,18 +12,16 @@ import {
   getCombinedStatus,
   getComplianceAlerts,
   getDivisionLabel,
+  formatVendorStatus,
   getMergedSubcontractors,
   getPrimaryContact,
   getPrimaryPhone,
+  isPreferredVendor,
   getSectionLabel,
   groupSubcontractorsByDivisionAndSection,
   subcontractorsStorageKey,
 } from "@/lib/subcontractors";
-import {
-  PrequalificationStatus,
-  RelationshipStatus,
-  Subcontractor,
-} from "@/types/Subcontractor";
+import { PrequalificationStatus, Subcontractor } from "@/types/Subcontractor";
 
 const subcontractorListUiStateKey = "subcontractorListUiState";
 
@@ -41,14 +39,6 @@ type PrequalificationFilter =
   | PrequalificationStatus
   | "COMPLIANT"
   | "HAS_ALERTS";
-
-const relationshipStatuses: RelationshipStatus[] = [
-  "PREFERRED",
-  "APPROVED",
-  "CONDITIONAL",
-  "INACTIVE",
-  "DO_NOT_USE",
-];
 
 const prequalificationFilters: PrequalificationFilter[] = [
   "ALL",
@@ -75,9 +65,6 @@ export default function SubcontractorsPage() {
     [subcontractorsSnapshot]
   );
   const [searchQuery, setSearchQuery] = useState("");
-  const [relationshipFilter, setRelationshipFilter] = useState<
-    "ALL" | RelationshipStatus
-  >("ALL");
   const [prequalificationFilter, setPrequalificationFilter] =
     useState<PrequalificationFilter>("ALL");
   const [divisionFilter, setDivisionFilter] = useState("ALL");
@@ -90,7 +77,6 @@ export default function SubcontractorsPage() {
       subcontractors.filter((subcontractor) =>
         matchesFilters(subcontractor, {
           searchQuery,
-          relationshipFilter,
           prequalificationFilter,
           divisionFilter,
           sectionFilter,
@@ -105,7 +91,6 @@ export default function SubcontractorsPage() {
       minimumVpi,
       preferredOnly,
       prequalificationFilter,
-      relationshipFilter,
       searchQuery,
       sectionFilter,
       subcontractors,
@@ -297,20 +282,13 @@ export default function SubcontractorsPage() {
             </label>
           </div>
           <SelectField
-            label="Relationship"
-            value={relationshipFilter}
-            options={["ALL", ...relationshipStatuses]}
-            onChange={(value) =>
-              setRelationshipFilter(value as "ALL" | RelationshipStatus)
-            }
-          />
-          <SelectField
-            label="Prequalification / Compliance"
+            label="Vendor Status / Compliance"
             value={prequalificationFilter}
             options={prequalificationFilters}
             onChange={(value) =>
               setPrequalificationFilter(value as PrequalificationFilter)
             }
+            getOptionLabel={formatPrequalificationFilter}
           />
           <SelectField
             label="CSI Division"
@@ -483,7 +461,7 @@ function VendorRow({
     >
       <td style={cell}>
         <strong>{subcontractor.companyName}</strong>
-        {subcontractor.relationshipStatus === "PREFERRED" && (
+        {isPreferredVendor(subcontractor) && (
           <span className="badge badge-primary">* Preferred</span>
         )}
         {subcontractor.dba && (
@@ -742,7 +720,6 @@ function matchesFilters(
   subcontractor: Subcontractor,
   filters: {
     searchQuery: string;
-    relationshipFilter: "ALL" | RelationshipStatus;
     prequalificationFilter: PrequalificationFilter;
     divisionFilter: string;
     sectionFilter: string;
@@ -759,14 +736,7 @@ function matchesFilters(
 
   if (
     filters.preferredOnly &&
-    subcontractor.relationshipStatus !== "PREFERRED"
-  ) {
-    return false;
-  }
-
-  if (
-    filters.relationshipFilter !== "ALL" &&
-    subcontractor.relationshipStatus !== filters.relationshipFilter
+    !isPreferredVendor(subcontractor)
   ) {
     return false;
   }
@@ -882,4 +852,12 @@ function formatStatus(value: string) {
     .split("_")
     .map((word) => word.charAt(0) + word.slice(1).toLowerCase())
     .join(" ");
+}
+
+function formatPrequalificationFilter(value: string) {
+  if (value === "ALL") return "All";
+  if (value === "COMPLIANT") return "Compliant";
+  if (value === "HAS_ALERTS") return "Has Compliance Alerts";
+
+  return formatVendorStatus(value as PrequalificationStatus);
 }

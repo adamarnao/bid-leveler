@@ -12,12 +12,12 @@ import {
   getSectionNumbersForSubcontractor,
   getSubcontractorCoverageForVersion,
 } from "@/lib/subcontractorCsiCoverage";
+import { formatVendorStatus } from "@/lib/subcontractors";
 import { CsiDivision, CsiMasterFormatVersion } from "@/types/Csi";
 import {
   ContactRole,
   PhoneType,
   PrequalificationStatus,
-  RelationshipStatus,
   Subcontractor,
   SubcontractorContact,
   SubcontractorLocation,
@@ -43,13 +43,6 @@ type StagedCsiCoverageDraft = {
   primaryDivisionId: string;
   csiCoverage: Subcontractor["csiCoverage"];
 };
-
-const vendorStatusOptions: RelationshipStatus[] = [
-  "APPROVED",
-  "CONDITIONAL",
-  "INACTIVE",
-  "DO_NOT_USE",
-];
 
 const prequalificationStatuses: PrequalificationStatus[] = [
   "NOT_STARTED",
@@ -649,6 +642,17 @@ export default function SubcontractorForm({
     });
   }
 
+  function updateDoNotUseVendor(isDoNotUse: boolean) {
+    setDraft({
+      ...draft,
+      relationshipStatus: isDoNotUse
+        ? "DO_NOT_USE"
+        : draft.relationshipStatus === "DO_NOT_USE"
+          ? "APPROVED"
+          : draft.relationshipStatus,
+    });
+  }
+
   return (
     <form onSubmit={submitSubcontractor}>
       <div className="form-action-bar">
@@ -917,6 +921,12 @@ export default function SubcontractorForm({
                 label="Preferred Vendor"
                 checked={draft.relationshipStatus === "PREFERRED"}
                 onChange={updatePreferredVendor}
+                disabled={draft.relationshipStatus === "DO_NOT_USE"}
+              />
+              <CheckboxField
+                label="Do Not Use"
+                checked={draft.relationshipStatus === "DO_NOT_USE"}
+                onChange={updateDoNotUseVendor}
               />
             </div>
           </div>
@@ -1474,23 +1484,11 @@ export default function SubcontractorForm({
             <div className="form-compact-grid">
               <FormSelect
                 label="Vendor Status"
-                value={
-                  draft.relationshipStatus === "PREFERRED"
-                    ? "APPROVED"
-                    : draft.relationshipStatus
-                }
-                options={vendorStatusOptions}
-                onChange={(value) =>
-                  setDraft({
-                    ...draft,
-                    relationshipStatus: value as RelationshipStatus,
-                  })
-                }
-              />
-              <FormSelect
-                label="Prequalification Status"
                 value={draft.prequalification.status}
                 options={prequalificationStatuses}
+                getOptionLabel={(value) =>
+                  formatVendorStatus(value as PrequalificationStatus)
+                }
                 onChange={(value) =>
                   setDraft({
                     ...draft,
@@ -1803,10 +1801,12 @@ function CheckboxField({
   label,
   checked,
   onChange,
+  disabled = false,
 }: {
   label: string;
   checked: boolean;
   onChange: (checked: boolean) => void;
+  disabled?: boolean;
 }) {
   return (
     <div className="form-field">
@@ -1814,6 +1814,7 @@ function CheckboxField({
         <input
           type="checkbox"
           checked={checked}
+          disabled={disabled}
           onChange={(event) => onChange(event.target.checked)}
         />
         {label}

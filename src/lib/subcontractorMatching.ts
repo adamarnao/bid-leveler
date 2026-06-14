@@ -4,6 +4,7 @@ import {
   getCrosswalkEntriesForCurrent,
 } from "@/lib/csiCrosswalk";
 import {
+  formatVendorStatus,
   getComplianceAlerts,
   getPrequalificationTone,
 } from "@/lib/subcontractors";
@@ -12,11 +13,7 @@ import {
   getSubcontractorCsiVersion,
 } from "@/lib/subcontractorCsiCoverage";
 import { CsiMasterFormatVersion } from "@/types/Csi";
-import {
-  PrequalificationStatus,
-  RelationshipStatus,
-  Subcontractor,
-} from "@/types/Subcontractor";
+import { PrequalificationStatus, Subcontractor } from "@/types/Subcontractor";
 import {
   MatchProjectLocationInput,
   MatchProjectSectionInput,
@@ -256,12 +253,6 @@ function scoreSubcontractorMatch({
   score += getMatchQualityScore(confidence);
   rankingReasons.push(formatMatchReason(matchType, confidence));
 
-  const relationshipScore = getRelationshipScore(subcontractor.relationshipStatus);
-  score += relationshipScore;
-  rankingReasons.push(
-    `Relationship: ${formatStatus(subcontractor.relationshipStatus)}`
-  );
-
   const vpiScore = getVpiScore(subcontractor);
   score += vpiScore;
   if (subcontractor.vpi.overall !== undefined) {
@@ -276,7 +267,7 @@ function scoreSubcontractorMatch({
   );
   score += prequalificationScore;
   rankingReasons.push(
-    `Prequalification: ${formatStatus(subcontractor.prequalification.status)}`
+    `Vendor Status: ${formatVendorStatus(subcontractor.prequalification.status)}`
   );
 
   if (complianceAlerts.length > 0) {
@@ -294,7 +285,7 @@ function scoreSubcontractorMatch({
   }
 
   if (getPrequalificationTone(subcontractor.prequalification.status) === "danger") {
-    warnings.push("Prequalification needs review");
+    warnings.push("Vendor status needs review");
   }
 
   return {
@@ -319,32 +310,10 @@ function getMatchQualityScore(confidence: SubcontractorMatchConfidence) {
   }
 }
 
-function getRelationshipScore(status: RelationshipStatus) {
-  switch (status) {
-    case "PREFERRED":
-      return 20;
-    case "APPROVED":
-      return 15;
-    case "CONDITIONAL":
-      return 6;
-    case "INACTIVE":
-      return -20;
-    case "DO_NOT_USE":
-      return -40;
-  }
-}
-
 function getVpiScore(subcontractor: Subcontractor) {
   if (subcontractor.vpi.overall === undefined) return 0;
 
-  const confidenceMultiplier =
-    subcontractor.vpi.confidenceLevel === "HIGH"
-      ? 1
-      : subcontractor.vpi.confidenceLevel === "MEDIUM"
-        ? 0.85
-        : 0.65;
-
-  return (subcontractor.vpi.overall / 5) * 15 * confidenceMultiplier;
+  return (subcontractor.vpi.overall / 5) * 15;
 }
 
 function getPrequalificationScore(

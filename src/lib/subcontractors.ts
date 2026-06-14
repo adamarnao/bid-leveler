@@ -3,7 +3,6 @@ import { mockCsiDivisions } from "@/data/mockCsiDivisions";
 import { mockCsiSections } from "@/data/mockCsiSections";
 import {
   PrequalificationStatus,
-  RelationshipStatus,
   Subcontractor,
   SubcontractorContact,
 } from "@/types/Subcontractor";
@@ -174,49 +173,24 @@ export function getPrimaryPhone(
 }
 
 export function getCombinedStatus(subcontractor: Subcontractor): CombinedStatus {
-  const relationshipStatus = subcontractor.relationshipStatus;
   const prequalStatus = subcontractor.prequalification.status;
 
-  if (relationshipStatus === "DO_NOT_USE") {
+  if (isDoNotUseVendor(subcontractor)) {
     return { label: "Do Not Use", tone: "danger" };
   }
 
-  if (relationshipStatus === "INACTIVE") {
-    return { label: "Inactive", tone: "muted" };
-  }
-
-  if (prequalStatus === "REJECTED") {
-    return { label: "Rejected", tone: "danger" };
-  }
-
-  if (prequalStatus === "EXPIRED") {
-    return { label: "Prequal Expired", tone: "danger" };
-  }
-
-  if (relationshipStatus === "CONDITIONAL" || prequalStatus === "CONDITIONAL") {
-    return { label: "Conditional", tone: "warning" };
-  }
-
-  if (relationshipStatus === "PREFERRED" && prequalStatus === "QUALIFIED") {
-    return { label: "Preferred / Prequalified", tone: "primary" };
-  }
-
-  if (relationshipStatus === "APPROVED" && prequalStatus === "QUALIFIED") {
-    return { label: "Approved / Prequalified", tone: "success" };
-  }
-
-  if (prequalStatus === "IN_PROGRESS") {
-    return { label: "Prequal In Progress", tone: "warning" };
-  }
-
-  if (prequalStatus === "NOT_STARTED") {
-    return { label: "Prequal Needed", tone: "muted" };
-  }
-
   return {
-    label: formatStatus(relationshipStatus),
-    tone: getRelationshipTone(relationshipStatus),
+    label: formatVendorStatus(prequalStatus),
+    tone: getVendorStatusTone(prequalStatus),
   };
+}
+
+export function isPreferredVendor(subcontractor: Subcontractor) {
+  return subcontractor.relationshipStatus === "PREFERRED";
+}
+
+export function isDoNotUseVendor(subcontractor: Subcontractor) {
+  return subcontractor.relationshipStatus === "DO_NOT_USE";
 }
 
 export function getBadgeClassName(tone: CombinedStatus["tone"]) {
@@ -273,15 +247,18 @@ export function formatStatus(value: string) {
     .join(" ");
 }
 
-function getRelationshipTone(
-  status: RelationshipStatus
-): CombinedStatus["tone"] {
-  if (status === "PREFERRED") return "primary";
-  if (status === "APPROVED") return "success";
-  if (status === "CONDITIONAL") return "warning";
-  if (status === "DO_NOT_USE") return "danger";
+export function formatVendorStatus(status: PrequalificationStatus) {
+  if (status === "QUALIFIED") return "Prequalified";
+  if (status === "NOT_STARTED") return "Not Started";
+  if (status === "IN_PROGRESS") return "In Progress";
 
-  return "muted";
+  return formatStatus(status);
+}
+
+export function getVendorStatusTone(
+  status: PrequalificationStatus
+): CombinedStatus["tone"] {
+  return getPrequalificationTone(status);
 }
 
 export function getPrequalificationTone(

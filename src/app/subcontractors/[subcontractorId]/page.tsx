@@ -9,7 +9,10 @@ import {
   getBadgeClassName,
   getComplianceAlerts,
   getDivisionLabel,
+  formatVendorStatus,
   getMergedSubcontractors,
+  getVendorStatusTone,
+  isPreferredVendor,
   getPrimaryDivisionId,
   getPrimaryPhone,
   getSecondaryDivisionLabels,
@@ -81,7 +84,7 @@ export default function SubcontractorProfilePage() {
           <div>
             <div className="profile-title-row">
               <h2>{subcontractor.companyName}</h2>
-              {subcontractor.relationshipStatus === "PREFERRED" && (
+              {isPreferredVendor(subcontractor) && (
                 <span className="badge badge-primary">Preferred</span>
               )}
             </div>
@@ -268,11 +271,11 @@ export default function SubcontractorProfilePage() {
         </div>
       </Panel>
 
-      <Panel title="Compliance / Prequalification">
+      <Panel title="Vendor Status & Compliance">
         <div className="profile-detail-grid">
           <ProfileDetail
-            label="Status"
-            value={formatStatus(subcontractor.prequalification.status)}
+            label="Vendor Status"
+            value={formatVendorStatus(subcontractor.prequalification.status)}
           />
           <ProfileDetail
             label="W-9"
@@ -592,36 +595,14 @@ function getSimplifiedStatus(subcontractor: Subcontractor): {
   label: string;
   tone: BadgeTone;
 } {
-  const complianceAlerts = getComplianceAlerts(subcontractor);
-
   if (subcontractor.relationshipStatus === "DO_NOT_USE") {
     return { label: "Do Not Use", tone: "danger" };
   }
 
-  if (subcontractor.relationshipStatus === "INACTIVE") {
-    return { label: "Inactive", tone: "muted" };
-  }
-
-  if (
-    subcontractor.prequalification.status === "EXPIRED" ||
-    subcontractor.prequalification.status === "REJECTED" ||
-    complianceAlerts.length > 0
-  ) {
-    return { label: "Compliance Issue", tone: "danger" };
-  }
-
-  if (
-    subcontractor.relationshipStatus === "CONDITIONAL" ||
-    subcontractor.prequalification.status === "CONDITIONAL"
-  ) {
-    return { label: "Conditional", tone: "warning" };
-  }
-
-  if (subcontractor.prequalification.status === "QUALIFIED") {
-    return { label: "Prequalified", tone: "success" };
-  }
-
-  return { label: "Pending Review", tone: "warning" };
+  return {
+    label: formatVendorStatus(subcontractor.prequalification.status),
+    tone: getVendorStatusTone(subcontractor.prequalification.status),
+  };
 }
 
 function formatAddress(subcontractor: Subcontractor) {

@@ -10,8 +10,11 @@ import { getMergedProjects, projectsStorageKey } from "@/lib/projects";
 import {
   getBadgeClassName,
   getComplianceAlerts,
+  formatVendorStatus,
   getMergedSubcontractors,
+  getVendorStatusTone,
   getPrimaryPhone,
+  isPreferredVendor,
   subcontractorsStorageKey,
 } from "@/lib/subcontractors";
 import { matchSubcontractorsToProjectSections } from "@/lib/subcontractorMatching";
@@ -47,6 +50,15 @@ type StoredProjectDraftInviteSelections = Record<
   string,
   StoredProjectDraftInviteSelection
 >;
+
+type InviteStatusLabel =
+  | "Prequalified"
+  | "Not Started"
+  | "In Progress"
+  | "Conditional"
+  | "Expired"
+  | "Rejected"
+  | "Do Not Use";
 
 export default function ProjectInvitePreviewPage() {
   const params = useParams();
@@ -364,7 +376,7 @@ function MatchRow({
       </td>
       <td style={cell}>
         <strong>{subcontractor.companyName}</strong>
-        {subcontractor.relationshipStatus === "PREFERRED" && (
+        {isPreferredVendor(subcontractor) && (
           <span className="badge badge-primary">Preferred</span>
         )}
         {subcontractor.dba && (
@@ -462,49 +474,19 @@ function getInviteContacts(subcontractor: Subcontractor): SubcontractorContact[]
 }
 
 function getInviteStatus(match: ProjectSectionSubcontractorMatch): {
-  label:
-    | "Prequalified"
-    | "Pending Review"
-    | "Conditional"
-    | "Compliance Issue"
-    | "Inactive"
-    | "Do Not Use";
+  label: InviteStatusLabel;
   tone: "primary" | "secondary" | "success" | "warning" | "danger" | "muted";
 } {
   const subcontractor = match.subcontractor;
-  const complianceAlerts = getComplianceAlerts(subcontractor);
-  const hasCriticalComplianceIssue = complianceAlerts.some((alert) =>
-    isCriticalWarning(alert)
-  );
 
   if (subcontractor.relationshipStatus === "DO_NOT_USE") {
     return { label: "Do Not Use", tone: "danger" };
   }
 
-  if (subcontractor.relationshipStatus === "INACTIVE") {
-    return { label: "Inactive", tone: "muted" };
-  }
-
-  if (
-    subcontractor.prequalification.status === "EXPIRED" ||
-    subcontractor.prequalification.status === "REJECTED" ||
-    hasCriticalComplianceIssue
-  ) {
-    return { label: "Compliance Issue", tone: "danger" };
-  }
-
-  if (
-    subcontractor.relationshipStatus === "CONDITIONAL" ||
-    subcontractor.prequalification.status === "CONDITIONAL"
-  ) {
-    return { label: "Conditional", tone: "warning" };
-  }
-
-  if (subcontractor.prequalification.status === "QUALIFIED") {
-    return { label: "Prequalified", tone: "success" };
-  }
-
-  return { label: "Pending Review", tone: "warning" };
+  return {
+    label: formatVendorStatus(subcontractor.prequalification.status) as InviteStatusLabel,
+    tone: getVendorStatusTone(subcontractor.prequalification.status),
+  };
 }
 
 function getInviteWarnings(match: ProjectSectionSubcontractorMatch) {
@@ -541,16 +523,6 @@ function formatContactRoleTitle(contact: SubcontractorContact) {
   }
 
   return `${roleLabel} | ${title}`;
-}
-
-function isCriticalWarning(warning: string) {
-  return [
-    "W-9 missing",
-    "Insurance missing",
-    "Insurance expired",
-    "License missing",
-    "License expired",
-  ].includes(warning);
 }
 
 function getServiceAreaTone(
