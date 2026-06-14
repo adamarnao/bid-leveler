@@ -60,6 +60,9 @@ type InviteStatusLabel =
   | "Rejected"
   | "Do Not Use";
 
+type InviteSortKey = "company" | "vpi" | "serviceArea";
+type SortDirection = "asc" | "desc";
+
 export default function ProjectInvitePreviewPage() {
   const params = useParams();
   const rawProjectId = params.projectId;
@@ -103,6 +106,8 @@ export default function ProjectInvitePreviewPage() {
   const [selectedCandidatesByKey, setSelectedCandidatesByKey] = useState<
     Record<string, StoredProjectDraftInviteCandidate>
   >({});
+  const [sortKey, setSortKey] = useState<InviteSortKey>("company");
+  const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
   const [saveMessage, setSaveMessage] = useState("");
   const selectedCandidateCount = Object.keys(selectedCandidatesByKey).length;
 
@@ -171,6 +176,18 @@ export default function ProjectInvitePreviewPage() {
     setSelectedCandidatesByKey({});
     removeProjectDraftInviteSelection(project.id);
     setSaveMessage("Draft invite selections cleared.");
+  }
+
+  function updateSort(nextSortKey: InviteSortKey) {
+    if (nextSortKey === sortKey) {
+      setSortDirection((currentDirection) =>
+        currentDirection === "asc" ? "desc" : "asc"
+      );
+      return;
+    }
+
+    setSortKey(nextSortKey);
+    setSortDirection(getDefaultSortDirection(nextSortKey));
   }
 
   if (!project) {
@@ -273,6 +290,9 @@ export default function ProjectInvitePreviewPage() {
                   <MatchTable
                     matches={exactMatches}
                     sectionNumber={group.projectSectionNumber}
+                    sortKey={sortKey}
+                    sortDirection={sortDirection}
+                    onSortChange={updateSort}
                     selectedCandidatesByKey={selectedCandidatesByKey}
                     onToggleCandidate={toggleCandidate}
                   />
@@ -289,17 +309,28 @@ export default function ProjectInvitePreviewPage() {
 function MatchTable({
   matches,
   sectionNumber,
+  sortKey,
+  sortDirection,
+  onSortChange,
   selectedCandidatesByKey,
   onToggleCandidate,
 }: {
   matches: ProjectSectionSubcontractorMatch[];
   sectionNumber: string;
+  sortKey: InviteSortKey;
+  sortDirection: SortDirection;
+  onSortChange: (sortKey: InviteSortKey) => void;
   selectedCandidatesByKey: Record<string, StoredProjectDraftInviteCandidate>;
   onToggleCandidate: (
     match: ProjectSectionSubcontractorMatch,
     checked: boolean
   ) => void;
 }) {
+  const sortedMatches = useMemo(
+    () => sortInviteMatches(matches, sortKey, sortDirection),
+    [matches, sortDirection, sortKey]
+  );
+
   return (
     <div className="invite-table-scroll">
       <table className="crm-vendor-table invite-preview-table">
@@ -317,18 +348,36 @@ function MatchTable({
         <thead>
           <tr>
             <th style={cell}>Select</th>
-            <th style={cell}>Subcontractor</th>
+            <SortableHeaderCell
+              label="Subcontractor"
+              sortKey="company"
+              activeSortKey={sortKey}
+              sortDirection={sortDirection}
+              onSortChange={onSortChange}
+            />
             <th style={cell}>Status</th>
-            <th style={cell}>VPI</th>
+            <SortableHeaderCell
+              label="VPI"
+              sortKey="vpi"
+              activeSortKey={sortKey}
+              sortDirection={sortDirection}
+              onSortChange={onSortChange}
+            />
             <th style={cell}>Contacts</th>
             <th style={cell}>Scope Notes</th>
-            <th style={cell}>Service Area</th>
+            <SortableHeaderCell
+              label="Service Area"
+              sortKey="serviceArea"
+              activeSortKey={sortKey}
+              sortDirection={sortDirection}
+              onSortChange={onSortChange}
+            />
             <th style={cell}>Warnings</th>
             <th style={cell}>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {matches.map((match) => (
+          {sortedMatches.map((match) => (
             <MatchRow
               key={`${sectionNumber}-${match.matchType}-${match.subcontractor.id}`}
               match={match}
@@ -341,6 +390,49 @@ function MatchTable({
         </tbody>
       </table>
     </div>
+  );
+}
+
+function SortableHeaderCell({
+  label,
+  sortKey,
+  activeSortKey,
+  sortDirection,
+  onSortChange,
+}: {
+  label: string;
+  sortKey: InviteSortKey;
+  activeSortKey: InviteSortKey;
+  sortDirection: SortDirection;
+  onSortChange: (sortKey: InviteSortKey) => void;
+}) {
+  const isActive = activeSortKey === sortKey;
+
+  return (
+    <th
+      style={cell}
+      className="invite-sortable-header"
+      role="button"
+      tabIndex={0}
+      aria-label={`Sort by ${label}`}
+      aria-pressed={isActive}
+      onClick={() => onSortChange(sortKey)}
+      onKeyDown={(event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          onSortChange(sortKey);
+        }
+      }}
+    >
+      <span className="invite-sortable-header-content">
+        <span>{label}</span>
+        {isActive && (
+          <span className="table-sort-label">
+            {getSortDirectionLabel(sortKey, sortDirection)}
+          </span>
+        )}
+      </span>
+    </th>
   );
 }
 
@@ -506,6 +598,110 @@ function getInviteWarnings(match: ProjectSectionSubcontractorMatch) {
   return Array.from(warnings);
 }
 
+function sortInviteMatches(
+  matches: ProjectSectionSubcontractorMatch[],
+  sortKey: InviteSortKey,
+  sortDirection: SortDirection
+) {
+  return [...matches].sort((matchA, matchB) => {
+    const tierDifference = getInvitePriorityTier(matchA) - getInvitePriorityTier(matchB);
+    if (tierDifference !== 0) return tierDifference;
+
+    const sortDifference = compareWithinPriorityTier(
+      matchA,
+      matchB,
+      sortKey,
+      sortDirection
+    );
+    if (sortDifference !== 0) return sortDifference;
+
+    return compareCompanyName(matchA, matchB);
+  });
+}
+
+function getDefaultSortDirection(sortKey: InviteSortKey): SortDirection {
+  if (sortKey === "vpi") return "desc";
+
+  return "asc";
+}
+
+function getSortDirectionLabel(
+  sortKey: InviteSortKey,
+  sortDirection: SortDirection
+) {
+  if (sortKey === "company") {
+    return sortDirection === "asc" ? "A-Z" : "Z-A";
+  }
+
+  if (sortKey === "vpi") {
+    return sortDirection === "desc" ? "High" : "Low";
+  }
+
+  return sortDirection === "asc" ? "▲" : "▼";
+}
+
+function getInvitePriorityTier(match: ProjectSectionSubcontractorMatch) {
+  if (isPreferredVendor(match.subcontractor)) return 0;
+  if (match.subcontractor.prequalification.status === "QUALIFIED") return 1;
+
+  return 2;
+}
+
+function compareWithinPriorityTier(
+  matchA: ProjectSectionSubcontractorMatch,
+  matchB: ProjectSectionSubcontractorMatch,
+  sortKey: InviteSortKey,
+  sortDirection: SortDirection
+) {
+  if (sortKey === "vpi") {
+    return compareVpi(matchA, matchB, sortDirection);
+  }
+
+  if (sortKey === "serviceArea") {
+    return compareServiceArea(matchA, matchB) * getSortDirectionMultiplier(sortDirection);
+  }
+
+  return compareCompanyName(matchA, matchB) * getSortDirectionMultiplier(sortDirection);
+}
+
+function getSortDirectionMultiplier(sortDirection: SortDirection) {
+  return sortDirection === "asc" ? 1 : -1;
+}
+
+function compareCompanyName(
+  matchA: ProjectSectionSubcontractorMatch,
+  matchB: ProjectSectionSubcontractorMatch
+) {
+  return matchA.subcontractor.companyName.localeCompare(
+    matchB.subcontractor.companyName
+  );
+}
+
+function compareVpi(
+  matchA: ProjectSectionSubcontractorMatch,
+  matchB: ProjectSectionSubcontractorMatch,
+  sortDirection: SortDirection
+) {
+  const vpiA = matchA.subcontractor.vpi.overall;
+  const vpiB = matchB.subcontractor.vpi.overall;
+
+  if (vpiA === undefined && vpiB === undefined) return 0;
+  if (vpiA === undefined) return 1;
+  if (vpiB === undefined) return -1;
+
+  return sortDirection === "asc" ? vpiA - vpiB : vpiB - vpiA;
+}
+
+function compareServiceArea(
+  matchA: ProjectSectionSubcontractorMatch,
+  matchB: ProjectSectionSubcontractorMatch
+) {
+  return (
+    getServiceAreaSortRank(matchA.serviceAreaFit) -
+    getServiceAreaSortRank(matchB.serviceAreaFit)
+  );
+}
+
 function formatContactRoleTitle(contact: SubcontractorContact) {
   const roleLabel = formatStatus(contact.role);
   const title = contact.title?.trim();
@@ -543,6 +739,16 @@ function formatServiceAreaFit(
   if (serviceAreaFit === "PARTIAL") return "Review";
 
   return "Unknown";
+}
+
+function getServiceAreaSortRank(
+  serviceAreaFit: ProjectSectionSubcontractorMatch["serviceAreaFit"]
+) {
+  if (serviceAreaFit === "STRONG") return 0;
+  if (serviceAreaFit === "PARTIAL") return 1;
+  if (serviceAreaFit === "UNKNOWN") return 2;
+
+  return 3;
 }
 
 function buildVisibleCandidateMap(
