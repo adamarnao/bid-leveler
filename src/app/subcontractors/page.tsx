@@ -478,7 +478,9 @@ function VendorRow({
         {primaryContact ? (
           <>
             <strong>{primaryContact.name}</strong>
-            <div className="muted-text">{primaryContact.title || ""}</div>
+            <div className="muted-text">
+              {getContactDisplayLabel(primaryContact)}
+            </div>
           </>
         ) : (
           "No contact"
@@ -841,6 +843,10 @@ function formatVpi(subcontractor: Subcontractor) {
   return score === undefined
     ? `Not rated (${subcontractor.vpi.projectsEvaluated} ${projectsText})`
     : `${score.toFixed(1)} / 5 (${subcontractor.vpi.projectsEvaluated} ${projectsText})`;
+}
+
+function getContactDisplayLabel(contact: Subcontractor["contacts"][number]) {
+  return contact.title?.trim() || formatStatus(contact.role);
 }
 
 function formatStatus(value: string) {

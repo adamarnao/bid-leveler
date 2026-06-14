@@ -1282,7 +1282,7 @@ export default function SubcontractorForm({
                 {isExpanded && (
                   <div className="form-record-body form-compact-grid">
                     <FormSelect
-                      label="Role"
+                      label="Contact Type"
                       value={contact.role}
                       options={contactRoles}
                       onChange={(value) =>
@@ -1297,7 +1297,7 @@ export default function SubcontractorForm({
                       }
                     />
                     <FormInput
-                      label="Title"
+                      label="Job Title"
                       value={contact.title ?? ""}
                       onChange={(value) =>
                         updateContact(contact.id, { title: value })
@@ -1319,7 +1319,7 @@ export default function SubcontractorForm({
                       }
                     />
                     <FormInput
-                      label="Office Phone Extension"
+                      label="Ext."
                       value={contact.officePhoneExtension ?? ""}
                       onChange={(value) =>
                         updateContact(contact.id, {
@@ -2056,14 +2056,10 @@ function getLocationName(locations: SubcontractorLocation[], locationId: string)
 }
 
 function formatContactSummary(contact: SubcontractorContact) {
-  const role = formatStatus(contact.role);
-  const title = contact.title?.trim();
+  const contactType = formatStatus(contact.role);
+  const jobTitle = contact.title?.trim();
 
-  if (!title || title.toLowerCase() === role.toLowerCase()) {
-    return role;
-  }
-
-  return `${role} / ${title}`;
+  return jobTitle || contactType;
 }
 
 function getSelectedSectionGroups(

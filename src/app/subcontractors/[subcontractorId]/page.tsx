@@ -407,6 +407,8 @@ function ContactCard({
 }) {
   const primaryPhone = getPrimaryPhone(contact, subcontractor);
   const visibleMarkers = markers.filter(Boolean);
+  const contactLabel = getContactDisplayLabel(contact);
+  const contactTypeLabel = getSecondaryContactTypeLabel(contact);
 
   return (
     <div className="profile-contact-card">
@@ -423,7 +425,12 @@ function ContactCard({
           </span>
         ))}
       </div>
-      <p className="muted-text">{formatContactRoleTitle(contact)}</p>
+      <div className="badge-list">
+        <span className="muted-text">{contactLabel}</span>
+        {contactTypeLabel && (
+          <span className="badge badge-muted">{contactTypeLabel}</span>
+        )}
+      </div>
       <div className="profile-contact-methods">
         <span>{contact.email || "No email"}</span>
         {contact.officePhone && <span>Office: {contact.officePhone}</span>}
@@ -633,23 +640,23 @@ function formatPrimaryTrade(subcontractor: Subcontractor) {
     : `${primaryDivisionLabel} - ${primarySectionLabels.join(", ")}`;
 }
 
-function formatContactRoleTitle(contact: SubcontractorContact) {
-  const roleLabel = formatStatus(contact.role);
-  const title = contact.title?.trim();
+function getContactDisplayLabel(contact: SubcontractorContact) {
+  return contact.title?.trim() || formatStatus(contact.role);
+}
 
-  if (!title) return roleLabel;
+function getSecondaryContactTypeLabel(contact: SubcontractorContact) {
+  const contactType = formatStatus(contact.role);
+  const jobTitle = contact.title?.trim();
 
-  const normalizedRole = roleLabel.toLowerCase();
-  const normalizedTitle = title.toLowerCase();
+  if (!jobTitle) return undefined;
 
-  if (
-    normalizedTitle.includes(normalizedRole) ||
-    normalizedRole.includes(normalizedTitle)
-  ) {
-    return title;
-  }
+  const normalizedType = contactType.toLowerCase();
+  const normalizedTitle = jobTitle.toLowerCase();
 
-  return `${roleLabel} / ${title}`;
+  return normalizedTitle.includes(normalizedType) ||
+    normalizedType.includes(normalizedTitle)
+    ? undefined
+    : contactType;
 }
 
 function formatScopeTradeLine(scope: SubcontractorContactScope) {

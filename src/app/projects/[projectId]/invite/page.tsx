@@ -492,7 +492,7 @@ function MatchRow({
                   <div>
                     <strong>{contact.name}</strong>
                     <div className="muted-text">
-                      {formatContactRoleTitle(contact)}
+                      {getContactDisplayLabel(contact)}
                     </div>
                   </div>
                   <div className="invite-contact-methods">
@@ -702,23 +702,8 @@ function compareServiceArea(
   );
 }
 
-function formatContactRoleTitle(contact: SubcontractorContact) {
-  const roleLabel = formatStatus(contact.role);
-  const title = contact.title?.trim();
-
-  if (!title) return roleLabel;
-
-  const normalizedRole = roleLabel.toLowerCase();
-  const normalizedTitle = title.toLowerCase();
-
-  if (
-    normalizedTitle.includes(normalizedRole) ||
-    normalizedRole.includes(normalizedTitle)
-  ) {
-    return title;
-  }
-
-  return `${roleLabel} | ${title}`;
+function getContactDisplayLabel(contact: SubcontractorContact) {
+  return contact.title?.trim() || formatStatus(contact.role);
 }
 
 function getServiceAreaTone(
