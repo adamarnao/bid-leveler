@@ -111,7 +111,7 @@ function readSheetRows(sheetName) {
 
 function buildCatalog(rows, version, config) {
   const items = [];
-  const itemIds = new Set();
+  const idCounts = new Map();
   const hierarchyStack = [];
 
   rows.forEach(({ row, headerIndex }, rowIndex) => {
@@ -132,7 +132,8 @@ function buildCatalog(rows, version, config) {
       hierarchyStack.pop();
     }
 
-    const id = getCatalogItemId(version, sectionNumber);
+    const baseId = getCatalogItemId(version, sectionNumber);
+    const id = getUniqueCatalogItemId(baseId, idCounts);
     const parentId = hierarchyStack[hierarchyStack.length - 1]?.id;
     const item = {
       id,
@@ -145,11 +146,7 @@ function buildCatalog(rows, version, config) {
       sortOrder: rowIndex,
     };
 
-    if (!itemIds.has(id)) {
-      itemIds.add(id);
-      items.push(item);
-    }
-
+    items.push(item);
     hierarchyStack.push(item);
   });
 
@@ -259,6 +256,14 @@ function getCatalogItemId(version, sectionNumber) {
   if (version === "MASTERFORMAT_1995") return `${prefix}-${normalizedNumber}`;
 
   return `${prefix}-${normalizedNumber.replace(/\s+/g, "-").replace(/\./g, "-")}`;
+}
+
+function getUniqueCatalogItemId(baseId, idCounts) {
+  const nextCount = (idCounts.get(baseId) ?? 0) + 1;
+
+  idCounts.set(baseId, nextCount);
+
+  return nextCount === 1 ? baseId : `${baseId}-${nextCount}`;
 }
 
 function getDivisionIdFromSectionNumber(version, sectionNumber) {
