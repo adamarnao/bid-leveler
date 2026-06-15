@@ -24,7 +24,6 @@ import {
   getPrimaryPhone,
   isPreferredVendor,
   getSectionLabel,
-  groupSubcontractorsByDivisionAndSection,
   subcontractorsStorageKey,
 } from "@/lib/subcontractors";
 import { CsiMasterFormatVersion } from "@/types/Csi";
@@ -46,6 +45,15 @@ type PrequalificationFilter =
   | PrequalificationStatus
   | "COMPLIANT"
   | "HAS_ALERTS";
+
+type DisplayedSubcontractorCoverage = ReturnType<
+  typeof getDisplayedSubcontractorCoverage
+>;
+
+type DisplayedCoverageBySubcontractorId = Map<
+  string,
+  DisplayedSubcontractorCoverage
+>;
 
 const prequalificationFilters: PrequalificationFilter[] = [
   "ALL",
@@ -69,6 +77,16 @@ export default function SubcontractorsPage() {
       subcontractorsSnapshot.filter((subcontractor) => !subcontractor.archived),
     [subcontractorsSnapshot]
   );
+  const displayedCoverageBySubcontractorId = useMemo(
+    () =>
+      new Map(
+        subcontractors.map((subcontractor) => [
+          subcontractor.id,
+          getDisplayedSubcontractorCoverage(subcontractor, displayCsiVersion),
+        ])
+      ),
+    [displayCsiVersion, subcontractors]
+  );
   const [searchQuery, setSearchQuery] = useState("");
   const [prequalificationFilter, setPrequalificationFilter] =
     useState<PrequalificationFilter>("ALL");
@@ -79,20 +97,25 @@ export default function SubcontractorsPage() {
   const [minimumVpi, setMinimumVpi] = useState("");
   const filteredSubcontractors = useMemo(
     () =>
-      subcontractors.filter((subcontractor) =>
-        matchesFilters(subcontractor, {
-          searchQuery,
-          prequalificationFilter,
-          divisionFilter,
-          sectionFilter,
-          preferredOnly,
-          hideDoNotUse,
-          minimumVpi,
-          displayCsiVersion,
-        })
-      ),
+      subcontractors.filter((subcontractor) => {
+        const displayedCoverage = displayedCoverageBySubcontractorId.get(
+          subcontractor.id
+        );
+
+        return displayedCoverage
+          ? matchesFilters(subcontractor, displayedCoverage, {
+              searchQuery,
+              prequalificationFilter,
+              divisionFilter,
+              sectionFilter,
+              preferredOnly,
+              hideDoNotUse,
+              minimumVpi,
+            })
+          : false;
+      }),
     [
-      displayCsiVersion,
+      displayedCoverageBySubcontractorId,
       divisionFilter,
       hideDoNotUse,
       minimumVpi,
@@ -105,11 +128,11 @@ export default function SubcontractorsPage() {
   );
   const groupedSubcontractors = useMemo(
     () =>
-      groupSubcontractorsByDivisionAndSection(
+      groupSubcontractorsByDisplayedCoverage(
         filteredSubcontractors,
-        displayCsiVersion
+        displayedCoverageBySubcontractorId
       ),
-    [displayCsiVersion, filteredSubcontractors]
+    [displayedCoverageBySubcontractorId, filteredSubcontractors]
   );
   const initialUiState = getDefaultListUiState(groupedSubcontractors);
   const [expandedDivisionIds, setExpandedDivisionIds] = useState<string[]>(
@@ -131,12 +154,22 @@ export default function SubcontractorsPage() {
     initialUiState.lastClickedSectionId
   );
   const availableSectionOptions = useMemo(
-    () => getDisplayedSectionOptions(subcontractors, displayCsiVersion, divisionFilter),
-    [displayCsiVersion, divisionFilter, subcontractors]
+    () =>
+      getDisplayedSectionOptions(
+        subcontractors,
+        displayedCoverageBySubcontractorId,
+        divisionFilter
+      ),
+    [displayedCoverageBySubcontractorId, divisionFilter, subcontractors]
   );
   const availableDivisionOptions = useMemo(
-    () => getDisplayedDivisionOptions(subcontractors, displayCsiVersion),
-    [displayCsiVersion, subcontractors]
+    () =>
+      getDisplayedDivisionOptions(
+        subcontractors,
+        displayCsiVersion,
+        displayedCoverageBySubcontractorId
+      ),
+    [displayCsiVersion, displayedCoverageBySubcontractorId, subcontractors]
   );
 
   useEffect(() => {
@@ -783,8 +816,116 @@ function scrollToSubcontractorRow(
   return true;
 }
 
+function groupSubcontractorsByDisplayedCoverage(
+  subcontractors: Subcontractor[],
+  displayedCoverageBySubcontractorId: DisplayedCoverageBySubcontractorId
+): DivisionSubcontractorGroup[] {
+  const divisionGroups = new Map<
+    string,
+    {
+      label: string;
+      warnings: Set<string>;
+      sections: Map<
+        string,
+        {
+          label: string;
+          warnings: Set<string>;
+          subcontractors: Subcontractor[];
+        }
+      >;
+    }
+  >();
+
+  subcontractors.forEach((subcontractor) => {
+    const displayedCoverage = displayedCoverageBySubcontractorId.get(
+      subcontractor.id
+    );
+
+    if (!displayedCoverage) return;
+
+    const sections =
+      displayedCoverage.sections.length > 0
+        ? displayedCoverage.sections
+        : displayedCoverage.divisions.map((division) => ({
+            id: `${division.id}::unassigned`,
+            label: `${division.label} - Unassigned section`,
+            divisionId: division.id,
+            divisionNumber: division.number,
+            needsReview: division.needsReview,
+          }));
+
+    sections.forEach((section) => {
+      const division =
+        displayedCoverage.divisions.find(
+          (displayedDivision) => displayedDivision.id === section.divisionId
+        ) ??
+        displayedCoverage.divisions.find(
+          (displayedDivision) =>
+            displayedDivision.number === section.divisionNumber
+        );
+      const divisionId = division?.id ?? section.divisionId;
+      const divisionLabel = division?.label ?? getDivisionLabel(divisionId);
+      const divisionGroup =
+        divisionGroups.get(divisionId) ?? {
+          label: divisionLabel,
+          warnings: new Set<string>(),
+          sections: new Map(),
+        };
+      const sectionGroup =
+        divisionGroup.sections.get(section.id) ?? {
+          label: section.label,
+          warnings: new Set<string>(),
+          subcontractors: [],
+        };
+
+      displayedCoverage.warnings.forEach((warning) => {
+        divisionGroup.warnings.add(warning);
+        sectionGroup.warnings.add(warning);
+      });
+      if (section.needsReview) {
+        sectionGroup.warnings.add("CSI display needs review.");
+      }
+
+      sectionGroup.subcontractors.push(subcontractor);
+      divisionGroup.sections.set(section.id, sectionGroup);
+      divisionGroups.set(divisionId, divisionGroup);
+    });
+  });
+
+  return Array.from(divisionGroups.entries())
+    .map(([divisionId, divisionGroup]) => ({
+      divisionId,
+      divisionLabel: divisionGroup.label,
+      warnings: Array.from(divisionGroup.warnings),
+      sections: Array.from(divisionGroup.sections.entries())
+        .map(([sectionId, sectionGroup]) => ({
+          sectionId,
+          sectionLabel: sectionGroup.label,
+          warnings: Array.from(sectionGroup.warnings),
+          subcontractors: sectionGroup.subcontractors.sort((a, b) =>
+            a.companyName.localeCompare(b.companyName)
+          ),
+        }))
+        .sort((a, b) =>
+          (a.sectionLabel ?? a.sectionId).localeCompare(
+            b.sectionLabel ?? b.sectionId,
+            undefined,
+            { numeric: true }
+          )
+        ),
+    }))
+    .sort((a, b) =>
+      (a.divisionLabel ?? a.divisionId).localeCompare(
+        b.divisionLabel ?? b.divisionId,
+        undefined,
+        { numeric: true }
+      )
+    );
+}
+
 function matchesFilters(
   subcontractor: Subcontractor,
+  displayedCoverage: DisplayedSubcontractorCoverage,
   filters: {
     searchQuery: string;
     prequalificationFilter: PrequalificationFilter;
@@ -793,14 +934,9 @@ function matchesFilters(
     preferredOnly: boolean;
     hideDoNotUse: boolean;
     minimumVpi: string;
-    displayCsiVersion: CsiMasterFormatVersion;
   }
 ) {
   const complianceAlerts = getComplianceAlerts(subcontractor);
-  const displayedCoverage = getDisplayedSubcontractorCoverage(
-    subcontractor,
-    filters.displayCsiVersion
-  );
 
   if (filters.hideDoNotUse && subcontractor.relationshipStatus === "DO_NOT_USE") {
     return false;
@@ -896,7 +1032,8 @@ function getSearchText(
 
 function getDisplayedDivisionOptions(
   subcontractors: Subcontractor[],
-  displayCsiVersion: CsiMasterFormatVersion
+  displayCsiVersion: CsiMasterFormatVersion,
+  displayedCoverageBySubcontractorId: DisplayedCoverageBySubcontractorId
 ) {
   const divisionOptions = new Map<string, { id: string; label: string }>();
 
@@ -910,14 +1047,14 @@ function getDisplayedDivisionOptions(
     });
 
   subcontractors.forEach((subcontractor) => {
-    getDisplayedSubcontractorCoverage(subcontractor, displayCsiVersion).divisions.forEach(
-      (division) => {
+    displayedCoverageBySubcontractorId
+      .get(subcontractor.id)
+      ?.divisions.forEach((division) => {
         divisionOptions.set(division.id, {
           id: division.id,
           label: division.label,
         });
-      }
-    );
+      });
   });
 
   return Array.from(divisionOptions.values()).sort((a, b) =>
@@ -927,7 +1064,7 @@ function getDisplayedDivisionOptions(
 
 function getDisplayedSectionOptions(
   subcontractors: Subcontractor[],
-  displayCsiVersion: CsiMasterFormatVersion,
+  displayedCoverageBySubcontractorId: DisplayedCoverageBySubcontractorId,
   divisionFilter: string
 ) {
   const sectionOptions = new Map<
@@ -936,8 +1073,9 @@ function getDisplayedSectionOptions(
   >();
 
   subcontractors.forEach((subcontractor) => {
-    getDisplayedSubcontractorCoverage(subcontractor, displayCsiVersion).sections.forEach(
-      (section) => {
+    displayedCoverageBySubcontractorId
+      .get(subcontractor.id)
+      ?.sections.forEach((section) => {
         if (divisionFilter !== "ALL" && section.divisionId !== divisionFilter) {
           return;
         }
@@ -947,8 +1085,7 @@ function getDisplayedSectionOptions(
           label: section.label,
           divisionId: section.divisionId,
         });
-      }
-    );
+      });
   });
 
   return Array.from(sectionOptions.values()).sort((a, b) =>

@@ -1,8 +1,13 @@
-import { mockCsiSections } from "@/data/mockCsiSections";
 import {
   getCrosswalkEntriesFor1995,
   getCrosswalkEntriesForCurrent,
 } from "@/lib/csiCrosswalk";
+import {
+  normalizeCsiSectionNumber,
+  resolveCsiCatalogItem,
+  resolveCsiDivision,
+  resolveCsiSection,
+} from "@/lib/csiCatalog";
 import {
   formatVendorStatus,
   getComplianceAlerts,
@@ -152,16 +157,15 @@ function normalizeProjectSection(
   projectCsiVersion: CsiMasterFormatVersion
 ): NormalizedProjectSection | undefined {
   const sectionInput = typeof section === "string" ? { id: section } : section;
-  const matchingSection = mockCsiSections.find(
-    (item) =>
-      item.version === projectCsiVersion &&
-      (item.id === sectionInput.id ||
-        item.id === sectionInput.sectionNumber ||
-        normalizeSectionNumber(item.number) ===
-          normalizeSectionNumber(sectionInput.sectionNumber ?? sectionInput.id ?? ""))
-  );
+  const matchingSection =
+    resolveCsiSection(projectCsiVersion, sectionInput.id ?? "") ??
+    resolveCsiSection(projectCsiVersion, sectionInput.sectionNumber ?? "");
+  const matchingCatalogItem =
+    matchingSection ??
+    resolveCsiCatalogItem(projectCsiVersion, sectionInput.id ?? "") ??
+    resolveCsiCatalogItem(projectCsiVersion, sectionInput.sectionNumber ?? "");
   const sectionNumber = normalizeSectionNumber(
-    matchingSection?.number ??
+    matchingCatalogItem?.number ??
       sectionInput.sectionNumber ??
       sectionInput.id ??
       ""
@@ -170,10 +174,14 @@ function normalizeProjectSection(
   if (!sectionNumber) return undefined;
 
   return {
-    id: matchingSection?.id ?? sectionInput.id,
+    id: matchingCatalogItem?.id ?? sectionInput.id,
     sectionNumber,
-    name: matchingSection?.name ?? sectionInput.name,
-    divisionNumber: getDivisionNumberFromSection(sectionNumber),
+    name: matchingCatalogItem?.name ?? sectionInput.name,
+    divisionNumber: getDivisionNumberForProjectSection(
+      projectCsiVersion,
+      sectionNumber,
+      matchingCatalogItem?.divisionId
+    ),
   };
 }
 
@@ -197,8 +205,8 @@ function getMatchConfidence(
   if (matchType === "DIRECT") return "EXACT_DIRECT";
 
   const sourceVersion = getSubcontractorCsiVersion(subcontractor);
-  const sourceSectionNumbers = subcontractor.csiCoverage.sectionIds.map(
-    normalizeSectionIdOrNumber
+  const sourceSectionNumbers = subcontractor.csiCoverage.sectionIds.map((sectionId) =>
+    normalizeSectionIdOrNumber(sectionId, sourceVersion)
   );
   const relatedEntries = sourceSectionNumbers.flatMap((sourceSectionNumber) =>
     sourceVersion === "MASTERFORMAT_1995" &&
@@ -383,12 +391,12 @@ function formatMatchReason(
   return `Crosswalk CSI match: ${formatStatus(confidence)}`;
 }
 
-function normalizeSectionIdOrNumber(value: string) {
-  const matchingSection = mockCsiSections.find(
-    (section) =>
-      section.id === value ||
-      normalizeSectionNumber(section.number) === normalizeSectionNumber(value)
-  );
+function normalizeSectionIdOrNumber(
+  value: string,
+  version: CsiMasterFormatVersion
+) {
+  const matchingSection =
+    resolveCsiSection(version, value) ?? resolveCsiCatalogItem(version, value);
 
   return normalizeSectionNumber(matchingSection?.number ?? value);
 }
@@ -401,8 +409,21 @@ function getDivisionNumberFromSection(sectionNumber: string) {
   return normalizeSectionNumber(sectionNumber).slice(0, 2);
 }
 
+function getDivisionNumberForProjectSection(
+  version: CsiMasterFormatVersion,
+  sectionNumber: string,
+  divisionId: string | undefined
+) {
+  if (!divisionId) return getDivisionNumberFromSection(sectionNumber);
+
+  return (
+    resolveCsiDivision(version, divisionId)?.number ??
+    getDivisionNumberFromSection(sectionNumber)
+  );
+}
+
 function normalizeSectionNumber(value: string) {
-  return value.replace(/\u00a0/g, " ").trim();
+  return normalizeCsiSectionNumber(value);
 }
 
 function normalizeText(value: string) {

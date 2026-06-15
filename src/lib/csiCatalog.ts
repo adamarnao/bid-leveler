@@ -7,6 +7,17 @@ import {
   CsiSection,
 } from "@/types/Csi";
 
+type CsiCatalogIndex = {
+  catalog: CsiCatalogItem[];
+  itemById: Map<string, CsiCatalogItem>;
+  itemByNormalizedNumber: Map<string, CsiCatalogItem>;
+  itemByCompactNumber: Map<string, CsiCatalogItem>;
+  itemByLegacyAlias: Map<string, CsiCatalogItem>;
+  divisionIds: string[];
+  divisionItemByDivisionId: Map<string, CsiCatalogItem>;
+  sectionsByDivisionId: Map<string, CsiSection[]>;
+};
+
 const divisionNameFallbacks: Record<string, string> = {
   "1995-00": "Procurement and Contracting Requirements",
   "1995-01": "General Requirements",
@@ -32,22 +43,23 @@ const catalogByVersion: Record<CsiMasterFormatVersion, CsiCatalogItem[]> = {
   MASTERFORMAT_CURRENT: csiCatalogCurrent,
 };
 
+const catalogIndexesByVersion: Record<CsiMasterFormatVersion, CsiCatalogIndex> = {
+  MASTERFORMAT_1995: buildCatalogIndex(csiCatalog1995),
+  MASTERFORMAT_CURRENT: buildCatalogIndex(csiCatalogCurrent),
+};
+
 export function getCsiCatalog(version: CsiMasterFormatVersion): CsiCatalogItem[] {
   return catalogByVersion[version];
 }
 
 export function getCsiDivisions(version: CsiMasterFormatVersion): CsiDivision[] {
-  const divisionIds = new Set(getCsiCatalog(version).map((item) => item.divisionId));
-
-  return Array.from(divisionIds)
+  return getCatalogIndex(version).divisionIds
     .map((divisionId) => createDivision(version, divisionId))
     .sort((a, b) => a.number.localeCompare(b.number, undefined, { numeric: true }));
 }
 
 export function getCsiSections(version: CsiMasterFormatVersion): CsiSection[] {
-  return getCsiCatalog(version)
-    .filter((item) => item.level > 1)
-    .map(catalogItemToSection);
+  return Array.from(getCatalogIndex(version).sectionsByDivisionId.values()).flat();
 }
 
 export function getCsiSectionsByDivision(
@@ -58,9 +70,7 @@ export function getCsiSectionsByDivision(
 
   if (!resolvedDivision) return [];
 
-  return getCsiSections(version).filter(
-    (section) => section.divisionId === resolvedDivision.id
-  );
+  return getCatalogIndex(version).sectionsByDivisionId.get(resolvedDivision.id) ?? [];
 }
 
 export function getCsiDivisionById(
@@ -119,10 +129,21 @@ export function getDivisionIdFromSectionNumber(
   version: CsiMasterFormatVersion,
   sectionNumber: string
 ): string {
+  const resolvedItem = resolveCatalogItem(version, sectionNumber);
+
+  if (resolvedItem) return resolvedItem.divisionId;
+
   const prefix = getVersionPrefix(version);
   const divisionNumber = normalizeCsiSectionNumber(sectionNumber).slice(0, 2);
 
   return `${prefix}-${divisionNumber}`;
+}
+
+export function resolveCsiCatalogItem(
+  version: CsiMasterFormatVersion,
+  sectionIdOrNumber: string
+): CsiCatalogItem | undefined {
+  return resolveCatalogItem(version, sectionIdOrNumber);
 }
 
 export function resolveCsiSection(
@@ -139,8 +160,8 @@ export function resolveCsiDivision(
   divisionIdOrNumber: string
 ): CsiDivision | undefined {
   const divisionId = normalizeDivisionId(version, divisionIdOrNumber);
-  const hasDivision = getCsiCatalog(version).some(
-    (item) => item.divisionId === divisionId
+  const hasDivision = getCatalogIndex(version).divisionItemByDivisionId.has(
+    divisionId
   );
 
   return hasDivision ? createDivision(version, divisionId) : undefined;
@@ -150,35 +171,29 @@ function resolveCatalogItem(
   version: CsiMasterFormatVersion,
   sectionIdOrNumber: string
 ): CsiCatalogItem | undefined {
-  const catalog = getCsiCatalog(version);
+  const index = getCatalogIndex(version);
   const normalizedInput = normalizeCsiSectionNumber(sectionIdOrNumber);
   const stableId = getCatalogItemId(version, normalizedInput);
   const compactInput = compactSectionValue(normalizedInput);
+  const legacyAlias = normalizeOldMockCurrentId(sectionIdOrNumber);
 
-  return catalog.find((item) => {
-    const itemNumber = normalizeCsiSectionNumber(item.number);
-
-    return (
-      item.id === sectionIdOrNumber ||
-      item.id === stableId ||
-      itemNumber === normalizedInput ||
-      compactSectionValue(itemNumber) === compactInput ||
-      item.id === normalizeOldMockCurrentId(sectionIdOrNumber)
-    );
-  });
+  return (
+    index.itemById.get(sectionIdOrNumber) ??
+    index.itemById.get(stableId) ??
+    index.itemByLegacyAlias.get(sectionIdOrNumber) ??
+    index.itemById.get(legacyAlias) ??
+    index.itemByNormalizedNumber.get(normalizedInput) ??
+    index.itemByCompactNumber.get(compactInput)
+  );
 }
 
 function createDivision(
   version: CsiMasterFormatVersion,
   divisionId: string
 ): CsiDivision {
-  const catalog = getCsiCatalog(version);
   const divisionNumber = divisionId.replace(`${getVersionPrefix(version)}-`, "");
-  const divisionItem = catalog.find(
-    (item) =>
-      item.divisionId === divisionId &&
-      (item.level === 1 || compactSectionValue(item.number).slice(2) === "0000")
-  );
+  const divisionItem =
+    getCatalogIndex(version).divisionItemByDivisionId.get(divisionId);
 
   return {
     id: divisionId,
@@ -251,4 +266,82 @@ function getVersionPrefix(version: CsiMasterFormatVersion) {
 
 function normalizeSearchText(value: string) {
   return normalizeCsiSectionNumber(value).toLowerCase();
+}
+
+function getCatalogIndex(version: CsiMasterFormatVersion): CsiCatalogIndex {
+  return catalogIndexesByVersion[version];
+}
+
+function buildCatalogIndex(catalog: CsiCatalogItem[]): CsiCatalogIndex {
+  const itemById = new Map<string, CsiCatalogItem>();
+  const itemByNormalizedNumber = new Map<string, CsiCatalogItem>();
+  const itemByCompactNumber = new Map<string, CsiCatalogItem>();
+  const itemByLegacyAlias = new Map<string, CsiCatalogItem>();
+  const divisionIds = new Set<string>();
+  const divisionItemByDivisionId = new Map<string, CsiCatalogItem>();
+  const sectionsByDivisionId = new Map<string, CsiSection[]>();
+
+  catalog.forEach((item) => {
+    const normalizedNumber = normalizeCsiSectionNumber(item.number);
+    const compactNumber = compactSectionValue(normalizedNumber);
+
+    itemById.set(item.id, item);
+    setFirst(itemByNormalizedNumber, normalizedNumber, item);
+    setFirst(itemByCompactNumber, compactNumber, item);
+    divisionIds.add(item.divisionId);
+
+    const legacyAlias = getLegacyCurrentAlias(item);
+    if (legacyAlias) itemByLegacyAlias.set(legacyAlias, item);
+
+    if (
+      !divisionItemByDivisionId.has(item.divisionId) &&
+      (item.level === 1 || compactNumber.slice(2) === "0000")
+    ) {
+      divisionItemByDivisionId.set(item.divisionId, item);
+    }
+
+    if (item.level > 1) {
+      const section = catalogItemToSection(item);
+      const sections = sectionsByDivisionId.get(item.divisionId) ?? [];
+
+      sections.push(section);
+      sectionsByDivisionId.set(item.divisionId, sections);
+    }
+  });
+
+  divisionIds.forEach((divisionId) => {
+    if (divisionItemByDivisionId.has(divisionId)) return;
+
+    const fallbackItem = catalog.find((item) => item.divisionId === divisionId);
+    if (fallbackItem) divisionItemByDivisionId.set(divisionId, fallbackItem);
+  });
+
+  return {
+    catalog,
+    itemById,
+    itemByNormalizedNumber,
+    itemByCompactNumber,
+    itemByLegacyAlias,
+    divisionIds: Array.from(divisionIds),
+    divisionItemByDivisionId,
+    sectionsByDivisionId,
+  };
+}
+
+function setFirst(
+  map: Map<string, CsiCatalogItem>,
+  key: string,
+  item: CsiCatalogItem
+) {
+  if (!map.has(key)) map.set(key, item);
+}
+
+function getLegacyCurrentAlias(item: CsiCatalogItem) {
+  if (item.version !== "MASTERFORMAT_CURRENT") return undefined;
+
+  const match = item.id.match(/^current-(\d{2})-(\d{2})-(\d{2})$/);
+
+  if (!match) return undefined;
+
+  return `current-${match[1]}-${match[2]}${match[3]}`;
 }

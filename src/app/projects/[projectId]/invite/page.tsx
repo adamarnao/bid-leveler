@@ -5,7 +5,10 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import AppShell from "@/components/layout/AppShell";
 import Panel from "@/components/ui/Panel";
-import { mockCsiSections } from "@/data/mockCsiSections";
+import {
+  resolveCsiCatalogItem,
+  resolveCsiSection,
+} from "@/lib/csiCatalog";
 import { getMergedProjects, projectsStorageKey } from "@/lib/projects";
 import {
   getBadgeClassName,
@@ -849,17 +852,11 @@ function validateProjectSelection(
 ) {
   if (!selection || selection.version !== project.csiVersion) return [];
 
-  const validSectionIds = new Set(
-    mockCsiSections
-      .filter((section) => section.version === project.csiVersion)
-      .map((section) => section.id)
-  );
-
   return selection.sectionIds
-    .filter((sectionId) => validSectionIds.has(sectionId))
+    .filter((sectionId) => resolveProjectSelectionItem(sectionId, project))
     .sort((sectionIdA, sectionIdB) => {
-      const sectionA = mockCsiSections.find((section) => section.id === sectionIdA);
-      const sectionB = mockCsiSections.find((section) => section.id === sectionIdB);
+      const sectionA = resolveProjectSelectionItem(sectionIdA, project);
+      const sectionB = resolveProjectSelectionItem(sectionIdB, project);
 
       return (sectionA?.number ?? sectionIdA).localeCompare(
         sectionB?.number ?? sectionIdB,
@@ -867,6 +864,13 @@ function validateProjectSelection(
         { numeric: true }
       );
     });
+}
+
+function resolveProjectSelectionItem(sectionId: string, project: Project) {
+  return (
+    resolveCsiSection(project.csiVersion, sectionId) ??
+    resolveCsiCatalogItem(project.csiVersion, sectionId)
+  );
 }
 
 let cachedProjectsStorageValue: string | undefined;

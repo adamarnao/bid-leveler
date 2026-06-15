@@ -804,7 +804,6 @@ export default function SubcontractorForm({
   }
 
   function discardAndLeave() {
-    setShowUnsavedModal(false);
     window.history.back();
   }
 

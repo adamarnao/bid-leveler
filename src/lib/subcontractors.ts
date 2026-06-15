@@ -1,6 +1,10 @@
 import { mockSubcontractors } from "@/data/mockSubcontractors";
-import { mockCsiDivisions } from "@/data/mockCsiDivisions";
-import { mockCsiSections } from "@/data/mockCsiSections";
+import {
+  getCsiDivisionLabel,
+  getCsiSectionLabel,
+  resolveCsiDivision,
+  resolveCsiSection,
+} from "@/lib/csiCatalog";
 import { getDisplayedSubcontractorCoverage } from "@/lib/subcontractorCsiCoverage";
 import { CsiMasterFormatVersion } from "@/types/Csi";
 import {
@@ -74,21 +78,20 @@ export function getPrimaryDivisionId(subcontractor: Subcontractor): string {
 export function getDivisionLabel(divisionId: string): string {
   if (divisionId === "unassigned") return "Unassigned";
 
-  const division = mockCsiDivisions.find((item) => item.id === divisionId);
+  const version = getVersionForDivision(divisionId);
 
-  return division
-    ? `Division ${division.number} - ${division.name}`
-    : divisionId;
+  return version ? getCsiDivisionLabel(version, divisionId) : divisionId;
 }
 
 export function getSectionLabel(sectionId: string): string {
-  const section = mockCsiSections.find((item) => item.id === sectionId);
+  const version = getVersionForSection(sectionId);
 
-  return section ? `${section.number} - ${section.name}` : sectionId;
+  return version ? getCsiSectionLabel(version, sectionId) : sectionId;
 }
 
 export function getSectionDivisionId(sectionId: string): string {
-  const section = mockCsiSections.find((item) => item.id === sectionId);
+  const version = getVersionForSection(sectionId);
+  const section = version ? resolveCsiSection(version, sectionId) : undefined;
 
   return section?.divisionId ?? "unassigned";
 }
@@ -428,4 +431,32 @@ function mergeSubcontractors(
   );
 
   return Array.from(subcontractorsById.values());
+}
+
+function getVersionForDivision(
+  divisionIdOrNumber: string
+): CsiMasterFormatVersion | undefined {
+  if (resolveCsiDivision("MASTERFORMAT_CURRENT", divisionIdOrNumber)) {
+    return "MASTERFORMAT_CURRENT";
+  }
+
+  if (resolveCsiDivision("MASTERFORMAT_1995", divisionIdOrNumber)) {
+    return "MASTERFORMAT_1995";
+  }
+
+  return undefined;
+}
+
+function getVersionForSection(
+  sectionIdOrNumber: string
+): CsiMasterFormatVersion | undefined {
+  if (resolveCsiSection("MASTERFORMAT_CURRENT", sectionIdOrNumber)) {
+    return "MASTERFORMAT_CURRENT";
+  }
+
+  if (resolveCsiSection("MASTERFORMAT_1995", sectionIdOrNumber)) {
+    return "MASTERFORMAT_1995";
+  }
+
+  return undefined;
 }

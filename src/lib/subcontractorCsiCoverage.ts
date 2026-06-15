@@ -1,11 +1,18 @@
-import { mockCsiDivisions } from "@/data/mockCsiDivisions";
-import { mockCsiSections } from "@/data/mockCsiSections";
 import {
   expandSectionsTo1995,
   expandSectionsToCurrent,
   getCrosswalkEntriesFor1995,
   getCrosswalkEntriesForCurrent,
 } from "@/lib/csiCrosswalk";
+import {
+  getCsiDivisionById,
+  getCsiSectionById,
+  getDivisionIdFromSectionNumber,
+  normalizeCsiSectionNumber,
+  resolveCsiCatalogItem,
+  resolveCsiDivision,
+  resolveCsiSection,
+} from "@/lib/csiCatalog";
 import { CsiMasterFormatVersion } from "@/types/Csi";
 import { CsiCrosswalkEntry } from "@/types/CsiCrosswalk";
 import { Subcontractor } from "@/types/Subcontractor";
@@ -75,7 +82,7 @@ export function getDisplayedSubcontractorCoverage(
   const directDivisionNumbers =
     sourceVersion === targetVersion
       ? subcontractor.csiCoverage.divisionIds
-          .map(resolveDivisionNumber)
+          .map((divisionId) => resolveDivisionNumber(divisionId, sourceVersion))
           .filter(isString)
       : [];
   const divisions = uniqueStrings([
@@ -94,7 +101,7 @@ export function getDisplayedSubcontractorCoverage(
 
   if (sourceVersion !== targetVersion && sections.length === 0) {
     subcontractor.csiCoverage.divisionIds.forEach((divisionId) => {
-      const sourceDivisionNumber = resolveDivisionNumber(divisionId);
+      const sourceDivisionNumber = resolveDivisionNumber(divisionId, sourceVersion);
 
       if (sourceDivisionNumber) {
         warnings.add("CSI source division shown; no crosswalk section equivalent.");
@@ -136,9 +143,11 @@ export function getSubcontractorCoverageForVersion(
 export function getSectionNumbersForSubcontractor(
   subcontractor: Subcontractor
 ): string[] {
+  const sourceVersion = getSubcontractorCsiVersion(subcontractor);
+
   return uniqueStrings(
     subcontractor.csiCoverage.sectionIds
-      .map(resolveSectionNumber)
+      .map((sectionId) => resolveSectionNumber(sectionId, sourceVersion))
       .filter(isString)
   );
 }
@@ -146,8 +155,9 @@ export function getSectionNumbersForSubcontractor(
 export function getDivisionNumbersForSubcontractor(
   subcontractor: Subcontractor
 ): string[] {
+  const sourceVersion = getSubcontractorCsiVersion(subcontractor);
   const divisionNumbersFromDivisions = subcontractor.csiCoverage.divisionIds
-    .map(resolveDivisionNumber)
+    .map((divisionId) => resolveDivisionNumber(divisionId, sourceVersion))
     .filter(isString);
   const divisionNumbersFromSections = getDivisionNumbersFromSections(
     getSectionNumbersForSubcontractor(subcontractor)
@@ -185,15 +195,18 @@ export function convertSubcontractorSectionCoverage(
   return [];
 }
 
-function resolveSectionNumber(sectionIdOrNumber: string): string | undefined {
+function resolveSectionNumber(
+  sectionIdOrNumber: string,
+  version: CsiMasterFormatVersion
+): string | undefined {
   const normalizedValue = normalizeSectionNumber(sectionIdOrNumber);
-  const matchingSection = mockCsiSections.find(
-    (section) =>
-      section.id === sectionIdOrNumber ||
-      normalizeSectionNumber(section.number) === normalizedValue
-  );
+  const matchingSection =
+    getCsiSectionById(version, sectionIdOrNumber) ??
+    resolveCsiSection(version, normalizedValue);
+  const matchingCatalogItem =
+    matchingSection ?? resolveCsiCatalogItem(version, sectionIdOrNumber);
 
-  return matchingSection?.number ?? normalizedValue;
+  return matchingCatalogItem?.number ?? normalizedValue;
 }
 
 function getCrosswalkDisplayedSections(
@@ -255,26 +268,28 @@ function createDisplayedSection(
   }
 ): DisplayedSubcontractorCsiSection {
   const normalizedNumber = normalizeSectionNumber(sectionNumber);
-  const matchingSection = mockCsiSections.find(
-    (section) =>
-      section.version === version &&
-      normalizeSectionNumber(section.number) === normalizedNumber
-  );
-  const divisionNumber = getDivisionNumberFromSection(normalizedNumber);
+  const matchingSection = resolveCsiSection(version, normalizedNumber);
+  const matchingCatalogItem =
+    matchingSection ?? resolveCsiCatalogItem(version, normalizedNumber);
+  const fallbackDivisionNumber = getDivisionNumberFromSection(normalizedNumber);
+  const division = matchingCatalogItem
+    ? resolveCsiDivision(version, matchingCatalogItem.divisionId)
+    : undefined;
+  const divisionNumber = division?.number ?? fallbackDivisionNumber;
   const divisionId =
-    matchingSection?.divisionId ??
+    matchingCatalogItem?.divisionId ??
     resolveDivisionIdFromNumber(divisionNumber, version);
   const name =
-    matchingSection?.name ??
+    matchingCatalogItem?.name ??
     options.fallbackTitle ??
     getCrosswalkSectionTitle(normalizedNumber, version) ??
     "Source section";
 
   return {
-    id: matchingSection?.id ?? `${version}:${normalizedNumber}`,
-    number: normalizedNumber,
+    id: matchingCatalogItem?.id ?? `${version}:${normalizedNumber}`,
+    number: matchingCatalogItem?.number ?? normalizedNumber,
     name,
-    label: `${normalizedNumber} - ${name}`,
+    label: `${matchingCatalogItem?.number ?? normalizedNumber} - ${name}`,
     divisionId,
     divisionNumber,
     sourceFallback: options.sourceFallback,
@@ -291,11 +306,7 @@ function createDisplayedDivision(
   }
 ): DisplayedSubcontractorCsiDivision {
   const normalizedNumber = normalizeSectionNumber(divisionNumber);
-  const matchingDivision = mockCsiDivisions.find(
-    (division) =>
-      division.version === version &&
-      normalizeSectionNumber(division.number) === normalizedNumber
-  );
+  const matchingDivision = resolveCsiDivision(version, normalizedNumber);
   const name =
     matchingDivision?.name ??
     getCrosswalkDivisionTitle(normalizedNumber, version) ??
@@ -311,13 +322,14 @@ function createDisplayedDivision(
   };
 }
 
-function resolveDivisionNumber(divisionIdOrNumber: string): string | undefined {
+function resolveDivisionNumber(
+  divisionIdOrNumber: string,
+  version: CsiMasterFormatVersion
+): string | undefined {
   const normalizedValue = normalizeSectionNumber(divisionIdOrNumber);
-  const matchingDivision = mockCsiDivisions.find(
-    (division) =>
-      division.id === divisionIdOrNumber ||
-      normalizeSectionNumber(division.number) === normalizedValue
-  );
+  const matchingDivision =
+    getCsiDivisionById(version, divisionIdOrNumber) ??
+    resolveCsiDivision(version, normalizedValue);
 
   return matchingDivision?.number ?? getDivisionNumberFromSection(normalizedValue);
 }
@@ -326,13 +338,15 @@ function resolveDivisionIdFromNumber(
   divisionNumber: string,
   version: CsiMasterFormatVersion
 ) {
-  const matchingDivision = mockCsiDivisions.find(
-    (division) =>
-      division.version === version &&
-      normalizeSectionNumber(division.number) === normalizeSectionNumber(divisionNumber)
+  const matchingDivision = resolveCsiDivision(
+    version,
+    normalizeSectionNumber(divisionNumber)
   );
 
-  return matchingDivision?.id ?? `${version}:division:${normalizeSectionNumber(divisionNumber)}`;
+  return (
+    matchingDivision?.id ??
+    getDivisionIdFromSectionNumber(version, normalizeSectionNumber(divisionNumber))
+  );
 }
 
 function getDivisionNumbersFromSections(sectionNumbers: string[]): string[] {
@@ -344,7 +358,7 @@ function getDivisionNumberFromSection(sectionNumber: string): string {
 }
 
 function normalizeSectionNumber(value: string): string {
-  return value.replace(/\u00a0/g, " ").trim();
+  return normalizeCsiSectionNumber(value);
 }
 
 function uniqueStrings(values: string[]): string[] {
