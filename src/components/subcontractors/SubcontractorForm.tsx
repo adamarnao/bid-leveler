@@ -49,6 +49,13 @@ import {
   getLocationName,
 } from "@/components/subcontractors/form/subcontractorFormContactHelpers";
 import {
+  CheckboxField,
+  FormInput,
+  FormSelect,
+  FormTextArea,
+  VpiInput,
+} from "@/components/subcontractors/form/FormFields";
+import {
   formatVendorStatus,
   isDoNotUseVendor,
   isPreferredVendor,
@@ -2252,140 +2259,6 @@ function ResponsibilityScopeEditor({
         }
       />
     </div>
-  );
-}
-
-function FormInput({
-  label,
-  value,
-  onChange,
-  type = "text",
-  required = false,
-}: {
-  label: string;
-  value: string;
-  onChange: (value: string) => void;
-  type?: string;
-  required?: boolean;
-}) {
-  return (
-    <div className="form-field">
-      <label>
-        {label}
-        <br />
-        <input
-          type={type}
-          value={value}
-          required={required}
-          onChange={(event) => onChange(event.target.value)}
-          className="form-input"
-        />
-      </label>
-    </div>
-  );
-}
-
-function FormTextArea({
-  label,
-  value,
-  onChange,
-}: {
-  label: string;
-  value: string;
-  onChange: (value: string) => void;
-}) {
-  return (
-    <div className="form-field">
-      <label>
-        {label}
-        <br />
-        <textarea
-          value={value}
-          onChange={(event) => onChange(event.target.value)}
-          className="form-input"
-          rows={4}
-        />
-      </label>
-    </div>
-  );
-}
-
-function FormSelect({
-  label,
-  value,
-  options,
-  onChange,
-  getOptionLabel = formatStatus,
-}: {
-  label: string;
-  value: string;
-  options: string[];
-  onChange: (value: string) => void;
-  getOptionLabel?: (value: string) => string;
-}) {
-  return (
-    <div className="form-field">
-      <label>
-        {label}
-        <br />
-        <select
-          value={value}
-          onChange={(event) => onChange(event.target.value)}
-          className="form-input"
-        >
-          {options.map((option) => (
-            <option key={option} value={option}>
-              {getOptionLabel(option)}
-            </option>
-          ))}
-        </select>
-      </label>
-    </div>
-  );
-}
-
-function CheckboxField({
-  label,
-  checked,
-  onChange,
-  disabled = false,
-}: {
-  label: string;
-  checked: boolean;
-  onChange: (checked: boolean) => void;
-  disabled?: boolean;
-}) {
-  return (
-    <div className="form-field">
-      <label className="radio-option">
-        <input
-          type="checkbox"
-          checked={checked}
-          disabled={disabled}
-          onChange={(event) => onChange(event.target.checked)}
-        />
-        {label}
-      </label>
-    </div>
-  );
-}
-
-function VpiInput({
-  label,
-  value,
-  onChange,
-}: {
-  label: string;
-  value: number | undefined;
-  onChange: (value: number | undefined) => void;
-}) {
-  return (
-    <FormInput
-      label={label}
-      type="number"
-      value={formatOptionalNumber(value)}
-      onChange={(inputValue) => onChange(toOptionalNumber(inputValue))}
-    />
   );
 }
 
