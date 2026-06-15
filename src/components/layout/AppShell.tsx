@@ -37,6 +37,12 @@ const navItems = [
     isActive: (pathname: string) => pathname.startsWith("/subcontractors"),
   },
   {
+    href: "/masterformat",
+    label: "MasterFormat",
+    compactLabel: "MF",
+    isActive: (pathname: string) => pathname.startsWith("/masterformat"),
+  },
+  {
     href: "/budgets",
     label: "Budgets",
     compactLabel: "BG",
