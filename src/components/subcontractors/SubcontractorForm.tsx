@@ -20,6 +20,8 @@ import {
   PrequalificationStatus,
   Subcontractor,
   SubcontractorContact,
+  SubcontractorContactRoleContext,
+  SubcontractorContactScope,
   SubcontractorLocation,
   SubcontractorLocationType,
 } from "@/types/Subcontractor";
@@ -42,6 +44,11 @@ type CsiPickerSectionOption = {
 type StagedCsiCoverageDraft = {
   primaryDivisionId: string;
   csiCoverage: Subcontractor["csiCoverage"];
+};
+
+type StagedResponsibilitiesDraft = {
+  contactId: string;
+  inviteScopes: SubcontractorContactScope[];
 };
 
 const prequalificationStatuses: PrequalificationStatus[] = [
@@ -71,6 +78,12 @@ const locationTypes: SubcontractorLocationType[] = [
 const csiSourceVersions: CsiMasterFormatVersion[] = [
   "MASTERFORMAT_CURRENT",
   "MASTERFORMAT_1995",
+];
+const contactRoleContexts: SubcontractorContactRoleContext[] = [
+  "ESTIMATING",
+  "PROJECT_MANAGEMENT",
+  "ACCOUNTING",
+  "AWARD",
 ];
 
 export default function SubcontractorForm({
@@ -168,6 +181,52 @@ export default function SubcontractorForm({
     useState<CsiMasterFormatVersion | null>(null);
   const [stagedExpandedCsiDivisionIds, setStagedExpandedCsiDivisionIds] =
     useState<string[]>([]);
+  const [stagedResponsibilitiesDraft, setStagedResponsibilitiesDraft] =
+    useState<StagedResponsibilitiesDraft | null>(null);
+  const [showAllResponsibilityCsi, setShowAllResponsibilityCsi] =
+    useState(false);
+  const responsibilityCsiVersion =
+    draft.csiCoverage.sourceVersion ?? "MASTERFORMAT_CURRENT";
+  const responsibilityDivisionOptions = useMemo(
+    () => getCsiDivisionOptions(responsibilityCsiVersion),
+    [responsibilityCsiVersion]
+  );
+  const responsibilitySectionOptions = useMemo(
+    () => getCsiSectionOptions(responsibilityCsiVersion),
+    [responsibilityCsiVersion]
+  );
+  const visibleResponsibilityDivisionOptions = useMemo(
+    () =>
+      getVisibleResponsibilityDivisions(
+        responsibilityDivisionOptions,
+        responsibilitySectionOptions,
+        draft,
+        stagedResponsibilitiesDraft?.inviteScopes ?? [],
+        showAllResponsibilityCsi
+      ),
+    [
+      draft,
+      responsibilityDivisionOptions,
+      responsibilitySectionOptions,
+      showAllResponsibilityCsi,
+      stagedResponsibilitiesDraft,
+    ]
+  );
+  const visibleResponsibilitySectionOptions = useMemo(
+    () =>
+      getVisibleResponsibilitySections(
+        responsibilitySectionOptions,
+        draft,
+        stagedResponsibilitiesDraft?.inviteScopes ?? [],
+        showAllResponsibilityCsi
+      ),
+    [
+      draft,
+      responsibilitySectionOptions,
+      showAllResponsibilityCsi,
+      stagedResponsibilitiesDraft,
+    ]
+  );
   const stagedCsiSubcontractor = useMemo(
     () =>
       stagedCsiDraft
@@ -394,6 +453,124 @@ export default function SubcontractorForm({
         ...contact,
         isPrimary: contact.id === contactId,
       })),
+    });
+  }
+
+  function openResponsibilitiesModal(contact: SubcontractorContact) {
+    setStagedResponsibilitiesDraft({
+      contactId: contact.id,
+      inviteScopes: cloneInviteScopes(contact.inviteScopes ?? []),
+    });
+    setShowAllResponsibilityCsi(false);
+  }
+
+  function closeResponsibilitiesModal() {
+    setStagedResponsibilitiesDraft(null);
+    setShowAllResponsibilityCsi(false);
+  }
+
+  function applyResponsibilities() {
+    if (!stagedResponsibilitiesDraft) return;
+
+    const validLocationIds = new Set(
+      (draft.locations ?? []).map((location) => location.id)
+    );
+
+    updateContact(stagedResponsibilitiesDraft.contactId, {
+      inviteScopes: normalizeInviteScopes(
+        stagedResponsibilitiesDraft.inviteScopes,
+        validLocationIds
+      ),
+    });
+    closeResponsibilitiesModal();
+  }
+
+  function addResponsibilityScope() {
+    if (!stagedResponsibilitiesDraft) return;
+
+    setStagedResponsibilitiesDraft({
+      ...stagedResponsibilitiesDraft,
+      inviteScopes: [
+        ...stagedResponsibilitiesDraft.inviteScopes,
+        createEmptyContactScope(),
+      ],
+    });
+  }
+
+  function removeResponsibilityScope(scopeIndex: number) {
+    if (!stagedResponsibilitiesDraft) return;
+
+    setStagedResponsibilitiesDraft({
+      ...stagedResponsibilitiesDraft,
+      inviteScopes: stagedResponsibilitiesDraft.inviteScopes.filter(
+        (_scope, index) => index !== scopeIndex
+      ),
+    });
+  }
+
+  function updateResponsibilityScope(
+    scopeIndex: number,
+    updates: SubcontractorContactScope
+  ) {
+    if (!stagedResponsibilitiesDraft) return;
+
+    setStagedResponsibilitiesDraft({
+      ...stagedResponsibilitiesDraft,
+      inviteScopes: stagedResponsibilitiesDraft.inviteScopes.map((scope, index) =>
+        index === scopeIndex ? updates : scope
+      ),
+    });
+  }
+
+  function toggleResponsibilityScopeDivision(
+    scopeIndex: number,
+    divisionId: string,
+    checked: boolean
+  ) {
+    const scope = stagedResponsibilitiesDraft?.inviteScopes[scopeIndex];
+    if (!scope) return;
+
+    const childSectionIds = responsibilitySectionOptions
+      .filter((section) => section.divisionId === divisionId)
+      .map((section) => section.id);
+    const nextDivisionIds = checked
+      ? uniqueStrings([...(scope.divisionIds ?? []), divisionId])
+      : (scope.divisionIds ?? []).filter((id) => id !== divisionId);
+    const nextSectionIds = checked
+      ? scope.sectionIds
+      : (scope.sectionIds ?? []).filter(
+          (sectionId) => !childSectionIds.includes(sectionId)
+        );
+
+    updateResponsibilityScope(scopeIndex, {
+      ...scope,
+      divisionIds: nextDivisionIds,
+      sectionIds: nextSectionIds,
+    });
+  }
+
+  function toggleResponsibilityScopeSection(
+    scopeIndex: number,
+    sectionId: string,
+    checked: boolean
+  ) {
+    const scope = stagedResponsibilitiesDraft?.inviteScopes[scopeIndex];
+    if (!scope) return;
+
+    const sectionDivisionId =
+      getSectionDivisionIdFromOptions(sectionId, responsibilitySectionOptions) ??
+      getSectionDivisionId(sectionId);
+    const nextSectionIds = checked
+      ? uniqueStrings([...(scope.sectionIds ?? []), sectionId])
+      : (scope.sectionIds ?? []).filter((id) => id !== sectionId);
+    const nextDivisionIds = checked
+      ? uniqueStrings([...(scope.divisionIds ?? []), sectionDivisionId])
+      : scope.divisionIds;
+
+    updateResponsibilityScope(scopeIndex, {
+      ...scope,
+      divisionIds: nextDivisionIds,
+      sectionIds: nextSectionIds,
     });
   }
 
@@ -876,6 +1053,107 @@ export default function SubcontractorForm({
                 type="button"
                 className="button-secondary"
                 onClick={closeCsiCoverageModal}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {stagedResponsibilitiesDraft && (
+        <div className="modal-backdrop" role="presentation">
+          <div
+            className="modal-panel modal-panel-wide"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="contact-responsibilities-modal-title"
+          >
+            <div className="modal-header">
+              <div>
+                <h2 id="contact-responsibilities-modal-title">
+                  Responsibilities for{" "}
+                  {getContactName(draft.contacts, stagedResponsibilitiesDraft.contactId)}
+                </h2>
+                <p className="muted-text">
+                  Responsibilities determine when this contact receives invites
+                  for this company.
+                </p>
+                <p className="muted-text">
+                  Responsibilities are edited in the subcontractor&apos;s saved
+                  CSI source version. Crosswalk equivalents are used for display
+                  and matching elsewhere.
+                </p>
+              </div>
+            </div>
+
+            <div className="modal-body-scroll">
+              <label className="radio-option">
+                <input
+                  type="checkbox"
+                  checked={showAllResponsibilityCsi}
+                  onChange={(event) =>
+                    setShowAllResponsibilityCsi(event.target.checked)
+                  }
+                />
+                Show all CSI divisions and sections
+              </label>
+              {!showAllResponsibilityCsi && (
+                <p className="muted-text">
+                  Showing company-covered CSI options plus any already selected
+                  exceptions.
+                </p>
+              )}
+
+              {stagedResponsibilitiesDraft.inviteScopes.length === 0 ? (
+                <div className="responsibility-empty-state">
+                  <p className="muted-text">
+                    No specific responsibilities. This contact is treated as a
+                    general company-wide fallback.
+                  </p>
+                </div>
+              ) : (
+                <div className="responsibility-scope-list">
+                  {stagedResponsibilitiesDraft.inviteScopes.map((scope, index) => (
+                    <ResponsibilityScopeEditor
+                      key={index}
+                      scope={scope}
+                      scopeIndex={index}
+                      locations={draft.locations ?? []}
+                      divisions={visibleResponsibilityDivisionOptions}
+                      sections={visibleResponsibilitySectionOptions}
+                      companyDivisionIds={draft.csiCoverage.divisionIds}
+                      companySectionIds={draft.csiCoverage.sectionIds}
+                      onChange={updateResponsibilityScope}
+                      onRemove={removeResponsibilityScope}
+                      onToggleDivision={toggleResponsibilityScopeDivision}
+                      onToggleSection={toggleResponsibilityScopeSection}
+                    />
+                  ))}
+                </div>
+              )}
+
+              <button
+                type="button"
+                className="button-secondary"
+                onClick={addResponsibilityScope}
+              >
+                Add Responsibility Scope
+              </button>
+            </div>
+
+            <div className="modal-footer">
+              <button
+                type="button"
+                className="button-primary"
+                onClick={applyResponsibilities}
+              >
+                Apply Responsibilities
+              </button>
+              <button
+                type="button"
+                className="button-secondary"
+                onClick={closeResponsibilitiesModal}
               >
                 Cancel
               </button>
@@ -1389,6 +1667,27 @@ export default function SubcontractorForm({
                         updateContact(contact.id, { active: checked })
                       }
                     />
+                    <div className="contact-responsibility-summary">
+                      <strong>Responsibilities</strong>
+                      {getContactScopeSummaries(contact).length === 0 ? (
+                        <p className="muted-text">General company-wide fallback</p>
+                      ) : (
+                        <ul>
+                          {getContactScopeSummaries(contact).map((summary, summaryIndex) => (
+                            <li key={`${contact.id}-scope-summary-${summaryIndex}`}>
+                              {summary}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                      <button
+                        type="button"
+                        className="button-secondary"
+                        onClick={() => openResponsibilitiesModal(contact)}
+                      >
+                        Add / Edit Responsibilities
+                      </button>
+                    </div>
                   </div>
                 )}
               </div>
@@ -1708,6 +2007,223 @@ export default function SubcontractorForm({
   );
 }
 
+function ResponsibilityScopeEditor({
+  scope,
+  scopeIndex,
+  locations,
+  divisions,
+  sections,
+  companyDivisionIds,
+  companySectionIds,
+  onChange,
+  onRemove,
+  onToggleDivision,
+  onToggleSection,
+}: {
+  scope: SubcontractorContactScope;
+  scopeIndex: number;
+  locations: SubcontractorLocation[];
+  divisions: CsiDivision[];
+  sections: CsiPickerSectionOption[];
+  companyDivisionIds: string[];
+  companySectionIds: string[];
+  onChange: (scopeIndex: number, scope: SubcontractorContactScope) => void;
+  onRemove: (scopeIndex: number) => void;
+  onToggleDivision: (
+    scopeIndex: number,
+    divisionId: string,
+    checked: boolean
+  ) => void;
+  onToggleSection: (
+    scopeIndex: number,
+    sectionId: string,
+    checked: boolean
+  ) => void;
+}) {
+  return (
+    <div className="responsibility-scope-card">
+      <div className="responsibility-scope-header">
+        <strong>Scope {scopeIndex + 1}</strong>
+        <button
+          type="button"
+          className="button-secondary"
+          onClick={() => onRemove(scopeIndex)}
+        >
+          Remove
+        </button>
+      </div>
+
+      <div className="form-compact-grid">
+        <FormSelect
+          label="Role Context"
+          value={scope.roleContext ?? ""}
+          options={["", ...contactRoleContexts]}
+          getOptionLabel={(value) =>
+            value ? formatStatus(value) : "No specific context"
+          }
+          onChange={(value) =>
+            onChange(scopeIndex, {
+              ...scope,
+              roleContext: value
+                ? (value as SubcontractorContactRoleContext)
+                : undefined,
+            })
+          }
+        />
+        <FormInput
+          label="States"
+          value={(scope.states ?? []).join(", ")}
+          onChange={(value) =>
+            onChange(scopeIndex, {
+              ...scope,
+              states: parseCommaSeparatedValues(value),
+            })
+          }
+        />
+        <FormInput
+          label="Counties"
+          value={(scope.counties ?? []).join(", ")}
+          onChange={(value) =>
+            onChange(scopeIndex, {
+              ...scope,
+              counties: parseCommaSeparatedValues(value),
+            })
+          }
+        />
+        <FormInput
+          label="Cities / Markets"
+          value={(scope.citiesOrMarkets ?? []).join(", ")}
+          onChange={(value) =>
+            onChange(scopeIndex, {
+              ...scope,
+              citiesOrMarkets: parseCommaSeparatedValues(value),
+            })
+          }
+        />
+      </div>
+
+      <div className="responsibility-section">
+        <strong>Locations / Branches</strong>
+        {locations.length === 0 ? (
+          <p className="muted-text">No branches added.</p>
+        ) : (
+          <div className="responsibility-checkbox-grid">
+            {locations.map((location) => (
+              <label key={location.id} className="radio-option">
+                <input
+                  type="checkbox"
+                  checked={(scope.locationIds ?? []).includes(location.id)}
+                  onChange={(event) =>
+                    onChange(scopeIndex, {
+                      ...scope,
+                      locationIds: toggleArrayValue(
+                        scope.locationIds ?? [],
+                        location.id,
+                        event.target.checked
+                      ),
+                    })
+                  }
+                />
+                {location.name || "Unnamed location"}
+              </label>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <div className="responsibility-section">
+        <strong>CSI Divisions and Sections</strong>
+        <div className="csi-picker">
+          {divisions.map((division) => {
+            const divisionSections = sections.filter(
+              (section) => section.divisionId === division.id
+            );
+            const isOutsideCoverage = !companyDivisionIds.includes(division.id);
+
+            return (
+              <div key={division.id} className="csi-picker-division">
+                <div className="csi-picker-division-row">
+                  <span className="crm-expand-button" aria-hidden="true">
+                    -
+                  </span>
+                  <label className="csi-picker-label">
+                    <input
+                      type="checkbox"
+                      checked={(scope.divisionIds ?? []).includes(division.id)}
+                      onChange={(event) =>
+                        onToggleDivision(
+                          scopeIndex,
+                          division.id,
+                          event.target.checked
+                        )
+                      }
+                    />
+                    <span>
+                      {division.number} - {division.name}
+                    </span>
+                  </label>
+                  {isOutsideCoverage && (
+                    <span className="badge badge-warning">
+                      Outside company coverage
+                    </span>
+                  )}
+                </div>
+
+                {divisionSections.length > 0 && (
+                  <div className="csi-picker-sections">
+                    {divisionSections.map((section) => {
+                      const sectionOutsideCoverage =
+                        !companySectionIds.includes(section.id);
+
+                      return (
+                        <label
+                          key={section.id}
+                          className="csi-picker-section"
+                        >
+                          <input
+                            type="checkbox"
+                            checked={(scope.sectionIds ?? []).includes(section.id)}
+                            onChange={(event) =>
+                              onToggleSection(
+                                scopeIndex,
+                                section.id,
+                                event.target.checked
+                              )
+                            }
+                          />
+                          <span>
+                            {section.number} - {section.name}
+                          </span>
+                          {sectionOutsideCoverage && (
+                            <span className="badge badge-warning">
+                              Outside company coverage
+                            </span>
+                          )}
+                        </label>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      <FormTextArea
+        label="Notes"
+        value={scope.notes ?? ""}
+        onChange={(value) =>
+          onChange(scopeIndex, {
+            ...scope,
+            notes: value,
+          })
+        }
+      />
+    </div>
+  );
+}
+
 function FormInput({
   label,
   value,
@@ -1886,6 +2402,10 @@ function createEmptyLocation(
   };
 }
 
+function createEmptyContactScope(): SubcontractorContactScope {
+  return {};
+}
+
 function ensurePrimaryContact(contacts: SubcontractorContact[]) {
   if (contacts.length === 0) return contacts;
   if (contacts.some((contact) => contact.isPrimary)) return contacts;
@@ -1951,24 +2471,68 @@ function normalizeContactScopes(
   contact: SubcontractorContact,
   validLocationIds: Set<string>
 ) {
-  const normalizedScopes = contact.inviteScopes
-    ?.map((scope) => ({
-      ...scope,
-      locationIds: scope.locationIds?.filter((locationId) =>
+  return normalizeInviteScopes(contact.inviteScopes ?? [], validLocationIds);
+}
+
+function normalizeInviteScopes(
+  scopes: SubcontractorContactScope[],
+  validLocationIds: Set<string>
+) {
+  const normalizedScopes = scopes
+    .map((scope) => ({
+      divisionIds: normalizeStringArray(scope.divisionIds),
+      sectionIds: normalizeStringArray(scope.sectionIds),
+      states: normalizeStringArray(scope.states),
+      counties: normalizeStringArray(scope.counties),
+      citiesOrMarkets: normalizeStringArray(scope.citiesOrMarkets),
+      locationIds: normalizeStringArray(scope.locationIds).filter((locationId) =>
         validLocationIds.has(locationId)
       ),
+      roleContext: scope.roleContext,
+      notes: emptyToUndefined(scope.notes),
     }))
-    .map((scope) => ({
-      ...scope,
-      locationIds:
-        scope.locationIds && scope.locationIds.length > 0
-          ? scope.locationIds
-          : undefined,
-    }));
+    .map(removeEmptyScopeArrays)
+    .filter(isMeaningfulContactScope);
 
-  return normalizedScopes && normalizedScopes.length > 0
-    ? normalizedScopes
-    : undefined;
+  return normalizedScopes.length > 0 ? normalizedScopes : undefined;
+}
+
+function removeEmptyScopeArrays(scope: SubcontractorContactScope) {
+  return {
+    ...scope,
+    divisionIds:
+      scope.divisionIds && scope.divisionIds.length > 0
+        ? scope.divisionIds
+        : undefined,
+    sectionIds:
+      scope.sectionIds && scope.sectionIds.length > 0
+        ? scope.sectionIds
+        : undefined,
+    states: scope.states && scope.states.length > 0 ? scope.states : undefined,
+    counties:
+      scope.counties && scope.counties.length > 0 ? scope.counties : undefined,
+    citiesOrMarkets:
+      scope.citiesOrMarkets && scope.citiesOrMarkets.length > 0
+        ? scope.citiesOrMarkets
+        : undefined,
+    locationIds:
+      scope.locationIds && scope.locationIds.length > 0
+        ? scope.locationIds
+        : undefined,
+  };
+}
+
+function isMeaningfulContactScope(scope: SubcontractorContactScope) {
+  return Boolean(
+    scope.divisionIds?.length ||
+      scope.sectionIds?.length ||
+      scope.states?.length ||
+      scope.counties?.length ||
+      scope.citiesOrMarkets?.length ||
+      scope.locationIds?.length ||
+      scope.roleContext ||
+      scope.notes
+  );
 }
 
 function getSubcontractorSnapshot(subcontractor: Subcontractor) {
@@ -2055,11 +2619,97 @@ function getLocationName(locations: SubcontractorLocation[], locationId: string)
   return locations.find((location) => location.id === locationId)?.name || locationId;
 }
 
+function getContactName(contacts: SubcontractorContact[], contactId: string) {
+  return (
+    contacts.find((contact) => contact.id === contactId)?.name ||
+    "Selected Contact"
+  );
+}
+
 function formatContactSummary(contact: SubcontractorContact) {
   const contactType = formatStatus(contact.role);
   const jobTitle = contact.title?.trim();
 
   return jobTitle || contactType;
+}
+
+function getContactScopeSummaries(contact: SubcontractorContact) {
+  return (contact.inviteScopes ?? [])
+    .map(formatContactScopeSummary)
+    .filter(Boolean);
+}
+
+function formatContactScopeSummary(scope: SubcontractorContactScope) {
+  const parts = [
+    scope.roleContext ? formatStatus(scope.roleContext) : undefined,
+    scope.locationIds?.length ? `${scope.locationIds.length} location(s)` : undefined,
+    formatScopeCsiSummary(scope),
+    scope.states?.length ? `States: ${scope.states.join(", ")}` : undefined,
+    scope.counties?.length ? `Counties: ${scope.counties.join(", ")}` : undefined,
+    scope.citiesOrMarkets?.length
+      ? `Markets: ${scope.citiesOrMarkets.join(", ")}`
+      : undefined,
+    scope.notes,
+  ].filter(Boolean);
+
+  return parts.length > 0 ? parts.join(" | ") : undefined;
+}
+
+function formatScopeCsiSummary(scope: SubcontractorContactScope) {
+  const sectionLabels = (scope.sectionIds ?? []).map(getSectionLabel);
+  const divisionLabels = (scope.divisionIds ?? []).map(getDivisionName);
+
+  if (sectionLabels.length > 0) {
+    return sectionLabels.slice(0, 3).join(", ") +
+      (sectionLabels.length > 3 ? ` +${sectionLabels.length - 3} more` : "");
+  }
+
+  if (divisionLabels.length > 0) {
+    return divisionLabels.slice(0, 3).join(", ") +
+      (divisionLabels.length > 3 ? ` +${divisionLabels.length - 3} more` : "");
+  }
+
+  return undefined;
+}
+
+function getVisibleResponsibilityDivisions(
+  allDivisions: CsiDivision[],
+  allSections: CsiPickerSectionOption[],
+  subcontractor: Subcontractor,
+  scopes: SubcontractorContactScope[],
+  showAll: boolean
+) {
+  if (showAll) return allDivisions;
+
+  const selectedDivisionIds = new Set([
+    ...subcontractor.csiCoverage.divisionIds,
+    ...subcontractor.csiCoverage.sectionIds.map(getSectionDivisionId),
+    ...scopes.flatMap((scope) => scope.divisionIds ?? []),
+    ...scopes
+      .flatMap((scope) => scope.sectionIds ?? [])
+      .map((sectionId) =>
+        getSectionDivisionIdFromOptions(sectionId, allSections) ??
+        getSectionDivisionId(sectionId)
+      ),
+  ]);
+
+  return allDivisions.filter((division) => selectedDivisionIds.has(division.id));
+}
+
+function getVisibleResponsibilitySections(
+  allSections: CsiPickerSectionOption[],
+  subcontractor: Subcontractor,
+  scopes: SubcontractorContactScope[],
+  showAll: boolean
+) {
+  if (showAll) return allSections;
+
+  const selectedSectionIds = new Set([
+    ...subcontractor.csiCoverage.sectionIds,
+    ...scopes.flatMap((scope) => scope.sectionIds ?? []),
+  ]);
+
+  return allSections.filter((section) => selectedSectionIds.has(section.id));
 }
 
 function getSelectedSectionGroups(
@@ -2083,6 +2733,12 @@ function getDivisionName(divisionId: string) {
   const division = mockCsiDivisions.find((item) => item.id === divisionId);
 
   return division ? `${division.number} - ${division.name}` : divisionId;
+}
+
+function getSectionLabel(sectionId: string) {
+  const section = getAllCsiSectionOptions().find((item) => item.id === sectionId);
+
+  return section ? `${section.number} - ${section.name}` : sectionId;
 }
 
 function getSectionDivisionId(sectionId: string) {
@@ -2165,6 +2821,38 @@ function getDivisionIdsForSections(sectionIds: string[]) {
   return Array.from(
     new Set(sectionIds.map(getSectionDivisionId).filter(Boolean))
   );
+}
+
+function cloneInviteScopes(scopes: SubcontractorContactScope[]) {
+  return scopes.map((scope) => ({
+    ...scope,
+    divisionIds: scope.divisionIds ? [...scope.divisionIds] : undefined,
+    sectionIds: scope.sectionIds ? [...scope.sectionIds] : undefined,
+    states: scope.states ? [...scope.states] : undefined,
+    counties: scope.counties ? [...scope.counties] : undefined,
+    citiesOrMarkets: scope.citiesOrMarkets
+      ? [...scope.citiesOrMarkets]
+      : undefined,
+    locationIds: scope.locationIds ? [...scope.locationIds] : undefined,
+  }));
+}
+
+function toggleArrayValue(values: string[], value: string, checked: boolean) {
+  return checked
+    ? uniqueStrings([...values, value])
+    : values.filter((item) => item !== value);
+}
+
+function parseCommaSeparatedValues(value: string) {
+  return normalizeStringArray(value.split(","));
+}
+
+function normalizeStringArray(values: string[] | undefined) {
+  return uniqueStrings(values ?? []);
+}
+
+function uniqueStrings(values: string[]) {
+  return Array.from(new Set(values.map((value) => value.trim()).filter(Boolean)));
 }
 
 function getBestPrimaryDivisionId(

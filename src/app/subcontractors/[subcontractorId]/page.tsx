@@ -6,6 +6,16 @@ import { useParams } from "next/navigation";
 import AppShell from "@/components/layout/AppShell";
 import Panel from "@/components/ui/Panel";
 import {
+  companySettingsKey,
+  defaultCompanySettings,
+  getCompanySettings,
+  settingsChangedEvent,
+} from "@/lib/settings";
+import {
+  DisplayedSubcontractorCsiCoverage,
+  getDisplayedSubcontractorCoverage,
+} from "@/lib/subcontractorCsiCoverage";
+import {
   getBadgeClassName,
   getComplianceAlerts,
   getDivisionLabel,
@@ -13,13 +23,11 @@ import {
   getMergedSubcontractors,
   getVendorStatusTone,
   isPreferredVendor,
-  getPrimaryDivisionId,
   getPrimaryPhone,
-  getSecondaryDivisionLabels,
-  getSectionDivisionId,
   getSectionLabel,
   subcontractorsStorageKey,
 } from "@/lib/subcontractors";
+import { CsiMasterFormatVersion } from "@/types/Csi";
 import {
   Subcontractor,
   SubcontractorContact,
@@ -48,6 +56,7 @@ export default function SubcontractorProfilePage() {
     : rawSubcontractorId;
   const subcontractors = useSubcontractorsSnapshot();
   const subcontractor = subcontractors.find((item) => item.id === subcontractorId);
+  const displayCsiVersion = useCompanyDefaultCsiVersion();
 
   if (!subcontractor) {
     return (
@@ -67,9 +76,14 @@ export default function SubcontractorProfilePage() {
   const meaningfulLocations = getMeaningfulLocations(subcontractor);
   const simplifiedStatus = getSimplifiedStatus(subcontractor);
   const complianceWarnings = getComplianceAlerts(subcontractor);
-  const sectionLabels = subcontractor.csiCoverage.sectionIds.map(getSectionLabel);
-  const secondaryDivisionLabels = getSecondaryDivisionLabels(subcontractor);
-  const primaryTradeLabel = formatPrimaryTrade(subcontractor);
+  const displayedCoverage = getDisplayedSubcontractorCoverage(
+    subcontractor,
+    displayCsiVersion
+  );
+  const sectionLabels = displayedCoverage.sections.map((section) => section.label);
+  const secondaryDivisionLabels =
+    getDisplayedSecondaryDivisionLabels(displayedCoverage);
+  const primaryTradeLabel = formatPrimaryTrade(displayedCoverage);
 
   return (
     <AppShell title={subcontractor.companyName}>
@@ -191,12 +205,25 @@ export default function SubcontractorProfilePage() {
 
         <div className="profile-label-list">
           <strong>Selected Sections</strong>
+          {displayedCoverage.warnings.length > 0 && (
+            <div className="badge-list">
+              {displayedCoverage.warnings.map((warning) => (
+                <span key={warning} className="badge badge-warning">
+                  {warning}
+                </span>
+              ))}
+            </div>
+          )}
           {sectionLabels.length === 0 ? (
             <p className="muted-text">No sections selected.</p>
           ) : (
             <div className="badge-list">
               {sectionLabels.map((sectionLabel) => (
-                <span key={sectionLabel} className="badge badge-muted">
+                <span
+                  key={sectionLabel}
+                  className="badge badge-muted"
+                  title={sectionLabel}
+                >
                   {sectionLabel}
                 </span>
               ))}
@@ -484,6 +511,47 @@ function getSubcontractorsSnapshot(): Subcontractor[] {
   return cachedSubcontractors;
 }
 
+let cachedCompanySettingsStorageValue: string | undefined;
+let cachedCompanyDefaultCsiVersion: CsiMasterFormatVersion =
+  defaultCompanySettings.defaultCsiVersion;
+
+function useCompanyDefaultCsiVersion(): CsiMasterFormatVersion {
+  return useSyncExternalStore(
+    subscribeToCompanySettingsStorage,
+    getCompanyDefaultCsiVersionSnapshot,
+    getServerCompanyDefaultCsiVersionSnapshot
+  );
+}
+
+function subscribeToCompanySettingsStorage(onStoreChange: () => void) {
+  function handleStorage(event: StorageEvent) {
+    if (event.key === companySettingsKey) onStoreChange();
+  }
+
+  window.addEventListener("storage", handleStorage);
+  window.addEventListener(settingsChangedEvent, onStoreChange);
+
+  return () => {
+    window.removeEventListener("storage", handleStorage);
+    window.removeEventListener(settingsChangedEvent, onStoreChange);
+  };
+}
+
+function getServerCompanyDefaultCsiVersionSnapshot(): CsiMasterFormatVersion {
+  return cachedCompanyDefaultCsiVersion;
+}
+
+function getCompanyDefaultCsiVersionSnapshot(): CsiMasterFormatVersion {
+  const storageValue = localStorage.getItem(companySettingsKey) || "";
+
+  if (storageValue !== cachedCompanySettingsStorageValue) {
+    cachedCompanySettingsStorageValue = storageValue;
+    cachedCompanyDefaultCsiVersion = getCompanySettings().defaultCsiVersion;
+  }
+
+  return cachedCompanyDefaultCsiVersion;
+}
+
 function getInviteContacts(subcontractor: Subcontractor): SubcontractorContact[] {
   const activeContactsWithEmail = subcontractor.contacts.filter(
     (contact) => contact.active !== false && Boolean(contact.email?.trim())
@@ -628,16 +696,28 @@ function formatLocationAddress(location: SubcontractorLocation) {
     .join(", ");
 }
 
-function formatPrimaryTrade(subcontractor: Subcontractor) {
-  const primaryDivisionId = getPrimaryDivisionId(subcontractor);
-  const primaryDivisionLabel = getDivisionLabel(primaryDivisionId);
-  const primarySectionLabels = subcontractor.csiCoverage.sectionIds
-    .filter((sectionId) => getSectionDivisionId(sectionId) === primaryDivisionId)
-    .map(getSectionLabel);
+function formatPrimaryTrade(displayedCoverage: DisplayedSubcontractorCsiCoverage) {
+  const primaryDivision = displayedCoverage.divisions[0];
+
+  if (!primaryDivision) return "Not provided";
+
+  const primarySectionLabels = displayedCoverage.sections
+    .filter((section) => section.divisionId === primaryDivision.id)
+    .map((section) => section.label);
 
   return primarySectionLabels.length === 0
-    ? primaryDivisionLabel
-    : `${primaryDivisionLabel} - ${primarySectionLabels.join(", ")}`;
+    ? primaryDivision.label
+    : `${primaryDivision.label} - ${primarySectionLabels.join(", ")}`;
+}
+
+function getDisplayedSecondaryDivisionLabels(
+  displayedCoverage: DisplayedSubcontractorCsiCoverage
+) {
+  const primaryDivisionId = displayedCoverage.divisions[0]?.id;
+
+  return displayedCoverage.divisions
+    .filter((division) => division.id !== primaryDivisionId)
+    .map((division) => division.label);
 }
 
 function getContactDisplayLabel(contact: SubcontractorContact) {

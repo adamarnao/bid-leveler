@@ -1,6 +1,8 @@
 import { mockSubcontractors } from "@/data/mockSubcontractors";
 import { mockCsiDivisions } from "@/data/mockCsiDivisions";
 import { mockCsiSections } from "@/data/mockCsiSections";
+import { getDisplayedSubcontractorCoverage } from "@/lib/subcontractorCsiCoverage";
+import { CsiMasterFormatVersion } from "@/types/Csi";
 import {
   PrequalificationStatus,
   Subcontractor,
@@ -135,11 +137,15 @@ export type CombinedStatus = {
 
 export type SectionSubcontractorGroup = {
   sectionId: string;
+  sectionLabel?: string;
+  warnings?: string[];
   subcontractors: Subcontractor[];
 };
 
 export type DivisionSubcontractorGroup = {
   divisionId: string;
+  divisionLabel?: string;
+  warnings?: string[];
   sections: SectionSubcontractorGroup[];
 };
 
@@ -198,8 +204,16 @@ export function getBadgeClassName(tone: CombinedStatus["tone"]) {
 }
 
 export function groupSubcontractorsByDivisionAndSection(
-  subcontractors: Subcontractor[]
+  subcontractors: Subcontractor[],
+  targetVersion?: CsiMasterFormatVersion
 ): DivisionSubcontractorGroup[] {
+  if (targetVersion) {
+    return groupSubcontractorsByDisplayedDivisionAndSection(
+      subcontractors,
+      targetVersion
+    );
+  }
+
   const divisionGroups = new Map<string, Map<string, Subcontractor[]>>();
 
   subcontractors.forEach((subcontractor) => {
@@ -237,6 +251,113 @@ export function groupSubcontractorsByDivisionAndSection(
     }))
     .sort((a, b) =>
       getDivisionLabel(a.divisionId).localeCompare(getDivisionLabel(b.divisionId))
+    );
+}
+
+function groupSubcontractorsByDisplayedDivisionAndSection(
+  subcontractors: Subcontractor[],
+  targetVersion: CsiMasterFormatVersion
+): DivisionSubcontractorGroup[] {
+  const divisionGroups = new Map<
+    string,
+    {
+      label: string;
+      warnings: Set<string>;
+      sections: Map<
+        string,
+        {
+          label: string;
+          warnings: Set<string>;
+          subcontractors: Subcontractor[];
+        }
+      >;
+    }
+  >();
+
+  subcontractors.forEach((subcontractor) => {
+    const displayedCoverage = getDisplayedSubcontractorCoverage(
+      subcontractor,
+      targetVersion
+    );
+    const sections =
+      displayedCoverage.sections.length > 0
+        ? displayedCoverage.sections
+        : displayedCoverage.divisions.map((division) => ({
+            id: `${division.id}::unassigned`,
+            label: `${division.label} - Unassigned section`,
+            divisionId: division.id,
+            needsReview: division.needsReview,
+          }));
+
+    sections.forEach((section) => {
+      const division =
+        displayedCoverage.divisions.find(
+          (displayedDivision) => displayedDivision.id === section.divisionId
+        ) ??
+        displayedCoverage.divisions.find(
+          (displayedDivision) =>
+            "divisionNumber" in section &&
+            displayedDivision.number === section.divisionNumber
+        );
+      const divisionId = division?.id ?? section.divisionId;
+      const divisionLabel = division?.label ?? getDivisionLabel(divisionId);
+      const divisionGroup =
+        divisionGroups.get(divisionId) ??
+        {
+          label: divisionLabel,
+          warnings: new Set<string>(),
+          sections: new Map(),
+        };
+      const sectionGroup =
+        divisionGroup.sections.get(section.id) ??
+        {
+          label: section.label,
+          warnings: new Set<string>(),
+          subcontractors: [],
+        };
+
+      displayedCoverage.warnings.forEach((warning) => {
+        divisionGroup.warnings.add(warning);
+        sectionGroup.warnings.add(warning);
+      });
+      if (section.needsReview) {
+        sectionGroup.warnings.add("CSI display needs review.");
+      }
+
+      sectionGroup.subcontractors.push(subcontractor);
+      divisionGroup.sections.set(section.id, sectionGroup);
+      divisionGroups.set(divisionId, divisionGroup);
+    });
+  });
+
+  return Array.from(divisionGroups.entries())
+    .map(([divisionId, divisionGroup]) => ({
+      divisionId,
+      divisionLabel: divisionGroup.label,
+      warnings: Array.from(divisionGroup.warnings),
+      sections: Array.from(divisionGroup.sections.entries())
+        .map(([sectionId, sectionGroup]) => ({
+          sectionId,
+          sectionLabel: sectionGroup.label,
+          warnings: Array.from(sectionGroup.warnings),
+          subcontractors: sectionGroup.subcontractors.sort((a, b) =>
+            a.companyName.localeCompare(b.companyName)
+          ),
+        }))
+        .sort((a, b) =>
+          (a.sectionLabel ?? a.sectionId).localeCompare(
+            b.sectionLabel ?? b.sectionId,
+            undefined,
+            { numeric: true }
+          )
+        ),
+    }))
+    .sort((a, b) =>
+      (a.divisionLabel ?? a.divisionId).localeCompare(
+        b.divisionLabel ?? b.divisionId,
+        undefined,
+        { numeric: true }
+      )
     );
 }
 

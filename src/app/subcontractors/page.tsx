@@ -5,7 +5,13 @@ import Link from "next/link";
 import AppShell from "@/components/layout/AppShell";
 import Panel from "@/components/ui/Panel";
 import { mockCsiDivisions } from "@/data/mockCsiDivisions";
-import { mockCsiSections } from "@/data/mockCsiSections";
+import {
+  companySettingsKey,
+  defaultCompanySettings,
+  getCompanySettings,
+  settingsChangedEvent,
+} from "@/lib/settings";
+import { getDisplayedSubcontractorCoverage } from "@/lib/subcontractorCsiCoverage";
 import {
   DivisionSubcontractorGroup,
   getBadgeClassName,
@@ -21,6 +27,7 @@ import {
   groupSubcontractorsByDivisionAndSection,
   subcontractorsStorageKey,
 } from "@/lib/subcontractors";
+import { CsiMasterFormatVersion } from "@/types/Csi";
 import { PrequalificationStatus, Subcontractor } from "@/types/Subcontractor";
 
 const subcontractorListUiStateKey = "subcontractorListUiState";
@@ -53,12 +60,10 @@ const prequalificationFilters: PrequalificationFilter[] = [
 ];
 
 const minimumVpiOptions = ["", "3", "4", "4.5"];
-const currentDivisions = mockCsiDivisions.filter(
-  (division) => division.version === "MASTERFORMAT_CURRENT"
-);
 
 export default function SubcontractorsPage() {
   const subcontractorsSnapshot = useSubcontractorsSnapshot();
+  const displayCsiVersion = useCompanyDefaultCsiVersion();
   const subcontractors = useMemo(
     () =>
       subcontractorsSnapshot.filter((subcontractor) => !subcontractor.archived),
@@ -83,9 +88,11 @@ export default function SubcontractorsPage() {
           preferredOnly,
           hideDoNotUse,
           minimumVpi,
+          displayCsiVersion,
         })
       ),
     [
+      displayCsiVersion,
       divisionFilter,
       hideDoNotUse,
       minimumVpi,
@@ -97,8 +104,12 @@ export default function SubcontractorsPage() {
     ]
   );
   const groupedSubcontractors = useMemo(
-    () => groupSubcontractorsByDivisionAndSection(filteredSubcontractors),
-    [filteredSubcontractors]
+    () =>
+      groupSubcontractorsByDivisionAndSection(
+        filteredSubcontractors,
+        displayCsiVersion
+      ),
+    [displayCsiVersion, filteredSubcontractors]
   );
   const initialUiState = getDefaultListUiState(groupedSubcontractors);
   const [expandedDivisionIds, setExpandedDivisionIds] = useState<string[]>(
@@ -120,11 +131,12 @@ export default function SubcontractorsPage() {
     initialUiState.lastClickedSectionId
   );
   const availableSectionOptions = useMemo(
-    () =>
-      divisionFilter === "ALL"
-        ? mockCsiSections
-        : mockCsiSections.filter((section) => section.divisionId === divisionFilter),
-    [divisionFilter]
+    () => getDisplayedSectionOptions(subcontractors, displayCsiVersion, divisionFilter),
+    [displayCsiVersion, divisionFilter, subcontractors]
+  );
+  const availableDivisionOptions = useMemo(
+    () => getDisplayedDivisionOptions(subcontractors, displayCsiVersion),
+    [displayCsiVersion, subcontractors]
   );
 
   useEffect(() => {
@@ -293,13 +305,16 @@ export default function SubcontractorsPage() {
           <SelectField
             label="CSI Division"
             value={divisionFilter}
-            options={["ALL", ...currentDivisions.map((division) => division.id)]}
+            options={["ALL", ...availableDivisionOptions.map((division) => division.id)]}
             onChange={(value) => {
               setDivisionFilter(value);
               setSectionFilter("ALL");
             }}
             getOptionLabel={(value) =>
-              value === "ALL" ? "All" : getDivisionLabel(value)
+              value === "ALL"
+                ? "All"
+                : availableDivisionOptions.find((division) => division.id === value)
+                    ?.label ?? getDivisionLabel(value)
             }
           />
           <SelectField
@@ -308,7 +323,10 @@ export default function SubcontractorsPage() {
             options={["ALL", ...availableSectionOptions.map((section) => section.id)]}
             onChange={setSectionFilter}
             getOptionLabel={(value) =>
-              value === "ALL" ? "All" : getSectionLabel(value)
+              value === "ALL"
+                ? "All"
+                : availableSectionOptions.find((section) => section.id === value)
+                    ?.label ?? getSectionLabel(value)
             }
           />
           <SelectField
@@ -369,7 +387,10 @@ export default function SubcontractorsPage() {
                 <span className="crm-expand-button">
                   {isDivisionExpanded ? "-" : "+"}
                 </span>
-                <span>{getDivisionLabel(divisionGroup.divisionId)}</span>
+                <span>
+                  {divisionGroup.divisionLabel ??
+                    getDivisionLabel(divisionGroup.divisionId)}
+                </span>
                 <span className="muted-text">
                   {getDivisionVendorCount(divisionGroup)} vendors
                 </span>
@@ -397,7 +418,10 @@ export default function SubcontractorsPage() {
                         <span className="crm-expand-button">
                           {isSectionExpanded ? "-" : "+"}
                         </span>
-                        <span>{getSectionLabel(sectionGroup.sectionId)}</span>
+                        <span>
+                          {sectionGroup.sectionLabel ??
+                            getSectionLabel(sectionGroup.sectionId)}
+                        </span>
                         <span className="muted-text">
                           {sectionGroup.subcontractors.length} vendors
                         </span>
@@ -575,6 +599,47 @@ function useSubcontractorsSnapshot(): Subcontractor[] {
   );
 }
 
+let cachedCompanySettingsStorageValue: string | undefined;
+let cachedCompanyDefaultCsiVersion: CsiMasterFormatVersion =
+  defaultCompanySettings.defaultCsiVersion;
+
+function useCompanyDefaultCsiVersion(): CsiMasterFormatVersion {
+  return useSyncExternalStore(
+    subscribeToCompanySettingsStorage,
+    getCompanyDefaultCsiVersionSnapshot,
+    getServerCompanyDefaultCsiVersionSnapshot
+  );
+}
+
+function subscribeToCompanySettingsStorage(onStoreChange: () => void) {
+  function handleStorage(event: StorageEvent) {
+    if (event.key === companySettingsKey) onStoreChange();
+  }
+
+  window.addEventListener("storage", handleStorage);
+  window.addEventListener(settingsChangedEvent, onStoreChange);
+
+  return () => {
+    window.removeEventListener("storage", handleStorage);
+    window.removeEventListener(settingsChangedEvent, onStoreChange);
+  };
+}
+
+function getServerCompanyDefaultCsiVersionSnapshot(): CsiMasterFormatVersion {
+  return cachedCompanyDefaultCsiVersion;
+}
+
+function getCompanyDefaultCsiVersionSnapshot(): CsiMasterFormatVersion {
+  const storageValue = localStorage.getItem(companySettingsKey) || "";
+
+  if (storageValue !== cachedCompanySettingsStorageValue) {
+    cachedCompanySettingsStorageValue = storageValue;
+    cachedCompanyDefaultCsiVersion = getCompanySettings().defaultCsiVersion;
+  }
+
+  return cachedCompanyDefaultCsiVersion;
+}
+
 function subscribeToSubcontractorStorage(onStoreChange: () => void) {
   window.addEventListener("storage", onStoreChange);
 
@@ -728,9 +793,14 @@ function matchesFilters(
     preferredOnly: boolean;
     hideDoNotUse: boolean;
     minimumVpi: string;
+    displayCsiVersion: CsiMasterFormatVersion;
   }
 ) {
   const complianceAlerts = getComplianceAlerts(subcontractor);
+  const displayedCoverage = getDisplayedSubcontractorCoverage(
+    subcontractor,
+    filters.displayCsiVersion
+  );
 
   if (filters.hideDoNotUse && subcontractor.relationshipStatus === "DO_NOT_USE") {
     return false;
@@ -755,14 +825,18 @@ function matchesFilters(
 
   if (
     filters.divisionFilter !== "ALL" &&
-    !subcontractor.csiCoverage.divisionIds.includes(filters.divisionFilter)
+    !displayedCoverage.divisions.some(
+      (division) => division.id === filters.divisionFilter
+    )
   ) {
     return false;
   }
 
   if (
     filters.sectionFilter !== "ALL" &&
-    !subcontractor.csiCoverage.sectionIds.includes(filters.sectionFilter)
+    !displayedCoverage.sections.some(
+      (section) => section.id === filters.sectionFilter
+    )
   ) {
     return false;
   }
@@ -776,7 +850,9 @@ function matchesFilters(
   }
 
   if (filters.searchQuery.trim()) {
-    return getSearchText(subcontractor).includes(normalize(filters.searchQuery));
+    return getSearchText(subcontractor, displayedCoverage).includes(
+      normalize(filters.searchQuery)
+    );
   }
 
   return true;
@@ -794,7 +870,10 @@ function matchesPrequalificationFilter(
   return status === filter;
 }
 
-function getSearchText(subcontractor: Subcontractor) {
+function getSearchText(
+  subcontractor: Subcontractor,
+  displayedCoverage: ReturnType<typeof getDisplayedSubcontractorCoverage>
+) {
   const primaryContact = getPrimaryContact(subcontractor);
   const primaryPhone = getPrimaryPhone(primaryContact, subcontractor);
   const values = [
@@ -807,12 +886,74 @@ function getSearchText(subcontractor: Subcontractor) {
     ...subcontractor.serviceArea.states,
     ...subcontractor.serviceArea.counties,
     ...subcontractor.serviceArea.citiesOrMarkets,
-    ...subcontractor.csiCoverage.divisionIds.map(getDivisionLabel),
-    ...subcontractor.csiCoverage.sectionIds.map(getSectionLabel),
+    ...displayedCoverage.divisions.map((division) => division.label),
+    ...displayedCoverage.sections.map((section) => section.label),
     subcontractor.csiCoverage.specialtyScopeNotes,
   ];
 
   return normalize(values.filter(Boolean).join(" "));
+}
+
+function getDisplayedDivisionOptions(
+  subcontractors: Subcontractor[],
+  displayCsiVersion: CsiMasterFormatVersion
+) {
+  const divisionOptions = new Map<string, { id: string; label: string }>();
+
+  mockCsiDivisions
+    .filter((division) => division.version === displayCsiVersion)
+    .forEach((division) => {
+      divisionOptions.set(division.id, {
+        id: division.id,
+        label: `Division ${division.number} - ${division.name}`,
+      });
+    });
+
+  subcontractors.forEach((subcontractor) => {
+    getDisplayedSubcontractorCoverage(subcontractor, displayCsiVersion).divisions.forEach(
+      (division) => {
+        divisionOptions.set(division.id, {
+          id: division.id,
+          label: division.label,
+        });
+      }
+    );
+  });
+
+  return Array.from(divisionOptions.values()).sort((a, b) =>
+    a.label.localeCompare(b.label, undefined, { numeric: true })
+  );
+}
+
+function getDisplayedSectionOptions(
+  subcontractors: Subcontractor[],
+  displayCsiVersion: CsiMasterFormatVersion,
+  divisionFilter: string
+) {
+  const sectionOptions = new Map<
+    string,
+    { id: string; label: string; divisionId: string }
+  >();
+
+  subcontractors.forEach((subcontractor) => {
+    getDisplayedSubcontractorCoverage(subcontractor, displayCsiVersion).sections.forEach(
+      (section) => {
+        if (divisionFilter !== "ALL" && section.divisionId !== divisionFilter) {
+          return;
+        }
+
+        sectionOptions.set(section.id, {
+          id: section.id,
+          label: section.label,
+          divisionId: section.divisionId,
+        });
+      }
+    );
+  });
+
+  return Array.from(sectionOptions.values()).sort((a, b) =>
+    a.label.localeCompare(b.label, undefined, { numeric: true })
+  );
 }
 
 function normalize(value: string) {

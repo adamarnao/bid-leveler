@@ -107,7 +107,7 @@ textarea {
 
 .app-shell {
   display: flex;
-  width: max-content;
+  width: 100%;
   min-width: 100%;
   min-height: 100vh;
   background: var(--color-background);
@@ -374,6 +374,58 @@ textarea {
 
 .form-record-body {
   padding: 12px;
+}
+
+.contact-responsibility-summary {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-control);
+  background: var(--color-surface-muted);
+}
+
+.contact-responsibility-summary ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.responsibility-empty-state,
+.responsibility-scope-card {
+  padding: 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-control);
+  background: var(--color-surface);
+}
+
+.responsibility-scope-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 12px 0;
+}
+
+.responsibility-scope-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.responsibility-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.responsibility-checkbox-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 8px 12px;
 }
 
 .compliance-document-list {
@@ -732,12 +784,16 @@ textarea {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
+  max-width: 100%;
+  min-width: 0;
 }
 
 .badge {
   display: inline-flex;
   align-items: center;
   width: fit-content;
+  max-width: 100%;
+  min-width: 0;
   margin-left: 6px;
   border: 1px solid var(--color-border);
   border-radius: 999px;
@@ -745,7 +801,9 @@ textarea {
   font-size: 12px;
   font-weight: 700;
   line-height: 1.4;
-  white-space: nowrap;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: normal;
 }
 
 .badge-list .badge {
@@ -996,6 +1054,7 @@ textarea {
   justify-content: space-between;
   gap: 16px;
   align-items: flex-start;
+  min-width: 0;
 }
 
 .profile-title-row {
@@ -1003,6 +1062,7 @@ textarea {
   flex-wrap: wrap;
   gap: 8px;
   align-items: center;
+  min-width: 0;
 }
 
 .profile-title-row h2 {
@@ -1017,9 +1077,10 @@ textarea {
 .profile-detail-grid,
 .profile-score-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(220px, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
   margin-top: 16px;
+  min-width: 0;
 }
 
 .profile-detail {
@@ -1027,6 +1088,7 @@ textarea {
   flex-direction: column;
   gap: 3px;
   min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .profile-detail span,
@@ -1045,14 +1107,16 @@ textarea {
 .profile-contact-grid,
 .profile-card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
   gap: 12px;
+  min-width: 0;
 }
 
 .profile-contact-card,
 .profile-info-card,
 .profile-routing-card,
 .profile-metric {
+  min-width: 0;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-control);
   background: var(--color-surface-muted);
@@ -1070,7 +1134,10 @@ textarea {
 .profile-label-list,
 .profile-note,
 .profile-empty-warning {
+  max-width: 100%;
+  min-width: 0;
   margin-top: 16px;
+  overflow-wrap: anywhere;
 }
 
 .profile-empty-warning {
@@ -1083,6 +1150,7 @@ textarea {
   display: grid;
   grid-template-columns: repeat(3, minmax(140px, 1fr));
   gap: 12px;
+  min-width: 0;
 }
 
 .profile-metric {
@@ -1116,12 +1184,15 @@ textarea {
   display: flex;
   flex-direction: column;
   gap: 14px;
+  min-width: 0;
 }
 
 .profile-info-card h3,
 .profile-scope-group-list h4 {
+  min-width: 0;
   margin-top: 0;
   margin-bottom: 8px;
+  overflow-wrap: anywhere;
 }
 
 .profile-scope-group-list h4 {
