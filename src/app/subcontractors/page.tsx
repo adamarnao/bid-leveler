@@ -72,7 +72,10 @@ const minimumVpiOptions = ["", "3", "4", "4.5"];
 
 export default function SubcontractorsPage() {
   const subcontractorsSnapshot = useSubcontractorsSnapshot();
-  const displayCsiVersion = useCompanyDefaultCsiVersion();
+  const companyDefaultCsiVersion = useCompanyDefaultCsiVersion();
+  const [listDisplayCsiVersion, setListDisplayCsiVersion] =
+    useState<CsiMasterFormatVersion>(companyDefaultCsiVersion);
+  const hasChangedListDisplayCsiVersion = useRef(false);
   const subcontractors = useMemo(
     () =>
       subcontractorsSnapshot.filter((subcontractor) => !subcontractor.archived),
@@ -83,10 +86,13 @@ export default function SubcontractorsPage() {
       new Map(
         subcontractors.map((subcontractor) => [
           subcontractor.id,
-          getDisplayedSubcontractorCoverage(subcontractor, displayCsiVersion),
+          getDisplayedSubcontractorCoverage(
+            subcontractor,
+            listDisplayCsiVersion
+          ),
         ])
       ),
-    [displayCsiVersion, subcontractors]
+    [listDisplayCsiVersion, subcontractors]
   );
   const [searchQuery, setSearchQuery] = useState("");
   const [prequalificationFilter, setPrequalificationFilter] =
@@ -167,11 +173,24 @@ export default function SubcontractorsPage() {
     () =>
       getDisplayedDivisionOptions(
         subcontractors,
-        displayCsiVersion,
+        listDisplayCsiVersion,
         displayedCoverageBySubcontractorId
       ),
-    [displayCsiVersion, displayedCoverageBySubcontractorId, subcontractors]
+    [listDisplayCsiVersion, displayedCoverageBySubcontractorId, subcontractors]
   );
+
+  useEffect(() => {
+    if (hasChangedListDisplayCsiVersion.current) return;
+
+    setListDisplayCsiVersion(companyDefaultCsiVersion);
+  }, [companyDefaultCsiVersion]);
+
+  function handleListDisplayCsiVersionChange(value: string) {
+    hasChangedListDisplayCsiVersion.current = true;
+    setListDisplayCsiVersion(value as CsiMasterFormatVersion);
+    setDivisionFilter("ALL");
+    setSectionFilter("ALL");
+  }
 
   useEffect(() => {
     if (hasStartedUiStateRestore.current) return;
@@ -315,6 +334,13 @@ export default function SubcontractorsPage() {
 
       <Panel title="Search and Filters">
         <div className="form-grid">
+          <SelectField
+            label="Display CSI as"
+            value={listDisplayCsiVersion}
+            options={["MASTERFORMAT_CURRENT", "MASTERFORMAT_1995"]}
+            onChange={handleListDisplayCsiVersionChange}
+            getOptionLabel={formatCsiMasterFormatVersion}
+          />
           <div className="form-field">
             <label>
               Search
@@ -1145,4 +1171,10 @@ function formatPrequalificationFilter(value: string) {
   if (value === "HAS_ALERTS") return "Has Compliance Alerts";
 
   return formatVendorStatus(value as PrequalificationStatus);
+}
+
+function formatCsiMasterFormatVersion(value: string) {
+  if (value === "MASTERFORMAT_1995") return "MasterFormat 1995";
+
+  return "Current MasterFormat";
 }

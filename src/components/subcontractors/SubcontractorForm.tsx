@@ -24,6 +24,8 @@ import {
 } from "@/components/subcontractors/form/subcontractorFormNormalization";
 import {
   CsiPickerSectionOption,
+  csiDivisionIdsContain,
+  csiSectionIdsContain,
   getBestPrimaryDivisionId,
   getCrosswalkIssueCount,
   getCsiDivisionOptions,
@@ -37,27 +39,24 @@ import {
   getSelectedSectionGroups,
   getVisibleResponsibilityDivisions,
   getVisibleResponsibilitySections,
+  filterOutCsiDivisionIds,
+  filterOutCsiSectionIds,
 } from "@/components/subcontractors/form/subcontractorFormCsiHelpers";
 import {
-  formatContactSummary,
   getContactName,
-  getContactScopeSummaries,
-  getLocationName,
 } from "@/components/subcontractors/form/subcontractorFormContactHelpers";
 import {
-  CheckboxField,
   FormInput,
   FormSelect,
   FormTextArea,
 } from "@/components/subcontractors/form/FormFields";
 import CompanyInformationSection from "@/components/subcontractors/form/CompanyInformationSection";
+import ContactsSection from "@/components/subcontractors/form/ContactsSection";
 import LocationsSection from "@/components/subcontractors/form/LocationsSection";
 import VendorStatusComplianceSection from "@/components/subcontractors/form/VendorStatusComplianceSection";
 import VpiPerformanceSection from "@/components/subcontractors/form/VpiPerformanceSection";
 import { CsiDivision, CsiMasterFormatVersion } from "@/types/Csi";
 import {
-  ContactRole,
-  PhoneType,
   Subcontractor,
   SubcontractorContact,
   SubcontractorContactRoleContext,
@@ -82,15 +81,6 @@ type StagedResponsibilitiesDraft = {
   inviteScopes: SubcontractorContactScope[];
 };
 
-const contactRoles: ContactRole[] = [
-  "ESTIMATOR",
-  "PROJECT_MANAGER",
-  "OWNER",
-  "ACCOUNTING",
-  "GENERAL",
-];
-
-const phoneTypes: PhoneType[] = ["OFFICE", "MOBILE"];
 const csiSourceVersions: CsiMasterFormatVersion[] = [
   "MASTERFORMAT_CURRENT",
   "MASTERFORMAT_1995",
@@ -472,6 +462,12 @@ export default function SubcontractorForm({
     });
   }
 
+  function markDefaultInviteRecipient(contactId: string, checked: boolean) {
+    updateContact(contactId, {
+      isDefaultInviteRecipient: checked,
+    });
+  }
+
   function openResponsibilitiesModal(contact: SubcontractorContact) {
     setStagedResponsibilitiesDraft({
       contactId: contact.id,
@@ -551,11 +547,17 @@ export default function SubcontractorForm({
       .map((section) => section.id);
     const nextDivisionIds = checked
       ? uniqueStrings([...(scope.divisionIds ?? []), divisionId])
-      : (scope.divisionIds ?? []).filter((id) => id !== divisionId);
+      : filterOutCsiDivisionIds(
+          responsibilityCsiVersion,
+          scope.divisionIds,
+          [divisionId]
+        );
     const nextSectionIds = checked
       ? scope.sectionIds
-      : (scope.sectionIds ?? []).filter(
-          (sectionId) => !childSectionIds.includes(sectionId)
+      : filterOutCsiSectionIds(
+          responsibilityCsiVersion,
+          scope.sectionIds,
+          childSectionIds
         );
 
     updateResponsibilityScope(scopeIndex, {
@@ -578,7 +580,11 @@ export default function SubcontractorForm({
       getSectionDivisionId(sectionId);
     const nextSectionIds = checked
       ? uniqueStrings([...(scope.sectionIds ?? []), sectionId])
-      : (scope.sectionIds ?? []).filter((id) => id !== sectionId);
+      : filterOutCsiSectionIds(
+          responsibilityCsiVersion,
+          scope.sectionIds,
+          [sectionId]
+        );
     const nextDivisionIds = checked
       ? uniqueStrings([...(scope.divisionIds ?? []), sectionDivisionId])
       : scope.divisionIds;
@@ -1095,9 +1101,9 @@ export default function SubcontractorForm({
                   for this company.
                 </p>
                 <p className="muted-text">
-                  Responsibilities are edited in the subcontractor&apos;s saved
-                  CSI source version. Crosswalk equivalents are used for display
-                  and matching elsewhere.
+                  Responsibilities are edited in this subcontractor&apos;s saved
+                  CSI source version:{" "}
+                  {formatCsiSourceVersion(responsibilityCsiVersion)}.
                 </p>
               </div>
             </div>
@@ -1111,7 +1117,7 @@ export default function SubcontractorForm({
                     setShowAllResponsibilityCsi(event.target.checked)
                   }
                 />
-                Show all CSI divisions and sections
+                Show all source-version CSI divisions and sections
               </label>
               {!showAllResponsibilityCsi && (
                 <p className="muted-text">
@@ -1137,6 +1143,7 @@ export default function SubcontractorForm({
                       locations={draft.locations ?? []}
                       divisions={visibleResponsibilityDivisionOptions}
                       sections={visibleResponsibilitySectionOptions}
+                      csiVersion={responsibilityCsiVersion}
                       companyDivisionIds={draft.csiCoverage.divisionIds}
                       companySectionIds={draft.csiCoverage.sectionIds}
                       onChange={updateResponsibilityScope}
@@ -1197,194 +1204,20 @@ export default function SubcontractorForm({
           onToggleLocation={toggleExpanded}
         />
 
-        <Panel title="Contacts">
-          {draft.contacts.map((contact, index) => {
-            const isExpanded = expandedContactIds.includes(contact.id);
-
-            return (
-              <div key={contact.id} className="form-record">
-                <div className="form-record-header">
-                  <button
-                    type="button"
-                    className="crm-expand-button"
-                    aria-expanded={isExpanded}
-                    onClick={() =>
-                      toggleExpanded(contact.id, setExpandedContactIds)
-                    }
-                  >
-                    {isExpanded ? "-" : "+"}
-                  </button>
-                  <div className="form-record-summary">
-                    <strong>{contact.name || `Contact ${index + 1}`}</strong>
-                    <span className="muted-text">
-                      {formatContactSummary(contact)}
-                    </span>
-                    {contact.locationId && (
-                      <span className="muted-text">
-                        {getLocationName(draft.locations ?? [], contact.locationId)}
-                      </span>
-                    )}
-                    {contact.isPrimary === true && (
-                      <span className="badge badge-primary">Primary</span>
-                    )}
-                    {contact.isDefaultInviteRecipient === true && (
-                      <span className="badge badge-secondary">Default Invite</span>
-                    )}
-                    {contact.active === false && (
-                      <span className="badge badge-warning">Inactive</span>
-                    )}
-                  </div>
-                  <button
-                    type="button"
-                    className="button-secondary"
-                    onClick={() => removeContact(contact.id)}
-                    disabled={draft.contacts.length === 1}
-                  >
-                    Remove
-                  </button>
-                </div>
-
-                {isExpanded && (
-                  <div className="form-record-body form-compact-grid">
-                    <FormSelect
-                      label="Contact Type"
-                      value={contact.role}
-                      options={contactRoles}
-                      onChange={(value) =>
-                        updateContact(contact.id, { role: value as ContactRole })
-                      }
-                    />
-                    <FormInput
-                      label="Name"
-                      value={contact.name}
-                      onChange={(value) =>
-                        updateContact(contact.id, { name: value })
-                      }
-                    />
-                    <FormInput
-                      label="Job Title"
-                      value={contact.title ?? ""}
-                      onChange={(value) =>
-                        updateContact(contact.id, { title: value })
-                      }
-                    />
-                    <FormInput
-                      label="Email"
-                      type="email"
-                      value={contact.email ?? ""}
-                      onChange={(value) =>
-                        updateContact(contact.id, { email: value })
-                      }
-                    />
-                    <FormInput
-                      label="Office Phone"
-                      value={contact.officePhone ?? ""}
-                      onChange={(value) =>
-                        updateContact(contact.id, { officePhone: value })
-                      }
-                    />
-                    <FormInput
-                      label="Ext."
-                      value={contact.officePhoneExtension ?? ""}
-                      onChange={(value) =>
-                        updateContact(contact.id, {
-                          officePhoneExtension: value,
-                        })
-                      }
-                    />
-                    <FormInput
-                      label="Mobile Phone"
-                      value={contact.mobilePhone ?? ""}
-                      onChange={(value) =>
-                        updateContact(contact.id, { mobilePhone: value })
-                      }
-                    />
-                    <FormSelect
-                      label="Primary Phone"
-                      value={contact.primaryPhoneType ?? "OFFICE"}
-                      options={phoneTypes}
-                      onChange={(value) =>
-                        updateContact(contact.id, {
-                          primaryPhoneType: value as PhoneType,
-                        })
-                      }
-                    />
-                    <FormSelect
-                      label="Location / Branch"
-                      value={contact.locationId ?? ""}
-                      options={[
-                        "",
-                        ...(draft.locations ?? []).map((location) => location.id),
-                      ]}
-                      getOptionLabel={(locationId) =>
-                        locationId
-                          ? getLocationName(draft.locations ?? [], locationId)
-                          : "Company-wide / no specific branch"
-                      }
-                      onChange={(value) =>
-                        updateContact(contact.id, {
-                          locationId: value || undefined,
-                        })
-                      }
-                    />
-                    <div className="form-field">
-                      <label className="radio-option">
-                        <input
-                          type="radio"
-                          name={`${draft.id}-primary-contact`}
-                          checked={contact.isPrimary === true}
-                          onChange={() => markPrimaryContact(contact.id)}
-                        />
-                        Primary contact
-                      </label>
-                    </div>
-                    <CheckboxField
-                      label="Default invite recipient"
-                      checked={contact.isDefaultInviteRecipient === true}
-                      onChange={(checked) =>
-                        updateContact(contact.id, {
-                          isDefaultInviteRecipient: checked,
-                        })
-                      }
-                    />
-                    <CheckboxField
-                      label="Active"
-                      checked={contact.active !== false}
-                      onChange={(checked) =>
-                        updateContact(contact.id, { active: checked })
-                      }
-                    />
-                    <div className="contact-responsibility-summary">
-                      <strong>Responsibilities</strong>
-                      {getContactScopeSummaries(contact).length === 0 ? (
-                        <p className="muted-text">General company-wide fallback</p>
-                      ) : (
-                        <ul>
-                          {getContactScopeSummaries(contact).map((summary, summaryIndex) => (
-                            <li key={`${contact.id}-scope-summary-${summaryIndex}`}>
-                              {summary}
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                      <button
-                        type="button"
-                        className="button-secondary"
-                        onClick={() => openResponsibilitiesModal(contact)}
-                      >
-                        Add / Edit Responsibilities
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
-            );
-          })}
-
-          <button type="button" className="button-secondary" onClick={addContact}>
-            Add Contact
-          </button>
-        </Panel>
+        <ContactsSection
+          subcontractorId={draft.id}
+          contacts={draft.contacts}
+          locations={draft.locations}
+          expandedContactIds={expandedContactIds}
+          setExpandedContactIds={setExpandedContactIds}
+          onAddContact={addContact}
+          onUpdateContact={updateContact}
+          onRemoveContact={removeContact}
+          onMarkPrimaryContact={markPrimaryContact}
+          onMarkDefaultInviteRecipient={markDefaultInviteRecipient}
+          onOpenResponsibilities={openResponsibilitiesModal}
+          onToggleContact={toggleExpanded}
+        />
 
         <Panel title="CSI Coverage">
           <FormTextArea
@@ -1478,6 +1311,7 @@ function ResponsibilityScopeEditor({
   locations,
   divisions,
   sections,
+  csiVersion,
   companyDivisionIds,
   companySectionIds,
   onChange,
@@ -1490,6 +1324,7 @@ function ResponsibilityScopeEditor({
   locations: SubcontractorLocation[];
   divisions: CsiDivision[];
   sections: CsiPickerSectionOption[];
+  csiVersion: CsiMasterFormatVersion;
   companyDivisionIds: string[];
   companySectionIds: string[];
   onChange: (scopeIndex: number, scope: SubcontractorContactScope) => void;
@@ -1603,7 +1438,11 @@ function ResponsibilityScopeEditor({
             const divisionSections = sections.filter(
               (section) => section.divisionId === division.id
             );
-            const isOutsideCoverage = !companyDivisionIds.includes(division.id);
+            const isOutsideCoverage = !csiDivisionIdsContain(
+              csiVersion,
+              companyDivisionIds,
+              division.id
+            );
 
             return (
               <div key={division.id} className="csi-picker-division">
@@ -1614,7 +1453,11 @@ function ResponsibilityScopeEditor({
                   <label className="csi-picker-label">
                     <input
                       type="checkbox"
-                      checked={(scope.divisionIds ?? []).includes(division.id)}
+                      checked={csiDivisionIdsContain(
+                        csiVersion,
+                        scope.divisionIds,
+                        division.id
+                      )}
                       onChange={(event) =>
                         onToggleDivision(
                           scopeIndex,
@@ -1638,7 +1481,11 @@ function ResponsibilityScopeEditor({
                   <div className="csi-picker-sections">
                     {divisionSections.map((section) => {
                       const sectionOutsideCoverage =
-                        !companySectionIds.includes(section.id);
+                        !csiSectionIdsContain(
+                          csiVersion,
+                          companySectionIds,
+                          section.id
+                        );
 
                       return (
                         <label
@@ -1647,7 +1494,11 @@ function ResponsibilityScopeEditor({
                         >
                           <input
                             type="checkbox"
-                            checked={(scope.sectionIds ?? []).includes(section.id)}
+                            checked={csiSectionIdsContain(
+                              csiVersion,
+                              scope.sectionIds,
+                              section.id
+                            )}
                             onChange={(event) =>
                               onToggleSection(
                                 scopeIndex,

@@ -1,10 +1,16 @@
 import { csiCrosswalkEntries } from "@/data/csiCrosswalk";
 import { mockCsiDivisions } from "@/data/mockCsiDivisions";
-import { mockCsiSections } from "@/data/mockCsiSections";
 import {
   getCrosswalkEntriesFor1995,
   getCrosswalkEntriesForCurrent,
 } from "@/lib/csiCrosswalk";
+import {
+  getCsiDivisions,
+  getCsiSections,
+  resolveCsiCatalogItem,
+  resolveCsiDivision,
+  resolveCsiSection,
+} from "@/lib/csiCatalog";
 import {
   getSectionNumbersForSubcontractor,
   getSubcontractorCoverageForVersion,
@@ -32,17 +38,27 @@ export function getVisibleResponsibilityDivisions(
 ) {
   if (showAll) return allDivisions;
 
-  const selectedDivisionIds = new Set([
-    ...subcontractor.csiCoverage.divisionIds,
-    ...subcontractor.csiCoverage.sectionIds.map(getSectionDivisionId),
-    ...scopes.flatMap((scope) => scope.divisionIds ?? []),
-    ...scopes
-      .flatMap((scope) => scope.sectionIds ?? [])
-      .map((sectionId) =>
-        getSectionDivisionIdFromOptions(sectionId, allSections) ??
-        getSectionDivisionId(sectionId)
-      ),
-  ]);
+  const sourceVersion = getSubcontractorSourceVersion(subcontractor);
+  const selectedDivisionIds = new Set<string>();
+
+  subcontractor.csiCoverage.divisionIds.forEach((divisionId) => {
+    addResolvedDivisionId(selectedDivisionIds, sourceVersion, divisionId);
+  });
+  subcontractor.csiCoverage.sectionIds.forEach((sectionId) => {
+    addResolvedSectionDivisionId(selectedDivisionIds, sourceVersion, sectionId);
+  });
+  scopes.flatMap((scope) => scope.divisionIds ?? []).forEach((divisionId) => {
+    addResolvedDivisionId(selectedDivisionIds, sourceVersion, divisionId);
+  });
+  scopes.flatMap((scope) => scope.sectionIds ?? []).forEach((sectionId) => {
+    const optionDivisionId = getSectionDivisionIdFromOptions(sectionId, allSections);
+
+    addResolvedSectionDivisionId(
+      selectedDivisionIds,
+      sourceVersion,
+      optionDivisionId ?? sectionId
+    );
+  });
 
   return allDivisions.filter((division) => selectedDivisionIds.has(division.id));
 }
@@ -55,10 +71,15 @@ export function getVisibleResponsibilitySections(
 ) {
   if (showAll) return allSections;
 
-  const selectedSectionIds = new Set([
-    ...subcontractor.csiCoverage.sectionIds,
-    ...scopes.flatMap((scope) => scope.sectionIds ?? []),
-  ]);
+  const sourceVersion = getSubcontractorSourceVersion(subcontractor);
+  const selectedSectionIds = new Set<string>();
+
+  subcontractor.csiCoverage.sectionIds.forEach((sectionId) => {
+    addResolvedSectionId(selectedSectionIds, sourceVersion, sectionId);
+  });
+  scopes.flatMap((scope) => scope.sectionIds ?? []).forEach((sectionId) => {
+    addResolvedSectionId(selectedSectionIds, sourceVersion, sectionId);
+  });
 
   return allSections.filter((section) => selectedSectionIds.has(section.id));
 }
@@ -103,6 +124,80 @@ export function getSectionDivisionIdFromOptions(
   sectionOptions: CsiPickerSectionOption[]
 ) {
   return sectionOptions.find((section) => section.id === sectionId)?.divisionId;
+}
+
+export function csiDivisionIdsContain(
+  version: CsiMasterFormatVersion,
+  divisionIds: string[] | undefined,
+  divisionId: string
+) {
+  const resolvedDivisionId = resolveDivisionIdentity(version, divisionId);
+
+  return (divisionIds ?? []).some(
+    (candidateDivisionId) =>
+      resolveDivisionIdentity(version, candidateDivisionId) === resolvedDivisionId
+  );
+}
+
+export function csiSectionIdsContain(
+  version: CsiMasterFormatVersion,
+  sectionIds: string[] | undefined,
+  sectionId: string
+) {
+  const resolvedSectionId = resolveSectionIdentity(version, sectionId);
+
+  return (sectionIds ?? []).some(
+    (candidateSectionId) =>
+      resolveSectionIdentity(version, candidateSectionId) === resolvedSectionId
+  );
+}
+
+export function filterOutCsiSectionIds(
+  version: CsiMasterFormatVersion,
+  sectionIds: string[] | undefined,
+  idsToRemove: string[]
+) {
+  return (sectionIds ?? []).filter(
+    (sectionId) =>
+      !idsToRemove.some((idToRemove) =>
+        csiSectionIdsReferToSameItem(version, sectionId, idToRemove)
+      )
+  );
+}
+
+export function filterOutCsiDivisionIds(
+  version: CsiMasterFormatVersion,
+  divisionIds: string[] | undefined,
+  idsToRemove: string[]
+) {
+  return (divisionIds ?? []).filter(
+    (divisionId) =>
+      !idsToRemove.some((idToRemove) =>
+        csiDivisionIdsReferToSameItem(version, divisionId, idToRemove)
+      )
+  );
+}
+
+export function csiSectionIdsReferToSameItem(
+  version: CsiMasterFormatVersion,
+  sectionIdA: string,
+  sectionIdB: string
+) {
+  return (
+    resolveSectionIdentity(version, sectionIdA) ===
+    resolveSectionIdentity(version, sectionIdB)
+  );
+}
+
+export function csiDivisionIdsReferToSameItem(
+  version: CsiMasterFormatVersion,
+  divisionIdA: string,
+  divisionIdB: string
+) {
+  return (
+    resolveDivisionIdentity(version, divisionIdA) ===
+    resolveDivisionIdentity(version, divisionIdB)
+  );
 }
 
 export function getDisplayedSectionIds(
@@ -227,23 +322,19 @@ export function getCrosswalkIssueCount(
 export function getCsiDivisionOptions(
   version: CsiMasterFormatVersion
 ): CsiDivision[] {
-  return mockCsiDivisions.filter((division) => division.version === version);
+  return getCsiDivisions(version);
 }
 
 export function getCsiSectionOptions(
   version: CsiMasterFormatVersion
 ): CsiPickerSectionOption[] {
-  if (version === "MASTERFORMAT_CURRENT") {
-    return mockCsiSections.map((section) => ({
-      id: section.id,
-      divisionId: section.divisionId,
-      number: section.number,
-      name: section.name,
-      additionalTitleCount: 0,
-    }));
-  }
-
-  return get1995SectionOptions();
+  return getCsiSections(version).map((section) => ({
+    id: section.id,
+    divisionId: section.divisionId,
+    number: section.number,
+    name: section.name,
+    additionalTitleCount: 0,
+  }));
 }
 
 export function get1995SectionOptions(): CsiPickerSectionOption[] {
@@ -286,4 +377,91 @@ export function getAllCsiSectionOptions(): CsiPickerSectionOption[] {
 
 function normalizeSectionNumber(value: string) {
   return value.replace(/\u00a0/g, " ").trim();
+}
+
+function getSubcontractorSourceVersion(subcontractor: Subcontractor) {
+  return subcontractor.csiCoverage.sourceVersion ?? "MASTERFORMAT_CURRENT";
+}
+
+function addResolvedDivisionId(
+  divisionIds: Set<string>,
+  version: CsiMasterFormatVersion,
+  divisionIdOrNumber: string | undefined
+) {
+  if (!divisionIdOrNumber) return;
+
+  const division = resolveCsiDivision(version, divisionIdOrNumber);
+
+  if (division) {
+    divisionIds.add(division.id);
+    return;
+  }
+
+  const item = resolveCsiCatalogItem(version, divisionIdOrNumber);
+  if (item) divisionIds.add(item.divisionId);
+}
+
+function addResolvedSectionDivisionId(
+  divisionIds: Set<string>,
+  version: CsiMasterFormatVersion,
+  sectionIdOrNumber: string | undefined
+) {
+  if (!sectionIdOrNumber) return;
+
+  const section = resolveCsiSection(version, sectionIdOrNumber);
+  if (section) {
+    divisionIds.add(section.divisionId);
+    return;
+  }
+
+  const item = resolveCsiCatalogItem(version, sectionIdOrNumber);
+  if (item) {
+    divisionIds.add(item.divisionId);
+    return;
+  }
+
+  addResolvedDivisionId(divisionIds, version, sectionIdOrNumber);
+}
+
+function addResolvedSectionId(
+  sectionIds: Set<string>,
+  version: CsiMasterFormatVersion,
+  sectionIdOrNumber: string | undefined
+) {
+  if (!sectionIdOrNumber) return;
+
+  const section = resolveCsiSection(version, sectionIdOrNumber);
+  if (section) {
+    sectionIds.add(section.id);
+    return;
+  }
+
+  const item = resolveCsiCatalogItem(version, sectionIdOrNumber);
+  if (item) sectionIds.add(item.id);
+}
+
+function resolveDivisionIdentity(
+  version: CsiMasterFormatVersion,
+  divisionIdOrNumber: string
+) {
+  const division = resolveCsiDivision(version, divisionIdOrNumber);
+  if (division) return division.id;
+
+  const item = resolveCsiCatalogItem(version, divisionIdOrNumber);
+  if (item) return item.divisionId;
+
+  return divisionIdOrNumber;
+}
+
+function resolveSectionIdentity(
+  version: CsiMasterFormatVersion,
+  sectionIdOrNumber: string
+) {
+  const section = resolveCsiSection(version, sectionIdOrNumber);
+  if (section) return section.id;
+
+  const item = resolveCsiCatalogItem(version, sectionIdOrNumber);
+  if (item) return item.id;
+
+  return sectionIdOrNumber;
 }
