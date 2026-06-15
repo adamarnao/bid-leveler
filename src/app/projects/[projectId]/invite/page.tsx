@@ -13,11 +13,13 @@ import { getMergedProjects, projectsStorageKey } from "@/lib/projects";
 import {
   getBadgeClassName,
   getComplianceAlerts,
-  formatVendorStatus,
+  getVendorStatusLabel,
   getMergedSubcontractors,
   getVendorStatusTone,
   getPrimaryPhone,
+  isDoNotUseVendor,
   isPreferredVendor,
+  isVendorPrequalified,
   subcontractorsStorageKey,
 } from "@/lib/subcontractors";
 import { matchSubcontractorsToProjectSections } from "@/lib/subcontractorMatching";
@@ -574,13 +576,13 @@ function getInviteStatus(match: ProjectSectionSubcontractorMatch): {
 } {
   const subcontractor = match.subcontractor;
 
-  if (subcontractor.relationshipStatus === "DO_NOT_USE") {
+  if (isDoNotUseVendor(subcontractor)) {
     return { label: "Do Not Use", tone: "danger" };
   }
 
   return {
-    label: formatVendorStatus(subcontractor.prequalification.status) as InviteStatusLabel,
-    tone: getVendorStatusTone(subcontractor.prequalification.status),
+    label: getVendorStatusLabel(subcontractor) as InviteStatusLabel,
+    tone: getVendorStatusTone(subcontractor),
   };
 }
 
@@ -645,7 +647,7 @@ function getSortDirectionLabel(
 
 function getInvitePriorityTier(match: ProjectSectionSubcontractorMatch) {
   if (isPreferredVendor(match.subcontractor)) return 0;
-  if (match.subcontractor.prequalification.status === "QUALIFIED") return 1;
+  if (isVendorPrequalified(match.subcontractor)) return 1;
 
   return 2;
 }

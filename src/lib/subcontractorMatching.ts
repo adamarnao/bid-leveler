@@ -9,9 +9,10 @@ import {
   resolveCsiSection,
 } from "@/lib/csiCatalog";
 import {
-  formatVendorStatus,
   getComplianceAlerts,
-  getPrequalificationTone,
+  getVendorStatusLabel,
+  getVendorStatusTone,
+  isDoNotUseVendor,
 } from "@/lib/subcontractors";
 import {
   getSubcontractorCoverageForVersion,
@@ -49,9 +50,7 @@ export function matchSubcontractorsToProjectSections({
     .filter(isNormalizedProjectSection);
   const candidateSubcontractors = options?.includeDoNotUse
     ? subcontractors
-    : subcontractors.filter(
-        (subcontractor) => subcontractor.relationshipStatus !== "DO_NOT_USE"
-      );
+    : subcontractors.filter((subcontractor) => !isDoNotUseVendor(subcontractor));
 
   return projectSections.map((projectSection) => ({
     projectId,
@@ -274,9 +273,7 @@ function scoreSubcontractorMatch({
     complianceAlerts
   );
   score += prequalificationScore;
-  rankingReasons.push(
-    `Vendor Status: ${formatVendorStatus(subcontractor.prequalification.status)}`
-  );
+  rankingReasons.push(`Vendor Status: ${getVendorStatusLabel(subcontractor)}`);
 
   if (complianceAlerts.length > 0) {
     warnings.push(...complianceAlerts);
@@ -292,7 +289,7 @@ function scoreSubcontractorMatch({
     warnings.push(formatStatus(confidence));
   }
 
-  if (getPrequalificationTone(subcontractor.prequalification.status) === "danger") {
+  if (getVendorStatusTone(subcontractor) === "danger") {
     warnings.push("Vendor status needs review");
   }
 

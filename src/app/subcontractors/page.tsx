@@ -22,6 +22,7 @@ import {
   getMergedSubcontractors,
   getPrimaryContact,
   getPrimaryPhone,
+  isDoNotUseVendor,
   isPreferredVendor,
   getSectionLabel,
   subcontractorsStorageKey,
@@ -938,7 +939,7 @@ function matchesFilters(
 ) {
   const complianceAlerts = getComplianceAlerts(subcontractor);
 
-  if (filters.hideDoNotUse && subcontractor.relationshipStatus === "DO_NOT_USE") {
+  if (filters.hideDoNotUse && isDoNotUseVendor(subcontractor)) {
     return false;
   }
 

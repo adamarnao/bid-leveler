@@ -12,7 +12,11 @@ import {
   getSectionNumbersForSubcontractor,
   getSubcontractorCoverageForVersion,
 } from "@/lib/subcontractorCsiCoverage";
-import { formatVendorStatus } from "@/lib/subcontractors";
+import {
+  formatVendorStatus,
+  isDoNotUseVendor,
+  isPreferredVendor,
+} from "@/lib/subcontractors";
 import { CsiDivision, CsiMasterFormatVersion } from "@/types/Csi";
 import {
   ContactRole,
@@ -1196,13 +1200,13 @@ export default function SubcontractorForm({
               />
               <CheckboxField
                 label="Preferred Vendor"
-                checked={draft.relationshipStatus === "PREFERRED"}
+                checked={isPreferredVendor(draft)}
                 onChange={updatePreferredVendor}
-                disabled={draft.relationshipStatus === "DO_NOT_USE"}
+                disabled={isDoNotUseVendor(draft)}
               />
               <CheckboxField
                 label="Do Not Use"
-                checked={draft.relationshipStatus === "DO_NOT_USE"}
+                checked={isDoNotUseVendor(draft)}
                 onChange={updateDoNotUseVendor}
               />
             </div>

@@ -19,9 +19,10 @@ import {
   getBadgeClassName,
   getComplianceAlerts,
   getDivisionLabel,
-  formatVendorStatus,
+  getVendorStatusLabel,
   getMergedSubcontractors,
   getVendorStatusTone,
+  isDoNotUseVendor,
   isPreferredVendor,
   getPrimaryPhone,
   getSectionLabel,
@@ -302,7 +303,7 @@ export default function SubcontractorProfilePage() {
         <div className="profile-detail-grid">
           <ProfileDetail
             label="Vendor Status"
-            value={formatVendorStatus(subcontractor.prequalification.status)}
+            value={getVendorStatusLabel(subcontractor)}
           />
           <ProfileDetail
             label="W-9"
@@ -670,13 +671,13 @@ function getSimplifiedStatus(subcontractor: Subcontractor): {
   label: string;
   tone: BadgeTone;
 } {
-  if (subcontractor.relationshipStatus === "DO_NOT_USE") {
+  if (isDoNotUseVendor(subcontractor)) {
     return { label: "Do Not Use", tone: "danger" };
   }
 
   return {
-    label: formatVendorStatus(subcontractor.prequalification.status),
-    tone: getVendorStatusTone(subcontractor.prequalification.status),
+    label: getVendorStatusLabel(subcontractor),
+    tone: getVendorStatusTone(subcontractor),
   };
 }
 

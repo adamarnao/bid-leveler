@@ -182,16 +182,24 @@ export function getPrimaryPhone(
 }
 
 export function getCombinedStatus(subcontractor: Subcontractor): CombinedStatus {
-  const prequalStatus = subcontractor.prequalification.status;
-
   if (isDoNotUseVendor(subcontractor)) {
     return { label: "Do Not Use", tone: "danger" };
   }
 
   return {
-    label: formatVendorStatus(prequalStatus),
-    tone: getVendorStatusTone(prequalStatus),
+    label: getVendorStatusLabel(subcontractor),
+    tone: getVendorStatusTone(subcontractor),
   };
+}
+
+export function getVisibleVendorStatus(
+  subcontractor: Subcontractor
+): PrequalificationStatus {
+  return subcontractor.prequalification.status;
+}
+
+export function getVendorStatusLabel(subcontractor: Subcontractor) {
+  return formatVendorStatus(getVisibleVendorStatus(subcontractor));
 }
 
 export function isPreferredVendor(subcontractor: Subcontractor) {
@@ -200,6 +208,10 @@ export function isPreferredVendor(subcontractor: Subcontractor) {
 
 export function isDoNotUseVendor(subcontractor: Subcontractor) {
   return subcontractor.relationshipStatus === "DO_NOT_USE";
+}
+
+export function isVendorPrequalified(subcontractor: Subcontractor) {
+  return getVisibleVendorStatus(subcontractor) === "QUALIFIED";
 }
 
 export function getBadgeClassName(tone: CombinedStatus["tone"]) {
@@ -380,8 +392,13 @@ export function formatVendorStatus(status: PrequalificationStatus) {
 }
 
 export function getVendorStatusTone(
-  status: PrequalificationStatus
+  subcontractorOrStatus: Subcontractor | PrequalificationStatus
 ): CombinedStatus["tone"] {
+  const status =
+    typeof subcontractorOrStatus === "string"
+      ? subcontractorOrStatus
+      : getVisibleVendorStatus(subcontractorOrStatus);
+
   return getPrequalificationTone(status);
 }
 
