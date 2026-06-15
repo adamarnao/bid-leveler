@@ -13,15 +13,12 @@ import {
   emptyToUndefined,
   ensurePrimaryContact,
   formatCsiSourceVersion,
-  formatOptionalNumber,
   formatStatus,
   getSubcontractorSnapshot,
   normalizeContacts,
   normalizeInviteScopes,
   normalizeLocations,
   parseCommaSeparatedValues,
-  splitList,
-  toOptionalNumber,
   toggleArrayValue,
   uniqueStrings,
 } from "@/components/subcontractors/form/subcontractorFormNormalization";
@@ -53,12 +50,9 @@ import {
   FormSelect,
   FormTextArea,
 } from "@/components/subcontractors/form/FormFields";
+import CompanyInformationSection from "@/components/subcontractors/form/CompanyInformationSection";
 import VendorStatusComplianceSection from "@/components/subcontractors/form/VendorStatusComplianceSection";
 import VpiPerformanceSection from "@/components/subcontractors/form/VpiPerformanceSection";
-import {
-  isDoNotUseVendor,
-  isPreferredVendor,
-} from "@/lib/subcontractors";
 import { CsiDivision, CsiMasterFormatVersion } from "@/types/Csi";
 import {
   ContactRole,
@@ -1190,194 +1184,12 @@ export default function SubcontractorForm({
       )}
 
       <div className="form-section-stack">
-        <Panel title="Company Information">
-          <div className="form-subsection">
-            <h3>Company</h3>
-            <div className="form-compact-grid">
-              <FormInput
-                label="Company Name"
-                value={draft.companyName}
-                onChange={(value) => setDraft({ ...draft, companyName: value })}
-                required
-              />
-              <FormInput
-                label="DBA"
-                value={draft.dba ?? ""}
-                onChange={(value) => setDraft({ ...draft, dba: value })}
-              />
-              <FormInput
-                label="Website"
-                value={draft.website ?? ""}
-                onChange={(value) => setDraft({ ...draft, website: value })}
-              />
-              <FormInput
-                label="Main Phone"
-                value={draft.mainPhone ?? ""}
-                onChange={(value) => setDraft({ ...draft, mainPhone: value })}
-              />
-              <FormInput
-                label="Main Phone Extension"
-                value={draft.mainPhoneExtension ?? ""}
-                onChange={(value) =>
-                  setDraft({ ...draft, mainPhoneExtension: value })
-                }
-              />
-              <CheckboxField
-                label="Preferred Vendor"
-                checked={isPreferredVendor(draft)}
-                onChange={updatePreferredVendor}
-                disabled={isDoNotUseVendor(draft)}
-              />
-              <CheckboxField
-                label="Do Not Use"
-                checked={isDoNotUseVendor(draft)}
-                onChange={updateDoNotUseVendor}
-              />
-            </div>
-          </div>
-
-          <div className="form-subsection">
-            <h3>Address</h3>
-            <div className="form-compact-grid">
-              <FormInput
-                label="Address Line 1"
-                value={draft.address.line1}
-                onChange={(value) =>
-                  setDraft({
-                    ...draft,
-                    address: { ...draft.address, line1: value },
-                  })
-                }
-              />
-              <FormInput
-                label="Address Line 2"
-                value={draft.address.line2 ?? ""}
-                onChange={(value) =>
-                  setDraft({
-                    ...draft,
-                    address: { ...draft.address, line2: value },
-                  })
-                }
-              />
-              <FormInput
-                label="City"
-                value={draft.address.city}
-                onChange={(value) =>
-                  setDraft({
-                    ...draft,
-                    address: { ...draft.address, city: value },
-                  })
-                }
-              />
-              <FormInput
-                label="State"
-                value={draft.address.state}
-                onChange={(value) =>
-                  setDraft({
-                    ...draft,
-                    address: { ...draft.address, state: value },
-                  })
-                }
-              />
-              <FormInput
-                label="ZIP"
-                value={draft.address.zip}
-                onChange={(value) =>
-                  setDraft({
-                    ...draft,
-                    address: { ...draft.address, zip: value },
-                  })
-                }
-              />
-            </div>
-          </div>
-
-          <div className="form-subsection">
-            <h3>Service Area</h3>
-            <div className="form-compact-grid">
-              <FormInput
-                label="States"
-                value={draft.serviceArea.states.join(", ")}
-                onChange={(value) =>
-                  setDraft({
-                    ...draft,
-                    serviceArea: {
-                      ...draft.serviceArea,
-                      states: splitList(value),
-                    },
-                  })
-                }
-              />
-              <FormInput
-                label="Counties"
-                value={draft.serviceArea.counties.join(", ")}
-                onChange={(value) =>
-                  setDraft({
-                    ...draft,
-                    serviceArea: {
-                      ...draft.serviceArea,
-                      counties: splitList(value),
-                    },
-                  })
-                }
-              />
-              <FormInput
-                label="Cities / Markets"
-                value={draft.serviceArea.citiesOrMarkets.join(", ")}
-                onChange={(value) =>
-                  setDraft({
-                    ...draft,
-                    serviceArea: {
-                      ...draft.serviceArea,
-                      citiesOrMarkets: splitList(value),
-                    },
-                  })
-                }
-              />
-              <FormInput
-                label="Travel Radius"
-                type="number"
-                value={formatOptionalNumber(draft.serviceArea.travelRadiusMiles)}
-                onChange={(value) =>
-                  setDraft({
-                    ...draft,
-                    serviceArea: {
-                      ...draft.serviceArea,
-                      travelRadiusMiles: toOptionalNumber(value),
-                    },
-                  })
-                }
-              />
-              <div className="form-field">
-                <label className="radio-option">
-                  <input
-                    type="checkbox"
-                    checked={draft.serviceArea.willTravel}
-                    onChange={(event) =>
-                      setDraft({
-                        ...draft,
-                        serviceArea: {
-                          ...draft.serviceArea,
-                          willTravel: event.target.checked,
-                        },
-                      })
-                    }
-                  />
-                  Will Travel
-                </label>
-              </div>
-            </div>
-          </div>
-
-          <div className="form-subsection">
-            <h3>Notes</h3>
-            <FormTextArea
-              label="Notes"
-              value={draft.notes ?? ""}
-              onChange={(value) => setDraft({ ...draft, notes: value })}
-            />
-          </div>
-        </Panel>
+        <CompanyInformationSection
+          draft={draft}
+          setDraft={setDraft}
+          onPreferredChange={updatePreferredVendor}
+          onDoNotUseChange={updateDoNotUseVendor}
+        />
 
         <Panel title="Locations / Branches">
           {!draft.locations || draft.locations.length === 0 ? (
