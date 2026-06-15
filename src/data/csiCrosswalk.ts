@@ -143,7 +143,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
       "sectionNumber": "00100",
-      "title": "Bidder’s Qualifications",
+      "title": "Bidder's Qualifications",
       "level": 4
     },
     "targetSection": {
@@ -372,8 +372,8 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
       "title": "Permit Application",
       "level": 3
     },
-    "relationship": "MANY_TO_ONE",
-    "mappingConfidence": "EXPANDED"
+    "relationship": "ONE_TO_ONE",
+    "mappingConfidence": "DIRECT"
   },
   {
     "id": "csi-crosswalk-0023",
@@ -415,7 +415,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
       "sectionNumber": "00410",
-      "title": "Bid Form – Construction Management",
+      "title": "Bid Form - Construction Management",
       "level": 4
     },
     "targetSection": {
@@ -432,7 +432,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
       "sectionNumber": "00410",
-      "title": "Bid Form – Construction Management",
+      "title": "Bid Form - Construction Management",
       "level": 4
     },
     "targetSection": {
@@ -449,7 +449,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
       "sectionNumber": "00410",
-      "title": "Bid Form – Cost-Plus Fee",
+      "title": "Bid Form - Cost-Plus Fee",
       "level": 4
     },
     "targetSection": {
@@ -466,7 +466,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
       "sectionNumber": "00410",
-      "title": "Bid Form – Cost-Plus Fee",
+      "title": "Bid Form - Cost-Plus Fee",
       "level": 4
     },
     "targetSection": {
@@ -483,7 +483,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
       "sectionNumber": "00410",
-      "title": "Bid Form – Procurement",
+      "title": "Bid Form - Procurement",
       "level": 4
     },
     "targetSection": {
@@ -500,7 +500,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
       "sectionNumber": "00410",
-      "title": "Bid Form – Stipulated Sum",
+      "title": "Bid Form - Stipulated Sum",
       "level": 4
     },
     "targetSection": {
@@ -517,7 +517,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
       "sectionNumber": "00410",
-      "title": "Bid Form – Stipulated Sum",
+      "title": "Bid Form - Stipulated Sum",
       "level": 4
     },
     "targetSection": {
@@ -534,7 +534,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
       "sectionNumber": "00410",
-      "title": "Bid Form – Unit Price",
+      "title": "Bid Form - Unit Price",
       "level": 4
     },
     "targetSection": {
@@ -551,7 +551,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
       "sectionNumber": "00410",
-      "title": "Bid Form – Unit Price",
+      "title": "Bid Form - Unit Price",
       "level": 4
     },
     "targetSection": {
@@ -755,7 +755,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
       "sectionNumber": "00450",
-      "title": "Contractor’s Qualification",
+      "title": "Contractor's Qualification",
       "level": 4
     },
     "targetSection": {
@@ -772,7 +772,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
       "sectionNumber": "00450",
-      "title": "Contractor’s Qualification",
+      "title": "Contractor's Qualification",
       "level": 4
     },
     "targetSection": {
@@ -874,12 +874,12 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
       "sectionNumber": "00450",
-      "title": "Worker’s Compensation Certificate Schedule",
+      "title": "Worker's Compensation Certificate Schedule",
       "level": 4
     },
     "targetSection": {
       "sectionNumber": "00 45 26",
-      "title": "Worker’s Compensation Certificate Schedule",
+      "title": "Workers Compensation Certificate Schedule",
       "level": 3
     },
     "relationship": "ONE_TO_MANY",
@@ -942,7 +942,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
       "sectionNumber": "00520",
-      "title": "Agreement – Construction Management",
+      "title": "Agreement - Construction Management",
       "level": 4
     },
     "targetSection": {
@@ -959,7 +959,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
       "sectionNumber": "00520",
-      "title": "Agreement – Construction Management",
+      "title": "Agreement - Construction Management",
       "level": 4
     },
     "targetSection": {
@@ -976,7 +976,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
       "sectionNumber": "00520",
-      "title": "Agreement – Cost-Plus Fee",
+      "title": "Agreement - Cost-Plus Fee",
       "level": 4
     },
     "targetSection": {
@@ -993,7 +993,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
       "sectionNumber": "00520",
-      "title": "Agreement – Cost-Plus Fee",
+      "title": "Agreement - Cost-Plus Fee",
       "level": 4
     },
     "targetSection": {
@@ -1010,7 +1010,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
       "sectionNumber": "00520",
-      "title": "Agreement – Procurement",
+      "title": "Agreement - Procurement",
       "level": 4
     },
     "targetSection": {
@@ -1027,7 +1027,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
       "sectionNumber": "00520",
-      "title": "Agreement – Stipulated Sum",
+      "title": "Agreement - Stipulated Sum",
       "level": 4
     },
     "targetSection": {
@@ -1044,7 +1044,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
       "sectionNumber": "00520",
-      "title": "Agreement – Stipulated Sum",
+      "title": "Agreement - Stipulated Sum",
       "level": 4
     },
     "targetSection": {
@@ -1061,7 +1061,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
       "sectionNumber": "00520",
-      "title": "Agreement – Unit Price",
+      "title": "Agreement - Unit Price",
       "level": 4
     },
     "targetSection": {
@@ -1078,7 +1078,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
       "sectionNumber": "00520",
-      "title": "Agreement – Unit Price",
+      "title": "Agreement - Unit Price",
       "level": 4
     },
     "targetSection": {
@@ -1830,12 +1830,12 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
       "level": 4
     },
     "targetSection": {
-      "sectionNumber": "00 31 43",
-      "title": "Permit Application",
+      "sectionNumber": "00 31 46",
+      "title": "Permits",
       "level": 3
     },
-    "relationship": "MANY_TO_ONE",
-    "mappingConfidence": "EXPANDED"
+    "relationship": "ONE_TO_ONE",
+    "mappingConfidence": "DIRECT"
   },
   {
     "id": "csi-crosswalk-0109",
@@ -1847,12 +1847,12 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
       "level": 3
     },
     "targetSection": {
-      "sectionNumber": "00 31 43",
-      "title": "Permit Application",
+      "sectionNumber": "00 31 46",
+      "title": "Permits",
       "level": 3
     },
-    "relationship": "MANY_TO_ONE",
-    "mappingConfidence": "EXPANDED"
+    "relationship": "ONE_TO_ONE",
+    "mappingConfidence": "DIRECT"
   },
   {
     "id": "csi-crosswalk-0110",
@@ -2081,7 +2081,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
       "sectionNumber": "00940",
-      "title": "Architect’s Supplemental Instructions",
+      "title": "Architect's Supplemental Instructions",
       "level": 4
     },
     "targetSection": {
@@ -3271,7 +3271,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
       "sectionNumber": "01430",
-      "title": "Manufacturer’s Field Services",
+      "title": "Manufacturer's Field Services",
       "level": 4
     },
     "targetSection": {
@@ -3339,7 +3339,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
       "sectionNumber": "01450",
-      "title": "Contractor’s Quality Control",
+      "title": "Contractor's Quality Control",
       "level": 4
     },
     "targetSection": {
@@ -4772,7 +4772,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     },
     "targetSection": {
       "sectionNumber": "02 41 19",
-      "title": "Selective Structure Demolition",
+      "title": "Selective Demolition",
       "level": 3
     },
     "relationship": "MANY_TO_MANY",
@@ -6348,7 +6348,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
       "sectionNumber": "02160",
-      "title": "Reverse Osmosis",
+      "title": "Reverse-Osmosis",
       "level": 4
     },
     "targetSection": {
@@ -6790,12 +6790,12 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
       "sectionNumber": "02220",
-      "title": "Minor Site Demolition for  Remodeling",
+      "title": "Minor Site Demolition for Remodeling",
       "level": 4
     },
     "targetSection": {
       "sectionNumber": "02 41 19",
-      "title": "Selective Structure Demolition",
+      "title": "Selective Demolition",
       "level": 3
     },
     "relationship": "MANY_TO_MANY",
@@ -7759,7 +7759,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
       "sectionNumber": "02340",
-      "title": "Geotextile Soil Stabilization and   Layer Separation",
+      "title": "Geotextile Soil Stabilization and Layer Separation",
       "level": 4
     },
     "targetSection": {
@@ -7950,8 +7950,8 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
       "level": 4
     },
     "targetSection": {
-      "sectionNumber": "31 25 13",
-      "title": "Erosion Controls",
+      "sectionNumber": "31 25 14",
+      "title": "Stabilization Measures for Erosion and Sedimentation Control",
       "level": 3
     },
     "relationship": "ONE_TO_MANY",
@@ -7959,6 +7959,40 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
   },
   {
     "id": "csi-crosswalk-0469",
+    "sourceVersion": "MASTERFORMAT_1995",
+    "targetVersion": "MASTERFORMAT_CURRENT",
+    "sourceSection": {
+      "sectionNumber": "00000",
+      "title": null,
+      "level": null
+    },
+    "targetSection": {
+      "sectionNumber": "31 25 24",
+      "title": "Structrual Measures for Erosion and Sedimentation Control",
+      "level": 3
+    },
+    "relationship": "ONE_TO_MANY",
+    "mappingConfidence": "SPECIAL_CASE"
+  },
+  {
+    "id": "csi-crosswalk-0470",
+    "sourceVersion": "MASTERFORMAT_1995",
+    "targetVersion": "MASTERFORMAT_CURRENT",
+    "sourceSection": {
+      "sectionNumber": "00000",
+      "title": null,
+      "level": null
+    },
+    "targetSection": {
+      "sectionNumber": "31 25 34",
+      "title": "Retention Measures for Erosion and Sedimentation Controls",
+      "level": 3
+    },
+    "relationship": "ONE_TO_MANY",
+    "mappingConfidence": "SPECIAL_CASE"
+  },
+  {
+    "id": "csi-crosswalk-0471",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -7975,7 +8009,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0470",
+    "id": "csi-crosswalk-0472",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -7992,41 +8026,58 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0471",
-    "sourceVersion": "MASTERFORMAT_1995",
-    "targetVersion": "MASTERFORMAT_CURRENT",
-    "sourceSection": {
-      "sectionNumber": "02370",
-      "title": "Geotextile Sedimentation and Erosion",
-      "level": 4
-    },
-    "targetSection": {
-      "sectionNumber": "31 25 13",
-      "title": "Erosion Controls",
-      "level": 3
-    },
-    "relationship": "ONE_TO_MANY",
-    "mappingConfidence": "EXPANDED"
-  },
-  {
-    "id": "csi-crosswalk-0472",
-    "sourceVersion": "MASTERFORMAT_1995",
-    "targetVersion": "MASTERFORMAT_CURRENT",
-    "sourceSection": {
-      "sectionNumber": "02370",
-      "title": "Geotextile Sedimentation and Erosion",
-      "level": 4
-    },
-    "targetSection": {
-      "sectionNumber": "31 25 53",
-      "title": "Sedimentation Controls",
-      "level": 3
-    },
-    "relationship": "ONE_TO_MANY",
-    "mappingConfidence": "EXPANDED"
-  },
-  {
     "id": "csi-crosswalk-0473",
+    "sourceVersion": "MASTERFORMAT_1995",
+    "targetVersion": "MASTERFORMAT_CURRENT",
+    "sourceSection": {
+      "sectionNumber": "02370",
+      "title": "Geotextile Sedimentation and Erosion",
+      "level": 4
+    },
+    "targetSection": {
+      "sectionNumber": "31 25 14",
+      "title": "Stabilization Measures for Erosion and Sedimentation Control",
+      "level": 3
+    },
+    "relationship": "ONE_TO_MANY",
+    "mappingConfidence": "EXPANDED"
+  },
+  {
+    "id": "csi-crosswalk-0474",
+    "sourceVersion": "MASTERFORMAT_1995",
+    "targetVersion": "MASTERFORMAT_CURRENT",
+    "sourceSection": {
+      "sectionNumber": "00000",
+      "title": null,
+      "level": null
+    },
+    "targetSection": {
+      "sectionNumber": "31 25 24",
+      "title": "Structrual Measures for Erosion and Sedimentation Control",
+      "level": 3
+    },
+    "relationship": "ONE_TO_MANY",
+    "mappingConfidence": "SPECIAL_CASE"
+  },
+  {
+    "id": "csi-crosswalk-0475",
+    "sourceVersion": "MASTERFORMAT_1995",
+    "targetVersion": "MASTERFORMAT_CURRENT",
+    "sourceSection": {
+      "sectionNumber": "00000",
+      "title": null,
+      "level": null
+    },
+    "targetSection": {
+      "sectionNumber": "31 25 34",
+      "title": "Retention Measures for Erosion and Sedimentation Controls",
+      "level": 3
+    },
+    "relationship": "ONE_TO_MANY",
+    "mappingConfidence": "SPECIAL_CASE"
+  },
+  {
+    "id": "csi-crosswalk-0476",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -8043,7 +8094,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0474",
+    "id": "csi-crosswalk-0477",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -8060,7 +8111,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0475",
+    "id": "csi-crosswalk-0478",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -8077,7 +8128,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0476",
+    "id": "csi-crosswalk-0479",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -8086,7 +8137,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
       "level": 4
     },
     "targetSection": {
-      "sectionNumber": "31 25 23",
+      "sectionNumber": "31 25 24.13",
       "title": "Rock Barriers",
       "level": 3
     },
@@ -8094,7 +8145,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0477",
+    "id": "csi-crosswalk-0480",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -8103,7 +8154,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
       "level": 4
     },
     "targetSection": {
-      "sectionNumber": "31 25 63",
+      "sectionNumber": "31 25 34.13",
       "title": "Rock Basins",
       "level": 3
     },
@@ -8111,7 +8162,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0478",
+    "id": "csi-crosswalk-0481",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -8128,7 +8179,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0479",
+    "id": "csi-crosswalk-0482",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -8145,12 +8196,12 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-0480",
+    "id": "csi-crosswalk-0483",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
       "sectionNumber": "02370",
-      "title": "Synthetic Erosion Control and  Revegetation Mats",
+      "title": "Synthetic Erosion Control and Revegetation Mats",
       "level": 4
     },
     "targetSection": {
@@ -8162,7 +8213,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0481",
+    "id": "csi-crosswalk-0484",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -8179,12 +8230,12 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0482",
+    "id": "csi-crosswalk-0485",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
       "sectionNumber": "02370",
-      "title": "Water Course and Slope Erosion   Protection",
+      "title": "Water Course and Slope Erosion Protection",
       "level": 4
     },
     "targetSection": {
@@ -8196,7 +8247,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0483",
+    "id": "csi-crosswalk-0486",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -8213,7 +8264,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-0484",
+    "id": "csi-crosswalk-0487",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -8230,7 +8281,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0485",
+    "id": "csi-crosswalk-0488",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -8247,7 +8298,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0486",
+    "id": "csi-crosswalk-0489",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -8264,7 +8315,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0487",
+    "id": "csi-crosswalk-0490",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -8281,7 +8332,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0488",
+    "id": "csi-crosswalk-0491",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -8298,7 +8349,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0489",
+    "id": "csi-crosswalk-0492",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -8315,7 +8366,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0490",
+    "id": "csi-crosswalk-0493",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -8332,7 +8383,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0491",
+    "id": "csi-crosswalk-0494",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -8349,7 +8400,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0492",
+    "id": "csi-crosswalk-0495",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -8366,7 +8417,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0493",
+    "id": "csi-crosswalk-0496",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -8383,12 +8434,12 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0494",
+    "id": "csi-crosswalk-0497",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
       "sectionNumber": "02410",
-      "title": "Rock Excavation – Drill and Blast",
+      "title": "Rock Excavation - Drill and Blast",
       "level": 4
     },
     "targetSection": {
@@ -8400,12 +8451,12 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0495",
+    "id": "csi-crosswalk-0498",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
       "sectionNumber": "02410",
-      "title": "Rock Excavation – Tunnel Boring  Machine (TBM)",
+      "title": "Rock Excavation - Tunnel Boring Machine (TBM)",
       "level": 4
     },
     "targetSection": {
@@ -8417,7 +8468,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0496",
+    "id": "csi-crosswalk-0499",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -8434,7 +8485,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0497",
+    "id": "csi-crosswalk-0500",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -8451,7 +8502,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0498",
+    "id": "csi-crosswalk-0501",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -8468,7 +8519,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0499",
+    "id": "csi-crosswalk-0502",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -8485,7 +8536,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-0500",
+    "id": "csi-crosswalk-0503",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -8502,7 +8553,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0501",
+    "id": "csi-crosswalk-0504",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -8519,12 +8570,12 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0502",
+    "id": "csi-crosswalk-0505",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
       "sectionNumber": "02425",
-      "title": "Cast-in-Place Concrete Tunnel   Linings",
+      "title": "Cast-in-Place Concrete Tunnel Linings",
       "level": 4
     },
     "targetSection": {
@@ -8536,7 +8587,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0503",
+    "id": "csi-crosswalk-0506",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -8553,7 +8604,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0504",
+    "id": "csi-crosswalk-0507",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -8570,12 +8621,12 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-0505",
+    "id": "csi-crosswalk-0508",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
       "sectionNumber": "02430",
-      "title": "Earth Stabilization Chemical  Grouting",
+      "title": "Earth Stabilization Chemical Grouting",
       "level": 4
     },
     "targetSection": {
@@ -8587,7 +8638,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0506",
+    "id": "csi-crosswalk-0509",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -8604,7 +8655,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0507",
+    "id": "csi-crosswalk-0510",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -8621,7 +8672,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0508",
+    "id": "csi-crosswalk-0511",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -8638,7 +8689,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0509",
+    "id": "csi-crosswalk-0512",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -8655,7 +8706,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-0510",
+    "id": "csi-crosswalk-0513",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -8672,7 +8723,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-0511",
+    "id": "csi-crosswalk-0514",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -8689,7 +8740,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0512",
+    "id": "csi-crosswalk-0515",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -8706,7 +8757,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-0513",
+    "id": "csi-crosswalk-0516",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -8723,7 +8774,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-0514",
+    "id": "csi-crosswalk-0517",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -8740,7 +8791,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-0515",
+    "id": "csi-crosswalk-0518",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -8757,7 +8808,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-0516",
+    "id": "csi-crosswalk-0519",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -8774,7 +8825,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0517",
+    "id": "csi-crosswalk-0520",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -8791,7 +8842,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0518",
+    "id": "csi-crosswalk-0521",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -8808,7 +8859,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0519",
+    "id": "csi-crosswalk-0522",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -8825,7 +8876,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0520",
+    "id": "csi-crosswalk-0523",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -8834,15 +8885,49 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
       "level": 4
     },
     "targetSection": {
-      "sectionNumber": "31 09 16.23",
-      "title": "Driven Pile Load Tests",
+      "sectionNumber": "31 08 13",
+      "title": "Pile Load Testing",
+      "level": 4
+    },
+    "relationship": "MANY_TO_MANY",
+    "mappingConfidence": "SPECIAL_CASE"
+  },
+  {
+    "id": "csi-crosswalk-0524",
+    "sourceVersion": "MASTERFORMAT_1995",
+    "targetVersion": "MASTERFORMAT_CURRENT",
+    "sourceSection": {
+      "sectionNumber": "00000",
+      "title": null,
+      "level": null
+    },
+    "targetSection": {
+      "sectionNumber": "31 08 13.13",
+      "title": "Dynamic Pile Load Testing",
       "level": 4
     },
     "relationship": "ONE_TO_MANY",
-    "mappingConfidence": "EXPANDED"
+    "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-0521",
+    "id": "csi-crosswalk-0525",
+    "sourceVersion": "MASTERFORMAT_1995",
+    "targetVersion": "MASTERFORMAT_CURRENT",
+    "sourceSection": {
+      "sectionNumber": "00000",
+      "title": null,
+      "level": null
+    },
+    "targetSection": {
+      "sectionNumber": "31 08 13.16",
+      "title": "Static Pile Load Testing",
+      "level": 4
+    },
+    "relationship": "ONE_TO_MANY",
+    "mappingConfidence": "SPECIAL_CASE"
+  },
+  {
+    "id": "csi-crosswalk-0526",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -8859,7 +8944,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0522",
+    "id": "csi-crosswalk-0527",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -8876,7 +8961,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0523",
+    "id": "csi-crosswalk-0528",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -8893,7 +8978,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0524",
+    "id": "csi-crosswalk-0529",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -8910,7 +8995,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0525",
+    "id": "csi-crosswalk-0530",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -8927,7 +9012,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0526",
+    "id": "csi-crosswalk-0531",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -8944,7 +9029,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0527",
+    "id": "csi-crosswalk-0532",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -8961,7 +9046,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0528",
+    "id": "csi-crosswalk-0533",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -8978,7 +9063,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0529",
+    "id": "csi-crosswalk-0534",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -8995,7 +9080,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0530",
+    "id": "csi-crosswalk-0535",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9004,15 +9089,49 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
       "level": 4
     },
     "targetSection": {
-      "sectionNumber": "31 09 16.26",
-      "title": "Bored and Augered Pile Load Tests",
+      "sectionNumber": "31 08 13",
+      "title": "Pile Load Testing",
+      "level": 3
+    },
+    "relationship": "MANY_TO_MANY",
+    "mappingConfidence": "SPECIAL_CASE"
+  },
+  {
+    "id": "csi-crosswalk-0536",
+    "sourceVersion": "MASTERFORMAT_1995",
+    "targetVersion": "MASTERFORMAT_CURRENT",
+    "sourceSection": {
+      "sectionNumber": "00000",
+      "title": null,
+      "level": null
+    },
+    "targetSection": {
+      "sectionNumber": "31 08 13.13",
+      "title": "Dynamic Pile Load Testing",
       "level": 4
     },
     "relationship": "ONE_TO_MANY",
-    "mappingConfidence": "EXPANDED"
+    "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-0531",
+    "id": "csi-crosswalk-0537",
+    "sourceVersion": "MASTERFORMAT_1995",
+    "targetVersion": "MASTERFORMAT_CURRENT",
+    "sourceSection": {
+      "sectionNumber": "00000",
+      "title": null,
+      "level": null
+    },
+    "targetSection": {
+      "sectionNumber": "31 08 13.16",
+      "title": "Static Pile Load Testing",
+      "level": 4
+    },
+    "relationship": "ONE_TO_MANY",
+    "mappingConfidence": "SPECIAL_CASE"
+  },
+  {
+    "id": "csi-crosswalk-0538",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9029,7 +9148,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0532",
+    "id": "csi-crosswalk-0539",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9046,7 +9165,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0533",
+    "id": "csi-crosswalk-0540",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9063,7 +9182,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0534",
+    "id": "csi-crosswalk-0541",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9080,7 +9199,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0535",
+    "id": "csi-crosswalk-0542",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9097,7 +9216,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0536",
+    "id": "csi-crosswalk-0543",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9114,7 +9233,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0537",
+    "id": "csi-crosswalk-0544",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9131,7 +9250,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0538",
+    "id": "csi-crosswalk-0545",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9148,12 +9267,12 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0539",
+    "id": "csi-crosswalk-0546",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
       "sectionNumber": "02465",
-      "title": "Uncased Cast-in-Place Concrete   Piles",
+      "title": "Uncased Cast-in-Place Concrete Piles",
       "level": 4
     },
     "targetSection": {
@@ -9165,7 +9284,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0540",
+    "id": "csi-crosswalk-0547",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9182,7 +9301,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0541",
+    "id": "csi-crosswalk-0548",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9199,7 +9318,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0542",
+    "id": "csi-crosswalk-0549",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9216,7 +9335,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0543",
+    "id": "csi-crosswalk-0550",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9233,7 +9352,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0544",
+    "id": "csi-crosswalk-0551",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9250,7 +9369,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0545",
+    "id": "csi-crosswalk-0552",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9267,7 +9386,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0546",
+    "id": "csi-crosswalk-0553",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9284,7 +9403,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0547",
+    "id": "csi-crosswalk-0554",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9301,7 +9420,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0548",
+    "id": "csi-crosswalk-0555",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9318,7 +9437,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0549",
+    "id": "csi-crosswalk-0556",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9335,7 +9454,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0550",
+    "id": "csi-crosswalk-0557",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9352,7 +9471,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0551",
+    "id": "csi-crosswalk-0558",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9369,7 +9488,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0552",
+    "id": "csi-crosswalk-0559",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9386,7 +9505,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0553",
+    "id": "csi-crosswalk-0560",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9403,7 +9522,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0554",
+    "id": "csi-crosswalk-0561",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9420,7 +9539,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0555",
+    "id": "csi-crosswalk-0562",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9437,7 +9556,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0556",
+    "id": "csi-crosswalk-0563",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9454,7 +9573,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0557",
+    "id": "csi-crosswalk-0564",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9471,24 +9590,24 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0558",
+    "id": "csi-crosswalk-0565",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
       "sectionNumber": "02495",
-      "title": "Foundation Performance  Instrumentation",
-      "level": 4
-    },
-    "targetSection": {
-      "sectionNumber": "31 09 16.13",
       "title": "Foundation Performance Instrumentation",
       "level": 4
     },
-    "relationship": "ONE_TO_MANY",
-    "mappingConfidence": "EXPANDED"
+    "targetSection": {
+      "sectionNumber": "31 09 16",
+      "title": "Foundation Performance Instrumentation",
+      "level": 4
+    },
+    "relationship": "ONE_TO_ONE",
+    "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-0559",
+    "id": "csi-crosswalk-0566",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9498,14 +9617,14 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     },
     "targetSection": {
       "sectionNumber": "31 09 16",
-      "title": "Special Foundation and Load Bearing Elements Instrumentation and Monitoring",
+      "title": "Foundation Performance Instrumentation",
       "level": 3
     },
-    "relationship": "ONE_TO_MANY",
-    "mappingConfidence": "EXPANDED"
+    "relationship": "ONE_TO_ONE",
+    "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-0560",
+    "id": "csi-crosswalk-0567",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9522,7 +9641,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0561",
+    "id": "csi-crosswalk-0568",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9539,7 +9658,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0562",
+    "id": "csi-crosswalk-0569",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9556,7 +9675,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0563",
+    "id": "csi-crosswalk-0570",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9573,7 +9692,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0564",
+    "id": "csi-crosswalk-0571",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9590,7 +9709,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0565",
+    "id": "csi-crosswalk-0572",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9607,7 +9726,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0566",
+    "id": "csi-crosswalk-0573",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9624,7 +9743,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0567",
+    "id": "csi-crosswalk-0574",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9641,7 +9760,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0568",
+    "id": "csi-crosswalk-0575",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9658,7 +9777,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0569",
+    "id": "csi-crosswalk-0576",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9675,7 +9794,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0570",
+    "id": "csi-crosswalk-0577",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9692,7 +9811,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0571",
+    "id": "csi-crosswalk-0578",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9709,7 +9828,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0572",
+    "id": "csi-crosswalk-0579",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9726,7 +9845,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0573",
+    "id": "csi-crosswalk-0580",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9743,7 +9862,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0574",
+    "id": "csi-crosswalk-0581",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9760,7 +9879,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0575",
+    "id": "csi-crosswalk-0582",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9777,7 +9896,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0576",
+    "id": "csi-crosswalk-0583",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9794,7 +9913,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0577",
+    "id": "csi-crosswalk-0584",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9811,7 +9930,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0578",
+    "id": "csi-crosswalk-0585",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9828,7 +9947,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0579",
+    "id": "csi-crosswalk-0586",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9845,7 +9964,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0580",
+    "id": "csi-crosswalk-0587",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9862,7 +9981,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0581",
+    "id": "csi-crosswalk-0588",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9879,7 +9998,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0582",
+    "id": "csi-crosswalk-0589",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9896,7 +10015,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0583",
+    "id": "csi-crosswalk-0590",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9913,7 +10032,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0584",
+    "id": "csi-crosswalk-0591",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9930,7 +10049,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0585",
+    "id": "csi-crosswalk-0592",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9947,7 +10066,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0586",
+    "id": "csi-crosswalk-0593",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9957,14 +10076,14 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     },
     "targetSection": {
       "sectionNumber": "33 36 33",
-      "title": "Utility Drainage Field",
+      "title": "Utility Septic Tank Drainage Field",
       "level": 3
     },
     "relationship": "ONE_TO_MANY",
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0587",
+    "id": "csi-crosswalk-0594",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9981,7 +10100,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0588",
+    "id": "csi-crosswalk-0595",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -9998,7 +10117,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0589",
+    "id": "csi-crosswalk-0596",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10015,7 +10134,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0590",
+    "id": "csi-crosswalk-0597",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10032,7 +10151,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0591",
+    "id": "csi-crosswalk-0598",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10049,7 +10168,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0592",
+    "id": "csi-crosswalk-0599",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10066,7 +10185,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0593",
+    "id": "csi-crosswalk-0600",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10083,7 +10202,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0594",
+    "id": "csi-crosswalk-0601",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10100,7 +10219,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0595",
+    "id": "csi-crosswalk-0602",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10117,7 +10236,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0596",
+    "id": "csi-crosswalk-0603",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10134,7 +10253,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0597",
+    "id": "csi-crosswalk-0604",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10151,7 +10270,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0598",
+    "id": "csi-crosswalk-0605",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10168,7 +10287,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0599",
+    "id": "csi-crosswalk-0606",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10185,7 +10304,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0600",
+    "id": "csi-crosswalk-0607",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10202,7 +10321,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0601",
+    "id": "csi-crosswalk-0608",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10219,7 +10338,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0602",
+    "id": "csi-crosswalk-0609",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10236,7 +10355,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0603",
+    "id": "csi-crosswalk-0610",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10253,7 +10372,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0604",
+    "id": "csi-crosswalk-0611",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10270,7 +10389,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0605",
+    "id": "csi-crosswalk-0612",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10287,7 +10406,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0606",
+    "id": "csi-crosswalk-0613",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10304,7 +10423,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0607",
+    "id": "csi-crosswalk-0614",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10321,7 +10440,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0608",
+    "id": "csi-crosswalk-0615",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10338,7 +10457,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0609",
+    "id": "csi-crosswalk-0616",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10355,7 +10474,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-0610",
+    "id": "csi-crosswalk-0617",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10372,7 +10491,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0611",
+    "id": "csi-crosswalk-0618",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10389,7 +10508,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0612",
+    "id": "csi-crosswalk-0619",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10406,7 +10525,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0613",
+    "id": "csi-crosswalk-0620",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10423,7 +10542,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0614",
+    "id": "csi-crosswalk-0621",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10440,7 +10559,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0615",
+    "id": "csi-crosswalk-0622",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10457,7 +10576,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0616",
+    "id": "csi-crosswalk-0623",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10474,7 +10593,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0617",
+    "id": "csi-crosswalk-0624",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10491,7 +10610,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-0618",
+    "id": "csi-crosswalk-0625",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10508,7 +10627,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-0619",
+    "id": "csi-crosswalk-0626",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10525,7 +10644,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-0620",
+    "id": "csi-crosswalk-0627",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10542,7 +10661,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0621",
+    "id": "csi-crosswalk-0628",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10559,7 +10678,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0622",
+    "id": "csi-crosswalk-0629",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10576,7 +10695,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-0623",
+    "id": "csi-crosswalk-0630",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10593,7 +10712,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0624",
+    "id": "csi-crosswalk-0631",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10610,7 +10729,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-0625",
+    "id": "csi-crosswalk-0632",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10627,7 +10746,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0626",
+    "id": "csi-crosswalk-0633",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10644,7 +10763,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0627",
+    "id": "csi-crosswalk-0634",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10661,7 +10780,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0628",
+    "id": "csi-crosswalk-0635",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10678,7 +10797,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0629",
+    "id": "csi-crosswalk-0636",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10695,12 +10814,12 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0630",
+    "id": "csi-crosswalk-0637",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
       "sectionNumber": "02640",
-      "title": "Metal Pipe – Arch Culverts",
+      "title": "Metal Pipe - Arch Culverts",
       "level": 4
     },
     "targetSection": {
@@ -10712,7 +10831,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-0631",
+    "id": "csi-crosswalk-0638",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10729,7 +10848,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0632",
+    "id": "csi-crosswalk-0639",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10746,7 +10865,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0633",
+    "id": "csi-crosswalk-0640",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10763,7 +10882,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0634",
+    "id": "csi-crosswalk-0641",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10780,7 +10899,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0635",
+    "id": "csi-crosswalk-0642",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10797,7 +10916,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0636",
+    "id": "csi-crosswalk-0643",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10814,7 +10933,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0637",
+    "id": "csi-crosswalk-0644",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10831,7 +10950,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0638",
+    "id": "csi-crosswalk-0645",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10848,7 +10967,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0639",
+    "id": "csi-crosswalk-0646",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10865,7 +10984,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0640",
+    "id": "csi-crosswalk-0647",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10882,7 +11001,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0641",
+    "id": "csi-crosswalk-0648",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10899,7 +11018,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0642",
+    "id": "csi-crosswalk-0649",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10916,7 +11035,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0643",
+    "id": "csi-crosswalk-0650",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10925,15 +11044,15 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
       "level": 4
     },
     "targetSection": {
-      "sectionNumber": "33 47 23",
-      "title": "Sanitary Sewerage Lagoons",
-      "level": 3
+      "sectionNumber": "33 38 00",
+      "title": "Treatment Lagoons",
+      "level": 2
     },
     "relationship": "ONE_TO_MANY",
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0644",
+    "id": "csi-crosswalk-0651",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10950,7 +11069,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0645",
+    "id": "csi-crosswalk-0652",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10967,7 +11086,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-0646",
+    "id": "csi-crosswalk-0653",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -10984,7 +11103,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0647",
+    "id": "csi-crosswalk-0654",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11001,7 +11120,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-0648",
+    "id": "csi-crosswalk-0655",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11018,12 +11137,12 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-0649",
+    "id": "csi-crosswalk-0656",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
       "sectionNumber": "02710",
-      "title": "Asphalt-Treated Permeable Base  Course",
+      "title": "Asphalt-Treated Permeable Base Course",
       "level": 4
     },
     "targetSection": {
@@ -11035,7 +11154,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-0650",
+    "id": "csi-crosswalk-0657",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11052,7 +11171,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0651",
+    "id": "csi-crosswalk-0658",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11069,12 +11188,12 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-0652",
+    "id": "csi-crosswalk-0659",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
       "sectionNumber": "02710",
-      "title": "Cement Stabilized Open Graded   Base",
+      "title": "Cement Stabilized Open Graded Base",
       "level": 4
     },
     "targetSection": {
@@ -11086,7 +11205,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0653",
+    "id": "csi-crosswalk-0660",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11103,12 +11222,12 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0654",
+    "id": "csi-crosswalk-0661",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
       "sectionNumber": "02710",
-      "title": "Cold-Recycled Bituminous Base  Course",
+      "title": "Cold-Recycled Bituminous Base Course",
       "level": 4
     },
     "targetSection": {
@@ -11120,12 +11239,12 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-0655",
+    "id": "csi-crosswalk-0662",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
       "sectionNumber": "02710",
-      "title": "Hydraulic Cement Concrete Base  Course",
+      "title": "Hydraulic Cement Concrete Base Course",
       "level": 4
     },
     "targetSection": {
@@ -11137,7 +11256,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0656",
+    "id": "csi-crosswalk-0663",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11154,7 +11273,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0657",
+    "id": "csi-crosswalk-0664",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11171,7 +11290,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0658",
+    "id": "csi-crosswalk-0665",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11188,7 +11307,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0659",
+    "id": "csi-crosswalk-0666",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11205,7 +11324,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0660",
+    "id": "csi-crosswalk-0667",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11222,7 +11341,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0661",
+    "id": "csi-crosswalk-0668",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11239,7 +11358,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0662",
+    "id": "csi-crosswalk-0669",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11256,7 +11375,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0663",
+    "id": "csi-crosswalk-0670",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11273,7 +11392,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0664",
+    "id": "csi-crosswalk-0671",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11290,7 +11409,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-0665",
+    "id": "csi-crosswalk-0672",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11307,7 +11426,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-0666",
+    "id": "csi-crosswalk-0673",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11324,7 +11443,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-0667",
+    "id": "csi-crosswalk-0674",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11341,7 +11460,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0668",
+    "id": "csi-crosswalk-0675",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11358,7 +11477,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0669",
+    "id": "csi-crosswalk-0676",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11375,7 +11494,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0670",
+    "id": "csi-crosswalk-0677",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11392,7 +11511,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0671",
+    "id": "csi-crosswalk-0678",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11409,7 +11528,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0672",
+    "id": "csi-crosswalk-0679",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11426,7 +11545,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-0673",
+    "id": "csi-crosswalk-0680",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11443,7 +11562,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0674",
+    "id": "csi-crosswalk-0681",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11460,7 +11579,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0675",
+    "id": "csi-crosswalk-0682",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11477,7 +11596,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0676",
+    "id": "csi-crosswalk-0683",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11494,7 +11613,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0677",
+    "id": "csi-crosswalk-0684",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11511,7 +11630,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0678",
+    "id": "csi-crosswalk-0685",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11528,7 +11647,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-0679",
+    "id": "csi-crosswalk-0686",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11545,7 +11664,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-0680",
+    "id": "csi-crosswalk-0687",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11562,7 +11681,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0681",
+    "id": "csi-crosswalk-0688",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11579,7 +11698,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-0682",
+    "id": "csi-crosswalk-0689",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11596,7 +11715,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0683",
+    "id": "csi-crosswalk-0690",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11613,7 +11732,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0684",
+    "id": "csi-crosswalk-0691",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11630,7 +11749,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-0685",
+    "id": "csi-crosswalk-0692",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11647,7 +11766,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0686",
+    "id": "csi-crosswalk-0693",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11664,7 +11783,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0687",
+    "id": "csi-crosswalk-0694",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11681,7 +11800,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0688",
+    "id": "csi-crosswalk-0695",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11698,7 +11817,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0689",
+    "id": "csi-crosswalk-0696",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11708,14 +11827,14 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     },
     "targetSection": {
       "sectionNumber": "32 16 00",
-      "title": "Curbs and Gutters",
+      "title": "Curbs, Gutters, Sidewalks, and Driveways",
       "level": 2
     },
     "relationship": "MANY_TO_MANY",
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-0690",
+    "id": "csi-crosswalk-0697",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11732,7 +11851,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0691",
+    "id": "csi-crosswalk-0698",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11749,7 +11868,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0692",
+    "id": "csi-crosswalk-0699",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11766,7 +11885,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0693",
+    "id": "csi-crosswalk-0700",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11783,7 +11902,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0694",
+    "id": "csi-crosswalk-0701",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11800,7 +11919,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0695",
+    "id": "csi-crosswalk-0702",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11817,7 +11936,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0696",
+    "id": "csi-crosswalk-0703",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11834,7 +11953,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0697",
+    "id": "csi-crosswalk-0704",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11851,7 +11970,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0698",
+    "id": "csi-crosswalk-0705",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11868,7 +11987,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0699",
+    "id": "csi-crosswalk-0706",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11877,7 +11996,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
       "level": 4
     },
     "targetSection": {
-      "sectionNumber": "32 16 19",
+      "sectionNumber": "32 16 13.33",
       "title": "Asphalt Curbs",
       "level": 3
     },
@@ -11885,7 +12004,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0700",
+    "id": "csi-crosswalk-0707",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11894,15 +12013,15 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
       "level": 4
     },
     "targetSection": {
-      "sectionNumber": "32 16 13.16",
-      "title": "Cast-In-Place Concrete Curbs",
+      "sectionNumber": "32 16 13.13",
+      "title": "Cast-In-Place Concrete Curbs and Gutters",
       "level": 4
     },
     "relationship": "ONE_TO_MANY",
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0701",
+    "id": "csi-crosswalk-0708",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11912,14 +12031,14 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     },
     "targetSection": {
       "sectionNumber": "32 16 13",
-      "title": "Concrete Curbs and Gutters",
+      "title": "Curbs and Gutters",
       "level": 3
     },
     "relationship": "ONE_TO_MANY",
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0702",
+    "id": "csi-crosswalk-0709",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11929,14 +12048,14 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     },
     "targetSection": {
       "sectionNumber": "32 16 00",
-      "title": "Curbs and Gutters",
+      "title": "Curbs, Gutters, Sidewalks, and Driveways",
       "level": 2
     },
     "relationship": "MANY_TO_MANY",
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-0703",
+    "id": "csi-crosswalk-0710",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11945,15 +12064,15 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
       "level": 4
     },
     "targetSection": {
-      "sectionNumber": "32 16 13.29",
-      "title": "Precast Concrete Gutters",
+      "sectionNumber": "32 16 13.23",
+      "title": "Precast Concrete Curbs and Gutters",
       "level": 4
     },
     "relationship": "ONE_TO_MANY",
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0704",
+    "id": "csi-crosswalk-0711",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11962,15 +12081,15 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
       "level": 4
     },
     "targetSection": {
-      "sectionNumber": "32 16 40.13",
-      "title": "Manufactured Stone Curbs",
+      "sectionNumber": "32 16 13.43",
+      "title": "Stone Curbs",
       "level": 4
     },
     "relationship": "ONE_TO_MANY",
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0705",
+    "id": "csi-crosswalk-0712",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -11979,7 +12098,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
       "level": 4
     },
     "targetSection": {
-      "sectionNumber": "32 16 40",
+      "sectionNumber": "32 16 13.43",
       "title": "Stone Curbs",
       "level": 3
     },
@@ -11987,7 +12106,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0706",
+    "id": "csi-crosswalk-0713",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12004,7 +12123,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0707",
+    "id": "csi-crosswalk-0714",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12021,7 +12140,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0708",
+    "id": "csi-crosswalk-0715",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12038,7 +12157,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0709",
+    "id": "csi-crosswalk-0716",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12055,7 +12174,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0710",
+    "id": "csi-crosswalk-0717",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12072,7 +12191,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0711",
+    "id": "csi-crosswalk-0718",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12089,7 +12208,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0712",
+    "id": "csi-crosswalk-0719",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12106,7 +12225,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0713",
+    "id": "csi-crosswalk-0720",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12123,7 +12242,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0714",
+    "id": "csi-crosswalk-0721",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12140,7 +12259,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0715",
+    "id": "csi-crosswalk-0722",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12157,7 +12276,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0716",
+    "id": "csi-crosswalk-0723",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12174,7 +12293,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0717",
+    "id": "csi-crosswalk-0724",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12191,7 +12310,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0718",
+    "id": "csi-crosswalk-0725",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12208,7 +12327,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0719",
+    "id": "csi-crosswalk-0726",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12225,7 +12344,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0720",
+    "id": "csi-crosswalk-0727",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12242,7 +12361,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0721",
+    "id": "csi-crosswalk-0728",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12259,7 +12378,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0722",
+    "id": "csi-crosswalk-0729",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12276,7 +12395,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0723",
+    "id": "csi-crosswalk-0730",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12293,7 +12412,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0724",
+    "id": "csi-crosswalk-0731",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12310,7 +12429,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0725",
+    "id": "csi-crosswalk-0732",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12327,7 +12446,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0726",
+    "id": "csi-crosswalk-0733",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12344,7 +12463,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0727",
+    "id": "csi-crosswalk-0734",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12361,7 +12480,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0728",
+    "id": "csi-crosswalk-0735",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12378,7 +12497,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0729",
+    "id": "csi-crosswalk-0736",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12395,7 +12514,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0730",
+    "id": "csi-crosswalk-0737",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12412,7 +12531,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0731",
+    "id": "csi-crosswalk-0738",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12429,7 +12548,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0732",
+    "id": "csi-crosswalk-0739",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12446,7 +12565,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0733",
+    "id": "csi-crosswalk-0740",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12463,7 +12582,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-0734",
+    "id": "csi-crosswalk-0741",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12480,7 +12599,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0735",
+    "id": "csi-crosswalk-0742",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12497,7 +12616,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0736",
+    "id": "csi-crosswalk-0743",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12514,7 +12633,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0737",
+    "id": "csi-crosswalk-0744",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12531,7 +12650,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0738",
+    "id": "csi-crosswalk-0745",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12548,7 +12667,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-0739",
+    "id": "csi-crosswalk-0746",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12565,7 +12684,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0740",
+    "id": "csi-crosswalk-0747",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12582,7 +12701,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0741",
+    "id": "csi-crosswalk-0748",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12599,7 +12718,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0742",
+    "id": "csi-crosswalk-0749",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12616,7 +12735,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0743",
+    "id": "csi-crosswalk-0750",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12633,7 +12752,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0744",
+    "id": "csi-crosswalk-0751",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12650,7 +12769,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0745",
+    "id": "csi-crosswalk-0752",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12667,7 +12786,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0746",
+    "id": "csi-crosswalk-0753",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12684,7 +12803,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0747",
+    "id": "csi-crosswalk-0754",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12701,7 +12820,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0748",
+    "id": "csi-crosswalk-0755",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12718,7 +12837,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0749",
+    "id": "csi-crosswalk-0756",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12735,7 +12854,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0750",
+    "id": "csi-crosswalk-0757",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12752,7 +12871,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0751",
+    "id": "csi-crosswalk-0758",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12769,7 +12888,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0752",
+    "id": "csi-crosswalk-0759",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12786,7 +12905,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0753",
+    "id": "csi-crosswalk-0760",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12803,7 +12922,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0754",
+    "id": "csi-crosswalk-0761",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12820,7 +12939,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0755",
+    "id": "csi-crosswalk-0762",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12837,7 +12956,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0756",
+    "id": "csi-crosswalk-0763",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12854,7 +12973,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0757",
+    "id": "csi-crosswalk-0764",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12871,7 +12990,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0758",
+    "id": "csi-crosswalk-0765",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12888,7 +13007,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0759",
+    "id": "csi-crosswalk-0766",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12905,7 +13024,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0760",
+    "id": "csi-crosswalk-0767",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12922,7 +13041,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0761",
+    "id": "csi-crosswalk-0768",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12939,7 +13058,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-0762",
+    "id": "csi-crosswalk-0769",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12956,7 +13075,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0763",
+    "id": "csi-crosswalk-0770",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12973,7 +13092,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0764",
+    "id": "csi-crosswalk-0771",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -12990,7 +13109,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0765",
+    "id": "csi-crosswalk-0772",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13007,7 +13126,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0766",
+    "id": "csi-crosswalk-0773",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13024,7 +13143,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0767",
+    "id": "csi-crosswalk-0774",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13041,7 +13160,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0768",
+    "id": "csi-crosswalk-0775",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13058,7 +13177,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0769",
+    "id": "csi-crosswalk-0776",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13075,7 +13194,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0770",
+    "id": "csi-crosswalk-0777",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13092,7 +13211,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0771",
+    "id": "csi-crosswalk-0778",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13102,14 +13221,14 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     },
     "targetSection": {
       "sectionNumber": "12 93 23",
-      "title": "Trash and Litter Receptors",
+      "title": "Trash and Litter Receptacles",
       "level": 3
     },
     "relationship": "ONE_TO_MANY",
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0772",
+    "id": "csi-crosswalk-0779",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13126,7 +13245,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0773",
+    "id": "csi-crosswalk-0780",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13143,7 +13262,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-0774",
+    "id": "csi-crosswalk-0781",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13160,7 +13279,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0775",
+    "id": "csi-crosswalk-0782",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13177,7 +13296,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0776",
+    "id": "csi-crosswalk-0783",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13194,7 +13313,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0777",
+    "id": "csi-crosswalk-0784",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13211,7 +13330,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0778",
+    "id": "csi-crosswalk-0785",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13228,7 +13347,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0779",
+    "id": "csi-crosswalk-0786",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13245,7 +13364,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-0780",
+    "id": "csi-crosswalk-0787",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13262,7 +13381,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-0781",
+    "id": "csi-crosswalk-0788",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13279,7 +13398,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-0782",
+    "id": "csi-crosswalk-0789",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13296,7 +13415,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0783",
+    "id": "csi-crosswalk-0790",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13313,7 +13432,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-0784",
+    "id": "csi-crosswalk-0791",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13330,7 +13449,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0785",
+    "id": "csi-crosswalk-0792",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13347,7 +13466,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0786",
+    "id": "csi-crosswalk-0793",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13364,7 +13483,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-0787",
+    "id": "csi-crosswalk-0794",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13381,7 +13500,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0788",
+    "id": "csi-crosswalk-0795",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13398,7 +13517,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0789",
+    "id": "csi-crosswalk-0796",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13415,7 +13534,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0790",
+    "id": "csi-crosswalk-0797",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13432,7 +13551,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0791",
+    "id": "csi-crosswalk-0798",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13449,7 +13568,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0792",
+    "id": "csi-crosswalk-0799",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13466,7 +13585,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0793",
+    "id": "csi-crosswalk-0800",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13483,7 +13602,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0794",
+    "id": "csi-crosswalk-0801",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13500,7 +13619,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0795",
+    "id": "csi-crosswalk-0802",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13517,7 +13636,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0796",
+    "id": "csi-crosswalk-0803",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13534,7 +13653,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0797",
+    "id": "csi-crosswalk-0804",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13551,7 +13670,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0798",
+    "id": "csi-crosswalk-0805",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13568,7 +13687,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0799",
+    "id": "csi-crosswalk-0806",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13585,7 +13704,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0800",
+    "id": "csi-crosswalk-0807",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13602,7 +13721,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0801",
+    "id": "csi-crosswalk-0808",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13619,7 +13738,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0802",
+    "id": "csi-crosswalk-0809",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13636,7 +13755,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0803",
+    "id": "csi-crosswalk-0810",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13653,7 +13772,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0804",
+    "id": "csi-crosswalk-0811",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13670,7 +13789,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0805",
+    "id": "csi-crosswalk-0812",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13687,7 +13806,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0806",
+    "id": "csi-crosswalk-0813",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13704,7 +13823,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0807",
+    "id": "csi-crosswalk-0814",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13721,7 +13840,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0808",
+    "id": "csi-crosswalk-0815",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13738,7 +13857,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0809",
+    "id": "csi-crosswalk-0816",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13755,7 +13874,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-0810",
+    "id": "csi-crosswalk-0817",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13772,7 +13891,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0811",
+    "id": "csi-crosswalk-0818",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13789,7 +13908,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0812",
+    "id": "csi-crosswalk-0819",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13806,7 +13925,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0813",
+    "id": "csi-crosswalk-0820",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13823,7 +13942,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0814",
+    "id": "csi-crosswalk-0821",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13840,7 +13959,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0815",
+    "id": "csi-crosswalk-0822",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13857,7 +13976,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0816",
+    "id": "csi-crosswalk-0823",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13874,7 +13993,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0817",
+    "id": "csi-crosswalk-0824",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13891,7 +14010,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0818",
+    "id": "csi-crosswalk-0825",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13908,7 +14027,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0819",
+    "id": "csi-crosswalk-0826",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13925,7 +14044,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0820",
+    "id": "csi-crosswalk-0827",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13942,7 +14061,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0821",
+    "id": "csi-crosswalk-0828",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13959,7 +14078,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0822",
+    "id": "csi-crosswalk-0829",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13976,7 +14095,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0823",
+    "id": "csi-crosswalk-0830",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -13993,7 +14112,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0824",
+    "id": "csi-crosswalk-0831",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14010,7 +14129,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0825",
+    "id": "csi-crosswalk-0832",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14027,7 +14146,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0826",
+    "id": "csi-crosswalk-0833",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14044,7 +14163,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0827",
+    "id": "csi-crosswalk-0834",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14061,7 +14180,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0828",
+    "id": "csi-crosswalk-0835",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14078,7 +14197,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0829",
+    "id": "csi-crosswalk-0836",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14095,7 +14214,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0830",
+    "id": "csi-crosswalk-0837",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14112,7 +14231,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0831",
+    "id": "csi-crosswalk-0838",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14129,7 +14248,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0832",
+    "id": "csi-crosswalk-0839",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14146,12 +14265,12 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0833",
+    "id": "csi-crosswalk-0840",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
       "sectionNumber": "02960",
-      "title": "Flexible  Pavement Surfacing Recovery",
+      "title": "Flexible Pavement Surfacing Recovery",
       "level": 3
     },
     "targetSection": {
@@ -14163,7 +14282,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0834",
+    "id": "csi-crosswalk-0841",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14180,7 +14299,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0835",
+    "id": "csi-crosswalk-0842",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14197,7 +14316,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0836",
+    "id": "csi-crosswalk-0843",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14214,7 +14333,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0837",
+    "id": "csi-crosswalk-0844",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14231,7 +14350,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0838",
+    "id": "csi-crosswalk-0845",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14248,7 +14367,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0839",
+    "id": "csi-crosswalk-0846",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14265,7 +14384,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0840",
+    "id": "csi-crosswalk-0847",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14282,7 +14401,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0841",
+    "id": "csi-crosswalk-0848",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14299,7 +14418,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0842",
+    "id": "csi-crosswalk-0849",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14316,12 +14435,12 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0843",
+    "id": "csi-crosswalk-0850",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
       "sectionNumber": "02975",
-      "title": "Flexible and Bituminous Pavement Reinforcement and Crack and Joint  Sealants",
+      "title": "Flexible and Bituminous Pavement Reinforcement and Crack and Joint Sealants",
       "level": 3
     },
     "targetSection": {
@@ -14333,7 +14452,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0844",
+    "id": "csi-crosswalk-0851",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14350,7 +14469,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0845",
+    "id": "csi-crosswalk-0852",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14367,7 +14486,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0846",
+    "id": "csi-crosswalk-0853",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14384,7 +14503,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0847",
+    "id": "csi-crosswalk-0854",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14401,7 +14520,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0848",
+    "id": "csi-crosswalk-0855",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14418,7 +14537,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0849",
+    "id": "csi-crosswalk-0856",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14435,7 +14554,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0850",
+    "id": "csi-crosswalk-0857",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14452,7 +14571,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0851",
+    "id": "csi-crosswalk-0858",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14469,7 +14588,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0852",
+    "id": "csi-crosswalk-0859",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14486,7 +14605,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0853",
+    "id": "csi-crosswalk-0860",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14503,7 +14622,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0854",
+    "id": "csi-crosswalk-0861",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14520,7 +14639,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0855",
+    "id": "csi-crosswalk-0862",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14537,7 +14656,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0856",
+    "id": "csi-crosswalk-0863",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14554,7 +14673,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0857",
+    "id": "csi-crosswalk-0864",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14571,7 +14690,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0858",
+    "id": "csi-crosswalk-0865",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14588,7 +14707,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0859",
+    "id": "csi-crosswalk-0866",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14605,7 +14724,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0860",
+    "id": "csi-crosswalk-0867",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14622,7 +14741,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0861",
+    "id": "csi-crosswalk-0868",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14639,7 +14758,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0862",
+    "id": "csi-crosswalk-0869",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14656,7 +14775,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0863",
+    "id": "csi-crosswalk-0870",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14673,7 +14792,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-0864",
+    "id": "csi-crosswalk-0871",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14690,7 +14809,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-0865",
+    "id": "csi-crosswalk-0872",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14707,7 +14826,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-0866",
+    "id": "csi-crosswalk-0873",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14724,7 +14843,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0867",
+    "id": "csi-crosswalk-0874",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14741,7 +14860,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-0868",
+    "id": "csi-crosswalk-0875",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14758,7 +14877,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-0869",
+    "id": "csi-crosswalk-0876",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14775,7 +14894,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-0870",
+    "id": "csi-crosswalk-0877",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14792,7 +14911,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-0871",
+    "id": "csi-crosswalk-0878",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14809,7 +14928,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0872",
+    "id": "csi-crosswalk-0879",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14826,7 +14945,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0873",
+    "id": "csi-crosswalk-0880",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14843,7 +14962,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-0874",
+    "id": "csi-crosswalk-0881",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14860,7 +14979,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-0875",
+    "id": "csi-crosswalk-0882",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14870,14 +14989,14 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     },
     "targetSection": {
       "sectionNumber": "03 21 00",
-      "title": "Reinforcing Steel",
+      "title": "Reinforcement Bars",
       "level": 2
     },
     "relationship": "ONE_TO_ONE",
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-0876",
+    "id": "csi-crosswalk-0883",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14887,14 +15006,14 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     },
     "targetSection": {
       "sectionNumber": "03 22 00",
-      "title": "Welded Wire Fabric Reinforcing",
+      "title": "Fabric and Grid Reinforcing",
       "level": 2
     },
     "relationship": "ONE_TO_ONE",
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-0877",
+    "id": "csi-crosswalk-0884",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14904,14 +15023,14 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     },
     "targetSection": {
       "sectionNumber": "03 23 00",
-      "title": "Stressing Tendons",
+      "title": "Stressed Tendon Reinforcing",
       "level": 2
     },
     "relationship": "ONE_TO_ONE",
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-0878",
+    "id": "csi-crosswalk-0885",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14928,7 +15047,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-0879",
+    "id": "csi-crosswalk-0886",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14945,7 +15064,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0880",
+    "id": "csi-crosswalk-0887",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14962,7 +15081,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-0881",
+    "id": "csi-crosswalk-0888",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14979,7 +15098,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-0882",
+    "id": "csi-crosswalk-0889",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -14996,7 +15115,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-0883",
+    "id": "csi-crosswalk-0890",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15013,7 +15132,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-0884",
+    "id": "csi-crosswalk-0891",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15030,7 +15149,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0885",
+    "id": "csi-crosswalk-0892",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15047,7 +15166,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-0886",
+    "id": "csi-crosswalk-0893",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15064,7 +15183,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0887",
+    "id": "csi-crosswalk-0894",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15081,7 +15200,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-0888",
+    "id": "csi-crosswalk-0895",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15098,7 +15217,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0889",
+    "id": "csi-crosswalk-0896",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15115,7 +15234,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-0890",
+    "id": "csi-crosswalk-0897",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15132,7 +15251,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-0891",
+    "id": "csi-crosswalk-0898",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15149,7 +15268,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0892",
+    "id": "csi-crosswalk-0899",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15166,7 +15285,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0893",
+    "id": "csi-crosswalk-0900",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15183,7 +15302,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0894",
+    "id": "csi-crosswalk-0901",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15200,7 +15319,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-0895",
+    "id": "csi-crosswalk-0902",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15217,7 +15336,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0896",
+    "id": "csi-crosswalk-0903",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15234,7 +15353,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-0897",
+    "id": "csi-crosswalk-0904",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15251,7 +15370,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-0898",
+    "id": "csi-crosswalk-0905",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15268,7 +15387,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0899",
+    "id": "csi-crosswalk-0906",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15285,7 +15404,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-0900",
+    "id": "csi-crosswalk-0907",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15302,7 +15421,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-0901",
+    "id": "csi-crosswalk-0908",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15319,7 +15438,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-0902",
+    "id": "csi-crosswalk-0909",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15336,7 +15455,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-0903",
+    "id": "csi-crosswalk-0910",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15353,7 +15472,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-0904",
+    "id": "csi-crosswalk-0911",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15370,7 +15489,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-0905",
+    "id": "csi-crosswalk-0912",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15387,7 +15506,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-0906",
+    "id": "csi-crosswalk-0913",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15404,7 +15523,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-0907",
+    "id": "csi-crosswalk-0914",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15421,7 +15540,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0908",
+    "id": "csi-crosswalk-0915",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15438,7 +15557,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0909",
+    "id": "csi-crosswalk-0916",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15455,7 +15574,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0910",
+    "id": "csi-crosswalk-0917",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15472,7 +15591,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0911",
+    "id": "csi-crosswalk-0918",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15489,7 +15608,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0912",
+    "id": "csi-crosswalk-0919",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15506,7 +15625,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0913",
+    "id": "csi-crosswalk-0920",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15523,7 +15642,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0914",
+    "id": "csi-crosswalk-0921",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15540,7 +15659,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-0915",
+    "id": "csi-crosswalk-0922",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15557,7 +15676,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0916",
+    "id": "csi-crosswalk-0923",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15574,7 +15693,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0917",
+    "id": "csi-crosswalk-0924",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15591,7 +15710,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0918",
+    "id": "csi-crosswalk-0925",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15608,7 +15727,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-0919",
+    "id": "csi-crosswalk-0926",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15625,12 +15744,12 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-0920",
+    "id": "csi-crosswalk-0927",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
       "sectionNumber": "03900",
-      "title": "CONCRETE RESTORATION AND   CLEANING",
+      "title": "CONCRETE RESTORATION AND CLEANING",
       "level": 2
     },
     "targetSection": {
@@ -15642,7 +15761,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-0921",
+    "id": "csi-crosswalk-0928",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15659,7 +15778,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0922",
+    "id": "csi-crosswalk-0929",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15676,7 +15795,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0923",
+    "id": "csi-crosswalk-0930",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15693,7 +15812,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0924",
+    "id": "csi-crosswalk-0931",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15710,7 +15829,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0925",
+    "id": "csi-crosswalk-0932",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15727,7 +15846,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0926",
+    "id": "csi-crosswalk-0933",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15744,7 +15863,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0927",
+    "id": "csi-crosswalk-0934",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15761,7 +15880,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-0928",
+    "id": "csi-crosswalk-0935",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15778,7 +15897,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-0929",
+    "id": "csi-crosswalk-0936",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15795,7 +15914,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0930",
+    "id": "csi-crosswalk-0937",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15812,7 +15931,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0931",
+    "id": "csi-crosswalk-0938",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15829,7 +15948,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0932",
+    "id": "csi-crosswalk-0939",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15846,7 +15965,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0933",
+    "id": "csi-crosswalk-0940",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15863,7 +15982,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0934",
+    "id": "csi-crosswalk-0941",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15880,7 +15999,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0935",
+    "id": "csi-crosswalk-0942",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15897,7 +16016,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0936",
+    "id": "csi-crosswalk-0943",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15914,7 +16033,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0937",
+    "id": "csi-crosswalk-0944",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15931,7 +16050,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0938",
+    "id": "csi-crosswalk-0945",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15948,7 +16067,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0939",
+    "id": "csi-crosswalk-0946",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15965,7 +16084,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0940",
+    "id": "csi-crosswalk-0947",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15982,7 +16101,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0941",
+    "id": "csi-crosswalk-0948",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -15999,7 +16118,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0942",
+    "id": "csi-crosswalk-0949",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16016,7 +16135,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-0943",
+    "id": "csi-crosswalk-0950",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16033,7 +16152,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-0944",
+    "id": "csi-crosswalk-0951",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16050,7 +16169,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0945",
+    "id": "csi-crosswalk-0952",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16067,7 +16186,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-0946",
+    "id": "csi-crosswalk-0953",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16084,7 +16203,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0947",
+    "id": "csi-crosswalk-0954",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16101,7 +16220,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-0948",
+    "id": "csi-crosswalk-0955",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16118,7 +16237,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0949",
+    "id": "csi-crosswalk-0956",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16135,7 +16254,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-0950",
+    "id": "csi-crosswalk-0957",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16152,7 +16271,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-0951",
+    "id": "csi-crosswalk-0958",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16169,7 +16288,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-0952",
+    "id": "csi-crosswalk-0959",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16186,7 +16305,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0953",
+    "id": "csi-crosswalk-0960",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16203,7 +16322,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0954",
+    "id": "csi-crosswalk-0961",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16220,7 +16339,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0955",
+    "id": "csi-crosswalk-0962",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16237,7 +16356,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0956",
+    "id": "csi-crosswalk-0963",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16254,7 +16373,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0957",
+    "id": "csi-crosswalk-0964",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16271,7 +16390,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0958",
+    "id": "csi-crosswalk-0965",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16288,7 +16407,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-0959",
+    "id": "csi-crosswalk-0966",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16305,7 +16424,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0960",
+    "id": "csi-crosswalk-0967",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16322,7 +16441,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0961",
+    "id": "csi-crosswalk-0968",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16339,7 +16458,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0962",
+    "id": "csi-crosswalk-0969",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16356,7 +16475,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0963",
+    "id": "csi-crosswalk-0970",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16373,7 +16492,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0964",
+    "id": "csi-crosswalk-0971",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16390,7 +16509,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-0965",
+    "id": "csi-crosswalk-0972",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16407,7 +16526,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-0966",
+    "id": "csi-crosswalk-0973",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16424,7 +16543,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0967",
+    "id": "csi-crosswalk-0974",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16441,7 +16560,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0968",
+    "id": "csi-crosswalk-0975",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16458,7 +16577,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0969",
+    "id": "csi-crosswalk-0976",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16475,7 +16594,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0970",
+    "id": "csi-crosswalk-0977",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16492,7 +16611,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0971",
+    "id": "csi-crosswalk-0978",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16509,7 +16628,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0972",
+    "id": "csi-crosswalk-0979",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16526,7 +16645,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0973",
+    "id": "csi-crosswalk-0980",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16543,7 +16662,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0974",
+    "id": "csi-crosswalk-0981",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16560,7 +16679,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-0975",
+    "id": "csi-crosswalk-0982",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16577,7 +16696,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-0976",
+    "id": "csi-crosswalk-0983",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16594,7 +16713,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-0977",
+    "id": "csi-crosswalk-0984",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16611,7 +16730,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0978",
+    "id": "csi-crosswalk-0985",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16628,7 +16747,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0979",
+    "id": "csi-crosswalk-0986",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16645,7 +16764,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0980",
+    "id": "csi-crosswalk-0987",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16662,7 +16781,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0981",
+    "id": "csi-crosswalk-0988",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16679,7 +16798,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0982",
+    "id": "csi-crosswalk-0989",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16696,7 +16815,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0983",
+    "id": "csi-crosswalk-0990",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16713,7 +16832,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0984",
+    "id": "csi-crosswalk-0991",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16730,7 +16849,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0985",
+    "id": "csi-crosswalk-0992",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16747,7 +16866,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0986",
+    "id": "csi-crosswalk-0993",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16764,7 +16883,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0987",
+    "id": "csi-crosswalk-0994",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16781,7 +16900,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0988",
+    "id": "csi-crosswalk-0995",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16798,7 +16917,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0989",
+    "id": "csi-crosswalk-0996",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16815,7 +16934,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0990",
+    "id": "csi-crosswalk-0997",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16832,7 +16951,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0991",
+    "id": "csi-crosswalk-0998",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16849,7 +16968,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0992",
+    "id": "csi-crosswalk-0999",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16866,7 +16985,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0993",
+    "id": "csi-crosswalk-1000",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16883,7 +17002,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-0994",
+    "id": "csi-crosswalk-1001",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16900,7 +17019,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-0995",
+    "id": "csi-crosswalk-1002",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16917,7 +17036,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-0996",
+    "id": "csi-crosswalk-1003",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16934,7 +17053,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-0997",
+    "id": "csi-crosswalk-1004",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16951,7 +17070,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-0998",
+    "id": "csi-crosswalk-1005",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16968,7 +17087,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-0999",
+    "id": "csi-crosswalk-1006",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -16985,7 +17104,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1000",
+    "id": "csi-crosswalk-1007",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -17002,7 +17121,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1001",
+    "id": "csi-crosswalk-1008",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -17019,7 +17138,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1002",
+    "id": "csi-crosswalk-1009",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -17036,7 +17155,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1003",
+    "id": "csi-crosswalk-1010",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -17053,7 +17172,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1004",
+    "id": "csi-crosswalk-1011",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -17070,7 +17189,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1005",
+    "id": "csi-crosswalk-1012",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -17087,7 +17206,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1006",
+    "id": "csi-crosswalk-1013",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -17104,7 +17223,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1007",
+    "id": "csi-crosswalk-1014",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -17121,7 +17240,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1008",
+    "id": "csi-crosswalk-1015",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -17138,7 +17257,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1009",
+    "id": "csi-crosswalk-1016",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -17155,131 +17274,12 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1010",
-    "sourceVersion": "MASTERFORMAT_1995",
-    "targetVersion": "MASTERFORMAT_CURRENT",
-    "sourceSection": {
-      "sectionNumber": "04810",
-      "title": "Masonry Veneer",
-      "level": 4
-    },
-    "targetSection": {
-      "sectionNumber": "04 21 13.13",
-      "title": "Brick Veneer Masonry",
-      "level": 4
-    },
-    "relationship": "ONE_TO_MANY",
-    "mappingConfidence": "EXPANDED"
-  },
-  {
-    "id": "csi-crosswalk-1011",
-    "sourceVersion": "MASTERFORMAT_1995",
-    "targetVersion": "MASTERFORMAT_CURRENT",
-    "sourceSection": {
-      "sectionNumber": "04810",
-      "title": "Masonry Veneer",
-      "level": 4
-    },
-    "targetSection": {
-      "sectionNumber": "04 22 00.13",
-      "title": "Concrete Unit Veneer Masonry",
-      "level": 4
-    },
-    "relationship": "ONE_TO_MANY",
-    "mappingConfidence": "EXPANDED"
-  },
-  {
-    "id": "csi-crosswalk-1012",
-    "sourceVersion": "MASTERFORMAT_1995",
-    "targetVersion": "MASTERFORMAT_CURRENT",
-    "sourceSection": {
-      "sectionNumber": "04810",
-      "title": "Multiple-Wythe Unit Masonry",
-      "level": 4
-    },
-    "targetSection": {
-      "sectionNumber": "04 27 00",
-      "title": "Multiple-Wythe Unit Masonry",
-      "level": 2
-    },
-    "relationship": "MANY_TO_MANY",
-    "mappingConfidence": "SPECIAL_CASE"
-  },
-  {
-    "id": "csi-crosswalk-1013",
-    "sourceVersion": "MASTERFORMAT_1995",
-    "targetVersion": "MASTERFORMAT_CURRENT",
-    "sourceSection": {
-      "sectionNumber": "04810",
-      "title": "Single-Wythe Unit Masonry",
-      "level": 4
-    },
-    "targetSection": {
-      "sectionNumber": "04 21 00",
-      "title": "Clay Unit Masonry",
-      "level": 2
-    },
-    "relationship": "MANY_TO_MANY",
-    "mappingConfidence": "SPECIAL_CASE"
-  },
-  {
-    "id": "csi-crosswalk-1014",
-    "sourceVersion": "MASTERFORMAT_1995",
-    "targetVersion": "MASTERFORMAT_CURRENT",
-    "sourceSection": {
-      "sectionNumber": "04810",
-      "title": "Single-Wythe Unit Masonry",
-      "level": 4
-    },
-    "targetSection": {
-      "sectionNumber": "04 22 00",
-      "title": "Concrete Unit Masonry",
-      "level": 2
-    },
-    "relationship": "MANY_TO_MANY",
-    "mappingConfidence": "SPECIAL_CASE"
-  },
-  {
-    "id": "csi-crosswalk-1015",
-    "sourceVersion": "MASTERFORMAT_1995",
-    "targetVersion": "MASTERFORMAT_CURRENT",
-    "sourceSection": {
-      "sectionNumber": "04810",
-      "title": "Surface-Bonded Masonry",
-      "level": 4
-    },
-    "targetSection": {
-      "sectionNumber": "04 21 13.23",
-      "title": "Surface-Bonded Brick Masonry",
-      "level": 4
-    },
-    "relationship": "ONE_TO_MANY",
-    "mappingConfidence": "EXPANDED"
-  },
-  {
-    "id": "csi-crosswalk-1016",
-    "sourceVersion": "MASTERFORMAT_1995",
-    "targetVersion": "MASTERFORMAT_CURRENT",
-    "sourceSection": {
-      "sectionNumber": "04810",
-      "title": "Surface-Bonded Masonry",
-      "level": 4
-    },
-    "targetSection": {
-      "sectionNumber": "04 22 00.16",
-      "title": "Surface-Bonded Concrete Unit Masonry",
-      "level": 4
-    },
-    "relationship": "ONE_TO_MANY",
-    "mappingConfidence": "EXPANDED"
-  },
-  {
     "id": "csi-crosswalk-1017",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
       "sectionNumber": "04810",
-      "title": "Thin Brick Veneer",
+      "title": "Masonry Veneer",
       "level": 4
     },
     "targetSection": {
@@ -17296,6 +17296,125 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
       "sectionNumber": "04810",
+      "title": "Masonry Veneer",
+      "level": 4
+    },
+    "targetSection": {
+      "sectionNumber": "04 22 00.13",
+      "title": "Concrete Unit Veneer Masonry",
+      "level": 4
+    },
+    "relationship": "ONE_TO_MANY",
+    "mappingConfidence": "EXPANDED"
+  },
+  {
+    "id": "csi-crosswalk-1019",
+    "sourceVersion": "MASTERFORMAT_1995",
+    "targetVersion": "MASTERFORMAT_CURRENT",
+    "sourceSection": {
+      "sectionNumber": "04810",
+      "title": "Multiple-Wythe Unit Masonry",
+      "level": 4
+    },
+    "targetSection": {
+      "sectionNumber": "04 27 00",
+      "title": "Multiple-Wythe Unit Masonry",
+      "level": 2
+    },
+    "relationship": "MANY_TO_MANY",
+    "mappingConfidence": "SPECIAL_CASE"
+  },
+  {
+    "id": "csi-crosswalk-1020",
+    "sourceVersion": "MASTERFORMAT_1995",
+    "targetVersion": "MASTERFORMAT_CURRENT",
+    "sourceSection": {
+      "sectionNumber": "04810",
+      "title": "Single-Wythe Unit Masonry",
+      "level": 4
+    },
+    "targetSection": {
+      "sectionNumber": "04 21 00",
+      "title": "Clay Unit Masonry",
+      "level": 2
+    },
+    "relationship": "MANY_TO_MANY",
+    "mappingConfidence": "SPECIAL_CASE"
+  },
+  {
+    "id": "csi-crosswalk-1021",
+    "sourceVersion": "MASTERFORMAT_1995",
+    "targetVersion": "MASTERFORMAT_CURRENT",
+    "sourceSection": {
+      "sectionNumber": "04810",
+      "title": "Single-Wythe Unit Masonry",
+      "level": 4
+    },
+    "targetSection": {
+      "sectionNumber": "04 22 00",
+      "title": "Concrete Unit Masonry",
+      "level": 2
+    },
+    "relationship": "MANY_TO_MANY",
+    "mappingConfidence": "SPECIAL_CASE"
+  },
+  {
+    "id": "csi-crosswalk-1022",
+    "sourceVersion": "MASTERFORMAT_1995",
+    "targetVersion": "MASTERFORMAT_CURRENT",
+    "sourceSection": {
+      "sectionNumber": "04810",
+      "title": "Surface-Bonded Masonry",
+      "level": 4
+    },
+    "targetSection": {
+      "sectionNumber": "04 21 13.23",
+      "title": "Surface-Bonded Brick Masonry",
+      "level": 4
+    },
+    "relationship": "ONE_TO_MANY",
+    "mappingConfidence": "EXPANDED"
+  },
+  {
+    "id": "csi-crosswalk-1023",
+    "sourceVersion": "MASTERFORMAT_1995",
+    "targetVersion": "MASTERFORMAT_CURRENT",
+    "sourceSection": {
+      "sectionNumber": "04810",
+      "title": "Surface-Bonded Masonry",
+      "level": 4
+    },
+    "targetSection": {
+      "sectionNumber": "04 22 00.16",
+      "title": "Surface-Bonded Concrete Unit Masonry",
+      "level": 4
+    },
+    "relationship": "ONE_TO_MANY",
+    "mappingConfidence": "EXPANDED"
+  },
+  {
+    "id": "csi-crosswalk-1024",
+    "sourceVersion": "MASTERFORMAT_1995",
+    "targetVersion": "MASTERFORMAT_CURRENT",
+    "sourceSection": {
+      "sectionNumber": "04810",
+      "title": "Thin Brick Veneer",
+      "level": 4
+    },
+    "targetSection": {
+      "sectionNumber": "04 21 13.13",
+      "title": "Brick Veneer Masonry",
+      "level": 4
+    },
+    "relationship": "ONE_TO_MANY",
+    "mappingConfidence": "EXPANDED"
+  },
+  {
+    "id": "csi-crosswalk-1025",
+    "sourceVersion": "MASTERFORMAT_1995",
+    "targetVersion": "MASTERFORMAT_CURRENT",
+    "sourceSection": {
+      "sectionNumber": "04810",
       "title": "Unit Masonry Assemblies",
       "level": 3
     },
@@ -17308,7 +17427,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1019",
+    "id": "csi-crosswalk-1026",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -17325,7 +17444,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1020",
+    "id": "csi-crosswalk-1027",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -17342,7 +17461,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1021",
+    "id": "csi-crosswalk-1028",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -17359,7 +17478,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1022",
+    "id": "csi-crosswalk-1029",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -17376,7 +17495,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1023",
+    "id": "csi-crosswalk-1030",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -17393,7 +17512,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1024",
+    "id": "csi-crosswalk-1031",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -17410,7 +17529,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1025",
+    "id": "csi-crosswalk-1032",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -17427,7 +17546,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1026",
+    "id": "csi-crosswalk-1033",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -17444,7 +17563,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1027",
+    "id": "csi-crosswalk-1034",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -17461,7 +17580,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1028",
+    "id": "csi-crosswalk-1035",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -17478,7 +17597,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1029",
+    "id": "csi-crosswalk-1036",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -17495,7 +17614,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1030",
+    "id": "csi-crosswalk-1037",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -17512,7 +17631,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1031",
+    "id": "csi-crosswalk-1038",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -17529,7 +17648,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1032",
+    "id": "csi-crosswalk-1039",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -17546,7 +17665,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1033",
+    "id": "csi-crosswalk-1040",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -17563,7 +17682,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1034",
+    "id": "csi-crosswalk-1041",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -17580,7 +17699,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1035",
+    "id": "csi-crosswalk-1042",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -17597,7 +17716,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1036",
+    "id": "csi-crosswalk-1043",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -17614,7 +17733,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1037",
+    "id": "csi-crosswalk-1044",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -17631,7 +17750,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1038",
+    "id": "csi-crosswalk-1045",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -17648,7 +17767,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1039",
+    "id": "csi-crosswalk-1046",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -17665,7 +17784,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1040",
+    "id": "csi-crosswalk-1047",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -17682,7 +17801,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1041",
+    "id": "csi-crosswalk-1048",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -17699,7 +17818,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1042",
+    "id": "csi-crosswalk-1049",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -17716,7 +17835,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1043",
+    "id": "csi-crosswalk-1050",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -17733,7 +17852,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1044",
+    "id": "csi-crosswalk-1051",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -17750,7 +17869,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1045",
+    "id": "csi-crosswalk-1052",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -17767,7 +17886,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1046",
+    "id": "csi-crosswalk-1053",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -17784,7 +17903,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1047",
+    "id": "csi-crosswalk-1054",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -17801,7 +17920,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1048",
+    "id": "csi-crosswalk-1055",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -17818,7 +17937,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1049",
+    "id": "csi-crosswalk-1056",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -17835,7 +17954,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1050",
+    "id": "csi-crosswalk-1057",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -17852,7 +17971,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1051",
+    "id": "csi-crosswalk-1058",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -17869,7 +17988,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1052",
+    "id": "csi-crosswalk-1059",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -17886,7 +18005,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1053",
+    "id": "csi-crosswalk-1060",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -17903,7 +18022,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1054",
+    "id": "csi-crosswalk-1061",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -17920,7 +18039,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1055",
+    "id": "csi-crosswalk-1062",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -17937,7 +18056,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1056",
+    "id": "csi-crosswalk-1063",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -17954,7 +18073,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1057",
+    "id": "csi-crosswalk-1064",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -17971,7 +18090,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1058",
+    "id": "csi-crosswalk-1065",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -17988,7 +18107,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1059",
+    "id": "csi-crosswalk-1066",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18005,7 +18124,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1060",
+    "id": "csi-crosswalk-1067",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18022,7 +18141,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1061",
+    "id": "csi-crosswalk-1068",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18039,7 +18158,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1062",
+    "id": "csi-crosswalk-1069",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18056,7 +18175,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1063",
+    "id": "csi-crosswalk-1070",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18073,7 +18192,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1064",
+    "id": "csi-crosswalk-1071",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18090,7 +18209,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1065",
+    "id": "csi-crosswalk-1072",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18107,7 +18226,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1066",
+    "id": "csi-crosswalk-1073",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18124,7 +18243,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1067",
+    "id": "csi-crosswalk-1074",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18141,7 +18260,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1068",
+    "id": "csi-crosswalk-1075",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18158,7 +18277,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1069",
+    "id": "csi-crosswalk-1076",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18175,7 +18294,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1070",
+    "id": "csi-crosswalk-1077",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18192,7 +18311,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1071",
+    "id": "csi-crosswalk-1078",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18209,7 +18328,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1072",
+    "id": "csi-crosswalk-1079",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18226,7 +18345,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1073",
+    "id": "csi-crosswalk-1080",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18243,7 +18362,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1074",
+    "id": "csi-crosswalk-1081",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18260,7 +18379,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1075",
+    "id": "csi-crosswalk-1082",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18277,7 +18396,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1076",
+    "id": "csi-crosswalk-1083",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18294,7 +18413,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1077",
+    "id": "csi-crosswalk-1084",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18311,7 +18430,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1078",
+    "id": "csi-crosswalk-1085",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18328,7 +18447,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1079",
+    "id": "csi-crosswalk-1086",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18345,7 +18464,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1080",
+    "id": "csi-crosswalk-1087",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18362,7 +18481,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1081",
+    "id": "csi-crosswalk-1088",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18379,7 +18498,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1082",
+    "id": "csi-crosswalk-1089",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18396,7 +18515,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1083",
+    "id": "csi-crosswalk-1090",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18413,7 +18532,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1084",
+    "id": "csi-crosswalk-1091",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18430,7 +18549,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1085",
+    "id": "csi-crosswalk-1092",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18447,7 +18566,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1086",
+    "id": "csi-crosswalk-1093",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18464,7 +18583,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1087",
+    "id": "csi-crosswalk-1094",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18481,7 +18600,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1088",
+    "id": "csi-crosswalk-1095",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18498,7 +18617,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1089",
+    "id": "csi-crosswalk-1096",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18515,7 +18634,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1090",
+    "id": "csi-crosswalk-1097",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18532,7 +18651,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1091",
+    "id": "csi-crosswalk-1098",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18549,7 +18668,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1092",
+    "id": "csi-crosswalk-1099",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18566,7 +18685,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1093",
+    "id": "csi-crosswalk-1100",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18583,7 +18702,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1094",
+    "id": "csi-crosswalk-1101",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18600,7 +18719,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1095",
+    "id": "csi-crosswalk-1102",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18617,7 +18736,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1096",
+    "id": "csi-crosswalk-1103",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18634,7 +18753,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1097",
+    "id": "csi-crosswalk-1104",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18651,7 +18770,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1098",
+    "id": "csi-crosswalk-1105",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18668,7 +18787,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1099",
+    "id": "csi-crosswalk-1106",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18685,7 +18804,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1100",
+    "id": "csi-crosswalk-1107",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18702,7 +18821,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1101",
+    "id": "csi-crosswalk-1108",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18719,7 +18838,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1102",
+    "id": "csi-crosswalk-1109",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18736,7 +18855,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1103",
+    "id": "csi-crosswalk-1110",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18753,7 +18872,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1104",
+    "id": "csi-crosswalk-1111",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18770,7 +18889,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1105",
+    "id": "csi-crosswalk-1112",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18787,7 +18906,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1106",
+    "id": "csi-crosswalk-1113",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18804,7 +18923,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1107",
+    "id": "csi-crosswalk-1114",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18821,7 +18940,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1108",
+    "id": "csi-crosswalk-1115",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18838,7 +18957,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1109",
+    "id": "csi-crosswalk-1116",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18855,7 +18974,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1110",
+    "id": "csi-crosswalk-1117",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18872,7 +18991,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1111",
+    "id": "csi-crosswalk-1118",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18889,7 +19008,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1112",
+    "id": "csi-crosswalk-1119",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18906,7 +19025,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1113",
+    "id": "csi-crosswalk-1120",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18923,7 +19042,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1114",
+    "id": "csi-crosswalk-1121",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18940,7 +19059,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1115",
+    "id": "csi-crosswalk-1122",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18957,7 +19076,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1116",
+    "id": "csi-crosswalk-1123",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18974,7 +19093,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1117",
+    "id": "csi-crosswalk-1124",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -18991,7 +19110,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1118",
+    "id": "csi-crosswalk-1125",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19008,7 +19127,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1119",
+    "id": "csi-crosswalk-1126",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19025,7 +19144,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1120",
+    "id": "csi-crosswalk-1127",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19042,7 +19161,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1121",
+    "id": "csi-crosswalk-1128",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19059,7 +19178,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1122",
+    "id": "csi-crosswalk-1129",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19076,7 +19195,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1123",
+    "id": "csi-crosswalk-1130",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19093,7 +19212,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1124",
+    "id": "csi-crosswalk-1131",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19110,7 +19229,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1125",
+    "id": "csi-crosswalk-1132",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19127,7 +19246,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1126",
+    "id": "csi-crosswalk-1133",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19144,7 +19263,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1127",
+    "id": "csi-crosswalk-1134",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19161,7 +19280,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1128",
+    "id": "csi-crosswalk-1135",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19178,7 +19297,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1129",
+    "id": "csi-crosswalk-1136",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19195,7 +19314,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1130",
+    "id": "csi-crosswalk-1137",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19212,7 +19331,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1131",
+    "id": "csi-crosswalk-1138",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19229,7 +19348,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1132",
+    "id": "csi-crosswalk-1139",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19246,7 +19365,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1133",
+    "id": "csi-crosswalk-1140",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19263,7 +19382,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1134",
+    "id": "csi-crosswalk-1141",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19280,7 +19399,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1135",
+    "id": "csi-crosswalk-1142",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19297,7 +19416,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1136",
+    "id": "csi-crosswalk-1143",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19314,7 +19433,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1137",
+    "id": "csi-crosswalk-1144",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19331,7 +19450,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1138",
+    "id": "csi-crosswalk-1145",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19340,7 +19459,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
       "level": 3
     },
     "targetSection": {
-      "sectionNumber": "06 13 23",
+      "sectionNumber": "06 13 00",
       "title": "Heavy Timber Construction",
       "level": 3
     },
@@ -19348,7 +19467,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1139",
+    "id": "csi-crosswalk-1146",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19365,7 +19484,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1140",
+    "id": "csi-crosswalk-1147",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19375,14 +19494,14 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     },
     "targetSection": {
       "sectionNumber": "06 13 00",
-      "title": "Heavy Timber",
+      "title": "Heavy Timber Construction",
       "level": 3
     },
     "relationship": "ONE_TO_MANY",
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1141",
+    "id": "csi-crosswalk-1148",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19399,7 +19518,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1142",
+    "id": "csi-crosswalk-1149",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19416,7 +19535,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1143",
+    "id": "csi-crosswalk-1150",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19426,14 +19545,14 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     },
     "targetSection": {
       "sectionNumber": "06 13 00",
-      "title": "Heavy Timber",
+      "title": "Heavy Timber Construction",
       "level": 2
     },
     "relationship": "ONE_TO_MANY",
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1144",
+    "id": "csi-crosswalk-1151",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19442,15 +19561,15 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
       "level": 4
     },
     "targetSection": {
-      "sectionNumber": "06 13 00",
-      "title": "Heavy Timber",
+      "sectionNumber": "06 13 26",
+      "title": "Heavy Timber Trusses",
       "level": 2
     },
     "relationship": "ONE_TO_MANY",
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1145",
+    "id": "csi-crosswalk-1152",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19467,7 +19586,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1146",
+    "id": "csi-crosswalk-1153",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19484,7 +19603,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1147",
+    "id": "csi-crosswalk-1154",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19501,7 +19620,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1148",
+    "id": "csi-crosswalk-1155",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19518,7 +19637,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1149",
+    "id": "csi-crosswalk-1156",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19535,7 +19654,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1150",
+    "id": "csi-crosswalk-1157",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19552,7 +19671,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1151",
+    "id": "csi-crosswalk-1158",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19569,7 +19688,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1152",
+    "id": "csi-crosswalk-1159",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19586,7 +19705,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1153",
+    "id": "csi-crosswalk-1160",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19603,7 +19722,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1154",
+    "id": "csi-crosswalk-1161",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19620,7 +19739,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1155",
+    "id": "csi-crosswalk-1162",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19637,7 +19756,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1156",
+    "id": "csi-crosswalk-1163",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19654,7 +19773,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1157",
+    "id": "csi-crosswalk-1164",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19671,7 +19790,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1158",
+    "id": "csi-crosswalk-1165",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19688,7 +19807,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1159",
+    "id": "csi-crosswalk-1166",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19705,7 +19824,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1160",
+    "id": "csi-crosswalk-1167",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19722,7 +19841,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1161",
+    "id": "csi-crosswalk-1168",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19739,7 +19858,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1162",
+    "id": "csi-crosswalk-1169",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19756,7 +19875,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1163",
+    "id": "csi-crosswalk-1170",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19773,7 +19892,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1164",
+    "id": "csi-crosswalk-1171",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19790,7 +19909,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1165",
+    "id": "csi-crosswalk-1172",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19807,7 +19926,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1166",
+    "id": "csi-crosswalk-1173",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19824,7 +19943,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1167",
+    "id": "csi-crosswalk-1174",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19841,7 +19960,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1168",
+    "id": "csi-crosswalk-1175",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19858,7 +19977,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1169",
+    "id": "csi-crosswalk-1176",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19875,7 +19994,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1170",
+    "id": "csi-crosswalk-1177",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19892,7 +20011,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1171",
+    "id": "csi-crosswalk-1178",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19909,7 +20028,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1172",
+    "id": "csi-crosswalk-1179",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19926,7 +20045,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1173",
+    "id": "csi-crosswalk-1180",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19943,7 +20062,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1174",
+    "id": "csi-crosswalk-1181",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19960,7 +20079,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1175",
+    "id": "csi-crosswalk-1182",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19977,7 +20096,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1176",
+    "id": "csi-crosswalk-1183",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -19994,7 +20113,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1177",
+    "id": "csi-crosswalk-1184",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20011,7 +20130,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1178",
+    "id": "csi-crosswalk-1185",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20028,7 +20147,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1179",
+    "id": "csi-crosswalk-1186",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20045,7 +20164,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1180",
+    "id": "csi-crosswalk-1187",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20062,7 +20181,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1181",
+    "id": "csi-crosswalk-1188",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20079,7 +20198,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1182",
+    "id": "csi-crosswalk-1189",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20096,7 +20215,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1183",
+    "id": "csi-crosswalk-1190",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20113,7 +20232,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1184",
+    "id": "csi-crosswalk-1191",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20130,7 +20249,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1185",
+    "id": "csi-crosswalk-1192",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20147,7 +20266,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1186",
+    "id": "csi-crosswalk-1193",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20164,7 +20283,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1187",
+    "id": "csi-crosswalk-1194",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20181,7 +20300,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1188",
+    "id": "csi-crosswalk-1195",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20198,7 +20317,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1189",
+    "id": "csi-crosswalk-1196",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20215,7 +20334,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1190",
+    "id": "csi-crosswalk-1197",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20232,7 +20351,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1191",
+    "id": "csi-crosswalk-1198",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20249,7 +20368,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1192",
+    "id": "csi-crosswalk-1199",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20266,7 +20385,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1193",
+    "id": "csi-crosswalk-1200",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20276,14 +20395,14 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     },
     "targetSection": {
       "sectionNumber": "06 46 29",
-      "title": "Wood Fascia and Soffits",
+      "title": "Wood Fasciae and Soffits",
       "level": 3
     },
     "relationship": "ONE_TO_MANY",
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1194",
+    "id": "csi-crosswalk-1201",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20300,7 +20419,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1195",
+    "id": "csi-crosswalk-1202",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20317,7 +20436,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1196",
+    "id": "csi-crosswalk-1203",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20334,7 +20453,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1197",
+    "id": "csi-crosswalk-1204",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20351,7 +20470,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1198",
+    "id": "csi-crosswalk-1205",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20368,7 +20487,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1199",
+    "id": "csi-crosswalk-1206",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20385,7 +20504,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1200",
+    "id": "csi-crosswalk-1207",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20402,7 +20521,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1201",
+    "id": "csi-crosswalk-1208",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20419,7 +20538,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1202",
+    "id": "csi-crosswalk-1209",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20436,7 +20555,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1203",
+    "id": "csi-crosswalk-1210",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20453,7 +20572,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1204",
+    "id": "csi-crosswalk-1211",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20470,7 +20589,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1205",
+    "id": "csi-crosswalk-1212",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20487,7 +20606,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1206",
+    "id": "csi-crosswalk-1213",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20504,7 +20623,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1207",
+    "id": "csi-crosswalk-1214",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20521,7 +20640,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1208",
+    "id": "csi-crosswalk-1215",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20538,7 +20657,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1209",
+    "id": "csi-crosswalk-1216",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20555,7 +20674,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1210",
+    "id": "csi-crosswalk-1217",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20572,7 +20691,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1211",
+    "id": "csi-crosswalk-1218",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20589,7 +20708,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1212",
+    "id": "csi-crosswalk-1219",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20606,7 +20725,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1213",
+    "id": "csi-crosswalk-1220",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20623,7 +20742,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1214",
+    "id": "csi-crosswalk-1221",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20640,7 +20759,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1215",
+    "id": "csi-crosswalk-1222",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20657,7 +20776,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1216",
+    "id": "csi-crosswalk-1223",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20674,7 +20793,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1217",
+    "id": "csi-crosswalk-1224",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20691,7 +20810,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1218",
+    "id": "csi-crosswalk-1225",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20708,7 +20827,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1219",
+    "id": "csi-crosswalk-1226",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20725,7 +20844,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1220",
+    "id": "csi-crosswalk-1227",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20742,7 +20861,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1221",
+    "id": "csi-crosswalk-1228",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20759,7 +20878,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1222",
+    "id": "csi-crosswalk-1229",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20776,7 +20895,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1223",
+    "id": "csi-crosswalk-1230",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20793,7 +20912,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1224",
+    "id": "csi-crosswalk-1231",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20810,7 +20929,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1225",
+    "id": "csi-crosswalk-1232",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20827,7 +20946,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1226",
+    "id": "csi-crosswalk-1233",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20844,7 +20963,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1227",
+    "id": "csi-crosswalk-1234",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20861,7 +20980,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1228",
+    "id": "csi-crosswalk-1235",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20878,7 +20997,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1229",
+    "id": "csi-crosswalk-1236",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20895,7 +21014,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1230",
+    "id": "csi-crosswalk-1237",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20912,7 +21031,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1231",
+    "id": "csi-crosswalk-1238",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20929,7 +21048,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1232",
+    "id": "csi-crosswalk-1239",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20946,7 +21065,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1233",
+    "id": "csi-crosswalk-1240",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20963,7 +21082,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1234",
+    "id": "csi-crosswalk-1241",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20980,7 +21099,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1235",
+    "id": "csi-crosswalk-1242",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -20997,7 +21116,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1236",
+    "id": "csi-crosswalk-1243",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21014,7 +21133,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1237",
+    "id": "csi-crosswalk-1244",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21031,7 +21150,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1238",
+    "id": "csi-crosswalk-1245",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21048,7 +21167,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1239",
+    "id": "csi-crosswalk-1246",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21065,7 +21184,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1240",
+    "id": "csi-crosswalk-1247",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21082,7 +21201,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1241",
+    "id": "csi-crosswalk-1248",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21099,7 +21218,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1242",
+    "id": "csi-crosswalk-1249",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21116,7 +21235,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1243",
+    "id": "csi-crosswalk-1250",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21133,7 +21252,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1244",
+    "id": "csi-crosswalk-1251",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21150,7 +21269,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1245",
+    "id": "csi-crosswalk-1252",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21167,7 +21286,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1246",
+    "id": "csi-crosswalk-1253",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21184,7 +21303,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1247",
+    "id": "csi-crosswalk-1254",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21201,7 +21320,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1248",
+    "id": "csi-crosswalk-1255",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21218,7 +21337,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1249",
+    "id": "csi-crosswalk-1256",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21235,7 +21354,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1250",
+    "id": "csi-crosswalk-1257",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21252,7 +21371,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1251",
+    "id": "csi-crosswalk-1258",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21269,7 +21388,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1252",
+    "id": "csi-crosswalk-1259",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21286,7 +21405,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1253",
+    "id": "csi-crosswalk-1260",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21303,7 +21422,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1254",
+    "id": "csi-crosswalk-1261",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21320,7 +21439,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1255",
+    "id": "csi-crosswalk-1262",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21337,7 +21456,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1256",
+    "id": "csi-crosswalk-1263",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21354,7 +21473,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1257",
+    "id": "csi-crosswalk-1264",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21371,7 +21490,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1258",
+    "id": "csi-crosswalk-1265",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21388,7 +21507,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1259",
+    "id": "csi-crosswalk-1266",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21405,7 +21524,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1260",
+    "id": "csi-crosswalk-1267",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21422,7 +21541,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1261",
+    "id": "csi-crosswalk-1268",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21439,7 +21558,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1262",
+    "id": "csi-crosswalk-1269",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21456,7 +21575,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1263",
+    "id": "csi-crosswalk-1270",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21473,7 +21592,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1264",
+    "id": "csi-crosswalk-1271",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21490,7 +21609,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1265",
+    "id": "csi-crosswalk-1272",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21507,7 +21626,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1266",
+    "id": "csi-crosswalk-1273",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21524,7 +21643,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1267",
+    "id": "csi-crosswalk-1274",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21541,7 +21660,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1268",
+    "id": "csi-crosswalk-1275",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21558,7 +21677,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1269",
+    "id": "csi-crosswalk-1276",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21575,7 +21694,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1270",
+    "id": "csi-crosswalk-1277",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21592,7 +21711,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1271",
+    "id": "csi-crosswalk-1278",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21609,7 +21728,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1272",
+    "id": "csi-crosswalk-1279",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21626,7 +21745,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1273",
+    "id": "csi-crosswalk-1280",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21643,7 +21762,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1274",
+    "id": "csi-crosswalk-1281",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21660,7 +21779,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1275",
+    "id": "csi-crosswalk-1282",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21677,7 +21796,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1276",
+    "id": "csi-crosswalk-1283",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21694,7 +21813,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1277",
+    "id": "csi-crosswalk-1284",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21711,7 +21830,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1278",
+    "id": "csi-crosswalk-1285",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21728,7 +21847,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1279",
+    "id": "csi-crosswalk-1286",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21745,7 +21864,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1280",
+    "id": "csi-crosswalk-1287",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21762,7 +21881,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1281",
+    "id": "csi-crosswalk-1288",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21779,7 +21898,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1282",
+    "id": "csi-crosswalk-1289",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21796,7 +21915,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1283",
+    "id": "csi-crosswalk-1290",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21813,7 +21932,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1284",
+    "id": "csi-crosswalk-1291",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21830,7 +21949,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1285",
+    "id": "csi-crosswalk-1292",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21847,7 +21966,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1286",
+    "id": "csi-crosswalk-1293",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21864,7 +21983,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1287",
+    "id": "csi-crosswalk-1294",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21881,7 +22000,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1288",
+    "id": "csi-crosswalk-1295",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21898,7 +22017,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1289",
+    "id": "csi-crosswalk-1296",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21915,7 +22034,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1290",
+    "id": "csi-crosswalk-1297",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21932,7 +22051,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1291",
+    "id": "csi-crosswalk-1298",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21949,7 +22068,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1292",
+    "id": "csi-crosswalk-1299",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21966,7 +22085,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1293",
+    "id": "csi-crosswalk-1300",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -21983,7 +22102,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1294",
+    "id": "csi-crosswalk-1301",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22000,7 +22119,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1295",
+    "id": "csi-crosswalk-1302",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22017,7 +22136,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1296",
+    "id": "csi-crosswalk-1303",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22034,7 +22153,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1297",
+    "id": "csi-crosswalk-1304",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22051,7 +22170,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1298",
+    "id": "csi-crosswalk-1305",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22068,7 +22187,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1299",
+    "id": "csi-crosswalk-1306",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22085,7 +22204,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1300",
+    "id": "csi-crosswalk-1307",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22102,7 +22221,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1301",
+    "id": "csi-crosswalk-1308",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22119,7 +22238,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1302",
+    "id": "csi-crosswalk-1309",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22136,7 +22255,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1303",
+    "id": "csi-crosswalk-1310",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22153,7 +22272,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1304",
+    "id": "csi-crosswalk-1311",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22163,14 +22282,14 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     },
     "targetSection": {
       "sectionNumber": "07 46 46",
-      "title": "Mineral-Fiber Cement Siding",
+      "title": "Fiber-Cement Siding",
       "level": 3
     },
     "relationship": "ONE_TO_MANY",
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1305",
+    "id": "csi-crosswalk-1312",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22187,7 +22306,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1306",
+    "id": "csi-crosswalk-1313",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22204,7 +22323,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1307",
+    "id": "csi-crosswalk-1314",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22221,7 +22340,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1308",
+    "id": "csi-crosswalk-1315",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22238,7 +22357,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1309",
+    "id": "csi-crosswalk-1316",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22255,7 +22374,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1310",
+    "id": "csi-crosswalk-1317",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22272,7 +22391,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1311",
+    "id": "csi-crosswalk-1318",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22289,7 +22408,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1312",
+    "id": "csi-crosswalk-1319",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22306,7 +22425,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1313",
+    "id": "csi-crosswalk-1320",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22323,7 +22442,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1314",
+    "id": "csi-crosswalk-1321",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22340,7 +22459,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1315",
+    "id": "csi-crosswalk-1322",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22357,7 +22476,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1316",
+    "id": "csi-crosswalk-1323",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22374,7 +22493,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1317",
+    "id": "csi-crosswalk-1324",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22391,7 +22510,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1318",
+    "id": "csi-crosswalk-1325",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22408,7 +22527,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1319",
+    "id": "csi-crosswalk-1326",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22425,7 +22544,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1320",
+    "id": "csi-crosswalk-1327",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22442,7 +22561,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1321",
+    "id": "csi-crosswalk-1328",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22459,7 +22578,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1322",
+    "id": "csi-crosswalk-1329",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22476,7 +22595,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1323",
+    "id": "csi-crosswalk-1330",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22493,7 +22612,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1324",
+    "id": "csi-crosswalk-1331",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22510,7 +22629,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1325",
+    "id": "csi-crosswalk-1332",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22527,7 +22646,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1326",
+    "id": "csi-crosswalk-1333",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22544,7 +22663,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1327",
+    "id": "csi-crosswalk-1334",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22561,7 +22680,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1328",
+    "id": "csi-crosswalk-1335",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22578,7 +22697,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1329",
+    "id": "csi-crosswalk-1336",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22595,7 +22714,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1330",
+    "id": "csi-crosswalk-1337",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22612,7 +22731,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1331",
+    "id": "csi-crosswalk-1338",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22629,7 +22748,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1332",
+    "id": "csi-crosswalk-1339",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22646,7 +22765,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1333",
+    "id": "csi-crosswalk-1340",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22663,7 +22782,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1334",
+    "id": "csi-crosswalk-1341",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22680,7 +22799,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1335",
+    "id": "csi-crosswalk-1342",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22697,7 +22816,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1336",
+    "id": "csi-crosswalk-1343",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22714,7 +22833,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1337",
+    "id": "csi-crosswalk-1344",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22731,7 +22850,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1338",
+    "id": "csi-crosswalk-1345",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22748,7 +22867,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1339",
+    "id": "csi-crosswalk-1346",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22765,7 +22884,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1340",
+    "id": "csi-crosswalk-1347",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22782,7 +22901,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1341",
+    "id": "csi-crosswalk-1348",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22799,7 +22918,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1342",
+    "id": "csi-crosswalk-1349",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22816,7 +22935,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1343",
+    "id": "csi-crosswalk-1350",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22833,7 +22952,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1344",
+    "id": "csi-crosswalk-1351",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22850,7 +22969,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1345",
+    "id": "csi-crosswalk-1352",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22867,7 +22986,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1346",
+    "id": "csi-crosswalk-1353",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22884,7 +23003,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1347",
+    "id": "csi-crosswalk-1354",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22901,7 +23020,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1348",
+    "id": "csi-crosswalk-1355",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22918,7 +23037,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1349",
+    "id": "csi-crosswalk-1356",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22935,7 +23054,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1350",
+    "id": "csi-crosswalk-1357",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22952,7 +23071,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1351",
+    "id": "csi-crosswalk-1358",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22969,7 +23088,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1352",
+    "id": "csi-crosswalk-1359",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -22986,7 +23105,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1353",
+    "id": "csi-crosswalk-1360",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23003,7 +23122,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1354",
+    "id": "csi-crosswalk-1361",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23020,7 +23139,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1355",
+    "id": "csi-crosswalk-1362",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23037,7 +23156,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1356",
+    "id": "csi-crosswalk-1363",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23054,7 +23173,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1357",
+    "id": "csi-crosswalk-1364",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23071,7 +23190,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1358",
+    "id": "csi-crosswalk-1365",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23088,7 +23207,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1359",
+    "id": "csi-crosswalk-1366",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23098,14 +23217,14 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     },
     "targetSection": {
       "sectionNumber": "07 71 19",
-      "title": "Manufactured Gravel Stops and Facias",
+      "title": "Manufactured Gravel Stops and Fasciae",
       "level": 3
     },
     "relationship": "ONE_TO_MANY",
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1360",
+    "id": "csi-crosswalk-1367",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23122,7 +23241,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1361",
+    "id": "csi-crosswalk-1368",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23139,7 +23258,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1362",
+    "id": "csi-crosswalk-1369",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23156,7 +23275,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1363",
+    "id": "csi-crosswalk-1370",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23173,7 +23292,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1364",
+    "id": "csi-crosswalk-1371",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23190,7 +23309,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1365",
+    "id": "csi-crosswalk-1372",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23207,7 +23326,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1366",
+    "id": "csi-crosswalk-1373",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23224,7 +23343,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1367",
+    "id": "csi-crosswalk-1374",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23241,7 +23360,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1368",
+    "id": "csi-crosswalk-1375",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23258,7 +23377,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1369",
+    "id": "csi-crosswalk-1376",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23275,7 +23394,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1370",
+    "id": "csi-crosswalk-1377",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23292,7 +23411,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1371",
+    "id": "csi-crosswalk-1378",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23309,7 +23428,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1372",
+    "id": "csi-crosswalk-1379",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23326,7 +23445,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1373",
+    "id": "csi-crosswalk-1380",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23343,7 +23462,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1374",
+    "id": "csi-crosswalk-1381",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23360,7 +23479,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1375",
+    "id": "csi-crosswalk-1382",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23377,7 +23496,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1376",
+    "id": "csi-crosswalk-1383",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23394,7 +23513,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1377",
+    "id": "csi-crosswalk-1384",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23411,7 +23530,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1378",
+    "id": "csi-crosswalk-1385",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23428,7 +23547,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1379",
+    "id": "csi-crosswalk-1386",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23445,7 +23564,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1380",
+    "id": "csi-crosswalk-1387",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23462,7 +23581,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1381",
+    "id": "csi-crosswalk-1388",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23479,7 +23598,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1382",
+    "id": "csi-crosswalk-1389",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23496,7 +23615,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1383",
+    "id": "csi-crosswalk-1390",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23506,14 +23625,14 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     },
     "targetSection": {
       "sectionNumber": "07 81 23",
-      "title": "Intumescent Mastic Fireproofing",
+      "title": "Intumescent Fireproofing",
       "level": 3
     },
     "relationship": "ONE_TO_MANY",
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1384",
+    "id": "csi-crosswalk-1391",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23530,7 +23649,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1385",
+    "id": "csi-crosswalk-1392",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23547,7 +23666,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1386",
+    "id": "csi-crosswalk-1393",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23564,7 +23683,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1387",
+    "id": "csi-crosswalk-1394",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23581,7 +23700,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1388",
+    "id": "csi-crosswalk-1395",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23598,7 +23717,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1389",
+    "id": "csi-crosswalk-1396",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23615,7 +23734,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1390",
+    "id": "csi-crosswalk-1397",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23624,15 +23743,15 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
       "level": 4
     },
     "targetSection": {
-      "sectionNumber": "07 84 16",
-      "title": "Annular Space Protection",
+      "sectionNumber": "07 84 13",
+      "title": "Penetration Firestopping",
       "level": 3
     },
     "relationship": "ONE_TO_MANY",
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1391",
+    "id": "csi-crosswalk-1398",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23641,15 +23760,15 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
       "level": 4
     },
     "targetSection": {
-      "sectionNumber": "07 84 56.13",
-      "title": "Fibrous Fire Safing",
-      "level": 4
+      "sectionNumber": "07 84 53",
+      "title": "Building Perimeter Firestopping",
+      "level": 3
     },
     "relationship": "ONE_TO_MANY",
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1392",
+    "id": "csi-crosswalk-1399",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23659,14 +23778,14 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     },
     "targetSection": {
       "sectionNumber": "07 84 43",
-      "title": "Fire-Resistant Joint Sealants",
+      "title": "Joint Firestopping",
       "level": 3
     },
     "relationship": "ONE_TO_MANY",
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1393",
+    "id": "csi-crosswalk-1400",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23683,7 +23802,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1394",
+    "id": "csi-crosswalk-1401",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23700,7 +23819,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1395",
+    "id": "csi-crosswalk-1402",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23709,15 +23828,15 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
       "level": 4
     },
     "targetSection": {
-      "sectionNumber": "07 84 23",
-      "title": "Silicone Firestopping Foams",
+      "sectionNumber": "07 84 13",
+      "title": "Penetration Firestopping",
       "level": 3
     },
     "relationship": "ONE_TO_MANY",
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1396",
+    "id": "csi-crosswalk-1403",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23734,7 +23853,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1397",
+    "id": "csi-crosswalk-1404",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23751,7 +23870,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1398",
+    "id": "csi-crosswalk-1405",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23768,7 +23887,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1399",
+    "id": "csi-crosswalk-1406",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23785,7 +23904,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1400",
+    "id": "csi-crosswalk-1407",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23802,7 +23921,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1401",
+    "id": "csi-crosswalk-1408",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23819,7 +23938,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1402",
+    "id": "csi-crosswalk-1409",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23836,7 +23955,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1403",
+    "id": "csi-crosswalk-1410",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23853,7 +23972,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1404",
+    "id": "csi-crosswalk-1411",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23870,7 +23989,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1405",
+    "id": "csi-crosswalk-1412",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23887,7 +24006,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1406",
+    "id": "csi-crosswalk-1413",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23904,7 +24023,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1407",
+    "id": "csi-crosswalk-1414",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23921,7 +24040,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1408",
+    "id": "csi-crosswalk-1415",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23938,7 +24057,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1409",
+    "id": "csi-crosswalk-1416",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23955,7 +24074,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1410",
+    "id": "csi-crosswalk-1417",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23972,7 +24091,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1411",
+    "id": "csi-crosswalk-1418",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -23989,7 +24108,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1412",
+    "id": "csi-crosswalk-1419",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24006,7 +24125,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1413",
+    "id": "csi-crosswalk-1420",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24023,7 +24142,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1414",
+    "id": "csi-crosswalk-1421",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24040,7 +24159,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1415",
+    "id": "csi-crosswalk-1422",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24057,7 +24176,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1416",
+    "id": "csi-crosswalk-1423",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24074,7 +24193,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1417",
+    "id": "csi-crosswalk-1424",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24091,7 +24210,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1418",
+    "id": "csi-crosswalk-1425",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24108,7 +24227,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1419",
+    "id": "csi-crosswalk-1426",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24125,7 +24244,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1420",
+    "id": "csi-crosswalk-1427",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24142,7 +24261,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1421",
+    "id": "csi-crosswalk-1428",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24159,7 +24278,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1422",
+    "id": "csi-crosswalk-1429",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24176,7 +24295,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1423",
+    "id": "csi-crosswalk-1430",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24193,7 +24312,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1424",
+    "id": "csi-crosswalk-1431",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24210,7 +24329,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1425",
+    "id": "csi-crosswalk-1432",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24227,7 +24346,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1426",
+    "id": "csi-crosswalk-1433",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24244,7 +24363,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1427",
+    "id": "csi-crosswalk-1434",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24261,7 +24380,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1428",
+    "id": "csi-crosswalk-1435",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24278,7 +24397,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1429",
+    "id": "csi-crosswalk-1436",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24295,7 +24414,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1430",
+    "id": "csi-crosswalk-1437",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24312,7 +24431,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1431",
+    "id": "csi-crosswalk-1438",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24329,7 +24448,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1432",
+    "id": "csi-crosswalk-1439",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24346,7 +24465,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1433",
+    "id": "csi-crosswalk-1440",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24363,7 +24482,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1434",
+    "id": "csi-crosswalk-1441",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24380,7 +24499,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1435",
+    "id": "csi-crosswalk-1442",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24397,7 +24516,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1436",
+    "id": "csi-crosswalk-1443",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24414,7 +24533,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1437",
+    "id": "csi-crosswalk-1444",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24431,7 +24550,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1438",
+    "id": "csi-crosswalk-1445",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24448,7 +24567,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1439",
+    "id": "csi-crosswalk-1446",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24465,7 +24584,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1440",
+    "id": "csi-crosswalk-1447",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24482,7 +24601,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1441",
+    "id": "csi-crosswalk-1448",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24499,7 +24618,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1442",
+    "id": "csi-crosswalk-1449",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24516,7 +24635,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1443",
+    "id": "csi-crosswalk-1450",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24533,7 +24652,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1444",
+    "id": "csi-crosswalk-1451",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24550,7 +24669,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1445",
+    "id": "csi-crosswalk-1452",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24567,7 +24686,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1446",
+    "id": "csi-crosswalk-1453",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24584,7 +24703,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1447",
+    "id": "csi-crosswalk-1454",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24601,7 +24720,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1448",
+    "id": "csi-crosswalk-1455",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24618,7 +24737,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1449",
+    "id": "csi-crosswalk-1456",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24635,7 +24754,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1450",
+    "id": "csi-crosswalk-1457",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24652,7 +24771,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1451",
+    "id": "csi-crosswalk-1458",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24669,7 +24788,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1452",
+    "id": "csi-crosswalk-1459",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24686,7 +24805,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1453",
+    "id": "csi-crosswalk-1460",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24703,7 +24822,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1454",
+    "id": "csi-crosswalk-1461",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24720,7 +24839,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1455",
+    "id": "csi-crosswalk-1462",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24737,7 +24856,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1456",
+    "id": "csi-crosswalk-1463",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24754,7 +24873,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1457",
+    "id": "csi-crosswalk-1464",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24771,7 +24890,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1458",
+    "id": "csi-crosswalk-1465",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24788,7 +24907,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1459",
+    "id": "csi-crosswalk-1466",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24805,7 +24924,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1460",
+    "id": "csi-crosswalk-1467",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24822,7 +24941,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1461",
+    "id": "csi-crosswalk-1468",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24839,7 +24958,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1462",
+    "id": "csi-crosswalk-1469",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24856,7 +24975,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1463",
+    "id": "csi-crosswalk-1470",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24873,7 +24992,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1464",
+    "id": "csi-crosswalk-1471",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24890,7 +25009,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1465",
+    "id": "csi-crosswalk-1472",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24907,7 +25026,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1466",
+    "id": "csi-crosswalk-1473",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24924,7 +25043,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1467",
+    "id": "csi-crosswalk-1474",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24941,7 +25060,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1468",
+    "id": "csi-crosswalk-1475",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24958,7 +25077,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1469",
+    "id": "csi-crosswalk-1476",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24975,7 +25094,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1470",
+    "id": "csi-crosswalk-1477",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -24992,7 +25111,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1471",
+    "id": "csi-crosswalk-1478",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25009,7 +25128,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1472",
+    "id": "csi-crosswalk-1479",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25026,7 +25145,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1473",
+    "id": "csi-crosswalk-1480",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25043,7 +25162,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1474",
+    "id": "csi-crosswalk-1481",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25060,7 +25179,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1475",
+    "id": "csi-crosswalk-1482",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25077,7 +25196,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1476",
+    "id": "csi-crosswalk-1483",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25094,7 +25213,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1477",
+    "id": "csi-crosswalk-1484",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25111,7 +25230,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1478",
+    "id": "csi-crosswalk-1485",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25128,7 +25247,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1479",
+    "id": "csi-crosswalk-1486",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25145,7 +25264,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1480",
+    "id": "csi-crosswalk-1487",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25162,7 +25281,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1481",
+    "id": "csi-crosswalk-1488",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25179,7 +25298,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1482",
+    "id": "csi-crosswalk-1489",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25196,7 +25315,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1483",
+    "id": "csi-crosswalk-1490",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25213,7 +25332,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1484",
+    "id": "csi-crosswalk-1491",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25230,7 +25349,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1485",
+    "id": "csi-crosswalk-1492",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25247,7 +25366,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1486",
+    "id": "csi-crosswalk-1493",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25264,7 +25383,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1487",
+    "id": "csi-crosswalk-1494",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25281,7 +25400,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1488",
+    "id": "csi-crosswalk-1495",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25298,7 +25417,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1489",
+    "id": "csi-crosswalk-1496",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25315,7 +25434,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1490",
+    "id": "csi-crosswalk-1497",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25332,7 +25451,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1491",
+    "id": "csi-crosswalk-1498",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25349,7 +25468,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1492",
+    "id": "csi-crosswalk-1499",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25366,7 +25485,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1493",
+    "id": "csi-crosswalk-1500",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25383,7 +25502,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1494",
+    "id": "csi-crosswalk-1501",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25400,7 +25519,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1495",
+    "id": "csi-crosswalk-1502",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25417,7 +25536,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1496",
+    "id": "csi-crosswalk-1503",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25434,7 +25553,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1497",
+    "id": "csi-crosswalk-1504",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25451,7 +25570,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1498",
+    "id": "csi-crosswalk-1505",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25468,7 +25587,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1499",
+    "id": "csi-crosswalk-1506",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25485,7 +25604,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1500",
+    "id": "csi-crosswalk-1507",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25502,7 +25621,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1501",
+    "id": "csi-crosswalk-1508",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25519,7 +25638,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1502",
+    "id": "csi-crosswalk-1509",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25536,7 +25655,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1503",
+    "id": "csi-crosswalk-1510",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25553,7 +25672,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1504",
+    "id": "csi-crosswalk-1511",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25570,7 +25689,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1505",
+    "id": "csi-crosswalk-1512",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25587,7 +25706,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1506",
+    "id": "csi-crosswalk-1513",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25604,7 +25723,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1507",
+    "id": "csi-crosswalk-1514",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25621,7 +25740,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1508",
+    "id": "csi-crosswalk-1515",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25638,7 +25757,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1509",
+    "id": "csi-crosswalk-1516",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25655,7 +25774,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1510",
+    "id": "csi-crosswalk-1517",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25672,7 +25791,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1511",
+    "id": "csi-crosswalk-1518",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25689,7 +25808,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1512",
+    "id": "csi-crosswalk-1519",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25706,7 +25825,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1513",
+    "id": "csi-crosswalk-1520",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25723,7 +25842,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1514",
+    "id": "csi-crosswalk-1521",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25740,7 +25859,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1515",
+    "id": "csi-crosswalk-1522",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25757,7 +25876,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1516",
+    "id": "csi-crosswalk-1523",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25774,7 +25893,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1517",
+    "id": "csi-crosswalk-1524",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25791,7 +25910,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1518",
+    "id": "csi-crosswalk-1525",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25808,7 +25927,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1519",
+    "id": "csi-crosswalk-1526",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25825,7 +25944,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1520",
+    "id": "csi-crosswalk-1527",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25842,7 +25961,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1521",
+    "id": "csi-crosswalk-1528",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25859,7 +25978,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1522",
+    "id": "csi-crosswalk-1529",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25876,7 +25995,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1523",
+    "id": "csi-crosswalk-1530",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25893,7 +26012,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1524",
+    "id": "csi-crosswalk-1531",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25910,7 +26029,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1525",
+    "id": "csi-crosswalk-1532",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25927,7 +26046,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1526",
+    "id": "csi-crosswalk-1533",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25944,7 +26063,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1527",
+    "id": "csi-crosswalk-1534",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25961,7 +26080,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1528",
+    "id": "csi-crosswalk-1535",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25978,7 +26097,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1529",
+    "id": "csi-crosswalk-1536",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -25995,7 +26114,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1530",
+    "id": "csi-crosswalk-1537",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26012,7 +26131,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1531",
+    "id": "csi-crosswalk-1538",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26029,7 +26148,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1532",
+    "id": "csi-crosswalk-1539",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26046,7 +26165,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1533",
+    "id": "csi-crosswalk-1540",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26063,7 +26182,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1534",
+    "id": "csi-crosswalk-1541",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26080,7 +26199,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1535",
+    "id": "csi-crosswalk-1542",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26097,7 +26216,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1536",
+    "id": "csi-crosswalk-1543",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26114,7 +26233,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1537",
+    "id": "csi-crosswalk-1544",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26131,7 +26250,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1538",
+    "id": "csi-crosswalk-1545",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26148,7 +26267,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1539",
+    "id": "csi-crosswalk-1546",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26165,7 +26284,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1540",
+    "id": "csi-crosswalk-1547",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26182,7 +26301,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1541",
+    "id": "csi-crosswalk-1548",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26199,7 +26318,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1542",
+    "id": "csi-crosswalk-1549",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26216,7 +26335,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1543",
+    "id": "csi-crosswalk-1550",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26233,7 +26352,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1544",
+    "id": "csi-crosswalk-1551",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26250,7 +26369,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1545",
+    "id": "csi-crosswalk-1552",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26267,7 +26386,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1546",
+    "id": "csi-crosswalk-1553",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26284,7 +26403,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1547",
+    "id": "csi-crosswalk-1554",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26301,7 +26420,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1548",
+    "id": "csi-crosswalk-1555",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26318,7 +26437,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1549",
+    "id": "csi-crosswalk-1556",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26335,7 +26454,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1550",
+    "id": "csi-crosswalk-1557",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26352,7 +26471,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1551",
+    "id": "csi-crosswalk-1558",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26369,7 +26488,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1552",
+    "id": "csi-crosswalk-1559",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26386,7 +26505,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1553",
+    "id": "csi-crosswalk-1560",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26403,7 +26522,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1554",
+    "id": "csi-crosswalk-1561",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26420,7 +26539,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1555",
+    "id": "csi-crosswalk-1562",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26437,7 +26556,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1556",
+    "id": "csi-crosswalk-1563",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26454,7 +26573,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1557",
+    "id": "csi-crosswalk-1564",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26471,7 +26590,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1558",
+    "id": "csi-crosswalk-1565",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26488,7 +26607,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1559",
+    "id": "csi-crosswalk-1566",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26505,7 +26624,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1560",
+    "id": "csi-crosswalk-1567",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26522,7 +26641,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1561",
+    "id": "csi-crosswalk-1568",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26539,7 +26658,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1562",
+    "id": "csi-crosswalk-1569",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26556,7 +26675,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1563",
+    "id": "csi-crosswalk-1570",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26573,7 +26692,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1564",
+    "id": "csi-crosswalk-1571",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26590,7 +26709,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1565",
+    "id": "csi-crosswalk-1572",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26607,7 +26726,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1566",
+    "id": "csi-crosswalk-1573",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26624,7 +26743,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1567",
+    "id": "csi-crosswalk-1574",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26641,7 +26760,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1568",
+    "id": "csi-crosswalk-1575",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26658,7 +26777,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1569",
+    "id": "csi-crosswalk-1576",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26675,7 +26794,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1570",
+    "id": "csi-crosswalk-1577",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26692,7 +26811,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1571",
+    "id": "csi-crosswalk-1578",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26709,7 +26828,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1572",
+    "id": "csi-crosswalk-1579",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26726,7 +26845,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1573",
+    "id": "csi-crosswalk-1580",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26743,7 +26862,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1574",
+    "id": "csi-crosswalk-1581",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26760,7 +26879,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1575",
+    "id": "csi-crosswalk-1582",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26777,7 +26896,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1576",
+    "id": "csi-crosswalk-1583",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26794,7 +26913,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1577",
+    "id": "csi-crosswalk-1584",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26811,7 +26930,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1578",
+    "id": "csi-crosswalk-1585",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26828,7 +26947,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1579",
+    "id": "csi-crosswalk-1586",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26845,7 +26964,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1580",
+    "id": "csi-crosswalk-1587",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26862,7 +26981,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1581",
+    "id": "csi-crosswalk-1588",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26879,7 +26998,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1582",
+    "id": "csi-crosswalk-1589",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26896,7 +27015,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1583",
+    "id": "csi-crosswalk-1590",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26913,7 +27032,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1584",
+    "id": "csi-crosswalk-1591",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26930,7 +27049,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1585",
+    "id": "csi-crosswalk-1592",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26947,7 +27066,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1586",
+    "id": "csi-crosswalk-1593",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26964,7 +27083,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1587",
+    "id": "csi-crosswalk-1594",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26981,7 +27100,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1588",
+    "id": "csi-crosswalk-1595",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -26998,7 +27117,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1589",
+    "id": "csi-crosswalk-1596",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27015,7 +27134,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1590",
+    "id": "csi-crosswalk-1597",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27032,7 +27151,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1591",
+    "id": "csi-crosswalk-1598",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27049,7 +27168,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1592",
+    "id": "csi-crosswalk-1599",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27066,7 +27185,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1593",
+    "id": "csi-crosswalk-1600",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27083,7 +27202,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1594",
+    "id": "csi-crosswalk-1601",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27100,7 +27219,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1595",
+    "id": "csi-crosswalk-1602",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27117,7 +27236,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1596",
+    "id": "csi-crosswalk-1603",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27134,7 +27253,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1597",
+    "id": "csi-crosswalk-1604",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27151,7 +27270,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1598",
+    "id": "csi-crosswalk-1605",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27168,7 +27287,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1599",
+    "id": "csi-crosswalk-1606",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27185,7 +27304,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1600",
+    "id": "csi-crosswalk-1607",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27202,7 +27321,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1601",
+    "id": "csi-crosswalk-1608",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27219,7 +27338,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1602",
+    "id": "csi-crosswalk-1609",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27236,7 +27355,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1603",
+    "id": "csi-crosswalk-1610",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27253,7 +27372,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1604",
+    "id": "csi-crosswalk-1611",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27270,7 +27389,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1605",
+    "id": "csi-crosswalk-1612",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27287,7 +27406,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1606",
+    "id": "csi-crosswalk-1613",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27304,7 +27423,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1607",
+    "id": "csi-crosswalk-1614",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27321,7 +27440,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1608",
+    "id": "csi-crosswalk-1615",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27338,7 +27457,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1609",
+    "id": "csi-crosswalk-1616",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27355,7 +27474,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1610",
+    "id": "csi-crosswalk-1617",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27372,7 +27491,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1611",
+    "id": "csi-crosswalk-1618",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27389,7 +27508,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1612",
+    "id": "csi-crosswalk-1619",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27406,7 +27525,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1613",
+    "id": "csi-crosswalk-1620",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27423,7 +27542,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1614",
+    "id": "csi-crosswalk-1621",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27440,7 +27559,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1615",
+    "id": "csi-crosswalk-1622",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27457,7 +27576,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1616",
+    "id": "csi-crosswalk-1623",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27474,7 +27593,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1617",
+    "id": "csi-crosswalk-1624",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27491,7 +27610,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1618",
+    "id": "csi-crosswalk-1625",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27508,7 +27627,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1619",
+    "id": "csi-crosswalk-1626",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27525,7 +27644,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1620",
+    "id": "csi-crosswalk-1627",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27542,7 +27661,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1621",
+    "id": "csi-crosswalk-1628",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27559,7 +27678,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1622",
+    "id": "csi-crosswalk-1629",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27576,7 +27695,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1623",
+    "id": "csi-crosswalk-1630",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27593,7 +27712,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1624",
+    "id": "csi-crosswalk-1631",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27610,7 +27729,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1625",
+    "id": "csi-crosswalk-1632",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27627,7 +27746,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1626",
+    "id": "csi-crosswalk-1633",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27644,7 +27763,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1627",
+    "id": "csi-crosswalk-1634",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27661,7 +27780,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1628",
+    "id": "csi-crosswalk-1635",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27678,7 +27797,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1629",
+    "id": "csi-crosswalk-1636",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27695,7 +27814,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1630",
+    "id": "csi-crosswalk-1637",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27712,7 +27831,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1631",
+    "id": "csi-crosswalk-1638",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27729,7 +27848,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1632",
+    "id": "csi-crosswalk-1639",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27739,14 +27858,14 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     },
     "targetSection": {
       "sectionNumber": "09 24 00",
-      "title": "Portland Cement Plastering",
+      "title": "Cement Plastering",
       "level": 2
     },
     "relationship": "ONE_TO_MANY",
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1633",
+    "id": "csi-crosswalk-1640",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27763,7 +27882,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1634",
+    "id": "csi-crosswalk-1641",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27780,7 +27899,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1635",
+    "id": "csi-crosswalk-1642",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27797,7 +27916,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1636",
+    "id": "csi-crosswalk-1643",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27814,7 +27933,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1637",
+    "id": "csi-crosswalk-1644",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27831,7 +27950,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1638",
+    "id": "csi-crosswalk-1645",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27848,7 +27967,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1639",
+    "id": "csi-crosswalk-1646",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27865,7 +27984,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1640",
+    "id": "csi-crosswalk-1647",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27882,7 +28001,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1641",
+    "id": "csi-crosswalk-1648",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27899,7 +28018,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1642",
+    "id": "csi-crosswalk-1649",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27916,7 +28035,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1643",
+    "id": "csi-crosswalk-1650",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27933,7 +28052,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1644",
+    "id": "csi-crosswalk-1651",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27950,7 +28069,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1645",
+    "id": "csi-crosswalk-1652",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27967,7 +28086,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1646",
+    "id": "csi-crosswalk-1653",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -27984,7 +28103,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1647",
+    "id": "csi-crosswalk-1654",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28001,7 +28120,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1648",
+    "id": "csi-crosswalk-1655",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28018,7 +28137,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1649",
+    "id": "csi-crosswalk-1656",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28035,7 +28154,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1650",
+    "id": "csi-crosswalk-1657",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28052,7 +28171,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1651",
+    "id": "csi-crosswalk-1658",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28069,7 +28188,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1652",
+    "id": "csi-crosswalk-1659",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28086,7 +28205,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1653",
+    "id": "csi-crosswalk-1660",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28103,7 +28222,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1654",
+    "id": "csi-crosswalk-1661",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28120,7 +28239,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1655",
+    "id": "csi-crosswalk-1662",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28137,7 +28256,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1656",
+    "id": "csi-crosswalk-1663",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28154,7 +28273,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1657",
+    "id": "csi-crosswalk-1664",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28171,7 +28290,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1658",
+    "id": "csi-crosswalk-1665",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28188,7 +28307,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1659",
+    "id": "csi-crosswalk-1666",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28205,7 +28324,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1660",
+    "id": "csi-crosswalk-1667",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28222,7 +28341,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1661",
+    "id": "csi-crosswalk-1668",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28239,7 +28358,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1662",
+    "id": "csi-crosswalk-1669",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28256,7 +28375,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1663",
+    "id": "csi-crosswalk-1670",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28273,7 +28392,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1664",
+    "id": "csi-crosswalk-1671",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28290,7 +28409,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1665",
+    "id": "csi-crosswalk-1672",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28307,7 +28426,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1666",
+    "id": "csi-crosswalk-1673",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28324,7 +28443,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1667",
+    "id": "csi-crosswalk-1674",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28341,7 +28460,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1668",
+    "id": "csi-crosswalk-1675",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28358,7 +28477,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1669",
+    "id": "csi-crosswalk-1676",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28375,7 +28494,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1670",
+    "id": "csi-crosswalk-1677",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28392,7 +28511,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1671",
+    "id": "csi-crosswalk-1678",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28409,7 +28528,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1672",
+    "id": "csi-crosswalk-1679",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28426,7 +28545,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1673",
+    "id": "csi-crosswalk-1680",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28443,7 +28562,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1674",
+    "id": "csi-crosswalk-1681",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28460,7 +28579,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1675",
+    "id": "csi-crosswalk-1682",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28477,7 +28596,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1676",
+    "id": "csi-crosswalk-1683",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28494,7 +28613,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1677",
+    "id": "csi-crosswalk-1684",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28511,7 +28630,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1678",
+    "id": "csi-crosswalk-1685",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28528,7 +28647,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1679",
+    "id": "csi-crosswalk-1686",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28545,7 +28664,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1680",
+    "id": "csi-crosswalk-1687",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28562,7 +28681,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1681",
+    "id": "csi-crosswalk-1688",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28579,7 +28698,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1682",
+    "id": "csi-crosswalk-1689",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28589,14 +28708,14 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     },
     "targetSection": {
       "sectionNumber": "09 54 26",
-      "title": "Linear Wood Ceilings",
+      "title": "Suspended Wood Ceilings",
       "level": 3
     },
     "relationship": "ONE_TO_ONE",
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1683",
+    "id": "csi-crosswalk-1690",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28613,7 +28732,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1684",
+    "id": "csi-crosswalk-1691",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28630,7 +28749,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1685",
+    "id": "csi-crosswalk-1692",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28647,7 +28766,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1686",
+    "id": "csi-crosswalk-1693",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28664,7 +28783,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1687",
+    "id": "csi-crosswalk-1694",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28681,7 +28800,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1688",
+    "id": "csi-crosswalk-1695",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28698,7 +28817,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1689",
+    "id": "csi-crosswalk-1696",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28715,7 +28834,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1690",
+    "id": "csi-crosswalk-1697",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28732,7 +28851,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1691",
+    "id": "csi-crosswalk-1698",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28749,7 +28868,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1692",
+    "id": "csi-crosswalk-1699",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28766,7 +28885,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1693",
+    "id": "csi-crosswalk-1700",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28783,7 +28902,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1694",
+    "id": "csi-crosswalk-1701",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28800,7 +28919,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1695",
+    "id": "csi-crosswalk-1702",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28817,7 +28936,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1696",
+    "id": "csi-crosswalk-1703",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28834,7 +28953,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1697",
+    "id": "csi-crosswalk-1704",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28851,7 +28970,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1698",
+    "id": "csi-crosswalk-1705",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28868,7 +28987,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1699",
+    "id": "csi-crosswalk-1706",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28885,7 +29004,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1700",
+    "id": "csi-crosswalk-1707",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28902,7 +29021,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1701",
+    "id": "csi-crosswalk-1708",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28919,7 +29038,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1702",
+    "id": "csi-crosswalk-1709",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28936,7 +29055,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1703",
+    "id": "csi-crosswalk-1710",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28953,7 +29072,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1704",
+    "id": "csi-crosswalk-1711",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28970,7 +29089,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1705",
+    "id": "csi-crosswalk-1712",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -28987,7 +29106,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1706",
+    "id": "csi-crosswalk-1713",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29004,7 +29123,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1707",
+    "id": "csi-crosswalk-1714",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29021,7 +29140,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1708",
+    "id": "csi-crosswalk-1715",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29038,7 +29157,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1709",
+    "id": "csi-crosswalk-1716",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29055,7 +29174,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1710",
+    "id": "csi-crosswalk-1717",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29072,7 +29191,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1711",
+    "id": "csi-crosswalk-1718",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29089,7 +29208,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1712",
+    "id": "csi-crosswalk-1719",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29106,7 +29225,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1713",
+    "id": "csi-crosswalk-1720",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29123,7 +29242,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1714",
+    "id": "csi-crosswalk-1721",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29140,7 +29259,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1715",
+    "id": "csi-crosswalk-1722",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29157,7 +29276,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1716",
+    "id": "csi-crosswalk-1723",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29174,7 +29293,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1717",
+    "id": "csi-crosswalk-1724",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29191,7 +29310,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1718",
+    "id": "csi-crosswalk-1725",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29208,7 +29327,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1719",
+    "id": "csi-crosswalk-1726",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29225,7 +29344,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1720",
+    "id": "csi-crosswalk-1727",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29242,7 +29361,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1721",
+    "id": "csi-crosswalk-1728",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29259,7 +29378,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1722",
+    "id": "csi-crosswalk-1729",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29276,7 +29395,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1723",
+    "id": "csi-crosswalk-1730",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29293,7 +29412,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1724",
+    "id": "csi-crosswalk-1731",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29310,7 +29429,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1725",
+    "id": "csi-crosswalk-1732",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29327,7 +29446,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1726",
+    "id": "csi-crosswalk-1733",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29344,7 +29463,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1727",
+    "id": "csi-crosswalk-1734",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29361,7 +29480,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1728",
+    "id": "csi-crosswalk-1735",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29378,7 +29497,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1729",
+    "id": "csi-crosswalk-1736",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29395,7 +29514,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1730",
+    "id": "csi-crosswalk-1737",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29412,7 +29531,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1731",
+    "id": "csi-crosswalk-1738",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29429,7 +29548,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1732",
+    "id": "csi-crosswalk-1739",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29446,7 +29565,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1733",
+    "id": "csi-crosswalk-1740",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29463,7 +29582,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1734",
+    "id": "csi-crosswalk-1741",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29480,7 +29599,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1735",
+    "id": "csi-crosswalk-1742",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29497,7 +29616,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1736",
+    "id": "csi-crosswalk-1743",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29514,7 +29633,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1737",
+    "id": "csi-crosswalk-1744",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29531,7 +29650,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1738",
+    "id": "csi-crosswalk-1745",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29548,7 +29667,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1739",
+    "id": "csi-crosswalk-1746",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29565,7 +29684,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1740",
+    "id": "csi-crosswalk-1747",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29582,7 +29701,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1741",
+    "id": "csi-crosswalk-1748",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29599,7 +29718,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1742",
+    "id": "csi-crosswalk-1749",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29616,7 +29735,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1743",
+    "id": "csi-crosswalk-1750",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29633,7 +29752,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1744",
+    "id": "csi-crosswalk-1751",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29650,7 +29769,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1745",
+    "id": "csi-crosswalk-1752",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29667,7 +29786,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1746",
+    "id": "csi-crosswalk-1753",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29684,7 +29803,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1747",
+    "id": "csi-crosswalk-1754",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29701,7 +29820,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1748",
+    "id": "csi-crosswalk-1755",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29718,7 +29837,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1749",
+    "id": "csi-crosswalk-1756",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29735,7 +29854,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1750",
+    "id": "csi-crosswalk-1757",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29752,7 +29871,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1751",
+    "id": "csi-crosswalk-1758",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29769,7 +29888,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1752",
+    "id": "csi-crosswalk-1759",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29786,7 +29905,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1753",
+    "id": "csi-crosswalk-1760",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29803,7 +29922,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1754",
+    "id": "csi-crosswalk-1761",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29820,7 +29939,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1755",
+    "id": "csi-crosswalk-1762",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29837,7 +29956,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1756",
+    "id": "csi-crosswalk-1763",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29854,7 +29973,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1757",
+    "id": "csi-crosswalk-1764",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29871,7 +29990,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1758",
+    "id": "csi-crosswalk-1765",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29888,7 +30007,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1759",
+    "id": "csi-crosswalk-1766",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29905,7 +30024,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1760",
+    "id": "csi-crosswalk-1767",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29922,7 +30041,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1761",
+    "id": "csi-crosswalk-1768",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29939,7 +30058,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1762",
+    "id": "csi-crosswalk-1769",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29956,7 +30075,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1763",
+    "id": "csi-crosswalk-1770",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29973,7 +30092,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1764",
+    "id": "csi-crosswalk-1771",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -29990,7 +30109,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1765",
+    "id": "csi-crosswalk-1772",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30007,7 +30126,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1766",
+    "id": "csi-crosswalk-1773",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30024,7 +30143,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1767",
+    "id": "csi-crosswalk-1774",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30041,7 +30160,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1768",
+    "id": "csi-crosswalk-1775",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30058,7 +30177,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1769",
+    "id": "csi-crosswalk-1776",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30075,7 +30194,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1770",
+    "id": "csi-crosswalk-1777",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30092,7 +30211,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1771",
+    "id": "csi-crosswalk-1778",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30109,7 +30228,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1772",
+    "id": "csi-crosswalk-1779",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30126,7 +30245,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1773",
+    "id": "csi-crosswalk-1780",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30143,7 +30262,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1774",
+    "id": "csi-crosswalk-1781",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30160,7 +30279,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1775",
+    "id": "csi-crosswalk-1782",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30177,7 +30296,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1776",
+    "id": "csi-crosswalk-1783",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30194,7 +30313,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1777",
+    "id": "csi-crosswalk-1784",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30211,7 +30330,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1778",
+    "id": "csi-crosswalk-1785",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30228,7 +30347,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1779",
+    "id": "csi-crosswalk-1786",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30245,7 +30364,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1780",
+    "id": "csi-crosswalk-1787",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30262,7 +30381,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1781",
+    "id": "csi-crosswalk-1788",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30279,7 +30398,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1782",
+    "id": "csi-crosswalk-1789",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30296,7 +30415,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1783",
+    "id": "csi-crosswalk-1790",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30313,7 +30432,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1784",
+    "id": "csi-crosswalk-1791",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30330,7 +30449,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1785",
+    "id": "csi-crosswalk-1792",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30347,7 +30466,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1786",
+    "id": "csi-crosswalk-1793",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30364,7 +30483,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1787",
+    "id": "csi-crosswalk-1794",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30374,14 +30493,14 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     },
     "targetSection": {
       "sectionNumber": "10 11 00",
-      "title": "Visual Display Surfaces",
+      "title": "Visual Display Units",
       "level": 2
     },
     "relationship": "MANY_TO_ONE",
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1788",
+    "id": "csi-crosswalk-1795",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30398,7 +30517,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1789",
+    "id": "csi-crosswalk-1796",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30415,7 +30534,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1790",
+    "id": "csi-crosswalk-1797",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30432,7 +30551,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1791",
+    "id": "csi-crosswalk-1798",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30449,7 +30568,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1792",
+    "id": "csi-crosswalk-1799",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30466,7 +30585,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1793",
+    "id": "csi-crosswalk-1800",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30483,7 +30602,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1794",
+    "id": "csi-crosswalk-1801",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30500,7 +30619,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1795",
+    "id": "csi-crosswalk-1802",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30517,7 +30636,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1796",
+    "id": "csi-crosswalk-1803",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30534,7 +30653,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1797",
+    "id": "csi-crosswalk-1804",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30551,7 +30670,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1798",
+    "id": "csi-crosswalk-1805",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30561,14 +30680,14 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     },
     "targetSection": {
       "sectionNumber": "10 11 00",
-      "title": "Visual Display Surfaces",
+      "title": "Visual Display Units",
       "level": 2
     },
     "relationship": "MANY_TO_MANY",
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1799",
+    "id": "csi-crosswalk-1806",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30585,7 +30704,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1800",
+    "id": "csi-crosswalk-1807",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30602,7 +30721,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1801",
+    "id": "csi-crosswalk-1808",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30619,7 +30738,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1802",
+    "id": "csi-crosswalk-1809",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30636,7 +30755,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1803",
+    "id": "csi-crosswalk-1810",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30653,7 +30772,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1804",
+    "id": "csi-crosswalk-1811",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30670,7 +30789,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1805",
+    "id": "csi-crosswalk-1812",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30687,7 +30806,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1806",
+    "id": "csi-crosswalk-1813",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30704,7 +30823,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1807",
+    "id": "csi-crosswalk-1814",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30721,7 +30840,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1808",
+    "id": "csi-crosswalk-1815",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30738,7 +30857,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1809",
+    "id": "csi-crosswalk-1816",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30755,7 +30874,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1810",
+    "id": "csi-crosswalk-1817",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30772,7 +30891,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1811",
+    "id": "csi-crosswalk-1818",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30789,7 +30908,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1812",
+    "id": "csi-crosswalk-1819",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30806,7 +30925,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1813",
+    "id": "csi-crosswalk-1820",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30823,7 +30942,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1814",
+    "id": "csi-crosswalk-1821",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30833,14 +30952,14 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     },
     "targetSection": {
       "sectionNumber": "10 21 23",
-      "title": "Cubicles",
+      "title": "Cubicle Curtains and Track",
       "level": 3
     },
     "relationship": "ONE_TO_MANY",
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1815",
+    "id": "csi-crosswalk-1822",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30857,7 +30976,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1816",
+    "id": "csi-crosswalk-1823",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30874,7 +30993,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1817",
+    "id": "csi-crosswalk-1824",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30891,7 +31010,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1818",
+    "id": "csi-crosswalk-1825",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30908,7 +31027,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1819",
+    "id": "csi-crosswalk-1826",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30925,7 +31044,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1820",
+    "id": "csi-crosswalk-1827",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30942,7 +31061,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1821",
+    "id": "csi-crosswalk-1828",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30959,7 +31078,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1822",
+    "id": "csi-crosswalk-1829",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30976,7 +31095,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1823",
+    "id": "csi-crosswalk-1830",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -30993,7 +31112,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1824",
+    "id": "csi-crosswalk-1831",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31010,7 +31129,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1825",
+    "id": "csi-crosswalk-1832",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31027,7 +31146,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1826",
+    "id": "csi-crosswalk-1833",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31044,7 +31163,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1827",
+    "id": "csi-crosswalk-1834",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31061,7 +31180,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1828",
+    "id": "csi-crosswalk-1835",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31078,7 +31197,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1829",
+    "id": "csi-crosswalk-1836",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31095,7 +31214,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1830",
+    "id": "csi-crosswalk-1837",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31112,7 +31231,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1831",
+    "id": "csi-crosswalk-1838",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31129,7 +31248,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1832",
+    "id": "csi-crosswalk-1839",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31146,7 +31265,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1833",
+    "id": "csi-crosswalk-1840",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31163,7 +31282,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1834",
+    "id": "csi-crosswalk-1841",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31180,7 +31299,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1835",
+    "id": "csi-crosswalk-1842",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31197,7 +31316,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1836",
+    "id": "csi-crosswalk-1843",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31214,7 +31333,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1837",
+    "id": "csi-crosswalk-1844",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31231,7 +31350,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1838",
+    "id": "csi-crosswalk-1845",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31248,7 +31367,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1839",
+    "id": "csi-crosswalk-1846",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31265,7 +31384,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1840",
+    "id": "csi-crosswalk-1847",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31282,7 +31401,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1841",
+    "id": "csi-crosswalk-1848",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31299,7 +31418,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1842",
+    "id": "csi-crosswalk-1849",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31316,7 +31435,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1843",
+    "id": "csi-crosswalk-1850",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31333,7 +31452,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1844",
+    "id": "csi-crosswalk-1851",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31350,7 +31469,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1845",
+    "id": "csi-crosswalk-1852",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31367,7 +31486,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1846",
+    "id": "csi-crosswalk-1853",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31384,7 +31503,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1847",
+    "id": "csi-crosswalk-1854",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31401,7 +31520,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1848",
+    "id": "csi-crosswalk-1855",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31418,7 +31537,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1849",
+    "id": "csi-crosswalk-1856",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31435,7 +31554,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1850",
+    "id": "csi-crosswalk-1857",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31452,7 +31571,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1851",
+    "id": "csi-crosswalk-1858",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31469,7 +31588,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1852",
+    "id": "csi-crosswalk-1859",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31486,7 +31605,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1853",
+    "id": "csi-crosswalk-1860",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31503,7 +31622,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1854",
+    "id": "csi-crosswalk-1861",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31520,7 +31639,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1855",
+    "id": "csi-crosswalk-1862",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31537,7 +31656,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1856",
+    "id": "csi-crosswalk-1863",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31554,7 +31673,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1857",
+    "id": "csi-crosswalk-1864",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31571,7 +31690,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1858",
+    "id": "csi-crosswalk-1865",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31588,7 +31707,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1859",
+    "id": "csi-crosswalk-1866",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31605,7 +31724,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1860",
+    "id": "csi-crosswalk-1867",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31622,7 +31741,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1861",
+    "id": "csi-crosswalk-1868",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31639,7 +31758,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1862",
+    "id": "csi-crosswalk-1869",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31656,7 +31775,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1863",
+    "id": "csi-crosswalk-1870",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31673,7 +31792,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1864",
+    "id": "csi-crosswalk-1871",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31690,7 +31809,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1865",
+    "id": "csi-crosswalk-1872",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31707,7 +31826,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1866",
+    "id": "csi-crosswalk-1873",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31724,7 +31843,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1867",
+    "id": "csi-crosswalk-1874",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31741,7 +31860,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1868",
+    "id": "csi-crosswalk-1875",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31758,7 +31877,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1869",
+    "id": "csi-crosswalk-1876",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31775,7 +31894,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1870",
+    "id": "csi-crosswalk-1877",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31792,7 +31911,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1871",
+    "id": "csi-crosswalk-1878",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31809,7 +31928,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1872",
+    "id": "csi-crosswalk-1879",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31826,7 +31945,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1873",
+    "id": "csi-crosswalk-1880",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31835,15 +31954,15 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
       "level": 4
     },
     "targetSection": {
-      "sectionNumber": "10 14 36",
-      "title": "Non-Illuminated Panel Signage",
+      "sectionNumber": "10 14 23",
+      "title": "Panel Signage",
       "level": 3
     },
     "relationship": "MANY_TO_MANY",
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1874",
+    "id": "csi-crosswalk-1881",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31860,7 +31979,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1875",
+    "id": "csi-crosswalk-1882",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31877,7 +31996,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1876",
+    "id": "csi-crosswalk-1883",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31894,7 +32013,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1877",
+    "id": "csi-crosswalk-1884",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31911,7 +32030,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1878",
+    "id": "csi-crosswalk-1885",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31928,7 +32047,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1879",
+    "id": "csi-crosswalk-1886",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31945,7 +32064,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1880",
+    "id": "csi-crosswalk-1887",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31954,15 +32073,15 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
       "level": 4
     },
     "targetSection": {
-      "sectionNumber": "10 14 36",
-      "title": "Non-Illuminated Panel Signage",
+      "sectionNumber": "10 14 23",
+      "title": "Panel Signage",
       "level": 3
     },
     "relationship": "MANY_TO_MANY",
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1881",
+    "id": "csi-crosswalk-1888",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31979,7 +32098,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1882",
+    "id": "csi-crosswalk-1889",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -31996,7 +32115,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1883",
+    "id": "csi-crosswalk-1890",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32013,7 +32132,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1884",
+    "id": "csi-crosswalk-1891",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32030,7 +32149,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1885",
+    "id": "csi-crosswalk-1892",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32047,7 +32166,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1886",
+    "id": "csi-crosswalk-1893",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32064,7 +32183,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1887",
+    "id": "csi-crosswalk-1894",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32081,7 +32200,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1888",
+    "id": "csi-crosswalk-1895",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32098,7 +32217,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1889",
+    "id": "csi-crosswalk-1896",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32115,7 +32234,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1890",
+    "id": "csi-crosswalk-1897",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32132,7 +32251,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1891",
+    "id": "csi-crosswalk-1898",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32149,7 +32268,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1892",
+    "id": "csi-crosswalk-1899",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32166,7 +32285,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1893",
+    "id": "csi-crosswalk-1900",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32183,7 +32302,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1894",
+    "id": "csi-crosswalk-1901",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32200,7 +32319,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1895",
+    "id": "csi-crosswalk-1902",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32217,7 +32336,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1896",
+    "id": "csi-crosswalk-1903",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32227,14 +32346,14 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     },
     "targetSection": {
       "sectionNumber": "10 44 13",
-      "title": "Fire Extinguisher Cabinets",
+      "title": "Fire Protection Cabinets",
       "level": 3
     },
     "relationship": "ONE_TO_MANY",
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1897",
+    "id": "csi-crosswalk-1904",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32251,7 +32370,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1898",
+    "id": "csi-crosswalk-1905",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32268,7 +32387,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1899",
+    "id": "csi-crosswalk-1906",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32285,7 +32404,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1900",
+    "id": "csi-crosswalk-1907",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32302,7 +32421,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1901",
+    "id": "csi-crosswalk-1908",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32319,7 +32438,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1902",
+    "id": "csi-crosswalk-1909",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32336,7 +32455,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1903",
+    "id": "csi-crosswalk-1910",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32353,7 +32472,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1904",
+    "id": "csi-crosswalk-1911",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32370,7 +32489,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1905",
+    "id": "csi-crosswalk-1912",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32387,7 +32506,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1906",
+    "id": "csi-crosswalk-1913",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32404,7 +32523,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1907",
+    "id": "csi-crosswalk-1914",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32421,7 +32540,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1908",
+    "id": "csi-crosswalk-1915",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32438,7 +32557,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1909",
+    "id": "csi-crosswalk-1916",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32455,7 +32574,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1910",
+    "id": "csi-crosswalk-1917",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32472,7 +32591,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1911",
+    "id": "csi-crosswalk-1918",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32489,7 +32608,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1912",
+    "id": "csi-crosswalk-1919",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32506,7 +32625,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1913",
+    "id": "csi-crosswalk-1920",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32523,7 +32642,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1914",
+    "id": "csi-crosswalk-1921",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32540,7 +32659,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1915",
+    "id": "csi-crosswalk-1922",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32557,7 +32676,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1916",
+    "id": "csi-crosswalk-1923",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32574,7 +32693,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1917",
+    "id": "csi-crosswalk-1924",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32591,7 +32710,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1918",
+    "id": "csi-crosswalk-1925",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32600,7 +32719,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
       "level": 4
     },
     "targetSection": {
-      "sectionNumber": "10 22 26.13",
+      "sectionNumber": "10 22 33",
       "title": "Accordion Folding Partitions",
       "level": 4
     },
@@ -32608,7 +32727,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1919",
+    "id": "csi-crosswalk-1926",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32617,15 +32736,15 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
       "level": 4
     },
     "targetSection": {
-      "sectionNumber": "10 22 26.23",
+      "sectionNumber": "10 22 36",
       "title": "Coiling Partitions",
       "level": 4
     },
-    "relationship": "ONE_TO_MANY",
-    "mappingConfidence": "EXPANDED"
+    "relationship": "MANY_TO_MANY",
+    "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1920",
+    "id": "csi-crosswalk-1927",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32634,15 +32753,15 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
       "level": 4
     },
     "targetSection": {
-      "sectionNumber": "10 22 26.33",
+      "sectionNumber": "10 22 39",
       "title": "Folding Panel Partitions",
       "level": 4
     },
-    "relationship": "ONE_TO_MANY",
-    "mappingConfidence": "EXPANDED"
+    "relationship": "MANY_TO_MANY",
+    "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1921",
+    "id": "csi-crosswalk-1928",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32651,15 +32770,66 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
       "level": 3
     },
     "targetSection": {
-      "sectionNumber": "10 22 26",
-      "title": "Operable Partitions",
+      "sectionNumber": "10 22 33",
+      "title": "Accordion Folding Partitions",
       "level": 3
     },
     "relationship": "ONE_TO_MANY",
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1922",
+    "id": "csi-crosswalk-1929",
+    "sourceVersion": "MASTERFORMAT_1995",
+    "targetVersion": "MASTERFORMAT_CURRENT",
+    "sourceSection": {
+      "sectionNumber": "00000",
+      "title": null,
+      "level": null
+    },
+    "targetSection": {
+      "sectionNumber": "10 22 36",
+      "title": "Coiling Partitions",
+      "level": 3
+    },
+    "relationship": "MANY_TO_MANY",
+    "mappingConfidence": "SPECIAL_CASE"
+  },
+  {
+    "id": "csi-crosswalk-1930",
+    "sourceVersion": "MASTERFORMAT_1995",
+    "targetVersion": "MASTERFORMAT_CURRENT",
+    "sourceSection": {
+      "sectionNumber": "00000",
+      "title": null,
+      "level": null
+    },
+    "targetSection": {
+      "sectionNumber": "10 22 39",
+      "title": "Folding Panel Partitions",
+      "level": 3
+    },
+    "relationship": "MANY_TO_MANY",
+    "mappingConfidence": "SPECIAL_CASE"
+  },
+  {
+    "id": "csi-crosswalk-1931",
+    "sourceVersion": "MASTERFORMAT_1995",
+    "targetVersion": "MASTERFORMAT_CURRENT",
+    "sourceSection": {
+      "sectionNumber": "00000",
+      "title": null,
+      "level": null
+    },
+    "targetSection": {
+      "sectionNumber": "10 22 43",
+      "title": "Sliding Partitions",
+      "level": 3
+    },
+    "relationship": "MANY_TO_MANY",
+    "mappingConfidence": "SPECIAL_CASE"
+  },
+  {
+    "id": "csi-crosswalk-1932",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32668,15 +32838,15 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
       "level": 4
     },
     "targetSection": {
-      "sectionNumber": "10 22 26.43",
+      "sectionNumber": "10 22 43",
       "title": "Sliding Partitions",
       "level": 4
     },
-    "relationship": "ONE_TO_MANY",
-    "mappingConfidence": "EXPANDED"
+    "relationship": "MANY_TO_MANY",
+    "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1923",
+    "id": "csi-crosswalk-1933",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32693,7 +32863,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1924",
+    "id": "csi-crosswalk-1934",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32710,7 +32880,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1925",
+    "id": "csi-crosswalk-1935",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32727,7 +32897,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1926",
+    "id": "csi-crosswalk-1936",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32744,7 +32914,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1927",
+    "id": "csi-crosswalk-1937",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32761,7 +32931,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1928",
+    "id": "csi-crosswalk-1938",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32778,7 +32948,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1929",
+    "id": "csi-crosswalk-1939",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32795,7 +32965,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1930",
+    "id": "csi-crosswalk-1940",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32812,7 +32982,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1931",
+    "id": "csi-crosswalk-1941",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32829,7 +32999,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1932",
+    "id": "csi-crosswalk-1942",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32846,7 +33016,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1933",
+    "id": "csi-crosswalk-1943",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32863,7 +33033,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1934",
+    "id": "csi-crosswalk-1944",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32880,7 +33050,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1935",
+    "id": "csi-crosswalk-1945",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32897,7 +33067,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1936",
+    "id": "csi-crosswalk-1946",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32914,7 +33084,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1937",
+    "id": "csi-crosswalk-1947",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32931,7 +33101,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1938",
+    "id": "csi-crosswalk-1948",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32948,7 +33118,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1939",
+    "id": "csi-crosswalk-1949",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32965,7 +33135,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1940",
+    "id": "csi-crosswalk-1950",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32982,7 +33152,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1941",
+    "id": "csi-crosswalk-1951",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -32999,7 +33169,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1942",
+    "id": "csi-crosswalk-1952",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33016,7 +33186,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1943",
+    "id": "csi-crosswalk-1953",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33033,7 +33203,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1944",
+    "id": "csi-crosswalk-1954",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33050,7 +33220,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1945",
+    "id": "csi-crosswalk-1955",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33067,7 +33237,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1946",
+    "id": "csi-crosswalk-1956",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33084,7 +33254,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1947",
+    "id": "csi-crosswalk-1957",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33101,7 +33271,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1948",
+    "id": "csi-crosswalk-1958",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33118,7 +33288,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1949",
+    "id": "csi-crosswalk-1959",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33135,7 +33305,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1950",
+    "id": "csi-crosswalk-1960",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33152,7 +33322,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1951",
+    "id": "csi-crosswalk-1961",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33169,7 +33339,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1952",
+    "id": "csi-crosswalk-1962",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33186,7 +33356,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1953",
+    "id": "csi-crosswalk-1963",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33203,7 +33373,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1954",
+    "id": "csi-crosswalk-1964",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33220,7 +33390,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1955",
+    "id": "csi-crosswalk-1965",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33237,7 +33407,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1956",
+    "id": "csi-crosswalk-1966",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33254,7 +33424,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1957",
+    "id": "csi-crosswalk-1967",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33263,15 +33433,32 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
       "level": 4
     },
     "targetSection": {
-      "sectionNumber": "11 24 23",
+      "sectionNumber": "11 24 23.13",
       "title": "Window Washing Systems",
-      "level": 3
+      "level": 4
     },
     "relationship": "ONE_TO_MANY",
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1958",
+    "id": "csi-crosswalk-1968",
+    "sourceVersion": "MASTERFORMAT_1995",
+    "targetVersion": "MASTERFORMAT_CURRENT",
+    "sourceSection": {
+      "sectionNumber": "00000",
+      "title": null,
+      "level": null
+    },
+    "targetSection": {
+      "sectionNumber": "11 24 23",
+      "title": "Façade Access Equipment",
+      "level": 3
+    },
+    "relationship": "ONE_TO_MANY",
+    "mappingConfidence": "SPECIAL_CASE"
+  },
+  {
+    "id": "csi-crosswalk-1969",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33288,7 +33475,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1959",
+    "id": "csi-crosswalk-1970",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33305,7 +33492,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1960",
+    "id": "csi-crosswalk-1971",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33322,7 +33509,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1961",
+    "id": "csi-crosswalk-1972",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33339,7 +33526,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1962",
+    "id": "csi-crosswalk-1973",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33356,7 +33543,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1963",
+    "id": "csi-crosswalk-1974",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33373,7 +33560,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1964",
+    "id": "csi-crosswalk-1975",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33390,7 +33577,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1965",
+    "id": "csi-crosswalk-1976",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33407,7 +33594,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1966",
+    "id": "csi-crosswalk-1977",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33424,7 +33611,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1967",
+    "id": "csi-crosswalk-1978",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33441,7 +33628,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1968",
+    "id": "csi-crosswalk-1979",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33458,7 +33645,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1969",
+    "id": "csi-crosswalk-1980",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33475,7 +33662,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1970",
+    "id": "csi-crosswalk-1981",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33492,7 +33679,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1971",
+    "id": "csi-crosswalk-1982",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33509,7 +33696,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1972",
+    "id": "csi-crosswalk-1983",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33526,7 +33713,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1973",
+    "id": "csi-crosswalk-1984",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33543,7 +33730,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1974",
+    "id": "csi-crosswalk-1985",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33560,7 +33747,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1975",
+    "id": "csi-crosswalk-1986",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33577,7 +33764,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1976",
+    "id": "csi-crosswalk-1987",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33594,7 +33781,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1977",
+    "id": "csi-crosswalk-1988",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33611,7 +33798,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1978",
+    "id": "csi-crosswalk-1989",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33628,7 +33815,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1979",
+    "id": "csi-crosswalk-1990",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33645,7 +33832,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1980",
+    "id": "csi-crosswalk-1991",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33655,14 +33842,14 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     },
     "targetSection": {
       "sectionNumber": "11 61 00",
-      "title": "Theater and Stage Equipment",
+      "title": "Broadcast, Theater, and Stage Equipment",
       "level": 2
     },
     "relationship": "ONE_TO_MANY",
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1981",
+    "id": "csi-crosswalk-1992",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33679,7 +33866,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1982",
+    "id": "csi-crosswalk-1993",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33696,7 +33883,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1983",
+    "id": "csi-crosswalk-1994",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33713,7 +33900,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1984",
+    "id": "csi-crosswalk-1995",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33730,7 +33917,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1985",
+    "id": "csi-crosswalk-1996",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33747,7 +33934,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1986",
+    "id": "csi-crosswalk-1997",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33764,7 +33951,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-1987",
+    "id": "csi-crosswalk-1998",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33781,7 +33968,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1988",
+    "id": "csi-crosswalk-1999",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33798,7 +33985,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-1989",
+    "id": "csi-crosswalk-2000",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33815,7 +34002,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1990",
+    "id": "csi-crosswalk-2001",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33832,7 +34019,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1991",
+    "id": "csi-crosswalk-2002",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33849,7 +34036,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1992",
+    "id": "csi-crosswalk-2003",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33866,7 +34053,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1993",
+    "id": "csi-crosswalk-2004",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33883,7 +34070,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1994",
+    "id": "csi-crosswalk-2005",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33900,7 +34087,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1995",
+    "id": "csi-crosswalk-2006",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33917,7 +34104,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1996",
+    "id": "csi-crosswalk-2007",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33934,7 +34121,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1997",
+    "id": "csi-crosswalk-2008",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33951,7 +34138,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1998",
+    "id": "csi-crosswalk-2009",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33968,7 +34155,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-1999",
+    "id": "csi-crosswalk-2010",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -33985,7 +34172,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2000",
+    "id": "csi-crosswalk-2011",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34002,7 +34189,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2001",
+    "id": "csi-crosswalk-2012",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34019,7 +34206,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2002",
+    "id": "csi-crosswalk-2013",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34036,7 +34223,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2003",
+    "id": "csi-crosswalk-2014",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34053,7 +34240,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2004",
+    "id": "csi-crosswalk-2015",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34070,7 +34257,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2005",
+    "id": "csi-crosswalk-2016",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34087,7 +34274,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2006",
+    "id": "csi-crosswalk-2017",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34104,7 +34291,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2007",
+    "id": "csi-crosswalk-2018",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34121,7 +34308,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2008",
+    "id": "csi-crosswalk-2019",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34138,7 +34325,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2009",
+    "id": "csi-crosswalk-2020",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34155,7 +34342,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2010",
+    "id": "csi-crosswalk-2021",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34172,7 +34359,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2011",
+    "id": "csi-crosswalk-2022",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34189,7 +34376,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2012",
+    "id": "csi-crosswalk-2023",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34206,7 +34393,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2013",
+    "id": "csi-crosswalk-2024",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34223,7 +34410,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2014",
+    "id": "csi-crosswalk-2025",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34240,7 +34427,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2015",
+    "id": "csi-crosswalk-2026",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34257,7 +34444,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2016",
+    "id": "csi-crosswalk-2027",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34274,7 +34461,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2017",
+    "id": "csi-crosswalk-2028",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34291,7 +34478,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2018",
+    "id": "csi-crosswalk-2029",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34308,7 +34495,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2019",
+    "id": "csi-crosswalk-2030",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34325,7 +34512,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2020",
+    "id": "csi-crosswalk-2031",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34342,7 +34529,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2021",
+    "id": "csi-crosswalk-2032",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34359,7 +34546,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2022",
+    "id": "csi-crosswalk-2033",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34376,7 +34563,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2023",
+    "id": "csi-crosswalk-2034",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34393,7 +34580,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2024",
+    "id": "csi-crosswalk-2035",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34410,7 +34597,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2025",
+    "id": "csi-crosswalk-2036",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34419,15 +34606,32 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
       "level": 4
     },
     "targetSection": {
-      "sectionNumber": "44 51 26",
-      "title": "Solid Waste Containers",
+      "sectionNumber": "44 51 13",
+      "title": "Solid Waste Portable Containers",
       "level": 3
     },
     "relationship": "ONE_TO_MANY",
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2026",
+    "id": "csi-crosswalk-2037",
+    "sourceVersion": "MASTERFORMAT_1995",
+    "targetVersion": "MASTERFORMAT_CURRENT",
+    "sourceSection": {
+      "sectionNumber": "00000",
+      "title": null,
+      "level": null
+    },
+    "targetSection": {
+      "sectionNumber": "44 51 16",
+      "title": "Solid Waste Stationary Containers",
+      "level": 3
+    },
+    "relationship": "ONE_TO_MANY",
+    "mappingConfidence": "SPECIAL_CASE"
+  },
+  {
+    "id": "csi-crosswalk-2038",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34444,7 +34648,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2027",
+    "id": "csi-crosswalk-2039",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34461,7 +34665,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2028",
+    "id": "csi-crosswalk-2040",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34478,7 +34682,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2029",
+    "id": "csi-crosswalk-2041",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34495,7 +34699,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2030",
+    "id": "csi-crosswalk-2042",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34512,7 +34716,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2031",
+    "id": "csi-crosswalk-2043",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34529,7 +34733,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2032",
+    "id": "csi-crosswalk-2044",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34539,14 +34743,14 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     },
     "targetSection": {
       "sectionNumber": "11 82 26",
-      "title": "Waste Compactors and Destructors",
+      "title": "Facility Waste Compactors",
       "level": 3
     },
     "relationship": "ONE_TO_MANY",
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2033",
+    "id": "csi-crosswalk-2045",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34556,14 +34760,14 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     },
     "targetSection": {
       "sectionNumber": "44 51 13",
-      "title": "Solid Waste Compactors",
+      "title": "Solid Waste Portable Containers",
       "level": 3
     },
     "relationship": "ONE_TO_MANY",
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2034",
+    "id": "csi-crosswalk-2046",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34580,7 +34784,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2035",
+    "id": "csi-crosswalk-2047",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34590,14 +34794,14 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     },
     "targetSection": {
       "sectionNumber": "44 40 00",
-      "title": "Water Treatment Equipment",
+      "title": "Water Pollution Control Equipment",
       "level": 2
     },
     "relationship": "MANY_TO_ONE",
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2036",
+    "id": "csi-crosswalk-2048",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34614,7 +34818,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2037",
+    "id": "csi-crosswalk-2049",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34631,7 +34835,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2038",
+    "id": "csi-crosswalk-2050",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34648,7 +34852,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2039",
+    "id": "csi-crosswalk-2051",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34665,7 +34869,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2040",
+    "id": "csi-crosswalk-2052",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34682,7 +34886,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2041",
+    "id": "csi-crosswalk-2053",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34699,7 +34903,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2042",
+    "id": "csi-crosswalk-2054",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34716,7 +34920,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2043",
+    "id": "csi-crosswalk-2055",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34729,11 +34933,11 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
       "title": "Water Treatment Chemical Systems Equipment",
       "level": 2
     },
-    "relationship": "MANY_TO_MANY",
-    "mappingConfidence": "SPECIAL_CASE"
+    "relationship": "ONE_TO_MANY",
+    "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2044",
+    "id": "csi-crosswalk-2056",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34750,7 +34954,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2045",
+    "id": "csi-crosswalk-2057",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34767,7 +34971,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2046",
+    "id": "csi-crosswalk-2058",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34784,7 +34988,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2047",
+    "id": "csi-crosswalk-2059",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34801,7 +35005,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2048",
+    "id": "csi-crosswalk-2060",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34818,7 +35022,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2049",
+    "id": "csi-crosswalk-2061",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34835,7 +35039,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2050",
+    "id": "csi-crosswalk-2062",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34852,7 +35056,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2051",
+    "id": "csi-crosswalk-2063",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34869,7 +35073,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2052",
+    "id": "csi-crosswalk-2064",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34886,7 +35090,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2053",
+    "id": "csi-crosswalk-2065",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34903,7 +35107,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2054",
+    "id": "csi-crosswalk-2066",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34920,7 +35124,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2055",
+    "id": "csi-crosswalk-2067",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34937,7 +35141,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2056",
+    "id": "csi-crosswalk-2068",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34954,7 +35158,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2057",
+    "id": "csi-crosswalk-2069",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34971,7 +35175,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2058",
+    "id": "csi-crosswalk-2070",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -34988,7 +35192,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2059",
+    "id": "csi-crosswalk-2071",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35005,7 +35209,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2060",
+    "id": "csi-crosswalk-2072",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35022,7 +35226,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2061",
+    "id": "csi-crosswalk-2073",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35039,7 +35243,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2062",
+    "id": "csi-crosswalk-2074",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35056,7 +35260,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2063",
+    "id": "csi-crosswalk-2075",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35073,7 +35277,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2064",
+    "id": "csi-crosswalk-2076",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35083,14 +35287,14 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     },
     "targetSection": {
       "sectionNumber": "44 40 00",
-      "title": "Water Treatment Equipment",
+      "title": "Water Pollution Control Equipment",
       "level": 2
     },
     "relationship": "MANY_TO_ONE",
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2065",
+    "id": "csi-crosswalk-2077",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35099,15 +35303,15 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
       "level": 4
     },
     "targetSection": {
-      "sectionNumber": "44 42 53",
-      "title": "Water Treatment Oil/Water Separators",
-      "level": 3
+      "sectionNumber": "44 40 00",
+      "title": "Water Pollution Control Equipment",
+      "level": 2
     },
-    "relationship": "ONE_TO_MANY",
-    "mappingConfidence": "EXPANDED"
+    "relationship": "MANY_TO_MANY",
+    "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2066",
+    "id": "csi-crosswalk-2078",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35124,7 +35328,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2067",
+    "id": "csi-crosswalk-2079",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35141,7 +35345,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2068",
+    "id": "csi-crosswalk-2080",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35158,7 +35362,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2069",
+    "id": "csi-crosswalk-2081",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35167,15 +35371,15 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
       "level": 3
     },
     "targetSection": {
-      "sectionNumber": "44 42 39",
-      "title": "Water Treatment Grit Collectors",
-      "level": 3
+      "sectionNumber": "44 40 00",
+      "title": "Water Pollution Control Equipment",
+      "level": 2
     },
-    "relationship": "ONE_TO_ONE",
-    "mappingConfidence": "DIRECT"
+    "relationship": "MANY_TO_ONE",
+    "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2070",
+    "id": "csi-crosswalk-2082",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35184,15 +35388,15 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
       "level": 3
     },
     "targetSection": {
-      "sectionNumber": "44 42 00",
-      "title": "General Water Treatment Equipment",
+      "sectionNumber": "44 40 00",
+      "title": "Water Pollution Control Equipment",
       "level": 2
     },
     "relationship": "MANY_TO_ONE",
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2071",
+    "id": "csi-crosswalk-2083",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35201,15 +35405,15 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
       "level": 3
     },
     "targetSection": {
-      "sectionNumber": "44 42 63",
-      "title": "Water Treatment Sediment Removal Equipment",
-      "level": 3
+      "sectionNumber": "44 40 00",
+      "title": "Water Pollution Control Equipment",
+      "level": 2
     },
-    "relationship": "ONE_TO_ONE",
-    "mappingConfidence": "DIRECT"
+    "relationship": "MANY_TO_ONE",
+    "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2072",
+    "id": "csi-crosswalk-2084",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35218,15 +35422,15 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
       "level": 3
     },
     "targetSection": {
-      "sectionNumber": "44 42 00",
-      "title": "General Water Treatment Equipment",
+      "sectionNumber": "44 41 00",
+      "title": "Water Pollution Containment and Cleanup Equipment",
       "level": 2
     },
-    "relationship": "MANY_TO_ONE",
-    "mappingConfidence": "EXPANDED"
+    "relationship": "ONE_TO_ONE",
+    "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2073",
+    "id": "csi-crosswalk-2085",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35235,15 +35439,15 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
       "level": 3
     },
     "targetSection": {
-      "sectionNumber": "44 44 00",
-      "title": "Water Treatment Chemical Systems Equipment",
+      "sectionNumber": "44 40 00",
+      "title": "Water Pollution Control Equipment",
       "level": 2
     },
     "relationship": "MANY_TO_ONE",
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2074",
+    "id": "csi-crosswalk-2086",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35252,15 +35456,15 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
       "level": 3
     },
     "targetSection": {
-      "sectionNumber": "44 46 00",
-      "title": "Sludge Treatment and Handling Equipment for Water Treatment Systems",
+      "sectionNumber": "44 40 00",
+      "title": "Water Pollution Control Equipment",
       "level": 2
     },
     "relationship": "MANY_TO_ONE",
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2075",
+    "id": "csi-crosswalk-2087",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35277,7 +35481,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2076",
+    "id": "csi-crosswalk-2088",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35286,15 +35490,15 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
       "level": 3
     },
     "targetSection": {
-      "sectionNumber": "44 43 00",
-      "title": "Water Filtration Equipment",
+      "sectionNumber": "44 40 00",
+      "title": "Water Pollution Control Equipment",
       "level": 2
     },
-    "relationship": "ONE_TO_ONE",
-    "mappingConfidence": "DIRECT"
+    "relationship": "MANY_TO_ONE",
+    "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2077",
+    "id": "csi-crosswalk-2089",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35311,7 +35515,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2078",
+    "id": "csi-crosswalk-2090",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35328,7 +35532,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2079",
+    "id": "csi-crosswalk-2091",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35337,15 +35541,15 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
       "level": 3
     },
     "targetSection": {
-      "sectionNumber": "44 46 19",
-      "title": "Sludge Digesters",
-      "level": 3
+      "sectionNumber": "44 40 00",
+      "title": "Water Pollution Control Equipment",
+      "level": 2
     },
     "relationship": "MANY_TO_ONE",
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2080",
+    "id": "csi-crosswalk-2092",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35354,15 +35558,15 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
       "level": 3
     },
     "targetSection": {
-      "sectionNumber": "44 46 19",
-      "title": "Sludge Digesters",
-      "level": 3
+      "sectionNumber": "44 40 00",
+      "title": "Water Pollution Control Equipment",
+      "level": 2
     },
     "relationship": "MANY_TO_ONE",
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2081",
+    "id": "csi-crosswalk-2093",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35371,15 +35575,15 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
       "level": 3
     },
     "targetSection": {
-      "sectionNumber": "44 41 13",
-      "title": "Packaged Water Treatment Plants",
-      "level": 3
+      "sectionNumber": "44 40 00",
+      "title": "Water Pollution Control Equipment",
+      "level": 2
     },
-    "relationship": "ONE_TO_ONE",
-    "mappingConfidence": "DIRECT"
+    "relationship": "MANY_TO_ONE",
+    "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2082",
+    "id": "csi-crosswalk-2094",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35396,7 +35600,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2083",
+    "id": "csi-crosswalk-2095",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35406,14 +35610,14 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     },
     "targetSection": {
       "sectionNumber": "11 41 00",
-      "title": "Food Storage Equipment",
+      "title": "Foodservice Storage Equipment",
       "level": 2
     },
     "relationship": "ONE_TO_ONE",
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2084",
+    "id": "csi-crosswalk-2096",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35430,7 +35634,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2085",
+    "id": "csi-crosswalk-2097",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35447,7 +35651,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2086",
+    "id": "csi-crosswalk-2098",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35464,7 +35668,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2087",
+    "id": "csi-crosswalk-2099",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35481,7 +35685,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2088",
+    "id": "csi-crosswalk-2100",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35498,7 +35702,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2089",
+    "id": "csi-crosswalk-2101",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35515,7 +35719,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2090",
+    "id": "csi-crosswalk-2102",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35532,7 +35736,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2091",
+    "id": "csi-crosswalk-2103",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35549,7 +35753,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2092",
+    "id": "csi-crosswalk-2104",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35566,7 +35770,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2093",
+    "id": "csi-crosswalk-2105",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35583,7 +35787,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2094",
+    "id": "csi-crosswalk-2106",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35600,7 +35804,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2095",
+    "id": "csi-crosswalk-2107",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35617,7 +35821,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2096",
+    "id": "csi-crosswalk-2108",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35634,7 +35838,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2097",
+    "id": "csi-crosswalk-2109",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35651,7 +35855,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2098",
+    "id": "csi-crosswalk-2110",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35668,7 +35872,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2099",
+    "id": "csi-crosswalk-2111",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35685,7 +35889,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2100",
+    "id": "csi-crosswalk-2112",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35702,7 +35906,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2101",
+    "id": "csi-crosswalk-2113",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35719,7 +35923,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2102",
+    "id": "csi-crosswalk-2114",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35736,7 +35940,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2103",
+    "id": "csi-crosswalk-2115",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35753,7 +35957,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2104",
+    "id": "csi-crosswalk-2116",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35770,7 +35974,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2105",
+    "id": "csi-crosswalk-2117",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35787,7 +35991,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2106",
+    "id": "csi-crosswalk-2118",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35804,7 +36008,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2107",
+    "id": "csi-crosswalk-2119",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35821,7 +36025,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2108",
+    "id": "csi-crosswalk-2120",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35838,7 +36042,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2109",
+    "id": "csi-crosswalk-2121",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35855,7 +36059,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2110",
+    "id": "csi-crosswalk-2122",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35872,7 +36076,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2111",
+    "id": "csi-crosswalk-2123",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35889,7 +36093,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2112",
+    "id": "csi-crosswalk-2124",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35906,7 +36110,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2113",
+    "id": "csi-crosswalk-2125",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35923,7 +36127,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2114",
+    "id": "csi-crosswalk-2126",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35940,7 +36144,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2115",
+    "id": "csi-crosswalk-2127",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35957,7 +36161,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2116",
+    "id": "csi-crosswalk-2128",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35974,7 +36178,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2117",
+    "id": "csi-crosswalk-2129",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -35991,7 +36195,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2118",
+    "id": "csi-crosswalk-2130",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36008,7 +36212,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2119",
+    "id": "csi-crosswalk-2131",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36025,7 +36229,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2120",
+    "id": "csi-crosswalk-2132",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36042,7 +36246,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2121",
+    "id": "csi-crosswalk-2133",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36059,7 +36263,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2122",
+    "id": "csi-crosswalk-2134",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36076,7 +36280,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2123",
+    "id": "csi-crosswalk-2135",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36093,7 +36297,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2124",
+    "id": "csi-crosswalk-2136",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36110,7 +36314,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2125",
+    "id": "csi-crosswalk-2137",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36127,7 +36331,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2126",
+    "id": "csi-crosswalk-2138",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36144,7 +36348,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2127",
+    "id": "csi-crosswalk-2139",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36161,7 +36365,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2128",
+    "id": "csi-crosswalk-2140",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36178,7 +36382,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2129",
+    "id": "csi-crosswalk-2141",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36195,7 +36399,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2130",
+    "id": "csi-crosswalk-2142",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36212,7 +36416,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2131",
+    "id": "csi-crosswalk-2143",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36229,7 +36433,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2132",
+    "id": "csi-crosswalk-2144",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36246,7 +36450,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2133",
+    "id": "csi-crosswalk-2145",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36263,7 +36467,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2134",
+    "id": "csi-crosswalk-2146",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36280,7 +36484,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2135",
+    "id": "csi-crosswalk-2147",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36297,7 +36501,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2136",
+    "id": "csi-crosswalk-2148",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36314,7 +36518,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2137",
+    "id": "csi-crosswalk-2149",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36331,7 +36535,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2138",
+    "id": "csi-crosswalk-2150",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36348,7 +36552,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2139",
+    "id": "csi-crosswalk-2151",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36365,7 +36569,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2140",
+    "id": "csi-crosswalk-2152",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36382,7 +36586,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2141",
+    "id": "csi-crosswalk-2153",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36399,7 +36603,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2142",
+    "id": "csi-crosswalk-2154",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36416,7 +36620,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2143",
+    "id": "csi-crosswalk-2155",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36433,7 +36637,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2144",
+    "id": "csi-crosswalk-2156",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36450,7 +36654,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2145",
+    "id": "csi-crosswalk-2157",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36467,7 +36671,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2146",
+    "id": "csi-crosswalk-2158",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36484,7 +36688,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2147",
+    "id": "csi-crosswalk-2159",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36501,7 +36705,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2148",
+    "id": "csi-crosswalk-2160",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36518,7 +36722,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2149",
+    "id": "csi-crosswalk-2161",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36535,7 +36739,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2150",
+    "id": "csi-crosswalk-2162",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36552,7 +36756,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2151",
+    "id": "csi-crosswalk-2163",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36569,7 +36773,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2152",
+    "id": "csi-crosswalk-2164",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36586,7 +36790,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2153",
+    "id": "csi-crosswalk-2165",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36603,7 +36807,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2154",
+    "id": "csi-crosswalk-2166",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36620,7 +36824,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2155",
+    "id": "csi-crosswalk-2167",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36637,7 +36841,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2156",
+    "id": "csi-crosswalk-2168",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36654,7 +36858,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2157",
+    "id": "csi-crosswalk-2169",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36671,7 +36875,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2158",
+    "id": "csi-crosswalk-2170",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36688,7 +36892,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2159",
+    "id": "csi-crosswalk-2171",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36705,7 +36909,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2160",
+    "id": "csi-crosswalk-2172",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36722,7 +36926,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2161",
+    "id": "csi-crosswalk-2173",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36739,7 +36943,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2162",
+    "id": "csi-crosswalk-2174",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36756,7 +36960,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2163",
+    "id": "csi-crosswalk-2175",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36773,7 +36977,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2164",
+    "id": "csi-crosswalk-2176",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36790,7 +36994,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2165",
+    "id": "csi-crosswalk-2177",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36807,7 +37011,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2166",
+    "id": "csi-crosswalk-2178",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36824,7 +37028,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2167",
+    "id": "csi-crosswalk-2179",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36841,7 +37045,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2168",
+    "id": "csi-crosswalk-2180",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36858,7 +37062,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2169",
+    "id": "csi-crosswalk-2181",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36875,7 +37079,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2170",
+    "id": "csi-crosswalk-2182",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36892,7 +37096,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2171",
+    "id": "csi-crosswalk-2183",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36909,7 +37113,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2172",
+    "id": "csi-crosswalk-2184",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36926,7 +37130,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2173",
+    "id": "csi-crosswalk-2185",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36943,7 +37147,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2174",
+    "id": "csi-crosswalk-2186",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36960,7 +37164,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2175",
+    "id": "csi-crosswalk-2187",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36977,7 +37181,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2176",
+    "id": "csi-crosswalk-2188",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -36994,7 +37198,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2177",
+    "id": "csi-crosswalk-2189",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37011,7 +37215,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2178",
+    "id": "csi-crosswalk-2190",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37028,7 +37232,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2179",
+    "id": "csi-crosswalk-2191",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37045,7 +37249,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2180",
+    "id": "csi-crosswalk-2192",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37062,7 +37266,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2181",
+    "id": "csi-crosswalk-2193",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37079,7 +37283,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2182",
+    "id": "csi-crosswalk-2194",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37096,7 +37300,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2183",
+    "id": "csi-crosswalk-2195",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37113,7 +37317,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2184",
+    "id": "csi-crosswalk-2196",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37130,7 +37334,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2185",
+    "id": "csi-crosswalk-2197",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37147,7 +37351,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2186",
+    "id": "csi-crosswalk-2198",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37164,7 +37368,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2187",
+    "id": "csi-crosswalk-2199",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37181,7 +37385,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2188",
+    "id": "csi-crosswalk-2200",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37198,7 +37402,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2189",
+    "id": "csi-crosswalk-2201",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37215,7 +37419,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2190",
+    "id": "csi-crosswalk-2202",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37232,7 +37436,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2191",
+    "id": "csi-crosswalk-2203",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37249,7 +37453,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2192",
+    "id": "csi-crosswalk-2204",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37266,7 +37470,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2193",
+    "id": "csi-crosswalk-2205",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37283,7 +37487,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2194",
+    "id": "csi-crosswalk-2206",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37300,7 +37504,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2195",
+    "id": "csi-crosswalk-2207",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37317,7 +37521,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2196",
+    "id": "csi-crosswalk-2208",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37334,7 +37538,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2197",
+    "id": "csi-crosswalk-2209",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37351,7 +37555,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2198",
+    "id": "csi-crosswalk-2210",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37368,7 +37572,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2199",
+    "id": "csi-crosswalk-2211",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37385,7 +37589,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2200",
+    "id": "csi-crosswalk-2212",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37402,7 +37606,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2201",
+    "id": "csi-crosswalk-2213",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37419,7 +37623,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2202",
+    "id": "csi-crosswalk-2214",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37436,7 +37640,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2203",
+    "id": "csi-crosswalk-2215",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37453,7 +37657,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2204",
+    "id": "csi-crosswalk-2216",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37470,7 +37674,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2205",
+    "id": "csi-crosswalk-2217",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37487,7 +37691,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2206",
+    "id": "csi-crosswalk-2218",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37504,7 +37708,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2207",
+    "id": "csi-crosswalk-2219",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37521,7 +37725,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2208",
+    "id": "csi-crosswalk-2220",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37538,7 +37742,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2209",
+    "id": "csi-crosswalk-2221",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37555,7 +37759,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2210",
+    "id": "csi-crosswalk-2222",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37572,7 +37776,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2211",
+    "id": "csi-crosswalk-2223",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37589,7 +37793,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2212",
+    "id": "csi-crosswalk-2224",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37606,7 +37810,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2213",
+    "id": "csi-crosswalk-2225",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37623,7 +37827,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2214",
+    "id": "csi-crosswalk-2226",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37640,7 +37844,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2215",
+    "id": "csi-crosswalk-2227",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37657,7 +37861,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2216",
+    "id": "csi-crosswalk-2228",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37674,7 +37878,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2217",
+    "id": "csi-crosswalk-2229",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37691,7 +37895,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2218",
+    "id": "csi-crosswalk-2230",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37708,7 +37912,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2219",
+    "id": "csi-crosswalk-2231",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37725,7 +37929,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2220",
+    "id": "csi-crosswalk-2232",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37742,7 +37946,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2221",
+    "id": "csi-crosswalk-2233",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37759,7 +37963,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2222",
+    "id": "csi-crosswalk-2234",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37776,7 +37980,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2223",
+    "id": "csi-crosswalk-2235",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37793,7 +37997,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2224",
+    "id": "csi-crosswalk-2236",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37810,7 +38014,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2225",
+    "id": "csi-crosswalk-2237",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37827,7 +38031,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2226",
+    "id": "csi-crosswalk-2238",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37844,7 +38048,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2227",
+    "id": "csi-crosswalk-2239",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37861,7 +38065,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2228",
+    "id": "csi-crosswalk-2240",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37878,7 +38082,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2229",
+    "id": "csi-crosswalk-2241",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37895,7 +38099,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2230",
+    "id": "csi-crosswalk-2242",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37912,7 +38116,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2231",
+    "id": "csi-crosswalk-2243",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37929,7 +38133,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2232",
+    "id": "csi-crosswalk-2244",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37946,7 +38150,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2233",
+    "id": "csi-crosswalk-2245",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37963,7 +38167,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2234",
+    "id": "csi-crosswalk-2246",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37980,7 +38184,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2235",
+    "id": "csi-crosswalk-2247",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -37997,7 +38201,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2236",
+    "id": "csi-crosswalk-2248",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38014,7 +38218,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2237",
+    "id": "csi-crosswalk-2249",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38031,7 +38235,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2238",
+    "id": "csi-crosswalk-2250",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38048,7 +38252,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2239",
+    "id": "csi-crosswalk-2251",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38065,7 +38269,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2240",
+    "id": "csi-crosswalk-2252",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38082,7 +38286,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2241",
+    "id": "csi-crosswalk-2253",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38099,7 +38303,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2242",
+    "id": "csi-crosswalk-2254",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38116,7 +38320,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2243",
+    "id": "csi-crosswalk-2255",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38133,7 +38337,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2244",
+    "id": "csi-crosswalk-2256",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38150,7 +38354,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2245",
+    "id": "csi-crosswalk-2257",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38167,7 +38371,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2246",
+    "id": "csi-crosswalk-2258",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38184,7 +38388,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2247",
+    "id": "csi-crosswalk-2259",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38201,7 +38405,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2248",
+    "id": "csi-crosswalk-2260",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38218,7 +38422,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2249",
+    "id": "csi-crosswalk-2261",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38235,7 +38439,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2250",
+    "id": "csi-crosswalk-2262",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38252,7 +38456,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2251",
+    "id": "csi-crosswalk-2263",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38269,7 +38473,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2252",
+    "id": "csi-crosswalk-2264",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38286,7 +38490,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2253",
+    "id": "csi-crosswalk-2265",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38303,7 +38507,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2254",
+    "id": "csi-crosswalk-2266",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38320,7 +38524,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2255",
+    "id": "csi-crosswalk-2267",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38337,7 +38541,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2256",
+    "id": "csi-crosswalk-2268",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38354,7 +38558,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2257",
+    "id": "csi-crosswalk-2269",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38371,7 +38575,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2258",
+    "id": "csi-crosswalk-2270",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38388,7 +38592,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2259",
+    "id": "csi-crosswalk-2271",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38405,7 +38609,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2260",
+    "id": "csi-crosswalk-2272",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38422,7 +38626,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2261",
+    "id": "csi-crosswalk-2273",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38439,7 +38643,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2262",
+    "id": "csi-crosswalk-2274",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38456,7 +38660,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2263",
+    "id": "csi-crosswalk-2275",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38473,7 +38677,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2264",
+    "id": "csi-crosswalk-2276",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38490,7 +38694,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2265",
+    "id": "csi-crosswalk-2277",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38507,7 +38711,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2266",
+    "id": "csi-crosswalk-2278",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38524,7 +38728,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2267",
+    "id": "csi-crosswalk-2279",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38541,7 +38745,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2268",
+    "id": "csi-crosswalk-2280",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38558,7 +38762,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2269",
+    "id": "csi-crosswalk-2281",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38575,7 +38779,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2270",
+    "id": "csi-crosswalk-2282",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38592,7 +38796,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2271",
+    "id": "csi-crosswalk-2283",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38609,7 +38813,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2272",
+    "id": "csi-crosswalk-2284",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38626,7 +38830,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2273",
+    "id": "csi-crosswalk-2285",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38643,7 +38847,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2274",
+    "id": "csi-crosswalk-2286",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38660,7 +38864,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2275",
+    "id": "csi-crosswalk-2287",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38677,7 +38881,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2276",
+    "id": "csi-crosswalk-2288",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38694,7 +38898,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2277",
+    "id": "csi-crosswalk-2289",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38711,7 +38915,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2278",
+    "id": "csi-crosswalk-2290",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38728,7 +38932,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2279",
+    "id": "csi-crosswalk-2291",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38745,7 +38949,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2280",
+    "id": "csi-crosswalk-2292",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38762,7 +38966,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2281",
+    "id": "csi-crosswalk-2293",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38779,7 +38983,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2282",
+    "id": "csi-crosswalk-2294",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38796,7 +39000,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2283",
+    "id": "csi-crosswalk-2295",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38813,7 +39017,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2284",
+    "id": "csi-crosswalk-2296",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38830,7 +39034,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2285",
+    "id": "csi-crosswalk-2297",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38847,7 +39051,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2286",
+    "id": "csi-crosswalk-2298",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38864,7 +39068,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2287",
+    "id": "csi-crosswalk-2299",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38881,7 +39085,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2288",
+    "id": "csi-crosswalk-2300",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38898,7 +39102,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2289",
+    "id": "csi-crosswalk-2301",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38915,7 +39119,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2290",
+    "id": "csi-crosswalk-2302",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38932,7 +39136,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2291",
+    "id": "csi-crosswalk-2303",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38949,7 +39153,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2292",
+    "id": "csi-crosswalk-2304",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38966,7 +39170,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2293",
+    "id": "csi-crosswalk-2305",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -38983,7 +39187,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2294",
+    "id": "csi-crosswalk-2306",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39000,7 +39204,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2295",
+    "id": "csi-crosswalk-2307",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39017,7 +39221,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2296",
+    "id": "csi-crosswalk-2308",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39034,7 +39238,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2297",
+    "id": "csi-crosswalk-2309",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39051,7 +39255,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2298",
+    "id": "csi-crosswalk-2310",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39068,7 +39272,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2299",
+    "id": "csi-crosswalk-2311",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39085,7 +39289,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2300",
+    "id": "csi-crosswalk-2312",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39102,7 +39306,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2301",
+    "id": "csi-crosswalk-2313",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39119,7 +39323,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2302",
+    "id": "csi-crosswalk-2314",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39136,7 +39340,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2303",
+    "id": "csi-crosswalk-2315",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39153,7 +39357,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2304",
+    "id": "csi-crosswalk-2316",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39170,7 +39374,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2305",
+    "id": "csi-crosswalk-2317",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39187,7 +39391,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2306",
+    "id": "csi-crosswalk-2318",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39204,7 +39408,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2307",
+    "id": "csi-crosswalk-2319",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39221,7 +39425,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2308",
+    "id": "csi-crosswalk-2320",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39238,7 +39442,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2309",
+    "id": "csi-crosswalk-2321",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39255,7 +39459,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2310",
+    "id": "csi-crosswalk-2322",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39272,7 +39476,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2311",
+    "id": "csi-crosswalk-2323",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39289,7 +39493,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2312",
+    "id": "csi-crosswalk-2324",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39306,7 +39510,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2313",
+    "id": "csi-crosswalk-2325",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39323,7 +39527,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2314",
+    "id": "csi-crosswalk-2326",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39340,7 +39544,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2315",
+    "id": "csi-crosswalk-2327",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39357,7 +39561,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2316",
+    "id": "csi-crosswalk-2328",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39374,7 +39578,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2317",
+    "id": "csi-crosswalk-2329",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39391,7 +39595,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2318",
+    "id": "csi-crosswalk-2330",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39408,7 +39612,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2319",
+    "id": "csi-crosswalk-2331",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39425,7 +39629,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2320",
+    "id": "csi-crosswalk-2332",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39442,7 +39646,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2321",
+    "id": "csi-crosswalk-2333",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39459,7 +39663,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "INCOMPLETE"
   },
   {
-    "id": "csi-crosswalk-2322",
+    "id": "csi-crosswalk-2334",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39476,7 +39680,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2323",
+    "id": "csi-crosswalk-2335",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39493,7 +39697,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2324",
+    "id": "csi-crosswalk-2336",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39510,7 +39714,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2325",
+    "id": "csi-crosswalk-2337",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39527,7 +39731,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2326",
+    "id": "csi-crosswalk-2338",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39544,7 +39748,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2327",
+    "id": "csi-crosswalk-2339",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39561,7 +39765,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2328",
+    "id": "csi-crosswalk-2340",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39578,7 +39782,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2329",
+    "id": "csi-crosswalk-2341",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39595,7 +39799,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2330",
+    "id": "csi-crosswalk-2342",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39612,7 +39816,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "INCOMPLETE"
   },
   {
-    "id": "csi-crosswalk-2331",
+    "id": "csi-crosswalk-2343",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39629,7 +39833,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2332",
+    "id": "csi-crosswalk-2344",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39646,7 +39850,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2333",
+    "id": "csi-crosswalk-2345",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39663,7 +39867,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2334",
+    "id": "csi-crosswalk-2346",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39680,7 +39884,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2335",
+    "id": "csi-crosswalk-2347",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39697,7 +39901,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2336",
+    "id": "csi-crosswalk-2348",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39714,7 +39918,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2337",
+    "id": "csi-crosswalk-2349",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39731,7 +39935,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2338",
+    "id": "csi-crosswalk-2350",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39748,7 +39952,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2339",
+    "id": "csi-crosswalk-2351",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39765,7 +39969,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2340",
+    "id": "csi-crosswalk-2352",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39782,7 +39986,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2341",
+    "id": "csi-crosswalk-2353",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39799,7 +40003,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2342",
+    "id": "csi-crosswalk-2354",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39816,7 +40020,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2343",
+    "id": "csi-crosswalk-2355",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39833,7 +40037,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2344",
+    "id": "csi-crosswalk-2356",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39850,7 +40054,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2345",
+    "id": "csi-crosswalk-2357",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39867,7 +40071,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2346",
+    "id": "csi-crosswalk-2358",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39884,7 +40088,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2347",
+    "id": "csi-crosswalk-2359",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39901,7 +40105,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2348",
+    "id": "csi-crosswalk-2360",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39918,7 +40122,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2349",
+    "id": "csi-crosswalk-2361",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39931,11 +40135,11 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
       "title": "Sludge Treatment and Handling Equipment for Water Treatment Systems",
       "level": 2
     },
-    "relationship": "MANY_TO_ONE",
-    "mappingConfidence": "EXPANDED"
+    "relationship": "ONE_TO_ONE",
+    "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2350",
+    "id": "csi-crosswalk-2362",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39952,7 +40156,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2351",
+    "id": "csi-crosswalk-2363",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39969,7 +40173,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2352",
+    "id": "csi-crosswalk-2364",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -39986,7 +40190,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2353",
+    "id": "csi-crosswalk-2365",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40003,7 +40207,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2354",
+    "id": "csi-crosswalk-2366",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40020,7 +40224,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2355",
+    "id": "csi-crosswalk-2367",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40037,7 +40241,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2356",
+    "id": "csi-crosswalk-2368",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40054,7 +40258,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2357",
+    "id": "csi-crosswalk-2369",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40071,7 +40275,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2358",
+    "id": "csi-crosswalk-2370",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40088,7 +40292,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2359",
+    "id": "csi-crosswalk-2371",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40105,7 +40309,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2360",
+    "id": "csi-crosswalk-2372",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40122,7 +40326,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2361",
+    "id": "csi-crosswalk-2373",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40139,7 +40343,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2362",
+    "id": "csi-crosswalk-2374",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40156,7 +40360,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2363",
+    "id": "csi-crosswalk-2375",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40173,7 +40377,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2364",
+    "id": "csi-crosswalk-2376",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40190,7 +40394,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2365",
+    "id": "csi-crosswalk-2377",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40207,7 +40411,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2366",
+    "id": "csi-crosswalk-2378",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40224,7 +40428,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2367",
+    "id": "csi-crosswalk-2379",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40241,7 +40445,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2368",
+    "id": "csi-crosswalk-2380",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40258,7 +40462,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2369",
+    "id": "csi-crosswalk-2381",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40275,7 +40479,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2370",
+    "id": "csi-crosswalk-2382",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40292,7 +40496,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2371",
+    "id": "csi-crosswalk-2383",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40309,7 +40513,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2372",
+    "id": "csi-crosswalk-2384",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40326,7 +40530,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2373",
+    "id": "csi-crosswalk-2385",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40343,7 +40547,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2374",
+    "id": "csi-crosswalk-2386",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40360,7 +40564,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2375",
+    "id": "csi-crosswalk-2387",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40377,7 +40581,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2376",
+    "id": "csi-crosswalk-2388",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40394,7 +40598,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2377",
+    "id": "csi-crosswalk-2389",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40411,7 +40615,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2378",
+    "id": "csi-crosswalk-2390",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40428,7 +40632,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2379",
+    "id": "csi-crosswalk-2391",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40445,7 +40649,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2380",
+    "id": "csi-crosswalk-2392",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40462,7 +40666,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2381",
+    "id": "csi-crosswalk-2393",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40479,7 +40683,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2382",
+    "id": "csi-crosswalk-2394",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40496,7 +40700,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2383",
+    "id": "csi-crosswalk-2395",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40513,7 +40717,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2384",
+    "id": "csi-crosswalk-2396",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40530,7 +40734,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2385",
+    "id": "csi-crosswalk-2397",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40547,7 +40751,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2386",
+    "id": "csi-crosswalk-2398",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40564,7 +40768,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2387",
+    "id": "csi-crosswalk-2399",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40581,7 +40785,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2388",
+    "id": "csi-crosswalk-2400",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40598,7 +40802,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2389",
+    "id": "csi-crosswalk-2401",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40615,7 +40819,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2390",
+    "id": "csi-crosswalk-2402",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40632,7 +40836,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2391",
+    "id": "csi-crosswalk-2403",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40649,7 +40853,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2392",
+    "id": "csi-crosswalk-2404",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40666,7 +40870,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2393",
+    "id": "csi-crosswalk-2405",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40683,7 +40887,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2394",
+    "id": "csi-crosswalk-2406",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40700,7 +40904,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2395",
+    "id": "csi-crosswalk-2407",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40717,7 +40921,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2396",
+    "id": "csi-crosswalk-2408",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40734,7 +40938,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2397",
+    "id": "csi-crosswalk-2409",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40751,7 +40955,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2398",
+    "id": "csi-crosswalk-2410",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40768,7 +40972,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2399",
+    "id": "csi-crosswalk-2411",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40785,7 +40989,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2400",
+    "id": "csi-crosswalk-2412",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40802,7 +41006,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2401",
+    "id": "csi-crosswalk-2413",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40819,7 +41023,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2402",
+    "id": "csi-crosswalk-2414",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40836,7 +41040,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2403",
+    "id": "csi-crosswalk-2415",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40853,7 +41057,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2404",
+    "id": "csi-crosswalk-2416",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40870,7 +41074,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2405",
+    "id": "csi-crosswalk-2417",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40887,7 +41091,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2406",
+    "id": "csi-crosswalk-2418",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40904,7 +41108,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2407",
+    "id": "csi-crosswalk-2419",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40921,7 +41125,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2408",
+    "id": "csi-crosswalk-2420",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40938,7 +41142,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2409",
+    "id": "csi-crosswalk-2421",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40955,7 +41159,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2410",
+    "id": "csi-crosswalk-2422",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40972,7 +41176,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2411",
+    "id": "csi-crosswalk-2423",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -40989,7 +41193,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2412",
+    "id": "csi-crosswalk-2424",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41006,7 +41210,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2413",
+    "id": "csi-crosswalk-2425",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41023,7 +41227,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2414",
+    "id": "csi-crosswalk-2426",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41040,7 +41244,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2415",
+    "id": "csi-crosswalk-2427",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41057,7 +41261,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2416",
+    "id": "csi-crosswalk-2428",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41074,7 +41278,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2417",
+    "id": "csi-crosswalk-2429",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41091,7 +41295,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2418",
+    "id": "csi-crosswalk-2430",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41108,7 +41312,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2419",
+    "id": "csi-crosswalk-2431",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41125,7 +41329,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2420",
+    "id": "csi-crosswalk-2432",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41142,7 +41346,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2421",
+    "id": "csi-crosswalk-2433",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41159,7 +41363,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2422",
+    "id": "csi-crosswalk-2434",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41176,7 +41380,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2423",
+    "id": "csi-crosswalk-2435",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41193,12 +41397,12 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2424",
+    "id": "csi-crosswalk-2436",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
       "sectionNumber": "13630",
-      "title": "Solar Coatings and Surface   Treatment",
+      "title": "Solar Coatings and Surface Treatment",
       "level": 4
     },
     "targetSection": {
@@ -41210,7 +41414,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2425",
+    "id": "csi-crosswalk-2437",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41227,7 +41431,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2426",
+    "id": "csi-crosswalk-2438",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41244,7 +41448,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2427",
+    "id": "csi-crosswalk-2439",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41261,7 +41465,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2428",
+    "id": "csi-crosswalk-2440",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41278,7 +41482,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2429",
+    "id": "csi-crosswalk-2441",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41295,7 +41499,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2430",
+    "id": "csi-crosswalk-2442",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41312,7 +41516,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2431",
+    "id": "csi-crosswalk-2443",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41329,7 +41533,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2432",
+    "id": "csi-crosswalk-2444",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41346,7 +41550,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2433",
+    "id": "csi-crosswalk-2445",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41363,7 +41567,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2434",
+    "id": "csi-crosswalk-2446",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41380,7 +41584,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2435",
+    "id": "csi-crosswalk-2447",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41397,7 +41601,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2436",
+    "id": "csi-crosswalk-2448",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41414,7 +41618,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2437",
+    "id": "csi-crosswalk-2449",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41431,7 +41635,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2438",
+    "id": "csi-crosswalk-2450",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41448,7 +41652,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2439",
+    "id": "csi-crosswalk-2451",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41465,7 +41669,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2440",
+    "id": "csi-crosswalk-2452",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41482,7 +41686,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2441",
+    "id": "csi-crosswalk-2453",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41499,7 +41703,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2442",
+    "id": "csi-crosswalk-2454",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41516,7 +41720,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2443",
+    "id": "csi-crosswalk-2455",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41533,7 +41737,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2444",
+    "id": "csi-crosswalk-2456",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41550,7 +41754,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2445",
+    "id": "csi-crosswalk-2457",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41567,7 +41771,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2446",
+    "id": "csi-crosswalk-2458",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41584,7 +41788,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2447",
+    "id": "csi-crosswalk-2459",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41601,7 +41805,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2448",
+    "id": "csi-crosswalk-2460",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41618,7 +41822,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2449",
+    "id": "csi-crosswalk-2461",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41635,7 +41839,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2450",
+    "id": "csi-crosswalk-2462",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41652,7 +41856,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2451",
+    "id": "csi-crosswalk-2463",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41662,14 +41866,14 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     },
     "targetSection": {
       "sectionNumber": "28 33 00",
-      "title": "Fuel-Gas Detection and Alarm",
+      "title": "Gas Detection and Alarm",
       "level": 2
     },
     "relationship": "ONE_TO_MANY",
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2452",
+    "id": "csi-crosswalk-2464",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41679,14 +41883,14 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     },
     "targetSection": {
       "sectionNumber": "28 33 00",
-      "title": "Fuel-Gas Detection and Alarm",
+      "title": "Gas Detection and Alarm",
       "level": 2
     },
     "relationship": "ONE_TO_MANY",
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2453",
+    "id": "csi-crosswalk-2465",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41703,7 +41907,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2454",
+    "id": "csi-crosswalk-2466",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41720,7 +41924,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2455",
+    "id": "csi-crosswalk-2467",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41737,7 +41941,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2456",
+    "id": "csi-crosswalk-2468",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41754,7 +41958,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2457",
+    "id": "csi-crosswalk-2469",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41771,7 +41975,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2458",
+    "id": "csi-crosswalk-2470",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41788,7 +41992,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2459",
+    "id": "csi-crosswalk-2471",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41805,7 +42009,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2460",
+    "id": "csi-crosswalk-2472",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41822,7 +42026,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2461",
+    "id": "csi-crosswalk-2473",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41839,7 +42043,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2462",
+    "id": "csi-crosswalk-2474",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41856,7 +42060,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2463",
+    "id": "csi-crosswalk-2475",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41873,7 +42077,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2464",
+    "id": "csi-crosswalk-2476",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41890,7 +42094,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2465",
+    "id": "csi-crosswalk-2477",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41907,7 +42111,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2466",
+    "id": "csi-crosswalk-2478",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41924,7 +42128,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2467",
+    "id": "csi-crosswalk-2479",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41941,7 +42145,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2468",
+    "id": "csi-crosswalk-2480",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41958,7 +42162,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2469",
+    "id": "csi-crosswalk-2481",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41975,7 +42179,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2470",
+    "id": "csi-crosswalk-2482",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -41992,7 +42196,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2471",
+    "id": "csi-crosswalk-2483",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42009,7 +42213,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2472",
+    "id": "csi-crosswalk-2484",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42026,7 +42230,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2473",
+    "id": "csi-crosswalk-2485",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42043,7 +42247,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2474",
+    "id": "csi-crosswalk-2486",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42060,7 +42264,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2475",
+    "id": "csi-crosswalk-2487",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42077,7 +42281,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2476",
+    "id": "csi-crosswalk-2488",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42094,7 +42298,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2477",
+    "id": "csi-crosswalk-2489",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42111,7 +42315,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2478",
+    "id": "csi-crosswalk-2490",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42128,7 +42332,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2479",
+    "id": "csi-crosswalk-2491",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42145,7 +42349,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2480",
+    "id": "csi-crosswalk-2492",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42162,7 +42366,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2481",
+    "id": "csi-crosswalk-2493",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42179,7 +42383,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2482",
+    "id": "csi-crosswalk-2494",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42196,7 +42400,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2483",
+    "id": "csi-crosswalk-2495",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42213,7 +42417,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2484",
+    "id": "csi-crosswalk-2496",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42230,7 +42434,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2485",
+    "id": "csi-crosswalk-2497",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42247,7 +42451,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2486",
+    "id": "csi-crosswalk-2498",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42264,7 +42468,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2487",
+    "id": "csi-crosswalk-2499",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42281,7 +42485,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2488",
+    "id": "csi-crosswalk-2500",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42298,7 +42502,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2489",
+    "id": "csi-crosswalk-2501",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42315,7 +42519,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2490",
+    "id": "csi-crosswalk-2502",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42332,7 +42536,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2491",
+    "id": "csi-crosswalk-2503",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42349,7 +42553,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2492",
+    "id": "csi-crosswalk-2504",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42366,7 +42570,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2493",
+    "id": "csi-crosswalk-2505",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42376,14 +42580,14 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     },
     "targetSection": {
       "sectionNumber": "14 27 00",
-      "title": "Custom Elevator Cabs",
+      "title": "Custom Elevator Cabs and Doors",
       "level": 2
     },
     "relationship": "ONE_TO_MANY",
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2494",
+    "id": "csi-crosswalk-2506",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42400,7 +42604,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2495",
+    "id": "csi-crosswalk-2507",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42409,15 +42613,15 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
       "level": 4
     },
     "targetSection": {
-      "sectionNumber": "14 28 13",
-      "title": "Elevator Doors",
+      "sectionNumber": "14 27 16",
+      "title": "Custom Elevator Doors",
       "level": 3
     },
     "relationship": "ONE_TO_MANY",
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2496",
+    "id": "csi-crosswalk-2508",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42434,7 +42638,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2497",
+    "id": "csi-crosswalk-2509",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42451,7 +42655,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2498",
+    "id": "csi-crosswalk-2510",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42468,7 +42672,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2499",
+    "id": "csi-crosswalk-2511",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42485,7 +42689,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2500",
+    "id": "csi-crosswalk-2512",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42502,7 +42706,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2501",
+    "id": "csi-crosswalk-2513",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42519,7 +42723,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2502",
+    "id": "csi-crosswalk-2514",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42536,7 +42740,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2503",
+    "id": "csi-crosswalk-2515",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42553,7 +42757,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2504",
+    "id": "csi-crosswalk-2516",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42570,7 +42774,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2505",
+    "id": "csi-crosswalk-2517",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42587,7 +42791,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2506",
+    "id": "csi-crosswalk-2518",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42604,7 +42808,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2507",
+    "id": "csi-crosswalk-2519",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42621,7 +42825,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2508",
+    "id": "csi-crosswalk-2520",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42638,7 +42842,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2509",
+    "id": "csi-crosswalk-2521",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42655,7 +42859,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2510",
+    "id": "csi-crosswalk-2522",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42672,7 +42876,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2511",
+    "id": "csi-crosswalk-2523",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42689,7 +42893,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2512",
+    "id": "csi-crosswalk-2524",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42706,7 +42910,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2513",
+    "id": "csi-crosswalk-2525",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42723,7 +42927,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2514",
+    "id": "csi-crosswalk-2526",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42740,7 +42944,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2515",
+    "id": "csi-crosswalk-2527",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42757,7 +42961,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2516",
+    "id": "csi-crosswalk-2528",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42774,7 +42978,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2517",
+    "id": "csi-crosswalk-2529",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42791,7 +42995,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2518",
+    "id": "csi-crosswalk-2530",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42800,15 +43004,15 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
       "level": 3
     },
     "targetSection": {
-      "sectionNumber": "34 77 16.19",
+      "sectionNumber": "34 77 39",
       "title": "Baggage Conveying Equipment",
-      "level": 4
+      "level": 3
     },
     "relationship": "ONE_TO_ONE",
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2519",
+    "id": "csi-crosswalk-2531",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42825,7 +43029,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2520",
+    "id": "csi-crosswalk-2532",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42842,7 +43046,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2521",
+    "id": "csi-crosswalk-2533",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42859,7 +43063,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2522",
+    "id": "csi-crosswalk-2534",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42876,7 +43080,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2523",
+    "id": "csi-crosswalk-2535",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42893,7 +43097,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2524",
+    "id": "csi-crosswalk-2536",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42910,7 +43114,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2525",
+    "id": "csi-crosswalk-2537",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42927,7 +43131,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2526",
+    "id": "csi-crosswalk-2538",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42944,7 +43148,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2527",
+    "id": "csi-crosswalk-2539",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42961,7 +43165,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2528",
+    "id": "csi-crosswalk-2540",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42978,7 +43182,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2529",
+    "id": "csi-crosswalk-2541",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -42995,7 +43199,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2530",
+    "id": "csi-crosswalk-2542",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43012,7 +43216,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2531",
+    "id": "csi-crosswalk-2543",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43029,7 +43233,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2532",
+    "id": "csi-crosswalk-2544",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43046,7 +43250,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2533",
+    "id": "csi-crosswalk-2545",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43063,7 +43267,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2534",
+    "id": "csi-crosswalk-2546",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43080,7 +43284,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2535",
+    "id": "csi-crosswalk-2547",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43097,7 +43301,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2536",
+    "id": "csi-crosswalk-2548",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43114,7 +43318,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2537",
+    "id": "csi-crosswalk-2549",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43131,7 +43335,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2538",
+    "id": "csi-crosswalk-2550",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43148,7 +43352,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2539",
+    "id": "csi-crosswalk-2551",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43165,7 +43369,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2540",
+    "id": "csi-crosswalk-2552",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43182,7 +43386,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2541",
+    "id": "csi-crosswalk-2553",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43199,7 +43403,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2542",
+    "id": "csi-crosswalk-2554",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43216,7 +43420,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2543",
+    "id": "csi-crosswalk-2555",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43233,7 +43437,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2544",
+    "id": "csi-crosswalk-2556",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43250,7 +43454,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2545",
+    "id": "csi-crosswalk-2557",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43267,7 +43471,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2546",
+    "id": "csi-crosswalk-2558",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43284,7 +43488,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2547",
+    "id": "csi-crosswalk-2559",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43301,7 +43505,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2548",
+    "id": "csi-crosswalk-2560",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43318,7 +43522,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2549",
+    "id": "csi-crosswalk-2561",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43335,7 +43539,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2550",
+    "id": "csi-crosswalk-2562",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43352,7 +43556,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2551",
+    "id": "csi-crosswalk-2563",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43369,7 +43573,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2552",
+    "id": "csi-crosswalk-2564",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43386,7 +43590,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2553",
+    "id": "csi-crosswalk-2565",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43403,7 +43607,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2554",
+    "id": "csi-crosswalk-2566",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43420,7 +43624,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2555",
+    "id": "csi-crosswalk-2567",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43437,7 +43641,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2556",
+    "id": "csi-crosswalk-2568",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43454,7 +43658,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2557",
+    "id": "csi-crosswalk-2569",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43471,7 +43675,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2558",
+    "id": "csi-crosswalk-2570",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43488,7 +43692,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2559",
+    "id": "csi-crosswalk-2571",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43505,7 +43709,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2560",
+    "id": "csi-crosswalk-2572",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43522,7 +43726,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2561",
+    "id": "csi-crosswalk-2573",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43539,7 +43743,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2562",
+    "id": "csi-crosswalk-2574",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43556,7 +43760,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2563",
+    "id": "csi-crosswalk-2575",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43573,7 +43777,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2564",
+    "id": "csi-crosswalk-2576",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43590,7 +43794,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2565",
+    "id": "csi-crosswalk-2577",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43607,7 +43811,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2566",
+    "id": "csi-crosswalk-2578",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43624,7 +43828,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2567",
+    "id": "csi-crosswalk-2579",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43641,7 +43845,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2568",
+    "id": "csi-crosswalk-2580",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43658,7 +43862,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2569",
+    "id": "csi-crosswalk-2581",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43675,7 +43879,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2570",
+    "id": "csi-crosswalk-2582",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43692,7 +43896,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2571",
+    "id": "csi-crosswalk-2583",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43709,7 +43913,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2572",
+    "id": "csi-crosswalk-2584",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43726,7 +43930,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2573",
+    "id": "csi-crosswalk-2585",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43743,7 +43947,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2574",
+    "id": "csi-crosswalk-2586",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43760,7 +43964,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2575",
+    "id": "csi-crosswalk-2587",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43777,7 +43981,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2576",
+    "id": "csi-crosswalk-2588",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43794,7 +43998,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2577",
+    "id": "csi-crosswalk-2589",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43811,7 +44015,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2578",
+    "id": "csi-crosswalk-2590",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43828,7 +44032,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2579",
+    "id": "csi-crosswalk-2591",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43845,7 +44049,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2580",
+    "id": "csi-crosswalk-2592",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43862,7 +44066,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2581",
+    "id": "csi-crosswalk-2593",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43879,7 +44083,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2582",
+    "id": "csi-crosswalk-2594",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43896,7 +44100,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2583",
+    "id": "csi-crosswalk-2595",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43913,7 +44117,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2584",
+    "id": "csi-crosswalk-2596",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43930,7 +44134,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2585",
+    "id": "csi-crosswalk-2597",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43947,7 +44151,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2586",
+    "id": "csi-crosswalk-2598",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43964,7 +44168,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2587",
+    "id": "csi-crosswalk-2599",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43981,7 +44185,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2588",
+    "id": "csi-crosswalk-2600",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -43991,14 +44195,14 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     },
     "targetSection": {
       "sectionNumber": "34 77 13",
-      "title": "Passenger Loading Bridges",
+      "title": "Passenger Boarding Bridges",
       "level": 3
     },
     "relationship": "ONE_TO_ONE",
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2589",
+    "id": "csi-crosswalk-2601",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44015,7 +44219,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2590",
+    "id": "csi-crosswalk-2602",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44032,7 +44236,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2591",
+    "id": "csi-crosswalk-2603",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44049,7 +44253,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2592",
+    "id": "csi-crosswalk-2604",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44066,7 +44270,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2593",
+    "id": "csi-crosswalk-2605",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44083,7 +44287,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2594",
+    "id": "csi-crosswalk-2606",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44100,7 +44304,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2595",
+    "id": "csi-crosswalk-2607",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44117,7 +44321,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2596",
+    "id": "csi-crosswalk-2608",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44134,7 +44338,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2597",
+    "id": "csi-crosswalk-2609",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44151,7 +44355,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2598",
+    "id": "csi-crosswalk-2610",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44168,7 +44372,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2599",
+    "id": "csi-crosswalk-2611",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44185,7 +44389,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2600",
+    "id": "csi-crosswalk-2612",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44195,14 +44399,14 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     },
     "targetSection": {
       "sectionNumber": "23 05 48",
-      "title": "Vibration and Seismic Controls for HVAC Piping and Equipment",
+      "title": "Vibration and Seismic Controls for HVAC",
       "level": 3
     },
     "relationship": "ONE_TO_MANY",
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2601",
+    "id": "csi-crosswalk-2613",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44219,7 +44423,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2602",
+    "id": "csi-crosswalk-2614",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44236,7 +44440,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2603",
+    "id": "csi-crosswalk-2615",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44253,7 +44457,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2604",
+    "id": "csi-crosswalk-2616",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44270,7 +44474,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2605",
+    "id": "csi-crosswalk-2617",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44287,7 +44491,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2606",
+    "id": "csi-crosswalk-2618",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44304,7 +44508,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2607",
+    "id": "csi-crosswalk-2619",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44321,7 +44525,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2608",
+    "id": "csi-crosswalk-2620",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44338,7 +44542,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2609",
+    "id": "csi-crosswalk-2621",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44355,7 +44559,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2610",
+    "id": "csi-crosswalk-2622",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44372,7 +44576,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2611",
+    "id": "csi-crosswalk-2623",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44389,7 +44593,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2612",
+    "id": "csi-crosswalk-2624",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44406,7 +44610,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2613",
+    "id": "csi-crosswalk-2625",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44423,7 +44627,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2614",
+    "id": "csi-crosswalk-2626",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44440,7 +44644,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2615",
+    "id": "csi-crosswalk-2627",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44457,7 +44661,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2616",
+    "id": "csi-crosswalk-2628",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44474,7 +44678,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2617",
+    "id": "csi-crosswalk-2629",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44491,7 +44695,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2618",
+    "id": "csi-crosswalk-2630",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44508,7 +44712,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2619",
+    "id": "csi-crosswalk-2631",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44525,7 +44729,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2620",
+    "id": "csi-crosswalk-2632",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44542,7 +44746,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2621",
+    "id": "csi-crosswalk-2633",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44559,7 +44763,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2622",
+    "id": "csi-crosswalk-2634",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44576,7 +44780,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2623",
+    "id": "csi-crosswalk-2635",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44593,7 +44797,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "INCOMPLETE"
   },
   {
-    "id": "csi-crosswalk-2624",
+    "id": "csi-crosswalk-2636",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44610,7 +44814,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2625",
+    "id": "csi-crosswalk-2637",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44627,7 +44831,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2626",
+    "id": "csi-crosswalk-2638",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44644,7 +44848,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2627",
+    "id": "csi-crosswalk-2639",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44661,7 +44865,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2628",
+    "id": "csi-crosswalk-2640",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44678,7 +44882,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2629",
+    "id": "csi-crosswalk-2641",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44695,7 +44899,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2630",
+    "id": "csi-crosswalk-2642",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44712,7 +44916,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2631",
+    "id": "csi-crosswalk-2643",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44729,7 +44933,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2632",
+    "id": "csi-crosswalk-2644",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44746,7 +44950,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2633",
+    "id": "csi-crosswalk-2645",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44763,7 +44967,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2634",
+    "id": "csi-crosswalk-2646",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44780,7 +44984,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2635",
+    "id": "csi-crosswalk-2647",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44797,7 +45001,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2636",
+    "id": "csi-crosswalk-2648",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44814,7 +45018,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2637",
+    "id": "csi-crosswalk-2649",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44831,7 +45035,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2638",
+    "id": "csi-crosswalk-2650",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44848,7 +45052,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2639",
+    "id": "csi-crosswalk-2651",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44865,7 +45069,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2640",
+    "id": "csi-crosswalk-2652",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44882,7 +45086,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2641",
+    "id": "csi-crosswalk-2653",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44899,7 +45103,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2642",
+    "id": "csi-crosswalk-2654",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44916,7 +45120,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2643",
+    "id": "csi-crosswalk-2655",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44933,7 +45137,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2644",
+    "id": "csi-crosswalk-2656",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44950,7 +45154,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2645",
+    "id": "csi-crosswalk-2657",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44967,7 +45171,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2646",
+    "id": "csi-crosswalk-2658",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -44984,7 +45188,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2647",
+    "id": "csi-crosswalk-2659",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45001,7 +45205,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2648",
+    "id": "csi-crosswalk-2660",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45018,7 +45222,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2649",
+    "id": "csi-crosswalk-2661",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45035,7 +45239,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2650",
+    "id": "csi-crosswalk-2662",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45052,7 +45256,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2651",
+    "id": "csi-crosswalk-2663",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45069,7 +45273,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2652",
+    "id": "csi-crosswalk-2664",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45086,7 +45290,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2653",
+    "id": "csi-crosswalk-2665",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45103,7 +45307,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2654",
+    "id": "csi-crosswalk-2666",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45120,7 +45324,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2655",
+    "id": "csi-crosswalk-2667",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45137,7 +45341,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2656",
+    "id": "csi-crosswalk-2668",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45154,7 +45358,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2657",
+    "id": "csi-crosswalk-2669",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45171,7 +45375,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2658",
+    "id": "csi-crosswalk-2670",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45188,7 +45392,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2659",
+    "id": "csi-crosswalk-2671",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45205,7 +45409,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2660",
+    "id": "csi-crosswalk-2672",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45222,7 +45426,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2661",
+    "id": "csi-crosswalk-2673",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45239,7 +45443,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2662",
+    "id": "csi-crosswalk-2674",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45256,7 +45460,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2663",
+    "id": "csi-crosswalk-2675",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45273,7 +45477,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2664",
+    "id": "csi-crosswalk-2676",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45290,7 +45494,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2665",
+    "id": "csi-crosswalk-2677",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45307,7 +45511,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2666",
+    "id": "csi-crosswalk-2678",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45324,7 +45528,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2667",
+    "id": "csi-crosswalk-2679",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45341,7 +45545,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2668",
+    "id": "csi-crosswalk-2680",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45358,7 +45562,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2669",
+    "id": "csi-crosswalk-2681",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45375,7 +45579,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2670",
+    "id": "csi-crosswalk-2682",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45392,7 +45596,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2671",
+    "id": "csi-crosswalk-2683",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45409,7 +45613,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2672",
+    "id": "csi-crosswalk-2684",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45426,7 +45630,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2673",
+    "id": "csi-crosswalk-2685",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45443,7 +45647,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2674",
+    "id": "csi-crosswalk-2686",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45460,7 +45664,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2675",
+    "id": "csi-crosswalk-2687",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45477,7 +45681,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2676",
+    "id": "csi-crosswalk-2688",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45494,7 +45698,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2677",
+    "id": "csi-crosswalk-2689",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45511,7 +45715,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2678",
+    "id": "csi-crosswalk-2690",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45528,7 +45732,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2679",
+    "id": "csi-crosswalk-2691",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45545,7 +45749,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2680",
+    "id": "csi-crosswalk-2692",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45562,7 +45766,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2681",
+    "id": "csi-crosswalk-2693",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45579,7 +45783,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2682",
+    "id": "csi-crosswalk-2694",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45596,7 +45800,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2683",
+    "id": "csi-crosswalk-2695",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45613,7 +45817,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2684",
+    "id": "csi-crosswalk-2696",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45630,7 +45834,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2685",
+    "id": "csi-crosswalk-2697",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45647,7 +45851,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2686",
+    "id": "csi-crosswalk-2698",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45664,7 +45868,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2687",
+    "id": "csi-crosswalk-2699",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45681,7 +45885,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2688",
+    "id": "csi-crosswalk-2700",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45698,7 +45902,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2689",
+    "id": "csi-crosswalk-2701",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45715,7 +45919,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2690",
+    "id": "csi-crosswalk-2702",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45732,7 +45936,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2691",
+    "id": "csi-crosswalk-2703",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45749,7 +45953,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2692",
+    "id": "csi-crosswalk-2704",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45766,7 +45970,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2693",
+    "id": "csi-crosswalk-2705",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45783,7 +45987,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2694",
+    "id": "csi-crosswalk-2706",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45800,7 +46004,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2695",
+    "id": "csi-crosswalk-2707",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45817,7 +46021,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2696",
+    "id": "csi-crosswalk-2708",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45834,7 +46038,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2697",
+    "id": "csi-crosswalk-2709",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45851,7 +46055,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2698",
+    "id": "csi-crosswalk-2710",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45868,7 +46072,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2699",
+    "id": "csi-crosswalk-2711",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45885,7 +46089,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2700",
+    "id": "csi-crosswalk-2712",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45902,7 +46106,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2701",
+    "id": "csi-crosswalk-2713",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45919,7 +46123,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2702",
+    "id": "csi-crosswalk-2714",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45936,7 +46140,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "INCOMPLETE"
   },
   {
-    "id": "csi-crosswalk-2703",
+    "id": "csi-crosswalk-2715",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45953,7 +46157,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2704",
+    "id": "csi-crosswalk-2716",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45970,7 +46174,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2705",
+    "id": "csi-crosswalk-2717",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -45987,7 +46191,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2706",
+    "id": "csi-crosswalk-2718",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46004,7 +46208,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2707",
+    "id": "csi-crosswalk-2719",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46021,7 +46225,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2708",
+    "id": "csi-crosswalk-2720",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46038,7 +46242,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2709",
+    "id": "csi-crosswalk-2721",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46055,7 +46259,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2710",
+    "id": "csi-crosswalk-2722",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46072,7 +46276,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2711",
+    "id": "csi-crosswalk-2723",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46089,7 +46293,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2712",
+    "id": "csi-crosswalk-2724",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46106,7 +46310,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2713",
+    "id": "csi-crosswalk-2725",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46123,7 +46327,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2714",
+    "id": "csi-crosswalk-2726",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46140,7 +46344,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2715",
+    "id": "csi-crosswalk-2727",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46157,7 +46361,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2716",
+    "id": "csi-crosswalk-2728",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46174,7 +46378,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2717",
+    "id": "csi-crosswalk-2729",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46191,7 +46395,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2718",
+    "id": "csi-crosswalk-2730",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46208,7 +46412,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2719",
+    "id": "csi-crosswalk-2731",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46225,7 +46429,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2720",
+    "id": "csi-crosswalk-2732",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46242,7 +46446,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2721",
+    "id": "csi-crosswalk-2733",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46259,7 +46463,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2722",
+    "id": "csi-crosswalk-2734",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46276,7 +46480,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2723",
+    "id": "csi-crosswalk-2735",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46293,7 +46497,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2724",
+    "id": "csi-crosswalk-2736",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46310,7 +46514,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2725",
+    "id": "csi-crosswalk-2737",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46327,7 +46531,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2726",
+    "id": "csi-crosswalk-2738",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46344,7 +46548,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2727",
+    "id": "csi-crosswalk-2739",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46361,7 +46565,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2728",
+    "id": "csi-crosswalk-2740",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46378,7 +46582,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2729",
+    "id": "csi-crosswalk-2741",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46395,7 +46599,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2730",
+    "id": "csi-crosswalk-2742",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46412,7 +46616,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2731",
+    "id": "csi-crosswalk-2743",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46429,7 +46633,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2732",
+    "id": "csi-crosswalk-2744",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46446,7 +46650,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2733",
+    "id": "csi-crosswalk-2745",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46463,7 +46667,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2734",
+    "id": "csi-crosswalk-2746",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46480,7 +46684,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2735",
+    "id": "csi-crosswalk-2747",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46497,7 +46701,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2736",
+    "id": "csi-crosswalk-2748",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46514,7 +46718,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2737",
+    "id": "csi-crosswalk-2749",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46531,7 +46735,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2738",
+    "id": "csi-crosswalk-2750",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46548,7 +46752,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2739",
+    "id": "csi-crosswalk-2751",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46565,7 +46769,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2740",
+    "id": "csi-crosswalk-2752",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46582,7 +46786,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2741",
+    "id": "csi-crosswalk-2753",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46599,7 +46803,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2742",
+    "id": "csi-crosswalk-2754",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46616,7 +46820,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2743",
+    "id": "csi-crosswalk-2755",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46633,7 +46837,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2744",
+    "id": "csi-crosswalk-2756",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46650,7 +46854,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2745",
+    "id": "csi-crosswalk-2757",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46667,7 +46871,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2746",
+    "id": "csi-crosswalk-2758",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46684,7 +46888,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2747",
+    "id": "csi-crosswalk-2759",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46701,7 +46905,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2748",
+    "id": "csi-crosswalk-2760",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46718,7 +46922,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2749",
+    "id": "csi-crosswalk-2761",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46735,7 +46939,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2750",
+    "id": "csi-crosswalk-2762",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46752,7 +46956,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2751",
+    "id": "csi-crosswalk-2763",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46769,7 +46973,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2752",
+    "id": "csi-crosswalk-2764",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46786,7 +46990,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2753",
+    "id": "csi-crosswalk-2765",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46803,7 +47007,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2754",
+    "id": "csi-crosswalk-2766",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46820,7 +47024,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2755",
+    "id": "csi-crosswalk-2767",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46837,7 +47041,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2756",
+    "id": "csi-crosswalk-2768",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46854,7 +47058,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2757",
+    "id": "csi-crosswalk-2769",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46871,7 +47075,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2758",
+    "id": "csi-crosswalk-2770",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46888,7 +47092,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2759",
+    "id": "csi-crosswalk-2771",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46905,7 +47109,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2760",
+    "id": "csi-crosswalk-2772",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46922,7 +47126,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2761",
+    "id": "csi-crosswalk-2773",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46939,7 +47143,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2762",
+    "id": "csi-crosswalk-2774",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46956,7 +47160,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2763",
+    "id": "csi-crosswalk-2775",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46973,7 +47177,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2764",
+    "id": "csi-crosswalk-2776",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -46990,7 +47194,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2765",
+    "id": "csi-crosswalk-2777",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47007,7 +47211,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2766",
+    "id": "csi-crosswalk-2778",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47024,7 +47228,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2767",
+    "id": "csi-crosswalk-2779",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47041,7 +47245,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2768",
+    "id": "csi-crosswalk-2780",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47058,7 +47262,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2769",
+    "id": "csi-crosswalk-2781",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47075,7 +47279,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2770",
+    "id": "csi-crosswalk-2782",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47092,7 +47296,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2771",
+    "id": "csi-crosswalk-2783",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47109,7 +47313,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2772",
+    "id": "csi-crosswalk-2784",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47126,7 +47330,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2773",
+    "id": "csi-crosswalk-2785",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47143,7 +47347,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2774",
+    "id": "csi-crosswalk-2786",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47160,7 +47364,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2775",
+    "id": "csi-crosswalk-2787",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47177,7 +47381,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2776",
+    "id": "csi-crosswalk-2788",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47194,7 +47398,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2777",
+    "id": "csi-crosswalk-2789",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47211,7 +47415,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2778",
+    "id": "csi-crosswalk-2790",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47228,7 +47432,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2779",
+    "id": "csi-crosswalk-2791",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47245,7 +47449,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2780",
+    "id": "csi-crosswalk-2792",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47262,7 +47466,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2781",
+    "id": "csi-crosswalk-2793",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47279,7 +47483,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2782",
+    "id": "csi-crosswalk-2794",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47296,7 +47500,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2783",
+    "id": "csi-crosswalk-2795",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47313,7 +47517,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2784",
+    "id": "csi-crosswalk-2796",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47330,7 +47534,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2785",
+    "id": "csi-crosswalk-2797",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47347,7 +47551,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2786",
+    "id": "csi-crosswalk-2798",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47364,7 +47568,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2787",
+    "id": "csi-crosswalk-2799",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47381,7 +47585,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2788",
+    "id": "csi-crosswalk-2800",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47398,7 +47602,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2789",
+    "id": "csi-crosswalk-2801",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47415,7 +47619,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2790",
+    "id": "csi-crosswalk-2802",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47432,7 +47636,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2791",
+    "id": "csi-crosswalk-2803",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47449,7 +47653,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2792",
+    "id": "csi-crosswalk-2804",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47466,7 +47670,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2793",
+    "id": "csi-crosswalk-2805",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47483,7 +47687,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2794",
+    "id": "csi-crosswalk-2806",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47500,7 +47704,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2795",
+    "id": "csi-crosswalk-2807",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47517,7 +47721,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2796",
+    "id": "csi-crosswalk-2808",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47534,7 +47738,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2797",
+    "id": "csi-crosswalk-2809",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47551,7 +47755,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2798",
+    "id": "csi-crosswalk-2810",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47568,7 +47772,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2799",
+    "id": "csi-crosswalk-2811",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47585,7 +47789,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2800",
+    "id": "csi-crosswalk-2812",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47602,7 +47806,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2801",
+    "id": "csi-crosswalk-2813",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47619,7 +47823,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2802",
+    "id": "csi-crosswalk-2814",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47629,14 +47833,14 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     },
     "targetSection": {
       "sectionNumber": "23 84 16",
-      "title": "Dehumidifiers",
+      "title": "Mechanical Dehumidification Units",
       "level": 3
     },
     "relationship": "ONE_TO_MANY",
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2803",
+    "id": "csi-crosswalk-2815",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47653,7 +47857,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2804",
+    "id": "csi-crosswalk-2816",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47670,7 +47874,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2805",
+    "id": "csi-crosswalk-2817",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47680,14 +47884,14 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     },
     "targetSection": {
       "sectionNumber": "23 84 19",
-      "title": "Indoor Pool and Ice-Rink Dehumidification Units",
+      "title": "Desiccant Dehumidification Units",
       "level": 3
     },
     "relationship": "ONE_TO_MANY",
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2806",
+    "id": "csi-crosswalk-2818",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47704,7 +47908,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2807",
+    "id": "csi-crosswalk-2819",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47721,7 +47925,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2808",
+    "id": "csi-crosswalk-2820",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47738,7 +47942,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2809",
+    "id": "csi-crosswalk-2821",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47755,7 +47959,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2810",
+    "id": "csi-crosswalk-2822",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47772,7 +47976,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2811",
+    "id": "csi-crosswalk-2823",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47789,7 +47993,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2812",
+    "id": "csi-crosswalk-2824",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47806,7 +48010,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2813",
+    "id": "csi-crosswalk-2825",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47823,7 +48027,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2814",
+    "id": "csi-crosswalk-2826",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47840,7 +48044,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2815",
+    "id": "csi-crosswalk-2827",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47857,7 +48061,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2816",
+    "id": "csi-crosswalk-2828",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47874,7 +48078,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2817",
+    "id": "csi-crosswalk-2829",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47891,7 +48095,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2818",
+    "id": "csi-crosswalk-2830",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47908,7 +48112,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2819",
+    "id": "csi-crosswalk-2831",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47925,7 +48129,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2820",
+    "id": "csi-crosswalk-2832",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47942,7 +48146,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2821",
+    "id": "csi-crosswalk-2833",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47959,7 +48163,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2822",
+    "id": "csi-crosswalk-2834",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47976,7 +48180,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2823",
+    "id": "csi-crosswalk-2835",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -47993,7 +48197,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2824",
+    "id": "csi-crosswalk-2836",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48010,7 +48214,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2825",
+    "id": "csi-crosswalk-2837",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48027,7 +48231,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2826",
+    "id": "csi-crosswalk-2838",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48044,7 +48248,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2827",
+    "id": "csi-crosswalk-2839",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48061,7 +48265,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2828",
+    "id": "csi-crosswalk-2840",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48078,7 +48282,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2829",
+    "id": "csi-crosswalk-2841",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48095,7 +48299,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2830",
+    "id": "csi-crosswalk-2842",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48112,7 +48316,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2831",
+    "id": "csi-crosswalk-2843",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48129,7 +48333,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2832",
+    "id": "csi-crosswalk-2844",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48146,7 +48350,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2833",
+    "id": "csi-crosswalk-2845",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48156,14 +48360,14 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     },
     "targetSection": {
       "sectionNumber": "44 11 00",
-      "title": "Air Pollution Control Equipment",
+      "title": "Particulate Control Equipment",
       "level": 2
     },
     "relationship": "ONE_TO_MANY",
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2834",
+    "id": "csi-crosswalk-2846",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48180,7 +48384,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2835",
+    "id": "csi-crosswalk-2847",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48197,7 +48401,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2836",
+    "id": "csi-crosswalk-2848",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48214,7 +48418,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2837",
+    "id": "csi-crosswalk-2849",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48231,7 +48435,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2838",
+    "id": "csi-crosswalk-2850",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48248,7 +48452,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2839",
+    "id": "csi-crosswalk-2851",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48265,7 +48469,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2840",
+    "id": "csi-crosswalk-2852",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48282,7 +48486,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2841",
+    "id": "csi-crosswalk-2853",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48299,7 +48503,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2842",
+    "id": "csi-crosswalk-2854",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48316,7 +48520,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2843",
+    "id": "csi-crosswalk-2855",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48333,7 +48537,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2844",
+    "id": "csi-crosswalk-2856",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48350,7 +48554,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2845",
+    "id": "csi-crosswalk-2857",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48359,7 +48563,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
       "level": 4
     },
     "targetSection": {
-      "sectionNumber": "23 35 13",
+      "sectionNumber": "23 35 13.13",
       "title": "Sawdust Collection Systems",
       "level": 3
     },
@@ -48367,7 +48571,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2846",
+    "id": "csi-crosswalk-2858",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48377,14 +48581,14 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     },
     "targetSection": {
       "sectionNumber": "44 11 16",
-      "title": "Industrial Dust Collectors",
+      "title": "Fugitive Dust Barrier Systems",
       "level": 3
     },
     "relationship": "ONE_TO_MANY",
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2847",
+    "id": "csi-crosswalk-2859",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48401,7 +48605,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2848",
+    "id": "csi-crosswalk-2860",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48418,7 +48622,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2849",
+    "id": "csi-crosswalk-2861",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48435,7 +48639,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2850",
+    "id": "csi-crosswalk-2862",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48452,7 +48656,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2851",
+    "id": "csi-crosswalk-2863",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48469,7 +48673,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2852",
+    "id": "csi-crosswalk-2864",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48486,7 +48690,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2853",
+    "id": "csi-crosswalk-2865",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48503,7 +48707,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2854",
+    "id": "csi-crosswalk-2866",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48520,7 +48724,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2855",
+    "id": "csi-crosswalk-2867",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48537,7 +48741,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2856",
+    "id": "csi-crosswalk-2868",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48554,7 +48758,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2857",
+    "id": "csi-crosswalk-2869",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48571,7 +48775,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2858",
+    "id": "csi-crosswalk-2870",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48588,7 +48792,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2859",
+    "id": "csi-crosswalk-2871",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48605,7 +48809,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2860",
+    "id": "csi-crosswalk-2872",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48622,7 +48826,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2861",
+    "id": "csi-crosswalk-2873",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48639,7 +48843,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2862",
+    "id": "csi-crosswalk-2874",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48656,7 +48860,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2863",
+    "id": "csi-crosswalk-2875",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48673,7 +48877,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2864",
+    "id": "csi-crosswalk-2876",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48690,7 +48894,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2865",
+    "id": "csi-crosswalk-2877",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48707,7 +48911,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2866",
+    "id": "csi-crosswalk-2878",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48724,7 +48928,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2867",
+    "id": "csi-crosswalk-2879",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48741,7 +48945,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2868",
+    "id": "csi-crosswalk-2880",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48758,7 +48962,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2869",
+    "id": "csi-crosswalk-2881",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48775,7 +48979,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2870",
+    "id": "csi-crosswalk-2882",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48792,7 +48996,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2871",
+    "id": "csi-crosswalk-2883",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48809,7 +49013,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2872",
+    "id": "csi-crosswalk-2884",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48826,7 +49030,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2873",
+    "id": "csi-crosswalk-2885",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48843,7 +49047,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2874",
+    "id": "csi-crosswalk-2886",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48860,7 +49064,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2875",
+    "id": "csi-crosswalk-2887",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48877,7 +49081,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2876",
+    "id": "csi-crosswalk-2888",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48894,7 +49098,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2877",
+    "id": "csi-crosswalk-2889",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48911,7 +49115,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2878",
+    "id": "csi-crosswalk-2890",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48928,7 +49132,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2879",
+    "id": "csi-crosswalk-2891",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48945,7 +49149,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2880",
+    "id": "csi-crosswalk-2892",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48962,7 +49166,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2881",
+    "id": "csi-crosswalk-2893",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48979,7 +49183,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2882",
+    "id": "csi-crosswalk-2894",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -48996,7 +49200,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2883",
+    "id": "csi-crosswalk-2895",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49013,7 +49217,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2884",
+    "id": "csi-crosswalk-2896",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49030,7 +49234,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2885",
+    "id": "csi-crosswalk-2897",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49047,7 +49251,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2886",
+    "id": "csi-crosswalk-2898",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49064,7 +49268,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2887",
+    "id": "csi-crosswalk-2899",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49081,7 +49285,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2888",
+    "id": "csi-crosswalk-2900",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49098,7 +49302,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2889",
+    "id": "csi-crosswalk-2901",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49115,7 +49319,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2890",
+    "id": "csi-crosswalk-2902",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49132,7 +49336,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2891",
+    "id": "csi-crosswalk-2903",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49141,15 +49345,15 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
       "level": 4
     },
     "targetSection": {
-      "sectionNumber": "26 05 33",
-      "title": "Raceway and Boxes for Electrical Systems",
-      "level": 3
+      "sectionNumber": "26 05 33.23",
+      "title": "Surface Raceways for Electrical Systems",
+      "level": 4
     },
     "relationship": "ONE_TO_MANY",
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2892",
+    "id": "csi-crosswalk-2904",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49166,7 +49370,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2893",
+    "id": "csi-crosswalk-2905",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49183,7 +49387,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2894",
+    "id": "csi-crosswalk-2906",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49200,7 +49404,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2895",
+    "id": "csi-crosswalk-2907",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49217,7 +49421,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2896",
+    "id": "csi-crosswalk-2908",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49234,7 +49438,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2897",
+    "id": "csi-crosswalk-2909",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49251,7 +49455,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2898",
+    "id": "csi-crosswalk-2910",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49268,7 +49472,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2899",
+    "id": "csi-crosswalk-2911",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49285,7 +49489,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2900",
+    "id": "csi-crosswalk-2912",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49302,7 +49506,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2901",
+    "id": "csi-crosswalk-2913",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49319,7 +49523,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2902",
+    "id": "csi-crosswalk-2914",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49336,7 +49540,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2903",
+    "id": "csi-crosswalk-2915",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49353,7 +49557,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2904",
+    "id": "csi-crosswalk-2916",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49370,7 +49574,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2905",
+    "id": "csi-crosswalk-2917",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49387,7 +49591,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2906",
+    "id": "csi-crosswalk-2918",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49404,7 +49608,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2907",
+    "id": "csi-crosswalk-2919",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49421,7 +49625,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2908",
+    "id": "csi-crosswalk-2920",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49438,7 +49642,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2909",
+    "id": "csi-crosswalk-2921",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49455,7 +49659,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2910",
+    "id": "csi-crosswalk-2922",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49472,7 +49676,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2911",
+    "id": "csi-crosswalk-2923",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49489,7 +49693,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2912",
+    "id": "csi-crosswalk-2924",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49506,7 +49710,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2913",
+    "id": "csi-crosswalk-2925",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49523,7 +49727,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2914",
+    "id": "csi-crosswalk-2926",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49540,7 +49744,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2915",
+    "id": "csi-crosswalk-2927",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49557,7 +49761,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2916",
+    "id": "csi-crosswalk-2928",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49574,7 +49778,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2917",
+    "id": "csi-crosswalk-2929",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49591,7 +49795,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2918",
+    "id": "csi-crosswalk-2930",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49608,7 +49812,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2919",
+    "id": "csi-crosswalk-2931",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49625,7 +49829,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2920",
+    "id": "csi-crosswalk-2932",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49642,7 +49846,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2921",
+    "id": "csi-crosswalk-2933",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49659,7 +49863,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2922",
+    "id": "csi-crosswalk-2934",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49676,7 +49880,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2923",
+    "id": "csi-crosswalk-2935",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49693,7 +49897,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2924",
+    "id": "csi-crosswalk-2936",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49710,7 +49914,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2925",
+    "id": "csi-crosswalk-2937",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49727,7 +49931,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2926",
+    "id": "csi-crosswalk-2938",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49744,7 +49948,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2927",
+    "id": "csi-crosswalk-2939",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49761,7 +49965,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2928",
+    "id": "csi-crosswalk-2940",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49778,7 +49982,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2929",
+    "id": "csi-crosswalk-2941",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49795,7 +49999,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2930",
+    "id": "csi-crosswalk-2942",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49812,7 +50016,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2931",
+    "id": "csi-crosswalk-2943",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49829,7 +50033,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2932",
+    "id": "csi-crosswalk-2944",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49846,7 +50050,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2933",
+    "id": "csi-crosswalk-2945",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49863,7 +50067,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2934",
+    "id": "csi-crosswalk-2946",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49880,7 +50084,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2935",
+    "id": "csi-crosswalk-2947",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49897,7 +50101,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2936",
+    "id": "csi-crosswalk-2948",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49914,7 +50118,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2937",
+    "id": "csi-crosswalk-2949",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49931,7 +50135,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2938",
+    "id": "csi-crosswalk-2950",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49948,7 +50152,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2939",
+    "id": "csi-crosswalk-2951",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49958,14 +50162,14 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     },
     "targetSection": {
       "sectionNumber": "26 09 13",
-      "title": "Electrical Power Monitoring and Control",
+      "title": "Electrical Power Monitoring",
       "level": 3
     },
     "relationship": "ONE_TO_ONE",
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2940",
+    "id": "csi-crosswalk-2952",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49982,7 +50186,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2941",
+    "id": "csi-crosswalk-2953",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -49999,7 +50203,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2942",
+    "id": "csi-crosswalk-2954",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50016,7 +50220,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2943",
+    "id": "csi-crosswalk-2955",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50033,7 +50237,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2944",
+    "id": "csi-crosswalk-2956",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50050,7 +50254,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2945",
+    "id": "csi-crosswalk-2957",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50067,7 +50271,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2946",
+    "id": "csi-crosswalk-2958",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50084,7 +50288,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2947",
+    "id": "csi-crosswalk-2959",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50101,7 +50305,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2948",
+    "id": "csi-crosswalk-2960",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50118,7 +50322,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2949",
+    "id": "csi-crosswalk-2961",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50135,7 +50339,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2950",
+    "id": "csi-crosswalk-2962",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50152,7 +50356,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2951",
+    "id": "csi-crosswalk-2963",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50169,7 +50373,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2952",
+    "id": "csi-crosswalk-2964",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50186,7 +50390,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2953",
+    "id": "csi-crosswalk-2965",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50203,7 +50407,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2954",
+    "id": "csi-crosswalk-2966",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50220,7 +50424,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2955",
+    "id": "csi-crosswalk-2967",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50237,7 +50441,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2956",
+    "id": "csi-crosswalk-2968",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50254,7 +50458,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2957",
+    "id": "csi-crosswalk-2969",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50271,7 +50475,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2958",
+    "id": "csi-crosswalk-2970",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50288,7 +50492,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2959",
+    "id": "csi-crosswalk-2971",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50305,7 +50509,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2960",
+    "id": "csi-crosswalk-2972",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50322,7 +50526,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2961",
+    "id": "csi-crosswalk-2973",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50339,7 +50543,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2962",
+    "id": "csi-crosswalk-2974",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50356,7 +50560,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2963",
+    "id": "csi-crosswalk-2975",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50373,7 +50577,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2964",
+    "id": "csi-crosswalk-2976",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50390,7 +50594,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2965",
+    "id": "csi-crosswalk-2977",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50407,7 +50611,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2966",
+    "id": "csi-crosswalk-2978",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50424,7 +50628,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2967",
+    "id": "csi-crosswalk-2979",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50441,7 +50645,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2968",
+    "id": "csi-crosswalk-2980",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50458,7 +50662,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2969",
+    "id": "csi-crosswalk-2981",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50475,7 +50679,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2970",
+    "id": "csi-crosswalk-2982",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50492,7 +50696,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2971",
+    "id": "csi-crosswalk-2983",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50509,7 +50713,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2972",
+    "id": "csi-crosswalk-2984",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50526,7 +50730,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2973",
+    "id": "csi-crosswalk-2985",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50543,7 +50747,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2974",
+    "id": "csi-crosswalk-2986",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50560,7 +50764,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2975",
+    "id": "csi-crosswalk-2987",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50577,7 +50781,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2976",
+    "id": "csi-crosswalk-2988",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50594,7 +50798,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2977",
+    "id": "csi-crosswalk-2989",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50611,7 +50815,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2978",
+    "id": "csi-crosswalk-2990",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50628,7 +50832,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-2979",
+    "id": "csi-crosswalk-2991",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50645,7 +50849,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2980",
+    "id": "csi-crosswalk-2992",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50662,7 +50866,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2981",
+    "id": "csi-crosswalk-2993",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50679,7 +50883,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2982",
+    "id": "csi-crosswalk-2994",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50696,7 +50900,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2983",
+    "id": "csi-crosswalk-2995",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50713,7 +50917,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2984",
+    "id": "csi-crosswalk-2996",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50730,7 +50934,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2985",
+    "id": "csi-crosswalk-2997",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50747,7 +50951,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2986",
+    "id": "csi-crosswalk-2998",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50764,7 +50968,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2987",
+    "id": "csi-crosswalk-2999",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50781,7 +50985,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2988",
+    "id": "csi-crosswalk-3000",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50798,7 +51002,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2989",
+    "id": "csi-crosswalk-3001",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50815,7 +51019,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2990",
+    "id": "csi-crosswalk-3002",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50832,7 +51036,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2991",
+    "id": "csi-crosswalk-3003",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50849,7 +51053,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-2992",
+    "id": "csi-crosswalk-3004",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50866,7 +51070,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2993",
+    "id": "csi-crosswalk-3005",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50883,7 +51087,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2994",
+    "id": "csi-crosswalk-3006",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50900,7 +51104,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2995",
+    "id": "csi-crosswalk-3007",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50917,7 +51121,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2996",
+    "id": "csi-crosswalk-3008",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50934,7 +51138,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2997",
+    "id": "csi-crosswalk-3009",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50951,7 +51155,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2998",
+    "id": "csi-crosswalk-3010",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50968,7 +51172,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-2999",
+    "id": "csi-crosswalk-3011",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -50985,7 +51189,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-3000",
+    "id": "csi-crosswalk-3012",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -51002,7 +51206,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-3001",
+    "id": "csi-crosswalk-3013",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -51019,7 +51223,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-3002",
+    "id": "csi-crosswalk-3014",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -51036,7 +51240,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-3003",
+    "id": "csi-crosswalk-3015",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -51053,7 +51257,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-3004",
+    "id": "csi-crosswalk-3016",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -51070,7 +51274,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-3005",
+    "id": "csi-crosswalk-3017",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -51087,7 +51291,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-3006",
+    "id": "csi-crosswalk-3018",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -51104,7 +51308,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-3007",
+    "id": "csi-crosswalk-3019",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -51121,7 +51325,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-3008",
+    "id": "csi-crosswalk-3020",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -51138,7 +51342,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-3009",
+    "id": "csi-crosswalk-3021",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -51155,7 +51359,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-3010",
+    "id": "csi-crosswalk-3022",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -51172,7 +51376,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-3011",
+    "id": "csi-crosswalk-3023",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -51189,7 +51393,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-3012",
+    "id": "csi-crosswalk-3024",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -51206,7 +51410,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-3013",
+    "id": "csi-crosswalk-3025",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -51223,7 +51427,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-3014",
+    "id": "csi-crosswalk-3026",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -51240,7 +51444,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-3015",
+    "id": "csi-crosswalk-3027",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -51257,7 +51461,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-3016",
+    "id": "csi-crosswalk-3028",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -51274,7 +51478,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-3017",
+    "id": "csi-crosswalk-3029",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -51291,7 +51495,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-3018",
+    "id": "csi-crosswalk-3030",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -51308,7 +51512,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-3019",
+    "id": "csi-crosswalk-3031",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -51325,7 +51529,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-3020",
+    "id": "csi-crosswalk-3032",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -51342,7 +51546,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-3021",
+    "id": "csi-crosswalk-3033",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -51359,7 +51563,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-3022",
+    "id": "csi-crosswalk-3034",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -51376,7 +51580,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-3023",
+    "id": "csi-crosswalk-3035",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -51393,7 +51597,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-3024",
+    "id": "csi-crosswalk-3036",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -51410,7 +51614,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-3025",
+    "id": "csi-crosswalk-3037",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -51427,7 +51631,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-3026",
+    "id": "csi-crosswalk-3038",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -51444,7 +51648,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-3027",
+    "id": "csi-crosswalk-3039",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -51461,7 +51665,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-3028",
+    "id": "csi-crosswalk-3040",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -51478,7 +51682,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-3029",
+    "id": "csi-crosswalk-3041",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -51495,7 +51699,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-3030",
+    "id": "csi-crosswalk-3042",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -51512,7 +51716,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "SPECIAL_CASE"
   },
   {
-    "id": "csi-crosswalk-3031",
+    "id": "csi-crosswalk-3043",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -51529,7 +51733,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-3032",
+    "id": "csi-crosswalk-3044",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -51546,7 +51750,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-3033",
+    "id": "csi-crosswalk-3045",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -51563,7 +51767,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-3034",
+    "id": "csi-crosswalk-3046",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -51580,7 +51784,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-3035",
+    "id": "csi-crosswalk-3047",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -51597,7 +51801,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-3036",
+    "id": "csi-crosswalk-3048",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -51614,7 +51818,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-3037",
+    "id": "csi-crosswalk-3049",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -51624,14 +51828,31 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     },
     "targetSection": {
       "sectionNumber": "27 51 16",
-      "title": "Public Address and Mass Notification Systems",
-      "level": 2
+      "title": "Public Address Systems",
+      "level": 3
     },
     "relationship": "ONE_TO_ONE",
     "mappingConfidence": "DIRECT"
   },
   {
-    "id": "csi-crosswalk-3038",
+    "id": "csi-crosswalk-3050",
+    "sourceVersion": "MASTERFORMAT_1995",
+    "targetVersion": "MASTERFORMAT_CURRENT",
+    "sourceSection": {
+      "sectionNumber": "00000",
+      "title": null,
+      "level": null
+    },
+    "targetSection": {
+      "sectionNumber": "28 39 00",
+      "title": "Mass Notification Systems",
+      "level": 2
+    },
+    "relationship": "ONE_TO_MANY",
+    "mappingConfidence": "SPECIAL_CASE"
+  },
+  {
+    "id": "csi-crosswalk-3051",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -51642,13 +51863,13 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "targetSection": {
       "sectionNumber": "27 41 16",
       "title": "Integrated Audio-Video Systems and Equipment",
-      "level": 2
+      "level": 3
     },
     "relationship": "MANY_TO_ONE",
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-3039",
+    "id": "csi-crosswalk-3052",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -51659,13 +51880,13 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "targetSection": {
       "sectionNumber": "27 41 16",
       "title": "Integrated Audio-Video Systems and Equipment",
-      "level": 2
+      "level": 3
     },
     "relationship": "MANY_TO_ONE",
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-3040",
+    "id": "csi-crosswalk-3053",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {
@@ -51682,7 +51903,7 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [
     "mappingConfidence": "EXPANDED"
   },
   {
-    "id": "csi-crosswalk-3041",
+    "id": "csi-crosswalk-3054",
     "sourceVersion": "MASTERFORMAT_1995",
     "targetVersion": "MASTERFORMAT_CURRENT",
     "sourceSection": {

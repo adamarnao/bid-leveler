@@ -7,6 +7,9 @@ export type CsiDivision = {
   version: CsiMasterFormatVersion;
   number: string;
   name: string;
+  level?: number;
+  parentId?: string;
+  sortOrder?: number;
 };
 
 export type CsiSection = {
@@ -15,6 +18,20 @@ export type CsiSection = {
   divisionId: string;
   number: string;
   name: string;
+  level?: number;
+  parentId?: string;
+  sortOrder?: number;
+};
+
+export type CsiCatalogItem = {
+  id: string;
+  version: CsiMasterFormatVersion;
+  number: string;
+  name: string;
+  level: number;
+  divisionId: string;
+  parentId?: string;
+  sortOrder: number;
 };
 
 export type CsiScopeItem = {
