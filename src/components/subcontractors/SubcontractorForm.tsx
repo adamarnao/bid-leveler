@@ -51,6 +51,7 @@ import {
   FormTextArea,
 } from "@/components/subcontractors/form/FormFields";
 import CompanyInformationSection from "@/components/subcontractors/form/CompanyInformationSection";
+import LocationsSection from "@/components/subcontractors/form/LocationsSection";
 import VendorStatusComplianceSection from "@/components/subcontractors/form/VendorStatusComplianceSection";
 import VpiPerformanceSection from "@/components/subcontractors/form/VpiPerformanceSection";
 import { CsiDivision, CsiMasterFormatVersion } from "@/types/Csi";
@@ -62,7 +63,6 @@ import {
   SubcontractorContactRoleContext,
   SubcontractorContactScope,
   SubcontractorLocation,
-  SubcontractorLocationType,
 } from "@/types/Subcontractor";
 import Panel from "@/components/ui/Panel";
 
@@ -91,12 +91,6 @@ const contactRoles: ContactRole[] = [
 ];
 
 const phoneTypes: PhoneType[] = ["OFFICE", "MOBILE"];
-const locationTypes: SubcontractorLocationType[] = [
-  "HEADQUARTERS",
-  "BRANCH",
-  "FIELD_OFFICE",
-  "BILLING",
-];
 const csiSourceVersions: CsiMasterFormatVersion[] = [
   "MASTERFORMAT_CURRENT",
   "MASTERFORMAT_1995",
@@ -1191,163 +1185,17 @@ export default function SubcontractorForm({
           onDoNotUseChange={updateDoNotUseVendor}
         />
 
-        <Panel title="Locations / Branches">
-          {!draft.locations || draft.locations.length === 0 ? (
-            <p className="muted-text">
-              This subcontractor uses the company address unless branches are added.
-            </p>
-          ) : (
-            draft.locations.map((location, index) => {
-              const isExpanded = expandedLocationIds.includes(location.id);
-
-              return (
-                <div key={location.id} className="form-record">
-                  <div className="form-record-header">
-                    <button
-                      type="button"
-                      className="crm-expand-button"
-                      aria-expanded={isExpanded}
-                      onClick={() =>
-                        toggleExpanded(location.id, setExpandedLocationIds)
-                      }
-                    >
-                      {isExpanded ? "-" : "+"}
-                    </button>
-                    <div className="form-record-summary">
-                      <strong>{location.name || `Location ${index + 1}`}</strong>
-                      <span className="muted-text">
-                        {formatStatus(location.type)}
-                      </span>
-                      {location.isPrimary === true && (
-                        <span className="badge badge-primary">Primary</span>
-                      )}
-                    </div>
-                    <button
-                      type="button"
-                      className="button-secondary"
-                      onClick={() => removeLocation(location.id)}
-                    >
-                      Remove
-                    </button>
-                  </div>
-
-                  {isExpanded && (
-                    <div className="form-record-body form-compact-grid">
-                      <FormInput
-                        label="Location Name"
-                        value={location.name}
-                        onChange={(value) =>
-                          updateLocation(location.id, { name: value })
-                        }
-                      />
-                      <FormSelect
-                        label="Location Type"
-                        value={location.type}
-                        options={locationTypes}
-                        onChange={(value) =>
-                          updateLocation(location.id, {
-                            type: value as SubcontractorLocationType,
-                          })
-                        }
-                      />
-                      <FormInput
-                        label="Address Line 1"
-                        value={location.address.line1}
-                        onChange={(value) =>
-                          updateLocation(location.id, {
-                            address: { ...location.address, line1: value },
-                          })
-                        }
-                      />
-                      <FormInput
-                        label="Address Line 2"
-                        value={location.address.line2 ?? ""}
-                        onChange={(value) =>
-                          updateLocation(location.id, {
-                            address: { ...location.address, line2: value },
-                          })
-                        }
-                      />
-                      <FormInput
-                        label="City"
-                        value={location.address.city}
-                        onChange={(value) =>
-                          updateLocation(location.id, {
-                            address: { ...location.address, city: value },
-                          })
-                        }
-                      />
-                      <FormInput
-                        label="State"
-                        value={location.address.state}
-                        onChange={(value) =>
-                          updateLocation(location.id, {
-                            address: { ...location.address, state: value },
-                          })
-                        }
-                      />
-                      <FormInput
-                        label="ZIP"
-                        value={location.address.zip}
-                        onChange={(value) =>
-                          updateLocation(location.id, {
-                            address: { ...location.address, zip: value },
-                          })
-                        }
-                      />
-                      <FormInput
-                        label="Main Phone"
-                        value={location.mainPhone ?? ""}
-                        onChange={(value) =>
-                          updateLocation(location.id, { mainPhone: value })
-                        }
-                      />
-                      <FormInput
-                        label="Main Phone Extension"
-                        value={location.mainPhoneExtension ?? ""}
-                        onChange={(value) =>
-                          updateLocation(location.id, {
-                            mainPhoneExtension: value,
-                          })
-                        }
-                      />
-                      <FormInput
-                        label="Email"
-                        type="email"
-                        value={location.email ?? ""}
-                        onChange={(value) =>
-                          updateLocation(location.id, { email: value })
-                        }
-                      />
-                      <FormTextArea
-                        label="Notes"
-                        value={location.notes ?? ""}
-                        onChange={(value) =>
-                          updateLocation(location.id, { notes: value })
-                        }
-                      />
-                      <div className="form-field">
-                        <label className="radio-option">
-                          <input
-                            type="radio"
-                            name={`${draft.id}-primary-location`}
-                            checked={location.isPrimary === true}
-                            onChange={() => markPrimaryLocation(location.id)}
-                          />
-                          Primary location
-                        </label>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              );
-            })
-          )}
-
-          <button type="button" className="button-secondary" onClick={addLocation}>
-            Add Location
-          </button>
-        </Panel>
+        <LocationsSection
+          subcontractorId={draft.id}
+          locations={draft.locations}
+          expandedLocationIds={expandedLocationIds}
+          setExpandedLocationIds={setExpandedLocationIds}
+          onAddLocation={addLocation}
+          onUpdateLocation={updateLocation}
+          onRemoveLocation={removeLocation}
+          onMarkPrimaryLocation={markPrimaryLocation}
+          onToggleLocation={toggleExpanded}
+        />
 
         <Panel title="Contacts">
           {draft.contacts.map((contact, index) => {
