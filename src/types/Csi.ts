@@ -34,6 +34,11 @@ export type CsiCatalogItem = {
   sortOrder: number;
 };
 
+export type CsiCatalogTreeNode = {
+  item: CsiCatalogItem;
+  children: CsiCatalogTreeNode[];
+};
+
 export type CsiScopeItem = {
   id: string;
   sectionId: string;

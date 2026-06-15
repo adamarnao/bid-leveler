@@ -2,6 +2,7 @@ import { csiCatalog1995 } from "@/data/csiCatalog1995";
 import { csiCatalogCurrent } from "@/data/csiCatalogCurrent";
 import {
   CsiCatalogItem,
+  CsiCatalogTreeNode,
   CsiDivision,
   CsiMasterFormatVersion,
   CsiSection,
@@ -16,6 +17,9 @@ type CsiCatalogIndex = {
   divisionIds: string[];
   divisionItemByDivisionId: Map<string, CsiCatalogItem>;
   sectionsByDivisionId: Map<string, CsiSection[]>;
+  itemsByLevel: Map<number, CsiCatalogItem[]>;
+  childrenByParentId: Map<string, CsiCatalogItem[]>;
+  rootItems: CsiCatalogItem[];
 };
 
 const divisionNameFallbacks: Record<string, string> = {
@@ -116,6 +120,136 @@ export function searchCsiCatalog(
   return getCsiCatalog(version).filter((item) =>
     normalizeSearchText(`${item.number} ${item.name}`).includes(normalizedQuery)
   );
+}
+
+export function getCsiCatalogTree(
+  version: CsiMasterFormatVersion
+): CsiCatalogTreeNode[] {
+  const index = getCatalogIndex(version);
+
+  return index.rootItems.map((item) => buildCatalogTreeNode(version, item));
+}
+
+export function getCsiItemsByLevel(
+  version: CsiMasterFormatVersion,
+  level: number
+): CsiCatalogItem[] {
+  return getCatalogIndex(version).itemsByLevel.get(level) ?? [];
+}
+
+export function getCsiChildren(
+  version: CsiMasterFormatVersion,
+  parentId: string
+): CsiCatalogItem[] {
+  const parentItem = resolveCsiCatalogItem(version, parentId);
+
+  if (!parentItem) return [];
+
+  return getCatalogIndex(version).childrenByParentId.get(parentItem.id) ?? [];
+}
+
+export function getCsiDescendants(
+  version: CsiMasterFormatVersion,
+  itemId: string
+): CsiCatalogItem[] {
+  const item = resolveCsiCatalogItem(version, itemId);
+
+  if (!item) return [];
+
+  const descendants: CsiCatalogItem[] = [];
+  const stack = [...getCsiChildren(version, item.id)].reverse();
+
+  while (stack.length > 0) {
+    const child = stack.pop();
+    if (!child) continue;
+
+    descendants.push(child);
+    stack.push(...getCsiChildren(version, child.id).reverse());
+  }
+
+  return descendants;
+}
+
+export function getCsiAncestors(
+  version: CsiMasterFormatVersion,
+  itemId: string
+): CsiCatalogItem[] {
+  const item = resolveCsiCatalogItem(version, itemId);
+  if (!item) return [];
+
+  const ancestors: CsiCatalogItem[] = [];
+  let parentId = item.parentId;
+
+  while (parentId) {
+    const parent = resolveCsiCatalogItem(version, parentId);
+    if (!parent) break;
+
+    ancestors.unshift(parent);
+    parentId = parent.parentId;
+  }
+
+  return ancestors;
+}
+
+export function getCsiLevel1Divisions(
+  version: CsiMasterFormatVersion
+): CsiCatalogItem[] {
+  return getCsiItemsByLevel(version, 1);
+}
+
+export function getCsiLevel2Subdivisions(
+  version: CsiMasterFormatVersion
+): CsiCatalogItem[] {
+  return getCsiItemsByLevel(version, 2);
+}
+
+export function getCsiLevel3Sections(
+  version: CsiMasterFormatVersion
+): CsiCatalogItem[] {
+  return getCsiItemsByLevel(version, 3);
+}
+
+export function getCsiLevel4Subsections(
+  version: CsiMasterFormatVersion
+): CsiCatalogItem[] {
+  return getCsiItemsByLevel(version, 4);
+}
+
+export function resolveCsiItemLevel(
+  version: CsiMasterFormatVersion,
+  idOrNumber: string
+): number | undefined {
+  return resolveCsiCatalogItem(version, idOrNumber)?.level;
+}
+
+export function getNearestLevel2Ancestor(
+  version: CsiMasterFormatVersion,
+  idOrNumber: string
+): CsiCatalogItem | undefined {
+  const item = resolveCsiCatalogItem(version, idOrNumber);
+
+  if (!item) return undefined;
+  if (isCsiSubdivisionItem(item)) return item;
+
+  return [...getCsiAncestors(version, item.id)]
+    .reverse()
+    .find(isCsiSubdivisionItem);
+}
+
+export function isCsiDivisionItem(item: CsiCatalogItem): boolean {
+  return item.level === 1;
+}
+
+export function isCsiSubdivisionItem(item: CsiCatalogItem): boolean {
+  return item.level === 2;
+}
+
+export function isCsiSectionItem(item: CsiCatalogItem): boolean {
+  return item.level === 3;
+}
+
+export function isCsiSubsectionItem(item: CsiCatalogItem): boolean {
+  return item.level === 4;
 }
 
 export function normalizeCsiSectionNumber(value: string): string {
@@ -272,6 +406,18 @@ function getCatalogIndex(version: CsiMasterFormatVersion): CsiCatalogIndex {
   return catalogIndexesByVersion[version];
 }
 
+function buildCatalogTreeNode(
+  version: CsiMasterFormatVersion,
+  item: CsiCatalogItem
+): CsiCatalogTreeNode {
+  return {
+    item,
+    children: (getCatalogIndex(version).childrenByParentId.get(item.id) ?? []).map(
+      (child) => buildCatalogTreeNode(version, child)
+    ),
+  };
+}
+
 function buildCatalogIndex(catalog: CsiCatalogItem[]): CsiCatalogIndex {
   const itemById = new Map<string, CsiCatalogItem>();
   const itemByNormalizedNumber = new Map<string, CsiCatalogItem>();
@@ -280,6 +426,9 @@ function buildCatalogIndex(catalog: CsiCatalogItem[]): CsiCatalogIndex {
   const divisionIds = new Set<string>();
   const divisionItemByDivisionId = new Map<string, CsiCatalogItem>();
   const sectionsByDivisionId = new Map<string, CsiSection[]>();
+  const itemsByLevel = new Map<number, CsiCatalogItem[]>();
+  const childrenByParentId = new Map<string, CsiCatalogItem[]>();
+  const rootItems: CsiCatalogItem[] = [];
 
   catalog.forEach((item) => {
     const normalizedNumber = normalizeCsiSectionNumber(item.number);
@@ -289,6 +438,13 @@ function buildCatalogIndex(catalog: CsiCatalogItem[]): CsiCatalogIndex {
     setFirst(itemByNormalizedNumber, normalizedNumber, item);
     setFirst(itemByCompactNumber, compactNumber, item);
     divisionIds.add(item.divisionId);
+    appendToMap(itemsByLevel, item.level, item);
+
+    if (item.parentId) {
+      appendToMap(childrenByParentId, item.parentId, item);
+    } else {
+      rootItems.push(item);
+    }
 
     const legacyAlias = getLegacyCurrentAlias(item);
     if (legacyAlias) itemByLegacyAlias.set(legacyAlias, item);
@@ -316,6 +472,13 @@ function buildCatalogIndex(catalog: CsiCatalogItem[]): CsiCatalogIndex {
     if (fallbackItem) divisionItemByDivisionId.set(divisionId, fallbackItem);
   });
 
+  sortItems(rootItems);
+  itemsByLevel.forEach(sortItems);
+  childrenByParentId.forEach(sortItems);
+  sectionsByDivisionId.forEach((sections) =>
+    sections.sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0))
+  );
+
   return {
     catalog,
     itemById,
@@ -325,6 +488,9 @@ function buildCatalogIndex(catalog: CsiCatalogItem[]): CsiCatalogIndex {
     divisionIds: Array.from(divisionIds),
     divisionItemByDivisionId,
     sectionsByDivisionId,
+    itemsByLevel,
+    childrenByParentId,
+    rootItems,
   };
 }
 
@@ -334,6 +500,21 @@ function setFirst(
   item: CsiCatalogItem
 ) {
   if (!map.has(key)) map.set(key, item);
+}
+
+function appendToMap<K, V>(map: Map<K, V[]>, key: K, value: V) {
+  const values = map.get(key) ?? [];
+
+  values.push(value);
+  map.set(key, values);
+}
+
+function sortItems<T extends { sortOrder?: number; number: string }>(items: T[]) {
+  items.sort(
+    (a, b) =>
+      (a.sortOrder ?? 0) - (b.sortOrder ?? 0) ||
+      a.number.localeCompare(b.number, undefined, { numeric: true })
+  );
 }
 
 function getLegacyCurrentAlias(item: CsiCatalogItem) {
