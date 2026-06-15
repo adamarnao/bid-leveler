@@ -5,10 +5,13 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import AppShell from "@/components/layout/AppShell";
 import { mockProjects } from "@/data/mockProjects";
-import { mockCsiDivisions } from "@/data/mockCsiDivisions";
-import { mockCsiSections } from "@/data/mockCsiSections";
 import {
-  StoredProjectCsiSelection,
+  getProjectCsiDivisions,
+  getProjectCsiSectionsByDivision,
+  projectCsiIdsReferToSameItem,
+  validateProjectCsiSelection,
+} from "@/lib/projectCsiSelections";
+import {
   StoredProjectCsiSelections,
 } from "@/types/Csi";
 
@@ -27,26 +30,11 @@ export default function ProjectSetupPage() {
   const [openedDivisionIds, setOpenedDivisionIds] = useState<string[]>([]);
 
   const divisions = useMemo(
-    () =>
-      project
-        ? mockCsiDivisions.filter(
-            (division) => division.version === project.csiVersion
-          )
-        : [],
+    () => (project ? getProjectCsiDivisions(project.csiVersion) : []),
     [project]
   );
-  const sections = useMemo(
-    () =>
-      project
-        ? mockCsiSections.filter(
-            (section) => section.version === project.csiVersion
-          )
-        : [],
-    [project]
-  );
-
   const csiSelection = project
-    ? validateSelection(storedSelections[project.id], project.csiVersion)
+    ? validateProjectCsiSelection(storedSelections[project.id], project.csiVersion)
     : undefined;
   const selectedDivisionIds = csiSelection?.divisionIds ?? [];
   const selectedSectionIds = csiSelection?.sectionIds ?? [];
@@ -55,7 +43,7 @@ export default function ProjectSetupPage() {
     if (!project) return;
 
     const storedSelections = readStoredSelections();
-    const selection = validateSelection(
+    const selection = validateProjectCsiSelection(
       {
         version: project.csiVersion,
         divisionIds,
@@ -71,6 +59,8 @@ export default function ProjectSetupPage() {
   }
 
   function toggleDivision(divisionId: string, checked: boolean) {
+    if (!project) return;
+
     if (checked) {
       setOpenedDivisionIds((currentDivisionIds) =>
         addUnique(currentDivisionIds, divisionId)
@@ -81,15 +71,23 @@ export default function ProjectSetupPage() {
       );
     }
 
-    const divisionSectionIds = sections
-      .filter((section) => section.divisionId === divisionId)
+    const divisionSectionIds = getProjectCsiSectionsByDivision(
+      project.csiVersion,
+      divisionId,
+      selectedSectionIds
+    )
       .map((section) => section.id);
     const divisionIds = checked
       ? addUnique(selectedDivisionIds, divisionId)
       : selectedDivisionIds.filter((id) => id !== divisionId);
     const sectionIds = checked
       ? selectedSectionIds
-      : selectedSectionIds.filter((id) => !divisionSectionIds.includes(id));
+      : selectedSectionIds.filter(
+          (id) =>
+            !divisionSectionIds.some((sectionId) =>
+              projectCsiIdsReferToSameItem(project.csiVersion, id, sectionId)
+            )
+        );
 
     saveSelection(divisionIds, sectionIds);
   }
@@ -99,6 +97,8 @@ export default function ProjectSetupPage() {
     divisionId: string,
     checked: boolean
   ) {
+    if (!project) return;
+
     if (checked) {
       setOpenedDivisionIds((currentDivisionIds) =>
         addUnique(currentDivisionIds, divisionId)
@@ -110,7 +110,9 @@ export default function ProjectSetupPage() {
       : selectedDivisionIds;
     const sectionIds = checked
       ? addUnique(selectedSectionIds, sectionId)
-      : selectedSectionIds.filter((id) => id !== sectionId);
+      : selectedSectionIds.filter(
+          (id) => !projectCsiIdsReferToSameItem(project.csiVersion, id, sectionId)
+        );
 
     saveSelection(divisionIds, sectionIds);
   }
@@ -154,8 +156,10 @@ export default function ProjectSetupPage() {
         <h2>CSI Divisions / Sections</h2>
 
         {divisions.map((division) => {
-          const divisionSections = sections.filter(
-            (section) => section.divisionId === division.id
+          const divisionSections = getProjectCsiSectionsByDivision(
+            project.csiVersion,
+            division.id,
+            selectedSectionIds
           );
           const isExpanded = openedDivisionIds.includes(division.id);
 
@@ -196,7 +200,13 @@ export default function ProjectSetupPage() {
                       <label>
                         <input
                           type="checkbox"
-                          checked={selectedSectionIds.includes(section.id)}
+                          checked={selectedSectionIds.some((sectionId) =>
+                            projectCsiIdsReferToSameItem(
+                              project.csiVersion,
+                              sectionId,
+                              section.id
+                            )
+                          )}
                           onChange={(event) =>
                             toggleSection(
                               section.id,
@@ -306,45 +316,6 @@ function parseStoredSelections(storageValue: string): StoredProjectCsiSelections
   } catch {
     return EMPTY_PROJECT_CSI_SELECTIONS;
   }
-}
-
-function validateSelection(
-  selection: StoredProjectCsiSelection | undefined,
-  version: StoredProjectCsiSelection["version"]
-): StoredProjectCsiSelection {
-  const availableDivisions = mockCsiDivisions.filter(
-    (division) => division.version === version
-  );
-  const availableDivisionIds = new Set(
-    availableDivisions.map((division) => division.id)
-  );
-  const availableSections = mockCsiSections.filter(
-    (section) =>
-      section.version === version && availableDivisionIds.has(section.divisionId)
-  );
-  const availableSectionIds = new Set(
-    availableSections.map((section) => section.id)
-  );
-  const selectedSectionIds = Array.isArray(selection?.sectionIds)
-    ? selection.sectionIds.filter((sectionId) =>
-        availableSectionIds.has(sectionId)
-      )
-    : [];
-  const sectionParentDivisionIds = availableSections
-    .filter((section) => selectedSectionIds.includes(section.id))
-    .map((section) => section.divisionId);
-  const selectedDivisionIds = Array.isArray(selection?.divisionIds)
-    ? selection.divisionIds.filter((divisionId) =>
-        availableDivisionIds.has(divisionId)
-      )
-    : [];
-
-  return {
-    version,
-    divisionIds: addUnique(selectedDivisionIds, ...sectionParentDivisionIds),
-    sectionIds: selectedSectionIds,
-    updatedAt: selection?.updatedAt ?? new Date().toISOString(),
-  };
 }
 
 function addUnique(values: string[], ...newValues: string[]) {

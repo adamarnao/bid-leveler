@@ -3,15 +3,18 @@
 import { Fragment, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { mockCsiDivisions } from "@/data/mockCsiDivisions";
-import { mockCsiSections } from "@/data/mockCsiSections";
 import { mockSectionCosts } from "@/data/mockSectionCosts";
 import ProjectCostSummaryTable from "@/components/projects/ProjectCostSummaryTable";
 import { mockProjectCosts } from "@/data/mockProjectCosts";
 import { getMergedProjects, projectsStorageKey } from "@/lib/projects";
+import {
+  getProjectCsiDivisions,
+  getProjectCsiSectionsByDivision,
+  projectCsiIdsReferToSameItem,
+  validateProjectCsiSelection,
+} from "@/lib/projectCsiSelections";
 import { Project } from "@/types/Project";
 import {
-  StoredProjectCsiSelection,
   StoredProjectCsiSelections,
 } from "@/types/Csi";
 
@@ -38,13 +41,11 @@ export default function ProjectOverviewPage() {
   }
 
   const csiSelection = projectId
-    ? validateSelection(csiSelections[projectId], project.csiVersion)
+    ? validateProjectCsiSelection(csiSelections[projectId], project.csiVersion)
     : undefined;
   const hasSavedCsiSelection =
     projectId !== undefined && csiSelections[projectId] !== undefined;
-  const allDivisions = mockCsiDivisions.filter(
-    (division) => division.version === project.csiVersion
-  );
+  const allDivisions = getProjectCsiDivisions(project.csiVersion);
   const divisions = hasSavedCsiSelection
     ? allDivisions.filter((division) =>
         csiSelection?.divisionIds.includes(division.id)
@@ -52,7 +53,13 @@ export default function ProjectOverviewPage() {
     : allDivisions;
 
   const getSectionCost = (sectionId: string) =>
-    mockSectionCosts.find((cost) => cost.sectionId === sectionId);
+    mockSectionCosts.find((cost) =>
+      projectCsiIdsReferToSameItem(
+        project.csiVersion,
+        cost.sectionId,
+        sectionId
+      )
+    );
 
   const totalSelectedCost = mockSectionCosts.reduce(
     (sum, item) => sum + item.selectedCost,
@@ -166,12 +173,20 @@ export default function ProjectOverviewPage() {
 
           <tbody>
             {divisions.map((division) => {
-              const allSections = mockCsiSections.filter(
-                (section) => section.divisionId === division.id
+              const allSections = getProjectCsiSectionsByDivision(
+                project.csiVersion,
+                division.id,
+                csiSelection?.sectionIds ?? []
               );
               const sections = hasSavedCsiSelection
                 ? allSections.filter((section) =>
-                    csiSelection?.sectionIds.includes(section.id)
+                    csiSelection?.sectionIds.some((sectionId) =>
+                      projectCsiIdsReferToSameItem(
+                        project.csiVersion,
+                        sectionId,
+                        section.id
+                      )
+                    )
                   )
                 : allSections;
 
@@ -396,45 +411,6 @@ function parseProjectCsiSelections(
   } catch {
     return EMPTY_PROJECT_CSI_SELECTIONS;
   }
-}
-
-function validateSelection(
-  selection: StoredProjectCsiSelection | undefined,
-  version: StoredProjectCsiSelection["version"]
-): StoredProjectCsiSelection {
-  const availableDivisions = mockCsiDivisions.filter(
-    (division) => division.version === version
-  );
-  const availableDivisionIds = new Set(
-    availableDivisions.map((division) => division.id)
-  );
-  const availableSections = mockCsiSections.filter(
-    (section) =>
-      section.version === version && availableDivisionIds.has(section.divisionId)
-  );
-  const availableSectionIds = new Set(
-    availableSections.map((section) => section.id)
-  );
-  const selectedSectionIds = Array.isArray(selection?.sectionIds)
-    ? selection.sectionIds.filter((sectionId) =>
-        availableSectionIds.has(sectionId)
-      )
-    : [];
-  const sectionParentDivisionIds = availableSections
-    .filter((section) => selectedSectionIds.includes(section.id))
-    .map((section) => section.divisionId);
-  const selectedDivisionIds = Array.isArray(selection?.divisionIds)
-    ? selection.divisionIds.filter((divisionId) =>
-        availableDivisionIds.has(divisionId)
-      )
-    : [];
-
-  return {
-    version,
-    divisionIds: addUnique(selectedDivisionIds, ...sectionParentDivisionIds),
-    sectionIds: selectedSectionIds,
-    updatedAt: selection?.updatedAt ?? new Date().toISOString(),
-  };
 }
 
 function addUnique(values: string[], ...newValues: string[]) {

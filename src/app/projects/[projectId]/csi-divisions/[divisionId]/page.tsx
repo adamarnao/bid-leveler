@@ -1,7 +1,10 @@
 import { mockProjects } from "@/data/mockProjects";
-import { mockCsiDivisions } from "@/data/mockCsiDivisions";
-import { mockCsiSections } from "@/data/mockCsiSections";
 import { mockBidSubmissions } from "@/data/mockBidSubmissions";
+import {
+  getProjectCsiSectionsByDivision,
+  projectCsiIdsReferToSameItem,
+  resolveProjectCsiDivision,
+} from "@/lib/projectCsiSelections";
 
 type DivisionPageProps = {
   params: Promise<{
@@ -21,18 +24,15 @@ export default async function DivisionPage({
     return <h1>Project Not Found</h1>;
   }
 
-  const division = mockCsiDivisions.find(
-    (d) =>
-      d.number === divisionId &&
-      d.version === project.csiVersion
-  );
+  const division = resolveProjectCsiDivision(project.csiVersion, divisionId);
 
   if (!division) {
     return <h1>Division Not Found</h1>;
   }
 
-  const sections = mockCsiSections.filter(
-    (s) => s.divisionId === division.id
+  const sections = getProjectCsiSectionsByDivision(
+    project.csiVersion,
+    division.id
   );
 
   return (
@@ -49,7 +49,11 @@ export default async function DivisionPage({
         const bids = mockBidSubmissions.filter(
           (bid) =>
             bid.projectId === project.id &&
-            bid.sectionId === section.id
+            projectCsiIdsReferToSameItem(
+              project.csiVersion,
+              bid.sectionId,
+              section.id
+            )
         );
 
         return (
