@@ -1275,6 +1275,10 @@ textarea {
   white-space: normal;
 }
 
+.invite-scope-heading {
+  margin-bottom: 8px;
+}
+
 .profile-summary {
   display: flex;
   justify-content: space-between;

@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { CsiCodeLabel } from "@/components/csi";
 import AppShell from "@/components/layout/AppShell";
 import Panel from "@/components/ui/Panel";
 import {
@@ -24,6 +25,7 @@ import {
 } from "@/lib/subcontractors";
 import { matchSubcontractorsToProjectSections } from "@/lib/subcontractorMatching";
 import {
+  CsiCatalogItem,
   StoredProjectCsiSelection,
   StoredProjectCsiSelections,
 } from "@/types/Csi";
@@ -231,7 +233,7 @@ export default function ProjectInvitePreviewPage() {
                 <td className="compact-cell">{project.csiVersion}</td>
               </tr>
               <tr>
-                <th className="compact-cell">Selected Sections</th>
+                <th className="compact-cell">Selected CSI Scopes</th>
                 <td className="compact-cell">{selectedSectionIds.length}</td>
               </tr>
               <tr>
@@ -262,9 +264,9 @@ export default function ProjectInvitePreviewPage() {
         </Panel>
 
         {selectedSectionIds.length === 0 ? (
-          <Panel title="No CSI Sections Selected">
+          <Panel title="No CSI Scopes Selected">
             <p className="muted-text">
-              Select project CSI sections before previewing invite candidates.
+              Select project CSI scopes before previewing invite candidates.
             </p>
             <p style={{ marginTop: 12 }}>
               <Link href={`/projects/${project.id}/setup`}>
@@ -277,20 +279,31 @@ export default function ProjectInvitePreviewPage() {
             const exactMatches = group.matches.filter(
               (match) => match.matchType !== "DIVISION_ONLY"
             );
+            const projectScopeItem = resolveCsiCatalogItem(
+              project.csiVersion,
+              group.projectSectionId ?? group.projectSectionNumber,
+            );
+            const projectScopeTitle = getProjectScopeTitle(projectScopeItem, group);
 
             return (
               <Panel
                 key={group.projectSectionId ?? group.projectSectionNumber}
-                title={`${group.projectSectionNumber} - ${
-                  group.projectSectionName ?? "Selected Section"
-                }`}
+                title={projectScopeTitle}
               >
+                <div className="invite-scope-heading">
+                  <CsiCodeLabel
+                    item={projectScopeItem}
+                    version={project.csiVersion}
+                    idOrNumber={group.projectSectionId ?? group.projectSectionNumber}
+                    showLevelBadge
+                  />
+                </div>
                 <p className="muted-text">
-                  {exactMatches.length} exact section matches found.
+                  {exactMatches.length} exact CSI matches found.
                 </p>
 
                 {exactMatches.length === 0 ? (
-                  <p style={{ marginTop: 12 }}>No exact section matches.</p>
+                  <p style={{ marginTop: 12 }}>No exact CSI matches.</p>
                 ) : (
                   <MatchTable
                     matches={exactMatches}
@@ -479,6 +492,9 @@ function MatchRow({
         {subcontractor.dba && (
           <div className="muted-text">DBA: {subcontractor.dba}</div>
         )}
+        <div className="badge-list" style={{ marginTop: 6 }}>
+          <span className="badge badge-muted">{getMatchDisplayLabel(match)}</span>
+        </div>
       </td>
       <td style={cell}>
         <span className={getBadgeClassName(inviteStatus.tone)}>
@@ -601,6 +617,34 @@ function getInviteWarnings(match: ProjectSectionSubcontractorMatch) {
   }
 
   return Array.from(warnings);
+}
+
+function getProjectScopeTitle(
+  item: CsiCatalogItem | undefined,
+  group: {
+    projectSectionNumber: string;
+    projectSectionName?: string;
+  }
+) {
+  if (item) return `${item.number} - ${item.name}`;
+
+  return `${group.projectSectionNumber} - ${
+    group.projectSectionName ?? "Selected CSI Scope"
+  }`;
+}
+
+function getMatchDisplayLabel(match: ProjectSectionSubcontractorMatch) {
+  if (match.matchLabel) return match.matchLabel;
+  if (match.matchType === "EXACT") return "Exact Match";
+  if (match.matchType === "SPECIALIZED_COVERAGE") {
+    return "Specialized Coverage";
+  }
+  if (match.matchType === "BROAD_COVERAGE") return "Broad Coverage";
+  if (match.matchType === "RELATED_SCOPE") return "Related Scope";
+  if (match.matchType === "DIRECT") return "Exact Match";
+  if (match.matchType === "CROSSWALK_DERIVED") return "Exact Match";
+
+  return "CSI Match";
 }
 
 function sortInviteMatches(

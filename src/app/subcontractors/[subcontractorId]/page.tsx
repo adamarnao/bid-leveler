@@ -3,6 +3,7 @@
 import { useSyncExternalStore } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { CsiCodeLabel } from "@/components/csi";
 import AppShell from "@/components/layout/AppShell";
 import Panel from "@/components/ui/Panel";
 import {
@@ -81,7 +82,6 @@ export default function SubcontractorProfilePage() {
     subcontractor,
     displayCsiVersion
   );
-  const sectionLabels = displayedCoverage.sections.map((section) => section.label);
   const secondaryDivisionLabels =
     getDisplayedSecondaryDivisionLabels(displayedCoverage);
   const primaryTradeLabel = formatPrimaryTrade(displayedCoverage);
@@ -205,7 +205,7 @@ export default function SubcontractorProfilePage() {
         )}
 
         <div className="profile-label-list">
-          <strong>Selected Sections</strong>
+          <strong>Coverage Details</strong>
           {displayedCoverage.warnings.length > 0 && (
             <div className="badge-list">
               {displayedCoverage.warnings.map((warning) => (
@@ -215,17 +215,21 @@ export default function SubcontractorProfilePage() {
               ))}
             </div>
           )}
-          {sectionLabels.length === 0 ? (
-            <p className="muted-text">No sections selected.</p>
+          {displayedCoverage.sections.length === 0 ? (
+            <p className="muted-text">No CSI scopes selected.</p>
           ) : (
             <div className="badge-list">
-              {sectionLabels.map((sectionLabel) => (
+              {displayedCoverage.sections.map((section) => (
                 <span
-                  key={sectionLabel}
+                  key={`${section.id}-${section.number}`}
                   className="badge badge-muted"
-                  title={sectionLabel}
+                  title={section.label}
                 >
-                  {sectionLabel}
+                  <CsiCodeLabel
+                    version={displayCsiVersion}
+                    idOrNumber={section.number}
+                    showLevelBadge
+                  />
                 </span>
               ))}
             </div>
