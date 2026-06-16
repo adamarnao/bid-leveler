@@ -2,9 +2,16 @@
 
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
+import { CsiCodeLabel, CsiLevelBadge } from "@/components/csi";
 import AppShell from "@/components/layout/AppShell";
 import Panel from "@/components/ui/Panel";
 import { mockCsiDivisions } from "@/data/mockCsiDivisions";
+import {
+  getNearestLevel2Ancestor,
+  isCsiSectionItem,
+  isCsiSubsectionItem,
+  resolveCsiCatalogItem,
+} from "@/lib/csiCatalog";
 import {
   companySettingsKey,
   defaultCompanySettings,
@@ -13,7 +20,6 @@ import {
 } from "@/lib/settings";
 import { getDisplayedSubcontractorCoverage } from "@/lib/subcontractorCsiCoverage";
 import {
-  DivisionSubcontractorGroup,
   getBadgeClassName,
   getCombinedStatus,
   getComplianceAlerts,
@@ -27,7 +33,7 @@ import {
   getSectionLabel,
   subcontractorsStorageKey,
 } from "@/lib/subcontractors";
-import { CsiMasterFormatVersion } from "@/types/Csi";
+import { CsiCatalogItem, CsiMasterFormatVersion } from "@/types/Csi";
 import { PrequalificationStatus, Subcontractor } from "@/types/Subcontractor";
 
 const subcontractorListUiStateKey = "subcontractorListUiState";
@@ -55,6 +61,36 @@ type DisplayedCoverageBySubcontractorId = Map<
   string,
   DisplayedSubcontractorCoverage
 >;
+
+type DisplayedCoverageSection = DisplayedSubcontractorCoverage["sections"][number];
+
+type CsiDetailTag = {
+  id: string;
+  number: string;
+  label: string;
+  item?: CsiCatalogItem;
+  needsReview: boolean;
+};
+
+type SubdivisionSubcontractorEntry = {
+  subcontractor: Subcontractor;
+  detailTags: CsiDetailTag[];
+};
+
+type SubdivisionSubcontractorGroup = {
+  subdivisionId: string;
+  subdivisionLabel: string;
+  subdivisionItem?: CsiCatalogItem;
+  warnings: string[];
+  subcontractors: SubdivisionSubcontractorEntry[];
+};
+
+type DivisionSubcontractorGroup = {
+  divisionId: string;
+  divisionLabel?: string;
+  warnings?: string[];
+  subdivisions: SubdivisionSubcontractorGroup[];
+};
 
 const prequalificationFilters: PrequalificationFilter[] = [
   "ALL",
@@ -137,9 +173,10 @@ export default function SubcontractorsPage() {
     () =>
       groupSubcontractorsByDisplayedCoverage(
         filteredSubcontractors,
-        displayedCoverageBySubcontractorId
+        displayedCoverageBySubcontractorId,
+        listDisplayCsiVersion
       ),
-    [displayedCoverageBySubcontractorId, filteredSubcontractors]
+    [displayedCoverageBySubcontractorId, filteredSubcontractors, listDisplayCsiVersion]
   );
   const initialUiState = getDefaultListUiState(groupedSubcontractors);
   const [expandedDivisionIds, setExpandedDivisionIds] = useState<string[]>(
@@ -326,7 +363,8 @@ export default function SubcontractorsPage() {
           <Link href="/subcontractors/new">Add / Prequalify Subcontractor</Link>
         </div>
         <p className="muted-text">
-          Vendors are grouped by CSI division and section. Project-specific
+          Vendors are grouped by CSI division and subdivision. Section and
+          subsection coverage appears as detail tags. Project-specific
           invite ranking will use location, service area, VPI, and compliance
           later.
         </p>
@@ -378,7 +416,7 @@ export default function SubcontractorsPage() {
             }
           />
           <SelectField
-            label="CSI Section"
+            label="CSI Scope"
             value={sectionFilter}
             options={["ALL", ...availableSectionOptions.map((section) => section.id)]}
             onChange={setSectionFilter}
@@ -457,20 +495,20 @@ export default function SubcontractorsPage() {
               </button>
 
               {isDivisionExpanded &&
-                divisionGroup.sections.map((sectionGroup) => {
+                divisionGroup.subdivisions.map((subdivisionGroup) => {
                   const isSectionExpanded = expandedSectionIds.includes(
-                    sectionGroup.sectionId
+                    subdivisionGroup.subdivisionId
                   );
 
                   return (
-                    <div key={sectionGroup.sectionId} className="crm-section">
+                    <div key={subdivisionGroup.subdivisionId} className="crm-section">
                       <button
                         type="button"
                         className="crm-expand-row crm-section-row"
                         aria-expanded={isSectionExpanded}
                         onClick={() =>
                           toggleExpanded(
-                            sectionGroup.sectionId,
+                            subdivisionGroup.subdivisionId,
                             setExpandedSectionIds
                           )
                         }
@@ -478,12 +516,21 @@ export default function SubcontractorsPage() {
                         <span className="crm-expand-button">
                           {isSectionExpanded ? "-" : "+"}
                         </span>
-                        <span>
-                          {sectionGroup.sectionLabel ??
-                            getSectionLabel(sectionGroup.sectionId)}
+                        <span className="subcontractor-csi-group-label">
+                          {subdivisionGroup.subdivisionItem ? (
+                            <CsiCodeLabel
+                              item={subdivisionGroup.subdivisionItem}
+                              showLevelBadge
+                            />
+                          ) : (
+                            <>
+                              <span>{subdivisionGroup.subdivisionLabel}</span>
+                              <CsiLevelBadge level={2} />
+                            </>
+                          )}
                         </span>
                         <span className="muted-text">
-                          {sectionGroup.subcontractors.length} vendors
+                          {subdivisionGroup.subcontractors.length} vendors
                         </span>
                       </button>
 
@@ -502,11 +549,14 @@ export default function SubcontractorsPage() {
                             </tr>
                           </thead>
                           <tbody>
-                            {sectionGroup.subcontractors.map((subcontractor) => (
+                            {subdivisionGroup.subcontractors.map((entry) => (
                               <VendorRow
-                                key={`${sectionGroup.sectionId}-${subcontractor.id}`}
-                                subcontractor={subcontractor}
-                                sectionId={sectionGroup.sectionId}
+                                key={`${subdivisionGroup.subdivisionId}-${entry.subcontractor.id}`}
+                                subcontractor={entry.subcontractor}
+                                sectionId={subdivisionGroup.subdivisionId}
+                                subdivisionLabel={subdivisionGroup.subdivisionLabel}
+                                subdivisionItem={subdivisionGroup.subdivisionItem}
+                                detailTags={entry.detailTags}
                                 onNavigate={saveCurrentListUiState}
                               />
                             ))}
@@ -527,10 +577,16 @@ export default function SubcontractorsPage() {
 function VendorRow({
   subcontractor,
   sectionId,
+  subdivisionLabel,
+  subdivisionItem,
+  detailTags,
   onNavigate,
 }: {
   subcontractor: Subcontractor;
   sectionId: string;
+  subdivisionLabel: string;
+  subdivisionItem?: CsiCatalogItem;
+  detailTags: CsiDetailTag[];
   onNavigate: (subcontractorId: string, sectionId: string) => void;
 }) {
   const primaryContact = getPrimaryContact(subcontractor);
@@ -551,6 +607,40 @@ function VendorRow({
         {subcontractor.dba && (
           <div className="muted-text">DBA: {subcontractor.dba}</div>
         )}
+        <div className="subcontractor-row-csi">
+          <div className="muted-text">Primary CSI Subdivision</div>
+          <div className="subcontractor-row-csi-primary">
+            {subdivisionItem ? (
+              <CsiCodeLabel item={subdivisionItem} showLevelBadge />
+            ) : (
+              <>
+                <span>{subdivisionLabel}</span>
+                <CsiLevelBadge level={2} />
+              </>
+            )}
+          </div>
+          {detailTags.length > 0 && (
+            <div className="badge-list subcontractor-row-csi-tags">
+              {detailTags.map((detailTag) => (
+                <span
+                  key={detailTag.id}
+                  className={
+                    detailTag.needsReview
+                      ? "badge badge-warning"
+                      : "badge badge-muted"
+                  }
+                  title={detailTag.label}
+                >
+                  <CsiCodeLabel
+                    item={detailTag.item}
+                    idOrNumber={detailTag.number}
+                    showLevelBadge
+                  />
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
       </td>
       <td style={cell}>
         <span className={getBadgeClassName(combinedStatus.tone)}>
@@ -787,7 +877,7 @@ function validateListUiState(
   );
   const availableSectionIds = new Set(
     groupedSubcontractors.flatMap((group) =>
-      group.sections.map((section) => section.sectionId)
+      group.subdivisions.map((subdivision) => subdivision.subdivisionId)
     )
   );
 
@@ -845,19 +935,27 @@ function scrollToSubcontractorRow(
 
 function groupSubcontractorsByDisplayedCoverage(
   subcontractors: Subcontractor[],
-  displayedCoverageBySubcontractorId: DisplayedCoverageBySubcontractorId
+  displayedCoverageBySubcontractorId: DisplayedCoverageBySubcontractorId,
+  displayCsiVersion: CsiMasterFormatVersion
 ): DivisionSubcontractorGroup[] {
   const divisionGroups = new Map<
     string,
     {
       label: string;
       warnings: Set<string>;
-      sections: Map<
+      subdivisions: Map<
         string,
         {
           label: string;
+          item?: CsiCatalogItem;
           warnings: Set<string>;
-          subcontractors: Subcontractor[];
+          subcontractors: Map<
+            string,
+            {
+              subcontractor: Subcontractor;
+              detailTags: Map<string, CsiDetailTag>;
+            }
+          >;
         }
       >;
     }
@@ -870,18 +968,21 @@ function groupSubcontractorsByDisplayedCoverage(
 
     if (!displayedCoverage) return;
 
-    const sections =
+    const coverageItems =
       displayedCoverage.sections.length > 0
         ? displayedCoverage.sections
         : displayedCoverage.divisions.map((division) => ({
             id: `${division.id}::unassigned`,
-            label: `${division.label} - Unassigned section`,
+            number: division.number,
+            name: "Unassigned CSI scope",
+            label: `${division.label} - Unassigned CSI scope`,
             divisionId: division.id,
             divisionNumber: division.number,
+            sourceFallback: division.sourceFallback,
             needsReview: division.needsReview,
           }));
 
-    sections.forEach((section) => {
+    coverageItems.forEach((section) => {
       const division =
         displayedCoverage.divisions.find(
           (displayedDivision) => displayedDivision.id === section.divisionId
@@ -896,25 +997,38 @@ function groupSubcontractorsByDisplayedCoverage(
         divisionGroups.get(divisionId) ?? {
           label: divisionLabel,
           warnings: new Set<string>(),
-          sections: new Map(),
+          subdivisions: new Map(),
         };
-      const sectionGroup =
-        divisionGroup.sections.get(section.id) ?? {
-          label: section.label,
+      const subdivision = getSubdivisionGroupTarget(section, displayCsiVersion);
+      const subdivisionId = subdivision.item?.id ?? subdivision.id;
+      const subdivisionGroup =
+        divisionGroup.subdivisions.get(subdivisionId) ?? {
+          label: subdivision.label,
+          item: subdivision.item,
           warnings: new Set<string>(),
-          subcontractors: [],
+          subcontractors: new Map(),
         };
+      const subcontractorEntry =
+        subdivisionGroup.subcontractors.get(subcontractor.id) ?? {
+          subcontractor,
+          detailTags: new Map<string, CsiDetailTag>(),
+        };
+      const detailTag = getDetailTag(section, displayCsiVersion);
 
       displayedCoverage.warnings.forEach((warning) => {
         divisionGroup.warnings.add(warning);
-        sectionGroup.warnings.add(warning);
+        subdivisionGroup.warnings.add(warning);
       });
       if (section.needsReview) {
-        sectionGroup.warnings.add("CSI display needs review.");
+        subdivisionGroup.warnings.add("CSI display needs review.");
       }
 
-      sectionGroup.subcontractors.push(subcontractor);
-      divisionGroup.sections.set(section.id, sectionGroup);
+      if (detailTag) {
+        subcontractorEntry.detailTags.set(detailTag.id, detailTag);
+      }
+
+      subdivisionGroup.subcontractors.set(subcontractor.id, subcontractorEntry);
+      divisionGroup.subdivisions.set(subdivisionId, subdivisionGroup);
       divisionGroups.set(divisionId, divisionGroup);
     });
   });
@@ -924,18 +1038,28 @@ function groupSubcontractorsByDisplayedCoverage(
       divisionId,
       divisionLabel: divisionGroup.label,
       warnings: Array.from(divisionGroup.warnings),
-      sections: Array.from(divisionGroup.sections.entries())
-        .map(([sectionId, sectionGroup]) => ({
-          sectionId,
-          sectionLabel: sectionGroup.label,
-          warnings: Array.from(sectionGroup.warnings),
-          subcontractors: sectionGroup.subcontractors.sort((a, b) =>
-            a.companyName.localeCompare(b.companyName)
-          ),
+      subdivisions: Array.from(divisionGroup.subdivisions.entries())
+        .map(([subdivisionId, subdivisionGroup]) => ({
+          subdivisionId,
+          subdivisionLabel: subdivisionGroup.label,
+          subdivisionItem: subdivisionGroup.item,
+          warnings: Array.from(subdivisionGroup.warnings),
+          subcontractors: Array.from(subdivisionGroup.subcontractors.values())
+            .map((entry) => ({
+              subcontractor: entry.subcontractor,
+              detailTags: Array.from(entry.detailTags.values()).sort(
+                compareCsiDetailTags
+              ),
+            }))
+            .sort((a, b) =>
+              a.subcontractor.companyName.localeCompare(
+                b.subcontractor.companyName
+              )
+            ),
         }))
         .sort((a, b) =>
-          (a.sectionLabel ?? a.sectionId).localeCompare(
-            b.sectionLabel ?? b.sectionId,
+          (a.subdivisionLabel ?? a.subdivisionId).localeCompare(
+            b.subdivisionLabel ?? b.subdivisionId,
             undefined,
             { numeric: true }
           )
@@ -1120,6 +1244,76 @@ function getDisplayedSectionOptions(
   );
 }
 
+function getSubdivisionGroupTarget(
+  section: DisplayedCoverageSection,
+  displayCsiVersion: CsiMasterFormatVersion
+): { id: string; label: string; item?: CsiCatalogItem } {
+  const item = resolveDisplayedCoverageItem(section, displayCsiVersion);
+
+  if (item?.level === 2) {
+    return {
+      id: item.id,
+      label: `${item.number} - ${item.name}`,
+      item,
+    };
+  }
+
+  if (item) {
+    const nearestSubdivision = getNearestLevel2Ancestor(
+      displayCsiVersion,
+      item.id
+    );
+
+    if (nearestSubdivision) {
+      return {
+        id: nearestSubdivision.id,
+        label: `${nearestSubdivision.number} - ${nearestSubdivision.name}`,
+        item: nearestSubdivision,
+      };
+    }
+  }
+
+  return {
+    id: `${section.divisionId}::unassigned-subdivision`,
+    label: `${getDivisionLabel(section.divisionId)} - Unassigned CSI scope`,
+  };
+}
+
+function getDetailTag(
+  section: DisplayedCoverageSection,
+  displayCsiVersion: CsiMasterFormatVersion
+): CsiDetailTag | undefined {
+  const item = resolveDisplayedCoverageItem(section, displayCsiVersion);
+
+  if (item && !(isCsiSectionItem(item) || isCsiSubsectionItem(item))) {
+    return undefined;
+  }
+
+  return {
+    id: item?.id ?? section.id,
+    number: item?.number ?? section.number,
+    label: item ? `${item.number} - ${item.name}` : section.label,
+    item,
+    needsReview: section.needsReview,
+  };
+}
+
+function resolveDisplayedCoverageItem(
+  section: DisplayedCoverageSection,
+  displayCsiVersion: CsiMasterFormatVersion
+) {
+  return (
+    resolveCsiCatalogItem(displayCsiVersion, section.id) ??
+    resolveCsiCatalogItem(displayCsiVersion, section.number)
+  );
+}
+
+function compareCsiDetailTags(detailTagA: CsiDetailTag, detailTagB: CsiDetailTag) {
+  return detailTagA.label.localeCompare(detailTagB.label, undefined, {
+    numeric: true,
+  });
+}
+
 function normalize(value: string) {
   return value.toLowerCase().trim();
 }
@@ -1131,9 +1325,9 @@ function isString(value: unknown): value is string {
 function getDivisionVendorCount(group: DivisionSubcontractorGroup) {
   const subcontractorIds = new Set<string>();
 
-  group.sections.forEach((section) => {
-    section.subcontractors.forEach((subcontractor) => {
-      subcontractorIds.add(subcontractor.id);
+  group.subdivisions.forEach((subdivision) => {
+    subdivision.subcontractors.forEach((entry) => {
+      subcontractorIds.add(entry.subcontractor.id);
     });
   });
 
