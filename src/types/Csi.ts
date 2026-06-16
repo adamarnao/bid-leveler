@@ -2,6 +2,13 @@ export type CsiMasterFormatVersion =
   | "MASTERFORMAT_1995"
   | "MASTERFORMAT_CURRENT";
 
+export type CsiHierarchyRelationship =
+  | "EXACT"
+  | "ANCESTOR"
+  | "DESCENDANT"
+  | "SIBLING"
+  | "UNRELATED";
+
 export type CsiDivision = {
   id: string;
   version: CsiMasterFormatVersion;

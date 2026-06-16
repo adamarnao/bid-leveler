@@ -3,6 +3,7 @@ import {
   getCrosswalkEntriesForCurrent,
 } from "@/lib/csiCrosswalk";
 import {
+  getCsiHierarchyRelationship,
   normalizeCsiSectionNumber,
   resolveCsiCatalogItem,
   resolveCsiDivision,
@@ -18,7 +19,11 @@ import {
   getSubcontractorCoverageForVersion,
   getSubcontractorCsiVersion,
 } from "@/lib/subcontractorCsiCoverage";
-import { CsiMasterFormatVersion } from "@/types/Csi";
+import {
+  CsiCatalogItem,
+  CsiHierarchyRelationship,
+  CsiMasterFormatVersion,
+} from "@/types/Csi";
 import { PrequalificationStatus, Subcontractor } from "@/types/Subcontractor";
 import {
   MatchProjectLocationInput,
@@ -33,9 +38,15 @@ import {
 
 type NormalizedProjectSection = {
   id?: string;
+  itemId?: string;
   sectionNumber: string;
   name?: string;
   divisionNumber: string;
+};
+
+type CoverageRelationshipMatch = {
+  coverageItem: CsiCatalogItem;
+  relationship: CsiHierarchyRelationship;
 };
 
 export function matchSubcontractorsToProjectSections({
@@ -70,7 +81,9 @@ export function matchSubcontractorsToProjectSections({
         )
       )
       .filter(isProjectSectionSubcontractorMatch)
-      .sort((a, b) => b.score - a.score),
+      .sort((a, b) =>
+        a.subcontractor.companyName.localeCompare(b.subcontractor.companyName)
+      ),
   }));
 }
 
@@ -92,35 +105,31 @@ export function matchSubcontractorToProjectSection(
     subcontractor,
     projectCsiVersion
   );
-  const matchedSectionNumbers = subcontractorCoverage.sectionNumbers.filter(
-    (sectionNumber) =>
-      normalizeSectionNumber(sectionNumber) ===
-      normalizedProjectSection.sectionNumber
-  );
-  const hasSectionMatch = matchedSectionNumbers.length > 0;
-  const matchedDivisionNumbers = subcontractorCoverage.divisionNumbers.filter(
-    (divisionNumber) =>
-      normalizeSectionNumber(divisionNumber) ===
-      normalizedProjectSection.divisionNumber
-  );
-  const hasDivisionMatch = matchedDivisionNumbers.length > 0;
-
-  if (!hasSectionMatch && !hasDivisionMatch) return undefined;
-
-  const sourceVersion = getSubcontractorCsiVersion(subcontractor);
-  const matchType = getMatchType(
-    sourceVersion,
+  const bestCoverageMatch = getBestCoverageRelationshipMatch(
     projectCsiVersion,
-    hasSectionMatch
+    normalizedProjectSection,
+    subcontractorCoverage.sectionNumbers
   );
+
+  if (!bestCoverageMatch) return undefined;
+
+  const matchType = getMatchType(bestCoverageMatch.relationship);
   const confidence = getMatchConfidence(
     subcontractor,
     projectCsiVersion,
-    normalizedProjectSection.sectionNumber,
-    matchType
+    bestCoverageMatch.coverageItem.number,
+    bestCoverageMatch.relationship
   );
   const complianceAlerts = getComplianceAlerts(subcontractor);
   const serviceAreaFit = getServiceAreaFit(subcontractor, projectLocation);
+  const matchedSectionNumbers = [bestCoverageMatch.coverageItem.number];
+  const matchedDivisionNumbers = [
+    getDivisionNumberForProjectSection(
+      projectCsiVersion,
+      bestCoverageMatch.coverageItem.number,
+      bestCoverageMatch.coverageItem.divisionId
+    ),
+  ];
   const { score, rankingReasons, warnings } = scoreSubcontractorMatch({
     subcontractor,
     matchType,
@@ -137,12 +146,13 @@ export function matchSubcontractorToProjectSection(
     projectSectionName: normalizedProjectSection.name,
     projectDivisionNumber: normalizedProjectSection.divisionNumber,
     subcontractor,
-    matchedSectionNumbers: hasSectionMatch
-      ? uniqueStrings(matchedSectionNumbers)
-      : [],
+    matchedSectionNumbers: uniqueStrings(matchedSectionNumbers),
     matchedDivisionNumbers: uniqueStrings(matchedDivisionNumbers),
     matchType,
     confidence,
+    hierarchyRelationship: bestCoverageMatch.relationship,
+    matchLabel: getMatchLabel(matchType),
+    isPossibleMatch: isPossibleMatchType(matchType),
     score,
     rankingReasons,
     warnings,
@@ -174,6 +184,7 @@ function normalizeProjectSection(
 
   return {
     id: matchingCatalogItem?.id ?? sectionInput.id,
+    itemId: matchingCatalogItem?.id,
     sectionNumber,
     name: matchingCatalogItem?.name ?? sectionInput.name,
     divisionNumber: getDivisionNumberForProjectSection(
@@ -184,26 +195,65 @@ function normalizeProjectSection(
   };
 }
 
-function getMatchType(
-  sourceVersion: CsiMasterFormatVersion,
+function getBestCoverageRelationshipMatch(
   projectCsiVersion: CsiMasterFormatVersion,
-  hasSectionMatch: boolean
-): SubcontractorMatchType {
-  if (!hasSectionMatch) return "DIVISION_ONLY";
+  projectSection: NormalizedProjectSection,
+  coverageSectionNumbers: string[]
+): CoverageRelationshipMatch | undefined {
+  const requestedItemIdOrNumber =
+    projectSection.itemId ?? projectSection.sectionNumber;
+  const matches: CoverageRelationshipMatch[] = [];
 
-  return sourceVersion === projectCsiVersion ? "DIRECT" : "CROSSWALK_DERIVED";
+  coverageSectionNumbers.forEach((sectionNumber) => {
+    const coverageItem = resolveCsiCatalogItem(projectCsiVersion, sectionNumber);
+    if (!coverageItem) return;
+
+    const relationship = getCsiHierarchyRelationship(
+      projectCsiVersion,
+      requestedItemIdOrNumber,
+      coverageItem.id
+    );
+
+    if (relationship === "UNRELATED") return;
+
+    matches.push({
+      coverageItem,
+      relationship,
+    });
+  });
+
+  return matches.sort(
+    (matchA, matchB) =>
+      getHierarchyRelationshipRank(matchA.relationship) -
+        getHierarchyRelationshipRank(matchB.relationship) ||
+      matchA.coverageItem.sortOrder - matchB.coverageItem.sortOrder
+  )[0];
+}
+
+function getMatchType(
+  hierarchyRelationship: CsiHierarchyRelationship
+): SubcontractorMatchType {
+  if (hierarchyRelationship === "EXACT") return "EXACT";
+  if (hierarchyRelationship === "DESCENDANT") return "SPECIALIZED_COVERAGE";
+  if (hierarchyRelationship === "ANCESTOR") return "BROAD_COVERAGE";
+
+  return "RELATED_SCOPE";
 }
 
 function getMatchConfidence(
   subcontractor: Subcontractor,
   projectCsiVersion: CsiMasterFormatVersion,
-  projectSectionNumber: string,
-  matchType: SubcontractorMatchType
+  matchedCoverageNumber: string,
+  hierarchyRelationship: CsiHierarchyRelationship
 ): SubcontractorMatchConfidence {
-  if (matchType === "DIVISION_ONLY") return "BROAD_DIVISION";
-  if (matchType === "DIRECT") return "EXACT_DIRECT";
-
   const sourceVersion = getSubcontractorCsiVersion(subcontractor);
+
+  if (sourceVersion === projectCsiVersion) {
+    return hierarchyRelationship === "EXACT"
+      ? "EXACT_DIRECT"
+      : "HIERARCHY_RELATED";
+  }
+
   const sourceSectionNumbers = subcontractor.csiCoverage.sectionIds.map((sectionId) =>
     normalizeSectionIdOrNumber(sectionId, sourceVersion)
   );
@@ -213,12 +263,12 @@ function getMatchConfidence(
       ? getCrosswalkEntriesFor1995(sourceSectionNumber).filter(
           (entry) =>
             normalizeNullableSectionNumber(entry.targetSection.sectionNumber) ===
-            projectSectionNumber
+            normalizeSectionNumber(matchedCoverageNumber)
         )
       : getCrosswalkEntriesForCurrent(sourceSectionNumber).filter(
           (entry) =>
             normalizeNullableSectionNumber(entry.sourceSection.sectionNumber) ===
-            projectSectionNumber
+            normalizeSectionNumber(matchedCoverageNumber)
         )
   );
 
@@ -308,6 +358,8 @@ function getMatchQualityScore(confidence: SubcontractorMatchConfidence) {
       return 34;
     case "AMBIGUOUS_CROSSWALK":
       return 26;
+    case "HIERARCHY_RELATED":
+      return 24;
     case "INCOMPLETE_CROSSWALK":
       return 16;
     case "BROAD_DIVISION":
@@ -382,10 +434,39 @@ function formatMatchReason(
   matchType: SubcontractorMatchType,
   confidence: SubcontractorMatchConfidence
 ) {
+  if (matchType === "EXACT") return "Exact CSI match";
+  if (matchType === "SPECIALIZED_COVERAGE") return "Specialized CSI coverage";
+  if (matchType === "BROAD_COVERAGE") return "Broad CSI coverage";
+  if (matchType === "RELATED_SCOPE") return "Related CSI scope";
   if (matchType === "DIRECT") return "Direct CSI section match";
   if (matchType === "DIVISION_ONLY") return "Division-level fallback match";
 
   return `Crosswalk CSI match: ${formatStatus(confidence)}`;
+}
+
+function getMatchLabel(matchType: SubcontractorMatchType) {
+  if (matchType === "EXACT" || matchType === "DIRECT") return "Exact Match";
+  if (matchType === "SPECIALIZED_COVERAGE") return "Specialized Coverage";
+  if (matchType === "BROAD_COVERAGE" || matchType === "DIVISION_ONLY") {
+    return "Broad Coverage";
+  }
+
+  return "Related Scope";
+}
+
+function isPossibleMatchType(matchType: SubcontractorMatchType) {
+  return matchType === "BROAD_COVERAGE" || matchType === "RELATED_SCOPE";
+}
+
+function getHierarchyRelationshipRank(
+  relationship: CsiHierarchyRelationship
+) {
+  if (relationship === "EXACT") return 0;
+  if (relationship === "DESCENDANT") return 1;
+  if (relationship === "ANCESTOR") return 2;
+  if (relationship === "SIBLING") return 3;
+
+  return 4;
 }
 
 function normalizeSectionIdOrNumber(

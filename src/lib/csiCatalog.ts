@@ -4,6 +4,7 @@ import {
   CsiCatalogItem,
   CsiCatalogTreeNode,
   CsiDivision,
+  CsiHierarchyRelationship,
   CsiMasterFormatVersion,
   CsiSection,
 } from "@/types/Csi";
@@ -236,6 +237,35 @@ export function getNearestLevel2Ancestor(
     .find(isCsiSubdivisionItem);
 }
 
+export function getCsiHierarchyRelationship(
+  version: CsiMasterFormatVersion,
+  requestedItemIdOrNumber: string,
+  coverageItemIdOrNumber: string
+): CsiHierarchyRelationship {
+  const requestedItem = resolveCsiCatalogItem(version, requestedItemIdOrNumber);
+  const coverageItem = resolveCsiCatalogItem(version, coverageItemIdOrNumber);
+
+  if (!requestedItem || !coverageItem) return "UNRELATED";
+  if (requestedItem.id === coverageItem.id) return "EXACT";
+
+  const requestedAncestors = getCsiAncestors(version, requestedItem.id);
+  const coverageAncestors = getCsiAncestors(version, coverageItem.id);
+
+  if (requestedAncestors.some((ancestor) => ancestor.id === coverageItem.id)) {
+    return "ANCESTOR";
+  }
+
+  if (coverageAncestors.some((ancestor) => ancestor.id === requestedItem.id)) {
+    return "DESCENDANT";
+  }
+
+  if (haveMeaningfulSharedParent(version, requestedItem, coverageItem)) {
+    return "SIBLING";
+  }
+
+  return "UNRELATED";
+}
+
 export function isCsiDivisionItem(item: CsiCatalogItem): boolean {
   return item.level === 1;
 }
@@ -416,6 +446,41 @@ function buildCatalogTreeNode(
       (child) => buildCatalogTreeNode(version, child)
     ),
   };
+}
+
+function haveMeaningfulSharedParent(
+  version: CsiMasterFormatVersion,
+  requestedItem: CsiCatalogItem,
+  coverageItem: CsiCatalogItem
+) {
+  if (isCsiDivisionItem(requestedItem) || isCsiDivisionItem(coverageItem)) {
+    return false;
+  }
+
+  if (
+    requestedItem.parentId &&
+    coverageItem.parentId &&
+    requestedItem.parentId === coverageItem.parentId
+  ) {
+    return true;
+  }
+
+  const requestedLevel2Ancestor = getNearestLevel2Ancestor(
+    version,
+    requestedItem.id
+  );
+  const coverageLevel2Ancestor = getNearestLevel2Ancestor(
+    version,
+    coverageItem.id
+  );
+
+  return Boolean(
+    requestedLevel2Ancestor &&
+      coverageLevel2Ancestor &&
+      requestedLevel2Ancestor.id === coverageLevel2Ancestor.id &&
+      requestedItem.id !== requestedLevel2Ancestor.id &&
+      coverageItem.id !== coverageLevel2Ancestor.id
+  );
 }
 
 function buildCatalogIndex(catalog: CsiCatalogItem[]): CsiCatalogIndex {

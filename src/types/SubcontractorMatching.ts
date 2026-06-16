@@ -1,7 +1,16 @@
-import { CsiMasterFormatVersion } from "@/types/Csi";
+import {
+  CsiHierarchyRelationship,
+  CsiMasterFormatVersion,
+} from "@/types/Csi";
 import { Subcontractor } from "@/types/Subcontractor";
 
 export type SubcontractorMatchType =
+  | "EXACT"
+  | "SPECIALIZED_COVERAGE"
+  | "BROAD_COVERAGE"
+  | "RELATED_SCOPE"
+  // Legacy compatibility values. The hierarchy-aware matcher no longer emits
+  // these, but existing UI/storage code may still compare against them.
   | "DIRECT"
   | "CROSSWALK_DERIVED"
   | "DIVISION_ONLY";
@@ -11,6 +20,7 @@ export type SubcontractorMatchConfidence =
   | "EXACT_CROSSWALK"
   | "AMBIGUOUS_CROSSWALK"
   | "INCOMPLETE_CROSSWALK"
+  | "HIERARCHY_RELATED"
   | "BROAD_DIVISION";
 
 export type SubcontractorServiceAreaFit =
@@ -55,6 +65,9 @@ export type ProjectSectionSubcontractorMatch = {
   matchedDivisionNumbers: string[];
   matchType: SubcontractorMatchType;
   confidence: SubcontractorMatchConfidence;
+  hierarchyRelationship?: CsiHierarchyRelationship;
+  matchLabel?: string;
+  isPossibleMatch?: boolean;
   score: number;
   rankingReasons: string[];
   warnings: string[];
