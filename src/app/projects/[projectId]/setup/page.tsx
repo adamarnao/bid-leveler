@@ -15,12 +15,28 @@ import {
 } from "@/lib/projects";
 import {
   Project,
+  MarketSector,
+  ProjectBidRequirements,
+  ProjectBidSubmissionMethod,
+  ProjectBidType,
+  ProjectBudgetReadiness,
+  ProjectCharacteristics,
+  ProjectComplexityLevel,
+  ProjectContractType,
+  ProjectDocumentSource,
+  ProjectDocuments,
   ProjectExternalTeamContact,
   ProjectExternalTeamDiscipline,
+  ProjectFinishLevel,
   ProjectInternalTeamMember,
   ProjectInternalTeamRole,
+  ProjectPlanReviewStatus,
+  ProjectPricingConfidence,
+  ProjectScopeSetup,
   ProjectStatus,
+  ProjectTakeoffStatus,
 } from "@/types/Project";
+import { StoredProjectCsiSelections } from "@/types/Csi";
 
 const setupSteps = [
   {
@@ -122,6 +138,88 @@ const externalTeamDisciplineOptions: ProjectExternalTeamDiscipline[] = [
   "Other",
 ];
 
+const bidTypeOptions: ProjectBidType[] = [
+  "HARD_BID",
+  "BUDGET",
+  "GMP",
+  "NEGOTIATED",
+  "DESIGN_BUILD",
+  "OTHER",
+];
+
+const contractTypeOptions: ProjectContractType[] = [
+  "LUMP_SUM",
+  "COST_PLUS",
+  "GMP",
+  "UNIT_PRICE",
+  "TIME_AND_MATERIAL",
+  "OTHER",
+];
+
+const bidSubmissionMethodOptions: ProjectBidSubmissionMethod[] = [
+  "EMAIL",
+  "PORTAL",
+  "SEALED_BID",
+  "IN_PERSON",
+  "OTHER",
+];
+
+const documentSourceOptions: ProjectDocumentSource[] = [
+  "OWNER",
+  "ARCHITECT",
+  "CLIENT_PORTAL",
+  "EMAIL",
+  "SHARED_DRIVE",
+  "OTHER",
+];
+
+const planReviewStatusOptions: ProjectPlanReviewStatus[] = [
+  "NOT_STARTED",
+  "IN_PROGRESS",
+  "NEEDS_CLARIFICATION",
+  "REVIEWED",
+];
+
+const marketSectorOptions: MarketSector[] = [
+  "Residential",
+  "Commercial",
+  "Medical",
+  "Industrial",
+  "Government",
+  "Education",
+  "Hospitality",
+  "Civil",
+  "Energy",
+  "Other",
+];
+
+const complexityLevelOptions: ProjectComplexityLevel[] = [
+  "LOW",
+  "MODERATE",
+  "HIGH",
+  "VERY_HIGH",
+];
+
+const finishLevelOptions: ProjectFinishLevel[] = [
+  "BASIC",
+  "STANDARD",
+  "HIGH_END",
+  "SPECIALTY",
+];
+
+const takeoffStatusOptions: ProjectTakeoffStatus[] = [
+  "NOT_STARTED",
+  "IN_PROGRESS",
+  "NEEDS_REVIEW",
+  "COMPLETE",
+];
+
+const pricingConfidenceOptions: ProjectPricingConfidence[] = [
+  "LOW",
+  "MEDIUM",
+  "HIGH",
+];
+
 type ProjectSetupDraft = Partial<
   Pick<
     Project,
@@ -138,6 +236,11 @@ type ProjectSetupDraft = Partial<
     | "bidDueDate"
     | "internalTeam"
     | "externalTeam"
+    | "bidRequirements"
+    | "projectDocuments"
+    | "projectCharacteristics"
+    | "projectScope"
+    | "budgetReadiness"
   >
 >;
 
@@ -148,12 +251,19 @@ type ProjectSetupDraftState = {
 
 let cachedProjectsStorageValue: string | undefined;
 let cachedProjects: Project[] = getMergedProjects();
+const projectCsiSelectionsStorageKey = "projectCsiSelections";
+const projectCsiSelectionsChangeEvent = "projectCsiSelectionsChange";
+const EMPTY_PROJECT_CSI_SELECTIONS: StoredProjectCsiSelections = {};
+let cachedProjectCsiSelectionsStorageValue: string | undefined;
+let cachedProjectCsiSelections: StoredProjectCsiSelections =
+  EMPTY_PROJECT_CSI_SELECTIONS;
 
 export default function ProjectSetupPage() {
   const params = useParams();
   const rawProjectId = params.projectId;
   const projectId = Array.isArray(rawProjectId) ? rawProjectId[0] : rawProjectId;
   const projects = useProjectsSnapshot();
+  const projectCsiSelections = useProjectCsiSelectionsSnapshot();
   const storedProject = projects.find((item) => item.id === projectId);
   const [localProject, setLocalProject] = useState<Project | null>(null);
   const [draftState, setDraftState] = useState<ProjectSetupDraftState>({
@@ -177,6 +287,9 @@ export default function ProjectSetupPage() {
     [setupProgress.completedStepIds]
   );
   const completedStepCount = completedStepIds.size;
+  const selectedCsiScopeCount = projectId
+    ? getProjectCsiScopeCount(projectCsiSelections, projectId)
+    : 0;
 
   if (!project) {
     return (
@@ -365,42 +478,29 @@ export default function ProjectSetupPage() {
                   project={currentProject}
                   onChange={updateDraft}
                 />
+              ) : activeStep.id === "bid-contract-requirements" ? (
+                <ProjectBidRequirementsFields
+                  draft={currentDraft}
+                  project={currentProject}
+                  onChange={updateDraft}
+                />
+              ) : activeStep.id === "plans-characteristics-scope" ? (
+                <ProjectPlansCharacteristicsScopeFields
+                  draft={currentDraft}
+                  project={currentProject}
+                  selectedCsiScopeCount={selectedCsiScopeCount}
+                  onChange={updateDraft}
+                />
+              ) : activeStep.id === "budget-pricing-readiness" ? (
+                <ProjectBudgetReadinessFields
+                  draft={currentDraft}
+                  project={currentProject}
+                  onChange={updateDraft}
+                />
               ) : (
                 <div className="project-setup-placeholder">
                   <p className="label-text">Future Fields</p>
                   <p>{getFutureFieldsSummary(activeStep.id)}</p>
-                </div>
-              )}
-
-              {activeStep.id === "plans-characteristics-scope" && (
-                <div className="project-setup-inline-cta">
-                  <div>
-                    <strong>Project CSI scopes live in Project Scope.</strong>
-                    <p className="muted-text">
-                      Use the dedicated scope workspace for division cards,
-                      staged CSI scope selection, and MasterFormat version
-                      handling.
-                    </p>
-                  </div>
-                  <Link
-                    href={`/projects/${currentProject.id}/scope`}
-                    className="button-secondary"
-                  >
-                    Open Project Scope
-                  </Link>
-                </div>
-              )}
-
-              {activeStep.id === "budget-pricing-readiness" && (
-                <div className="project-setup-inline-cta">
-                  <div>
-                    <strong>Pricing readiness is a placeholder.</strong>
-                    <p className="muted-text">
-                      This step will connect budget confidence to takeoffs,
-                      historical pricing, ROM assumptions, and estimate review
-                      notes in a later phase.
-                    </p>
-                  </div>
                 </div>
               )}
 
@@ -457,6 +557,65 @@ function getProjectsSnapshot(): Project[] {
   }
 
   return cachedProjects;
+}
+
+function useProjectCsiSelectionsSnapshot(): StoredProjectCsiSelections {
+  return useSyncExternalStore(
+    subscribeToProjectCsiSelectionsStorage,
+    getProjectCsiSelectionsSnapshot,
+    getServerProjectCsiSelectionsSnapshot
+  );
+}
+
+function subscribeToProjectCsiSelectionsStorage(onStoreChange: () => void) {
+  window.addEventListener("storage", onStoreChange);
+  window.addEventListener(projectCsiSelectionsChangeEvent, onStoreChange);
+
+  return () => {
+    window.removeEventListener("storage", onStoreChange);
+    window.removeEventListener(projectCsiSelectionsChangeEvent, onStoreChange);
+  };
+}
+
+function getServerProjectCsiSelectionsSnapshot(): StoredProjectCsiSelections {
+  return cachedProjectCsiSelections;
+}
+
+function getProjectCsiSelectionsSnapshot(): StoredProjectCsiSelections {
+  const storageValue =
+    localStorage.getItem(projectCsiSelectionsStorageKey) || "{}";
+
+  if (storageValue !== cachedProjectCsiSelectionsStorageValue) {
+    cachedProjectCsiSelectionsStorageValue = storageValue;
+    cachedProjectCsiSelections = parseProjectCsiSelections(storageValue);
+  }
+
+  return cachedProjectCsiSelections;
+}
+
+function parseProjectCsiSelections(
+  storageValue: string
+): StoredProjectCsiSelections {
+  try {
+    const parsedValue = JSON.parse(storageValue);
+    return parsedValue && typeof parsedValue === "object"
+      ? parsedValue
+      : EMPTY_PROJECT_CSI_SELECTIONS;
+  } catch {
+    return EMPTY_PROJECT_CSI_SELECTIONS;
+  }
+}
+
+function getProjectCsiScopeCount(
+  selections: StoredProjectCsiSelections,
+  projectId: string
+) {
+  const selection = selections[projectId];
+
+  return (
+    (Array.isArray(selection?.divisionIds) ? selection.divisionIds.length : 0) +
+    (Array.isArray(selection?.sectionIds) ? selection.sectionIds.length : 0)
+  );
 }
 
 function ProjectBasicsFields({
@@ -974,6 +1133,715 @@ function ProjectExternalTeamFields({
   );
 }
 
+function ProjectBidRequirementsFields({
+  draft,
+  project,
+  onChange,
+}: {
+  draft: ProjectSetupDraft;
+  project: Project;
+  onChange: <K extends keyof ProjectSetupDraft>(
+    field: K,
+    value: ProjectSetupDraft[K]
+  ) => void;
+}) {
+  const requirements = draft.bidRequirements ?? project.bidRequirements ?? {};
+
+  function updateRequirements(updates: Partial<ProjectBidRequirements>) {
+    onChange("bidRequirements", { ...requirements, ...updates });
+  }
+
+  return (
+    <div className="project-setup-field-sections">
+      <div className="project-setup-form-card">
+        <p className="label-text">Bid Structure</p>
+        <div className="project-setup-form-grid">
+          <label className="form-field">
+            Bid Type
+            <select
+              value={requirements.bidType ?? ""}
+              onChange={(event) =>
+                updateRequirements({
+                  bidType: normalizeBidType(event.target.value),
+                })
+              }
+            >
+              <option value="">Select bid type</option>
+              {bidTypeOptions.map((bidType) => (
+                <option key={bidType} value={bidType}>
+                  {formatSetupStatus(bidType)}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label className="form-field">
+            Contract Type
+            <select
+              value={requirements.contractType ?? ""}
+              onChange={(event) =>
+                updateRequirements({
+                  contractType: normalizeContractType(event.target.value),
+                })
+              }
+            >
+              <option value="">Select contract type</option>
+              {contractTypeOptions.map((contractType) => (
+                <option key={contractType} value={contractType}>
+                  {formatSetupStatus(contractType)}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label className="form-field">
+            Submission Method
+            <select
+              value={requirements.bidSubmissionMethod ?? ""}
+              onChange={(event) =>
+                updateRequirements({
+                  bidSubmissionMethod: normalizeBidSubmissionMethod(
+                    event.target.value
+                  ),
+                })
+              }
+            >
+              <option value="">Select method</option>
+              {bidSubmissionMethodOptions.map((method) => (
+                <option key={method} value={method}>
+                  {formatSetupStatus(method)}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label className="form-field">
+            Liquidated Damages
+            <input
+              value={requirements.liquidatedDamages ?? ""}
+              onChange={(event) =>
+                updateRequirements({ liquidatedDamages: event.target.value })
+              }
+            />
+          </label>
+          <label className="form-field">
+            Retainage Percent
+            <input
+              inputMode="decimal"
+              value={formatOptionalNumber(requirements.retainagePercent)}
+              onChange={(event) =>
+                updateRequirements({
+                  retainagePercent: parseOptionalNumber(event.target.value),
+                })
+              }
+            />
+          </label>
+          <label className="form-field">
+            Required Bids Per Scope
+            <input
+              inputMode="numeric"
+              value={formatOptionalNumber(requirements.requiredBidsPerScope)}
+              onChange={(event) =>
+                updateRequirements({
+                  requiredBidsPerScope: parseOptionalNumber(event.target.value),
+                })
+              }
+            />
+          </label>
+        </div>
+      </div>
+
+      <div className="project-setup-form-card">
+        <p className="label-text">Requirements</p>
+        <div className="project-setup-toggle-row project-setup-toggle-grid">
+          <ToggleField
+            checked={requirements.bidBondRequired ?? false}
+            label="Bid Bond Required"
+            onChange={(value) => updateRequirements({ bidBondRequired: value })}
+          />
+          <ToggleField
+            checked={requirements.performanceBondRequired ?? false}
+            label="Performance Bond Required"
+            onChange={(value) =>
+              updateRequirements({ performanceBondRequired: value })
+            }
+          />
+          <ToggleField
+            checked={requirements.paymentBondRequired ?? false}
+            label="Payment Bond Required"
+            onChange={(value) =>
+              updateRequirements({ paymentBondRequired: value })
+            }
+          />
+          <ToggleField
+            checked={requirements.prevailingWageRequired ?? false}
+            label="Prevailing Wage Required"
+            onChange={(value) =>
+              updateRequirements({ prevailingWageRequired: value })
+            }
+          />
+          <ToggleField
+            checked={requirements.davisBaconRequired ?? false}
+            label="Davis-Bacon Required"
+            onChange={(value) =>
+              updateRequirements({ davisBaconRequired: value })
+            }
+          />
+          <ToggleField
+            checked={requirements.certifiedPayrollRequired ?? false}
+            label="Certified Payroll Required"
+            onChange={(value) =>
+              updateRequirements({ certifiedPayrollRequired: value })
+            }
+          />
+          <ToggleField
+            checked={requirements.taxExempt ?? false}
+            label="Tax Exempt"
+            onChange={(value) => updateRequirements({ taxExempt: value })}
+          />
+          <ToggleField
+            checked={requirements.alternatesRequired ?? false}
+            label="Alternates Required"
+            onChange={(value) =>
+              updateRequirements({ alternatesRequired: value })
+            }
+          />
+          <ToggleField
+            checked={requirements.allowancesRequired ?? false}
+            label="Allowances Required"
+            onChange={(value) =>
+              updateRequirements({ allowancesRequired: value })
+            }
+          />
+          <ToggleField
+            checked={requirements.unitPricesRequired ?? false}
+            label="Unit Prices Required"
+            onChange={(value) =>
+              updateRequirements({ unitPricesRequired: value })
+            }
+          />
+          <ToggleField
+            checked={requirements.qualificationsAllowed ?? false}
+            label="Qualifications Allowed"
+            onChange={(value) =>
+              updateRequirements({ qualificationsAllowed: value })
+            }
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ProjectPlansCharacteristicsScopeFields({
+  draft,
+  project,
+  selectedCsiScopeCount,
+  onChange,
+}: {
+  draft: ProjectSetupDraft;
+  project: Project;
+  selectedCsiScopeCount: number;
+  onChange: <K extends keyof ProjectSetupDraft>(
+    field: K,
+    value: ProjectSetupDraft[K]
+  ) => void;
+}) {
+  const documents = draft.projectDocuments ?? project.projectDocuments ?? {};
+  const characteristics =
+    draft.projectCharacteristics ?? project.projectCharacteristics ?? {};
+  const projectScope = draft.projectScope ?? project.projectScope ?? {};
+
+  function updateDocuments(updates: Partial<ProjectDocuments>) {
+    onChange("projectDocuments", { ...documents, ...updates });
+  }
+
+  function updateCharacteristics(updates: Partial<ProjectCharacteristics>) {
+    onChange("projectCharacteristics", { ...characteristics, ...updates });
+  }
+
+  function updateScope(updates: Partial<ProjectScopeSetup>) {
+    onChange("projectScope", { ...projectScope, ...updates });
+  }
+
+  return (
+    <div className="project-setup-field-sections">
+      <div className="project-setup-form-card">
+        <p className="label-text">Documents</p>
+        <div className="project-setup-form-grid">
+          <label className="form-field">
+            Plans Link
+            <input
+              value={documents.plansLink ?? ""}
+              onChange={(event) =>
+                updateDocuments({ plansLink: event.target.value })
+              }
+            />
+          </label>
+          <label className="form-field">
+            Specs Link
+            <input
+              value={documents.specsLink ?? ""}
+              onChange={(event) =>
+                updateDocuments({ specsLink: event.target.value })
+              }
+            />
+          </label>
+          <label className="form-field">
+            Addenda Link
+            <input
+              value={documents.addendaLink ?? ""}
+              onChange={(event) =>
+                updateDocuments({ addendaLink: event.target.value })
+              }
+            />
+          </label>
+          <label className="form-field">
+            Bid Form Link
+            <input
+              value={documents.bidFormLink ?? ""}
+              onChange={(event) =>
+                updateDocuments({ bidFormLink: event.target.value })
+              }
+            />
+          </label>
+          <label className="form-field">
+            Drawing Date
+            <input
+              type="date"
+              value={documents.drawingDate ?? ""}
+              onChange={(event) =>
+                updateDocuments({ drawingDate: event.target.value })
+              }
+            />
+          </label>
+          <label className="form-field">
+            Drawing Set Name
+            <input
+              value={documents.drawingSetName ?? ""}
+              onChange={(event) =>
+                updateDocuments({ drawingSetName: event.target.value })
+              }
+            />
+          </label>
+          <label className="form-field">
+            Drawing Set Version
+            <input
+              value={documents.drawingSetVersion ?? ""}
+              onChange={(event) =>
+                updateDocuments({ drawingSetVersion: event.target.value })
+              }
+            />
+          </label>
+          <label className="form-field">
+            Last Addendum Received
+            <input
+              type="date"
+              value={documents.lastAddendumReceived ?? ""}
+              onChange={(event) =>
+                updateDocuments({ lastAddendumReceived: event.target.value })
+              }
+            />
+          </label>
+          <label className="form-field">
+            Document Source
+            <select
+              value={documents.documentSource ?? ""}
+              onChange={(event) =>
+                updateDocuments({
+                  documentSource: normalizeDocumentSource(event.target.value),
+                })
+              }
+            >
+              <option value="">Select source</option>
+              {documentSourceOptions.map((source) => (
+                <option key={source} value={source}>
+                  {formatSetupStatus(source)}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label className="form-field">
+            Plan Review Status
+            <select
+              value={documents.planReviewStatus ?? ""}
+              onChange={(event) =>
+                updateDocuments({
+                  planReviewStatus: normalizePlanReviewStatus(
+                    event.target.value
+                  ),
+                })
+              }
+            >
+              <option value="">Select status</option>
+              {planReviewStatusOptions.map((status) => (
+                <option key={status} value={status}>
+                  {formatSetupStatus(status)}
+                </option>
+              ))}
+            </select>
+          </label>
+        </div>
+      </div>
+
+      <div className="project-setup-form-card">
+        <p className="label-text">Project Characteristics</p>
+        <div className="project-setup-form-grid">
+          <label className="form-field">
+            Market Sector
+            <select
+              value={characteristics.marketSector ?? ""}
+              onChange={(event) =>
+                updateCharacteristics({
+                  marketSector: normalizeMarketSector(event.target.value),
+                })
+              }
+            >
+              <option value="">Select sector</option>
+              {marketSectorOptions.map((sector) => (
+                <option key={sector} value={sector}>
+                  {sector}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label className="form-field">
+            Building Type
+            <input
+              value={characteristics.buildingType ?? ""}
+              onChange={(event) =>
+                updateCharacteristics({ buildingType: event.target.value })
+              }
+            />
+          </label>
+          <label className="form-field">
+            Work Type
+            <input
+              value={characteristics.workType ?? ""}
+              onChange={(event) =>
+                updateCharacteristics({ workType: event.target.value })
+              }
+            />
+          </label>
+          <label className="form-field">
+            Construction Type
+            <input
+              value={characteristics.constructionType ?? ""}
+              onChange={(event) =>
+                updateCharacteristics({ constructionType: event.target.value })
+              }
+            />
+          </label>
+          <label className="form-field">
+            Square Footage
+            <input
+              inputMode="numeric"
+              value={formatOptionalNumber(characteristics.squareFootage)}
+              onChange={(event) =>
+                updateCharacteristics({
+                  squareFootage: parseOptionalNumber(event.target.value),
+                })
+              }
+            />
+          </label>
+          <label className="form-field">
+            Stories
+            <input
+              inputMode="numeric"
+              value={formatOptionalNumber(characteristics.stories)}
+              onChange={(event) =>
+                updateCharacteristics({
+                  stories: parseOptionalNumber(event.target.value),
+                })
+              }
+            />
+          </label>
+          <label className="form-field">
+            Complexity Level
+            <select
+              value={characteristics.complexityLevel ?? ""}
+              onChange={(event) =>
+                updateCharacteristics({
+                  complexityLevel: normalizeComplexityLevel(event.target.value),
+                })
+              }
+            >
+              <option value="">Select complexity</option>
+              {complexityLevelOptions.map((level) => (
+                <option key={level} value={level}>
+                  {formatSetupStatus(level)}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label className="form-field">
+            Finish Level
+            <select
+              value={characteristics.finishLevel ?? ""}
+              onChange={(event) =>
+                updateCharacteristics({
+                  finishLevel: normalizeFinishLevel(event.target.value),
+                })
+              }
+            >
+              <option value="">Select finish level</option>
+              {finishLevelOptions.map((level) => (
+                <option key={level} value={level}>
+                  {formatSetupStatus(level)}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label className="form-field project-setup-field-wide">
+            Access Constraints
+            <textarea
+              rows={2}
+              value={characteristics.accessConstraints ?? ""}
+              onChange={(event) =>
+                updateCharacteristics({ accessConstraints: event.target.value })
+              }
+            />
+          </label>
+          <label className="form-field project-setup-field-wide">
+            Special Conditions
+            <textarea
+              rows={2}
+              value={characteristics.specialConditions ?? ""}
+              onChange={(event) =>
+                updateCharacteristics({ specialConditions: event.target.value })
+              }
+            />
+          </label>
+        </div>
+        <div className="project-setup-toggle-row project-setup-toggle-grid">
+          <ToggleField
+            checked={characteristics.isOccupiedFacility ?? false}
+            label="Occupied Facility"
+            onChange={(value) =>
+              updateCharacteristics({ isOccupiedFacility: value })
+            }
+          />
+          <ToggleField
+            checked={characteristics.isExistingBuilding ?? false}
+            label="Existing Building"
+            onChange={(value) =>
+              updateCharacteristics({ isExistingBuilding: value })
+            }
+          />
+          <ToggleField
+            checked={characteristics.phasingRequired ?? false}
+            label="Phasing Required"
+            onChange={(value) =>
+              updateCharacteristics({ phasingRequired: value })
+            }
+          />
+          <ToggleField
+            checked={characteristics.afterHoursWorkRequired ?? false}
+            label="After-Hours Work Required"
+            onChange={(value) =>
+              updateCharacteristics({ afterHoursWorkRequired: value })
+            }
+          />
+        </div>
+      </div>
+
+      <div className="project-setup-form-card">
+        <div className="project-setup-card-header">
+          <div>
+            <p className="label-text">Project Scope</p>
+            <p className="muted-text">
+              {selectedCsiScopeCount} CSI scopes selected for this project.
+            </p>
+          </div>
+          <Link href={`/projects/${project.id}/scope`} className="button-secondary">
+            Open Project Scope
+          </Link>
+        </div>
+        <div className="project-setup-form-grid">
+          <ListTextareaField
+            label="Bid Packages"
+            value={projectScope.bidPackages}
+            onChange={(value) => updateScope({ bidPackages: value })}
+          />
+          <ListTextareaField
+            label="Alternates"
+            value={projectScope.alternates}
+            onChange={(value) => updateScope({ alternates: value })}
+          />
+          <ListTextareaField
+            label="Allowances"
+            value={projectScope.allowances}
+            onChange={(value) => updateScope({ allowances: value })}
+          />
+          <ListTextareaField
+            label="Unit Prices"
+            value={projectScope.unitPrices}
+            onChange={(value) => updateScope({ unitPrices: value })}
+          />
+          <ListTextareaField
+            label="Excluded Scopes"
+            value={projectScope.excludedScopes}
+            onChange={(value) => updateScope({ excludedScopes: value })}
+          />
+          <ListTextareaField
+            label="Owner Direct Scopes"
+            value={projectScope.ownerDirectScopes}
+            onChange={(value) => updateScope({ ownerDirectScopes: value })}
+          />
+          <ListTextareaField
+            label="GC Self-Perform Scopes"
+            value={projectScope.gcSelfPerformScopes}
+            onChange={(value) => updateScope({ gcSelfPerformScopes: value })}
+          />
+          <label className="form-field">
+            Takeoff Status
+            <select
+              value={projectScope.takeoffStatus ?? ""}
+              onChange={(event) =>
+                updateScope({
+                  takeoffStatus: normalizeTakeoffStatus(event.target.value),
+                })
+              }
+            >
+              <option value="">Select status</option>
+              {takeoffStatusOptions.map((status) => (
+                <option key={status} value={status}>
+                  {formatSetupStatus(status)}
+                </option>
+              ))}
+            </select>
+          </label>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ProjectBudgetReadinessFields({
+  draft,
+  project,
+  onChange,
+}: {
+  draft: ProjectSetupDraft;
+  project: Project;
+  onChange: <K extends keyof ProjectSetupDraft>(
+    field: K,
+    value: ProjectSetupDraft[K]
+  ) => void;
+}) {
+  const budgetReadiness =
+    draft.budgetReadiness ?? project.budgetReadiness ?? {};
+
+  function updateBudgetReadiness(updates: Partial<ProjectBudgetReadiness>) {
+    onChange("budgetReadiness", { ...budgetReadiness, ...updates });
+  }
+
+  return (
+    <div className="project-setup-field-sections">
+      <div className="project-setup-inline-cta">
+        <div>
+          <strong>Pricing readiness is a placeholder.</strong>
+          <p className="muted-text">
+            Budgeting becomes useful after takeoffs, historical pricing, or ROM
+            assumptions are available.
+          </p>
+        </div>
+      </div>
+
+      <div className="project-setup-form-card">
+        <p className="label-text">Budget Readiness</p>
+        <div className="project-setup-form-grid">
+          <label className="form-field">
+            Owner Budget
+            <input
+              inputMode="decimal"
+              value={formatOptionalNumber(budgetReadiness.ownerBudget)}
+              onChange={(event) =>
+                updateBudgetReadiness({
+                  ownerBudget: parseOptionalNumber(event.target.value),
+                })
+              }
+            />
+          </label>
+          <label className="form-field">
+            Target Budget
+            <input
+              inputMode="decimal"
+              value={formatOptionalNumber(budgetReadiness.targetBudget)}
+              onChange={(event) =>
+                updateBudgetReadiness({
+                  targetBudget: parseOptionalNumber(event.target.value),
+                })
+              }
+            />
+          </label>
+          <label className="form-field">
+            ROM Estimate
+            <input
+              inputMode="decimal"
+              value={formatOptionalNumber(budgetReadiness.romEstimate)}
+              onChange={(event) =>
+                updateBudgetReadiness({
+                  romEstimate: parseOptionalNumber(event.target.value),
+                })
+              }
+            />
+          </label>
+          <label className="form-field">
+            Pricing Confidence
+            <select
+              value={budgetReadiness.pricingConfidence ?? ""}
+              onChange={(event) =>
+                updateBudgetReadiness({
+                  pricingConfidence: normalizePricingConfidence(
+                    event.target.value
+                  ),
+                })
+              }
+            >
+              <option value="">Select confidence</option>
+              {pricingConfidenceOptions.map((confidence) => (
+                <option key={confidence} value={confidence}>
+                  {formatSetupStatus(confidence)}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label className="form-field project-setup-field-wide">
+            Notes
+            <textarea
+              rows={3}
+              value={budgetReadiness.notes ?? ""}
+              onChange={(event) =>
+                updateBudgetReadiness({ notes: event.target.value })
+              }
+            />
+          </label>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ListTextareaField({
+  label,
+  value,
+  onChange,
+}: {
+  label: string;
+  value: string[] | undefined;
+  onChange: (value: string[]) => void;
+}) {
+  return (
+    <label className="form-field">
+      {label}
+      <textarea
+        rows={3}
+        value={(value ?? []).join("\n")}
+        placeholder="One item per line"
+        onChange={(event) => onChange(parseListTextarea(event.target.value))}
+      />
+    </label>
+  );
+}
+
 function ToggleField({
   checked,
   label,
@@ -1009,6 +1877,79 @@ function normalizeExternalTeamDiscipline(
   return externalTeamDisciplineOptions.find(
     (discipline) => discipline === value
   );
+}
+
+function normalizeBidType(value: string): ProjectBidType | undefined {
+  return bidTypeOptions.find((bidType) => bidType === value);
+}
+
+function normalizeContractType(value: string): ProjectContractType | undefined {
+  return contractTypeOptions.find((contractType) => contractType === value);
+}
+
+function normalizeBidSubmissionMethod(
+  value: string
+): ProjectBidSubmissionMethod | undefined {
+  return bidSubmissionMethodOptions.find((method) => method === value);
+}
+
+function normalizeDocumentSource(
+  value: string
+): ProjectDocumentSource | undefined {
+  return documentSourceOptions.find((source) => source === value);
+}
+
+function normalizePlanReviewStatus(
+  value: string
+): ProjectPlanReviewStatus | undefined {
+  return planReviewStatusOptions.find((status) => status === value);
+}
+
+function normalizeMarketSector(value: string): MarketSector | undefined {
+  return marketSectorOptions.find((sector) => sector === value);
+}
+
+function normalizeComplexityLevel(
+  value: string
+): ProjectComplexityLevel | undefined {
+  return complexityLevelOptions.find((level) => level === value);
+}
+
+function normalizeFinishLevel(value: string): ProjectFinishLevel | undefined {
+  return finishLevelOptions.find((level) => level === value);
+}
+
+function normalizeTakeoffStatus(
+  value: string
+): ProjectTakeoffStatus | undefined {
+  return takeoffStatusOptions.find((status) => status === value);
+}
+
+function normalizePricingConfidence(
+  value: string
+): ProjectPricingConfidence | undefined {
+  return pricingConfidenceOptions.find((confidence) => confidence === value);
+}
+
+function parseListTextarea(value: string) {
+  return value
+    .split(/\r?\n/)
+    .map((item) => item.trim())
+    .filter(Boolean);
+}
+
+function parseOptionalNumber(value: string) {
+  const normalizedValue = value.replace(/,/g, "").trim();
+
+  if (!normalizedValue) return undefined;
+
+  const parsedValue = Number(normalizedValue);
+
+  return Number.isFinite(parsedValue) ? parsedValue : undefined;
+}
+
+function formatOptionalNumber(value: number | undefined) {
+  return value === undefined ? "" : String(value);
 }
 
 function createSetupRowId(prefix: string) {
