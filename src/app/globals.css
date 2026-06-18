@@ -1508,6 +1508,66 @@ textarea:focus {
   background: var(--color-surface-1);
 }
 
+.project-setup-review-title {
+  margin: 2px 0 4px;
+  font-size: 18px;
+}
+
+.project-setup-review-callout {
+  margin-bottom: 12px;
+  padding: 12px;
+  border: 1px solid color-mix(in srgb, var(--color-warning) 42%, var(--color-border));
+  border-radius: var(--radius-card);
+  background: var(--color-status-warning-bg);
+}
+
+.project-setup-review-callout p {
+  margin: 4px 0 0;
+}
+
+.project-setup-review-list {
+  display: grid;
+  gap: 8px;
+}
+
+.project-setup-review-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  background: var(--color-surface-1);
+}
+
+.project-setup-review-row p {
+  margin: 4px 0 0;
+}
+
+.project-setup-review-meta,
+.project-setup-next-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.project-setup-next-actions {
+  justify-content: flex-start;
+}
+
+.project-setup-next-actions a {
+  text-decoration: none;
+}
+
+.button-primary:disabled,
+.button-secondary:disabled {
+  cursor: not-allowed;
+  opacity: 0.52;
+}
+
 .project-setup-placeholder,
 .project-setup-inline-cta {
   padding: 14px;
@@ -2888,6 +2948,14 @@ textarea:focus {
   .project-setup-card-header,
   .project-setup-row-header {
     display: grid;
+  }
+
+  .project-setup-review-row {
+    grid-template-columns: 1fr;
+  }
+
+  .project-setup-review-meta {
+    justify-content: flex-start;
   }
 
   .form-action-bar {

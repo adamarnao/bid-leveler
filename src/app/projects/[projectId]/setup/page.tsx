@@ -249,6 +249,25 @@ type ProjectSetupDraftState = {
   values: ProjectSetupDraft;
 };
 
+type SetupReviewStatus = "complete" | "incomplete" | "optional";
+
+type SetupReadinessRow = {
+  stepId: string;
+  stepName: string;
+  requirement: "required" | "recommended" | "optional";
+  status: SetupReviewStatus;
+  summary: string;
+  blocking: boolean;
+};
+
+type SetupReadinessSummary = {
+  rows: SetupReadinessRow[];
+  requiredReady: boolean;
+  completeRequiredCount: number;
+  requiredCount: number;
+  warningCount: number;
+};
+
 let cachedProjectsStorageValue: string | undefined;
 let cachedProjects: Project[] = getMergedProjects();
 const projectCsiSelectionsStorageKey = "projectCsiSelections";
@@ -303,6 +322,11 @@ export default function ProjectSetupPage() {
   const currentProject = project;
   const currentDraft =
     draftState.projectId === currentProject.id ? draftState.values : {};
+  const effectiveProject: Project = { ...currentProject, ...currentDraft };
+  const readinessSummary = getSetupReadinessSummary(
+    effectiveProject,
+    selectedCsiScopeCount
+  );
 
   function updateDraft<K extends keyof ProjectSetupDraft>(
     field: K,
@@ -326,8 +350,7 @@ export default function ProjectSetupPage() {
   }
 
   function handleSaveProgress() {
-    const editedProject = { ...currentProject, ...currentDraft };
-    const nextProject = updateProjectSetupProgress(editedProject, {
+    const nextProject = updateProjectSetupProgress(effectiveProject, {
       currentStepId: activeStepId,
       lastEditedAt: new Date().toISOString(),
     });
@@ -344,9 +367,8 @@ export default function ProjectSetupPage() {
       new Set([...Array.from(completedStepIds), activeStepId])
     );
     const nextStepId = nextStep?.id ?? activeStepId;
-    const editedProject = { ...currentProject, ...currentDraft };
     const nextProject = {
-      ...updateProjectSetupProgress(editedProject, {
+      ...updateProjectSetupProgress(effectiveProject, {
         currentStepId: nextStepId,
         completedStepIds: nextCompletedStepIds,
         lastEditedAt: new Date().toISOString(),
@@ -356,6 +378,20 @@ export default function ProjectSetupPage() {
 
     persistProject(nextProject);
     setSelectedStepId(nextStepId);
+  }
+
+  function handleMarkReadyForInvites() {
+    if (!readinessSummary.requiredReady) return;
+
+    const nextProject = {
+      ...updateProjectSetupProgress(effectiveProject, {
+        currentStepId: activeStepId,
+        lastEditedAt: new Date().toISOString(),
+      }),
+      setupStatus: "READY_FOR_INVITES" as const,
+    };
+
+    persistProject(nextProject);
   }
 
   return (
@@ -496,6 +532,15 @@ export default function ProjectSetupPage() {
                   draft={currentDraft}
                   project={currentProject}
                   onChange={updateDraft}
+                />
+              ) : activeStep.id === "review-launch" ? (
+                <ProjectReviewLaunchFields
+                  project={effectiveProject}
+                  readinessSummary={readinessSummary}
+                  selectedCsiScopeCount={selectedCsiScopeCount}
+                  setupStatus={setupStatus}
+                  onJumpToStep={setSelectedStepId}
+                  onMarkReadyForInvites={handleMarkReadyForInvites}
                 />
               ) : (
                 <div className="project-setup-placeholder">
@@ -1820,6 +1865,132 @@ function ProjectBudgetReadinessFields({
   );
 }
 
+function ProjectReviewLaunchFields({
+  project,
+  readinessSummary,
+  selectedCsiScopeCount,
+  setupStatus,
+  onJumpToStep,
+  onMarkReadyForInvites,
+}: {
+  project: Project;
+  readinessSummary: SetupReadinessSummary;
+  selectedCsiScopeCount: number;
+  setupStatus: string;
+  onJumpToStep: (stepId: string) => void;
+  onMarkReadyForInvites: () => void;
+}) {
+  const inviteReady =
+    setupStatus === "READY_FOR_INVITES" || readinessSummary.requiredReady;
+  const blockingRows = readinessSummary.rows.filter((row) => row.blocking);
+
+  return (
+    <div className="project-setup-field-sections">
+      <div className="project-setup-form-card">
+        <div className="project-setup-card-header">
+          <div>
+            <p className="label-text">Invite Readiness</p>
+            <h3 className="project-setup-review-title">
+              {readinessSummary.requiredReady
+                ? "Required setup is ready"
+                : "Required setup needs attention"}
+            </h3>
+            <p className="muted-text">
+              {readinessSummary.completeRequiredCount} /{" "}
+              {readinessSummary.requiredCount} required areas complete.{" "}
+              {readinessSummary.warningCount} checklist warning(s).{" "}
+              {selectedCsiScopeCount} CSI scopes selected.
+            </p>
+          </div>
+          <span
+            className={`badge ${
+              readinessSummary.requiredReady ? "badge-success" : "badge-warning"
+            }`}
+          >
+            {readinessSummary.requiredReady ? "Ready" : "Blocked"}
+          </span>
+        </div>
+
+        {!readinessSummary.requiredReady && (
+          <div className="project-setup-review-callout">
+            <strong>Mark Ready for Invites is blocked.</strong>
+            <p className="muted-text">
+              Complete the required items first:{" "}
+              {blockingRows.map((row) => row.stepName).join(", ")}.
+            </p>
+          </div>
+        )}
+
+        <div className="project-setup-review-list">
+          {readinessSummary.rows.map((row) => (
+            <div className="project-setup-review-row" key={row.stepId}>
+              <div>
+                <strong>{row.stepName}</strong>
+                <p className="muted-text">{row.summary}</p>
+              </div>
+              <div className="project-setup-review-meta">
+                <span className={getReadinessBadgeClassName(row)}>
+                  {getReadinessStatusLabel(row)}
+                </span>
+                <span className="badge badge-muted">
+                  {formatSetupStatus(row.requirement)}
+                </span>
+                <button
+                  type="button"
+                  className="button-secondary"
+                  onClick={() => onJumpToStep(row.stepId)}
+                >
+                  Jump
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="project-setup-form-card">
+        <div className="project-setup-card-header">
+          <div>
+            <p className="label-text">Launch Actions</p>
+            <p className="muted-text">
+              Move into scope review, invites, overview, or the command center.
+            </p>
+          </div>
+          <button
+            type="button"
+            className="button-primary"
+            disabled={!readinessSummary.requiredReady}
+            onClick={onMarkReadyForInvites}
+          >
+            Mark Ready for Invites
+          </button>
+        </div>
+
+        <div className="project-setup-next-actions">
+          <Link href={`/projects/${project.id}/scope`} className="button-secondary">
+            Open Project Scope
+          </Link>
+          <Link
+            href={`/projects/${project.id}/invite`}
+            className={inviteReady ? "button-primary" : "button-secondary"}
+          >
+            Invite Subs
+          </Link>
+          <Link
+            href={`/projects/${project.id}/overview`}
+            className="button-secondary"
+          >
+            Project Overview
+          </Link>
+          <Link href={`/projects/${project.id}`} className="button-secondary">
+            Project Command Center
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function ListTextareaField({
   label,
   value,
@@ -1840,6 +2011,276 @@ function ListTextareaField({
       />
     </label>
   );
+}
+
+function getSetupReadinessSummary(
+  project: Project,
+  selectedCsiScopeCount: number
+): SetupReadinessSummary {
+  const rows = [
+    getBasicsReadiness(project),
+    getInternalTeamReadiness(project),
+    getExternalTeamReadiness(project),
+    getScheduleReadiness(project),
+    getBidRequirementsReadiness(project),
+    getPlansCharacteristicsScopeReadiness(project, selectedCsiScopeCount),
+    getBudgetReadiness(project),
+  ];
+  const requiredRows = rows.filter((row) => row.requirement === "required");
+
+  return {
+    rows,
+    requiredReady: requiredRows.every((row) => !row.blocking),
+    completeRequiredCount: requiredRows.filter((row) => !row.blocking).length,
+    requiredCount: requiredRows.length,
+    warningCount: rows.filter((row) => row.status === "incomplete").length,
+  };
+}
+
+function getBasicsReadiness(project: Project): SetupReadinessRow {
+  const missingItems = [
+    hasText(project.name) ? undefined : "project name",
+    hasText(project.client) ? undefined : "client",
+    hasText(project.estimator) ? undefined : "estimator",
+  ].filter(isDefined);
+
+  return buildReadinessRow({
+    stepId: "basics",
+    stepName: "Basics",
+    requirement: "required",
+    missingItems,
+    completeSummary: "Project name, client, and estimator are set.",
+  });
+}
+
+function getInternalTeamReadiness(project: Project): SetupReadinessRow {
+  const hasInternalTeam = (project.internalTeam ?? []).length > 0;
+
+  return buildReadinessRow({
+    stepId: "internal-team",
+    stepName: "Internal Team",
+    requirement: "recommended",
+    missingItems: hasInternalTeam ? [] : ["add at least one internal team member"],
+    completeSummary: `${project.internalTeam?.length ?? 0} internal team member(s) assigned.`,
+  });
+}
+
+function getExternalTeamReadiness(project: Project): SetupReadinessRow {
+  const externalTeam = project.externalTeam ?? [];
+  const hasExternalTeam = externalTeam.length > 0;
+  const hasDesignOrRfiContact = externalTeam.some(
+    (contact) =>
+      contact.isDefaultRfiRecipient ||
+      isDesignDiscipline(contact.discipline) ||
+      /architect|design|rfi/i.test(
+        [contact.firmName, contact.contactName, contact.notes].join(" ")
+      )
+  );
+  const missingItems = [
+    hasExternalTeam ? undefined : "add at least one external contact",
+    hasDesignOrRfiContact
+      ? undefined
+      : "identify an architect, design, or RFI contact",
+  ].filter(isDefined);
+
+  return buildReadinessRow({
+    stepId: "external-team-rfi-routing",
+    stepName: "External Team & RFI Routing",
+    requirement: "recommended",
+    missingItems,
+    completeSummary: `${externalTeam.length} external contact(s) with RFI/design routing context.`,
+  });
+}
+
+function getScheduleReadiness(project: Project): SetupReadinessRow {
+  const missingItems = [
+    hasText(project.subcontractorBidDueDate)
+      ? undefined
+      : "sub bid due date",
+    hasText(project.bidDueDate) ? undefined : "GC bid due date",
+  ].filter(isDefined);
+  const recommendedItems = hasText(project.bidReviewDate)
+    ? []
+    : ["recommended: bid review date"];
+
+  return buildReadinessRow({
+    stepId: "schedule-milestones",
+    stepName: "Schedule & Milestones",
+    requirement: "required",
+    missingItems,
+    recommendedItems,
+    completeSummary: "Sub bid due date and GC bid due date are set.",
+  });
+}
+
+function getBidRequirementsReadiness(project: Project): SetupReadinessRow {
+  const requirements = project.bidRequirements;
+  const hasBidOrContractType = Boolean(
+    requirements?.bidType || requirements?.contractType
+  );
+  const hasRequiredBidsPerScope =
+    requirements?.requiredBidsPerScope !== undefined &&
+    requirements.requiredBidsPerScope > 0;
+  const missingItems = [
+    hasBidOrContractType ? undefined : "bid type or contract type",
+    hasRequiredBidsPerScope ? undefined : "recommended: required bids per scope",
+  ].filter(isDefined);
+
+  return buildReadinessRow({
+    stepId: "bid-contract-requirements",
+    stepName: "Bid / Contract Requirements",
+    requirement: "recommended",
+    missingItems,
+    completeSummary: "Bid/contract requirements have enough launch context.",
+  });
+}
+
+function getPlansCharacteristicsScopeReadiness(
+  project: Project,
+  selectedCsiScopeCount: number
+): SetupReadinessRow {
+  const documents = project.projectDocuments;
+  const characteristics = project.projectCharacteristics;
+  const hasDocumentSignal = Boolean(
+    documents &&
+      [
+        documents.plansLink,
+        documents.specsLink,
+        documents.addendaLink,
+        documents.bidFormLink,
+        documents.drawingDate,
+        documents.drawingSetName,
+        documents.drawingSetVersion,
+        documents.lastAddendumReceived,
+      ].some(hasText)
+  );
+  const hasCharacteristicSignal = Boolean(
+    characteristics &&
+      [
+        characteristics.marketSector,
+        characteristics.buildingType,
+        characteristics.workType,
+        characteristics.constructionType,
+        characteristics.squareFootage,
+        characteristics.stories,
+        characteristics.complexityLevel,
+        characteristics.finishLevel,
+        characteristics.accessConstraints,
+        characteristics.specialConditions,
+        characteristics.isOccupiedFacility,
+        characteristics.isExistingBuilding,
+        characteristics.phasingRequired,
+        characteristics.afterHoursWorkRequired,
+      ].some(Boolean)
+  );
+  const missingItems = [
+    hasDocumentSignal ? undefined : "document link or drawing set/date",
+    hasCharacteristicSignal ? undefined : "at least one project characteristic",
+    selectedCsiScopeCount > 0 ? undefined : "at least one CSI scope",
+  ].filter(isDefined);
+
+  return buildReadinessRow({
+    stepId: "plans-characteristics-scope",
+    stepName: "Plans, Characteristics & Scope",
+    requirement: "required",
+    missingItems,
+    completeSummary: `Documents, characteristics, and ${selectedCsiScopeCount} CSI scope(s) are ready.`,
+  });
+}
+
+function getBudgetReadiness(project: Project): SetupReadinessRow {
+  const budgetReadiness = project.budgetReadiness;
+  const hasBudgetSignal = Boolean(
+    budgetReadiness?.ownerBudget ||
+      budgetReadiness?.targetBudget ||
+      budgetReadiness?.romEstimate
+  );
+
+  return {
+    stepId: "budget-pricing-readiness",
+    stepName: "Budget / Pricing Readiness",
+    requirement: "optional",
+    status: "optional",
+    blocking: false,
+    summary: hasBudgetSignal
+      ? "Budget or ROM context has been captured."
+      : "Optional placeholder until budget, takeoff, historical pricing, or ROM assumptions are available.",
+  };
+}
+
+function buildReadinessRow({
+  stepId,
+  stepName,
+  requirement,
+  missingItems,
+  recommendedItems = [],
+  completeSummary,
+}: {
+  stepId: string;
+  stepName: string;
+  requirement: "required" | "recommended";
+  missingItems: string[];
+  recommendedItems?: string[];
+  completeSummary: string;
+}): SetupReadinessRow {
+  const isComplete = missingItems.length === 0;
+  const summaryParts = [
+    isComplete ? completeSummary : `Missing: ${missingItems.join(", ")}.`,
+    recommendedItems.length > 0 ? recommendedItems.join(", ") + "." : undefined,
+  ].filter(isDefined);
+
+  return {
+    stepId,
+    stepName,
+    requirement,
+    status: isComplete ? "complete" : "incomplete",
+    blocking: requirement === "required" && !isComplete,
+    summary: summaryParts.join(" "),
+  };
+}
+
+function getReadinessBadgeClassName(row: SetupReadinessRow) {
+  if (row.status === "complete") return "badge badge-success";
+  if (row.status === "optional") return "badge badge-muted";
+  return row.blocking ? "badge badge-danger" : "badge badge-warning";
+}
+
+function getReadinessStatusLabel(row: SetupReadinessRow) {
+  if (row.status === "optional") return "Optional";
+  return row.status === "complete" ? "Complete" : "Incomplete";
+}
+
+function isDesignDiscipline(
+  discipline: ProjectExternalTeamDiscipline | undefined
+) {
+  return Boolean(
+    discipline &&
+      [
+        "Architectural",
+        "Structural",
+        "Civil",
+        "Mechanical",
+        "Electrical",
+        "Plumbing",
+        "Fire Protection",
+        "Low Voltage/Technology",
+        "Security",
+        "Landscape",
+        "Geotechnical",
+        "Interior Design",
+        "Food Service",
+        "Medical Equipment",
+      ].includes(discipline)
+  );
+}
+
+function hasText(value: string | number | boolean | undefined) {
+  if (typeof value === "number" || typeof value === "boolean") return true;
+  return Boolean(value?.trim());
+}
+
+function isDefined<T>(value: T | undefined): value is T {
+  return value !== undefined;
 }
 
 function ToggleField({
