@@ -1,4 +1,5 @@
 import {
+  getCsiCatalogTree,
   getCsiDivisions,
   getCsiSections,
   getCsiSectionsByDivision,
@@ -8,6 +9,7 @@ import {
 } from "@/lib/csiCatalog";
 import {
   CsiCatalogItem,
+  CsiCatalogTreeNode,
   CsiDivision,
   CsiMasterFormatVersion,
   CsiSection,
@@ -20,6 +22,12 @@ export function getProjectCsiDivisions(
   version: CsiMasterFormatVersion
 ): CsiDivision[] {
   return getCsiDivisions(version);
+}
+
+export function getProjectCsiTree(
+  version: CsiMasterFormatVersion
+): CsiCatalogTreeNode[] {
+  return getCsiCatalogTree(version);
 }
 
 export function getProjectCsiSections(
@@ -81,6 +89,133 @@ export function validateProjectCsiSelection(
     sectionIds: selectedSectionIds,
     updatedAt: selection?.updatedAt ?? new Date().toISOString(),
   };
+}
+
+export function getProjectSelectedCsiItems(
+  version: CsiMasterFormatVersion,
+  selection: StoredProjectCsiSelection | undefined
+): CsiCatalogItem[] {
+  const validSelection = validateProjectCsiSelection(selection, version);
+  const selectedItems = new Map<string, CsiCatalogItem>();
+
+  validSelection.divisionIds.forEach((divisionId) => {
+    const divisionItem = resolveProjectDivisionCatalogItem(version, divisionId);
+
+    if (divisionItem) selectedItems.set(divisionItem.id, divisionItem);
+  });
+
+  validSelection.sectionIds.forEach((sectionId) => {
+    const selectedItem = resolveProjectCsiItem(version, sectionId);
+    if (selectedItem) selectedItems.set(selectedItem.id, selectedItem);
+  });
+
+  return Array.from(selectedItems.values()).sort(compareCatalogItems);
+}
+
+export function isProjectCsiItemSelected(
+  version: CsiMasterFormatVersion,
+  selectedIds: string[],
+  itemId: string
+): boolean {
+  return selectedIds.some((selectedId) =>
+    projectCsiIdsReferToSameItem(version, selectedId, itemId)
+  );
+}
+
+export function toggleProjectCsiItemSelection(
+  selection: StoredProjectCsiSelection | undefined,
+  version: CsiMasterFormatVersion,
+  itemId: string,
+  checked: boolean
+): StoredProjectCsiSelection {
+  const validSelection = validateProjectCsiSelection(selection, version);
+  const item = resolveProjectCsiItem(version, itemId);
+
+  if (!item) return validSelection;
+
+  const isDivision = item.level === 1;
+
+  if (isDivision) {
+    const divisionIds = checked
+      ? addUnique(validSelection.divisionIds, item.divisionId)
+      : validSelection.divisionIds.filter(
+          (divisionId) => divisionId !== item.divisionId
+        );
+
+    return {
+      ...validSelection,
+      divisionIds,
+      updatedAt: new Date().toISOString(),
+    };
+  }
+
+  const sectionIds = checked
+    ? addUnique(validSelection.sectionIds, item.id)
+    : validSelection.sectionIds.filter(
+        (sectionId) => !projectCsiIdsReferToSameItem(version, sectionId, item.id)
+      );
+  const divisionIds = checked
+    ? addUnique(validSelection.divisionIds, item.divisionId)
+    : validSelection.divisionIds;
+
+  return {
+    ...validSelection,
+    divisionIds,
+    sectionIds,
+    updatedAt: new Date().toISOString(),
+  };
+}
+
+export function getSelectedProjectCsiSummary(
+  version: CsiMasterFormatVersion,
+  selection: StoredProjectCsiSelection | undefined
+) {
+  const selectedItems = getProjectSelectedCsiItems(version, selection);
+  const divisionGroups = new Map<
+    string,
+    {
+      division: CsiCatalogItem;
+      items: CsiCatalogItem[];
+    }
+  >();
+
+  selectedItems.forEach((item) => {
+    const division = resolveProjectDivisionCatalogItem(version, item.divisionId);
+
+    if (!division) return;
+
+    const group =
+      divisionGroups.get(division.id) ?? {
+        division,
+        items: [],
+      };
+
+    group.items.push(item);
+    divisionGroups.set(division.id, group);
+  });
+
+  return Array.from(divisionGroups.values())
+    .map((group) => ({
+      ...group,
+      items: group.items.sort(compareCatalogItems),
+    }))
+    .sort((groupA, groupB) => compareCatalogItems(groupA.division, groupB.division));
+}
+
+function resolveProjectDivisionCatalogItem(
+  version: CsiMasterFormatVersion,
+  divisionIdOrNumber: string
+) {
+  const division = resolveProjectCsiDivision(version, divisionIdOrNumber);
+
+  if (!division) return undefined;
+
+  const divisionCatalogNumber =
+    version === "MASTERFORMAT_CURRENT"
+      ? `${division.number} 00 00`
+      : `${division.number}000`;
+
+  return resolveCsiCatalogItem(version, divisionCatalogNumber);
 }
 
 export function resolveProjectCsiItem(
@@ -167,6 +302,13 @@ function compareProjectCsiItems(
   itemB: ProjectCsiDisplayItem
 ) {
   return itemA.number.localeCompare(itemB.number, undefined, { numeric: true });
+}
+
+function compareCatalogItems(itemA: CsiCatalogItem, itemB: CsiCatalogItem) {
+  return (
+    itemA.sortOrder - itemB.sortOrder ||
+    itemA.number.localeCompare(itemB.number, undefined, { numeric: true })
+  );
 }
 
 function addUnique(values: string[], ...newValues: string[]) {

@@ -1071,6 +1071,140 @@ textarea {
   overflow-wrap: anywhere;
 }
 
+.project-csi-summary {
+  display: grid;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.project-csi-summary-group {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-control);
+  padding: 10px;
+  background: var(--color-surface-muted);
+}
+
+.project-csi-section-header,
+.project-csi-division-card-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.project-csi-division-card-grid {
+  display: grid;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.project-csi-division-card {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: 14px;
+  background: var(--color-surface);
+}
+
+.project-csi-add-modal {
+  max-width: min(760px, calc(100vw - 32px));
+}
+
+.project-csi-editor-modal {
+  max-width: min(980px, calc(100vw - 32px));
+}
+
+.project-csi-modal-body {
+  max-height: min(68vh, 720px);
+  overflow: auto;
+}
+
+.project-csi-modal-heading {
+  margin-top: 6px;
+}
+
+.project-csi-division-picker {
+  display: grid;
+  gap: 8px;
+}
+
+.project-csi-division-choice {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-control);
+  padding: 10px 12px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  text-align: left;
+  cursor: pointer;
+}
+
+.project-csi-division-choice:hover {
+  border-color: var(--color-accent-primary);
+}
+
+.project-csi-tree {
+  display: grid;
+  gap: 4px;
+  margin-top: 12px;
+}
+
+.project-csi-tree-node {
+  min-width: 0;
+}
+
+.project-csi-tree-row {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  gap: 8px;
+  align-items: center;
+  min-width: 0;
+  padding-left: calc(var(--tree-depth, 0) * 20px);
+}
+
+.project-csi-tree-toggle {
+  min-height: 28px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-control);
+  background: var(--color-surface-muted);
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.project-csi-tree-toggle:disabled {
+  cursor: default;
+  opacity: 0.45;
+}
+
+.project-csi-tree-item {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: center;
+  min-width: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-control);
+  padding: 8px 10px;
+  background: var(--color-surface);
+}
+
+.project-csi-tree-label {
+  min-width: 0;
+}
+
+.project-csi-broad-row {
+  margin-bottom: 6px;
+}
+
 .crm-expand-row {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
