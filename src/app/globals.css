@@ -793,6 +793,14 @@ textarea {
   margin-bottom: 0;
 }
 
+.new-project-field-error {
+  display: block;
+  margin-top: 5px;
+  color: var(--color-danger);
+  font-size: 12px;
+  font-weight: 700;
+}
+
 .form-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(260px, 1fr));
@@ -1319,6 +1327,11 @@ textarea:focus {
 .project-setup-footer-actions a,
 .project-setup-inline-cta a {
   text-decoration: none;
+}
+
+.project-setup-disabled-action {
+  cursor: not-allowed;
+  opacity: 0.62;
 }
 
 .project-setup-status-grid {
