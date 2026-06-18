@@ -76,10 +76,10 @@ export default function ProjectCommandCenterPage() {
               Proposal
             </Link>
             <Link
-              href={`/projects/${project.id}/edit`}
+              href={`/projects/${project.id}/setup`}
               className="command-nav-link"
             >
-              Edit Project
+              Project Setup
             </Link>
           </nav>
         </Panel>

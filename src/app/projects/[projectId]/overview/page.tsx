@@ -81,7 +81,7 @@ export default function ProjectOverviewPage() {
       <Link href={`/projects/${project.id}`}>{"<-"} Back to Command Center</Link>
 
       <h1>{project.name} Overview</h1>
-      <Link href={`/projects/${project.id}/edit`}>Edit Project</Link>
+      <Link href={`/projects/${project.id}/setup`}>Project Setup</Link>
 
       <section style={panel}>
         <h2>Project Details</h2>
