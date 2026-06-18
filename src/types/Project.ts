@@ -256,6 +256,9 @@ export type Project = {
   status: ProjectStatus;
 
   archived: boolean;
+  archivedAt?: string;
+  deleted?: boolean;
+  deletedAt?: string;
   createdDate: string;
 
   csiVersion: CsiMasterFormatVersion;
