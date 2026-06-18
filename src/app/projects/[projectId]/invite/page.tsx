@@ -278,8 +278,8 @@ export default function ProjectInvitePreviewPage() {
               Select project CSI scopes before previewing invite candidates.
             </p>
             <p style={{ marginTop: 12 }}>
-              <Link href={`/projects/${project.id}/setup`}>
-                Go to Project Setup
+              <Link href={`/projects/${project.id}/scope`}>
+                Go to Project Scope
               </Link>
             </p>
           </Panel>

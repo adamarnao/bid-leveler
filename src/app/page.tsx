@@ -12,12 +12,6 @@ const projectCsiSelectionsStorageKey = "projectCsiSelections";
 const projectDraftInviteSelectionsStorageKey = "projectDraftInviteSelections";
 const EMPTY_PROJECT_CSI_SELECTIONS: StoredProjectCsiSelections = {};
 const EMPTY_DRAFT_INVITE_SELECTIONS: StoredProjectDraftInviteSelections = {};
-const lookaheadRanges: LookaheadRange[] = [
-  { label: "1D", days: 1 },
-  { label: "3D", days: 3 },
-  { label: "1W", days: 7 },
-  { label: "2W", days: 14 },
-];
 const sortOptions: { label: string; value: ProjectSortKey }[] = [
   { label: "Due Soon", value: "dueSoon" },
   { label: "Health Risk", value: "healthRisk" },
@@ -32,11 +26,6 @@ type ProjectSortKey =
   | "recentlyCreated"
   | "status"
   | "name";
-
-type LookaheadRange = {
-  label: string;
-  days: number;
-};
 
 type StoredProjectDraftInviteCandidate = {
   projectId: string;
@@ -79,6 +68,13 @@ type LookaheadEvent = {
   urgency: DateUrgency;
 };
 
+type CalendarDay = {
+  date: Date;
+  isCurrentMonth: boolean;
+  isToday: boolean;
+  events: LookaheadEvent[];
+};
+
 type ActionItem = {
   id: string;
   project: Project;
@@ -94,10 +90,8 @@ export default function Home() {
   const projectCsiSelections = useProjectCsiSelectionsSnapshot();
   const draftInviteSelections = useDraftInviteSelectionsSnapshot();
   const [sortKey, setSortKey] = useState<ProjectSortKey>("dueSoon");
-  const [lookaheadRange, setLookaheadRange] = useState<LookaheadRange>(
-    lookaheadRanges[2]
-  );
   const today = useMemo(() => startOfLocalDay(new Date()), []);
+  const [selectedCalendarDate, setSelectedCalendarDate] = useState<Date>(today);
   const activeProjects = useMemo(
     () => projects.filter((project) => !project.archived),
     [projects]
@@ -118,12 +112,21 @@ export default function Home() {
     () => sortDashboardProjects(dashboardProjects, sortKey),
     [dashboardProjects, sortKey]
   );
-  const lookaheadEvents = useMemo(
+  const calendarEvents = useMemo(
     () =>
-      buildLookaheadEvents(activeProjects, today, lookaheadRange.days).sort(
-        compareLookaheadEvents
+      buildProjectDateEvents(activeProjects, today).sort(compareLookaheadEvents),
+    [activeProjects, today]
+  );
+  const calendarDays = useMemo(
+    () => buildCalendarDays(today, selectedCalendarDate, calendarEvents),
+    [calendarEvents, selectedCalendarDate, today]
+  );
+  const selectedDateEvents = useMemo(
+    () =>
+      calendarEvents.filter((event) =>
+        isSameLocalDate(event.date, selectedCalendarDate)
       ),
-    [activeProjects, lookaheadRange.days, today]
+    [calendarEvents, selectedCalendarDate]
   );
   const actionItems = useMemo(
     () =>
@@ -202,36 +205,72 @@ export default function Home() {
           </div>
 
           <aside className="dashboard-side-column">
-            <section className="dashboard-panel">
+            <section className="dashboard-panel dashboard-calendar-panel">
               <div className="dashboard-section-header">
                 <div>
-                  <p className="label-text">Lookahead</p>
-                  <h2>Calendar</h2>
+                  <p className="label-text">Calendar</p>
+                  <h2>
+                    {new Intl.DateTimeFormat("en-US", {
+                      month: "long",
+                      year: "numeric",
+                    }).format(selectedCalendarDate)}
+                  </h2>
                 </div>
               </div>
-              <div className="dashboard-range-control" role="group" aria-label="Lookahead range">
-                {lookaheadRanges.map((range) => (
+              <div className="dashboard-calendar">
+                <div className="dashboard-calendar-weekdays" aria-hidden="true">
+                  {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
+                    <span key={day}>{day}</span>
+                  ))}
+                </div>
+                <div className="dashboard-calendar-grid">
+                  {calendarDays.map((day) => (
                   <button
-                    key={range.label}
+                    key={day.date.toISOString()}
                     type="button"
                     className={
-                      range.days === lookaheadRange.days
-                        ? "dashboard-range-button dashboard-range-button-active"
-                        : "dashboard-range-button"
+                      isSameLocalDate(day.date, selectedCalendarDate)
+                        ? `dashboard-calendar-day dashboard-calendar-day-selected${day.isToday ? " dashboard-calendar-day-today" : ""}`
+                        : day.isCurrentMonth
+                          ? `dashboard-calendar-day${day.isToday ? " dashboard-calendar-day-today" : ""}`
+                          : `dashboard-calendar-day dashboard-calendar-day-muted${day.isToday ? " dashboard-calendar-day-today" : ""}`
                     }
-                    onClick={() => setLookaheadRange(range)}
+                    onClick={() => setSelectedCalendarDate(day.date)}
+                    aria-label={`${formatFullDate(day.date)}, ${day.events.length} events`}
                   >
-                    {range.label}
+                    <span className="dashboard-calendar-day-number">
+                      {day.date.getDate()}
+                    </span>
+                    <span className="dashboard-calendar-markers">
+                      {day.events.slice(0, 3).map((event) => (
+                        <span
+                          key={event.id}
+                          className={`dashboard-calendar-marker dashboard-calendar-marker-${getEventTypeClassName(event.type)}`}
+                          title={`${event.type}: ${event.project.name}`}
+                        />
+                      ))}
+                    </span>
+                    {day.events.length > 3 && (
+                      <span className="dashboard-calendar-more">
+                        +{day.events.length - 3}
+                      </span>
+                    )}
                   </button>
                 ))}
+                </div>
               </div>
-              <div className="dashboard-event-list">
-                {lookaheadEvents.length === 0 ? (
+              <div className="dashboard-selected-day">
+                <div>
+                  <p className="label-text">Selected Date</p>
+                  <h3>{formatFullDate(selectedCalendarDate)}</h3>
+                </div>
+                <div className="dashboard-event-list">
+                  {selectedDateEvents.length === 0 ? (
                   <p className="muted-text">
-                    No project deadlines in this range.
+                    No project deadlines on this date.
                   </p>
                 ) : (
-                  lookaheadEvents.map((event) => (
+                  selectedDateEvents.map((event) => (
                     <Link
                       key={event.id}
                       href={`/projects/${event.project.id}`}
@@ -250,9 +289,10 @@ export default function Home() {
                     </Link>
                   ))
                 )}
+                </div>
               </div>
               <p className="muted-text dashboard-integration-note">
-                Calendar integrations can connect here later.
+                Google and Outlook sync can connect here later.
               </p>
             </section>
 
@@ -285,29 +325,6 @@ export default function Home() {
                     </Link>
                   ))
                 )}
-              </div>
-            </section>
-
-            <section className="dashboard-panel">
-              <div className="dashboard-section-header">
-                <div>
-                  <p className="label-text">Quick Actions</p>
-                  <h2>Launchpad</h2>
-                </div>
-              </div>
-              <div className="dashboard-quick-actions">
-                <Link href="/projects/new" className="dashboard-quick-action">
-                  New Project
-                </Link>
-                <Link href="/subcontractors/new" className="dashboard-quick-action">
-                  Add Subcontractor
-                </Link>
-                <Link href="/masterformat" className="dashboard-quick-action">
-                  MasterFormat Reference
-                </Link>
-                <Link href="/subcontractors" className="dashboard-quick-action">
-                  Open Subcontractor Library
-                </Link>
               </div>
             </section>
           </aside>
@@ -371,8 +388,8 @@ function ProjectHealthCard({
         <Link href={`/projects/${project.id}`} className="button-secondary">
           Open
         </Link>
-        <Link href={`/projects/${project.id}/setup`} className="button-secondary">
-          Setup
+        <Link href={`/projects/${project.id}/scope`} className="button-secondary">
+          Project Scope
         </Link>
         <Link href={`/projects/${project.id}/invite`} className="button-secondary">
           Invites
@@ -555,20 +572,6 @@ function buildDashboardProject(
   };
 }
 
-function buildLookaheadEvents(
-  projects: Project[],
-  today: Date,
-  rangeDays: number
-): LookaheadEvent[] {
-  const rangeEnd = addDays(today, rangeDays);
-
-  return projects.flatMap((project) =>
-    getProjectDateEvents(project, today)
-      .filter((event) => event.date >= today && event.date <= rangeEnd)
-      .map((event) => ({ ...event, urgency: getDateUrgency(event.date, today) }))
-  );
-}
-
 function buildActionItems(
   dashboardProjects: DashboardProject[],
   today: Date
@@ -632,6 +635,38 @@ function buildActionItems(
       ...draftInviteItem,
       ...bidsNeedingReview,
     ];
+  });
+}
+
+function buildProjectDateEvents(
+  projects: Project[],
+  today: Date
+): LookaheadEvent[] {
+  return projects.flatMap((project) =>
+    getProjectDateEvents(project, today).map((event) => ({
+      ...event,
+      urgency: getDateUrgency(event.date, today),
+    }))
+  );
+}
+
+function buildCalendarDays(
+  today: Date,
+  visibleDate: Date,
+  events: LookaheadEvent[]
+): CalendarDay[] {
+  const monthStart = new Date(visibleDate.getFullYear(), visibleDate.getMonth(), 1);
+  const calendarStart = addDays(monthStart, -monthStart.getDay());
+
+  return Array.from({ length: 42 }, (_item, index) => {
+    const date = addDays(calendarStart, index);
+
+    return {
+      date,
+      isCurrentMonth: date.getMonth() === visibleDate.getMonth(),
+      isToday: isSameLocalDate(date, today),
+      events: events.filter((event) => isSameLocalDate(event.date, date)),
+    };
   });
 }
 
@@ -839,6 +874,14 @@ function addDays(date: Date, days: number) {
   return nextDate;
 }
 
+function isSameLocalDate(leftDate: Date, rightDate: Date) {
+  return (
+    leftDate.getFullYear() === rightDate.getFullYear() &&
+    leftDate.getMonth() === rightDate.getMonth() &&
+    leftDate.getDate() === rightDate.getDate()
+  );
+}
+
 function getDayDifference(startDate: Date, endDate: Date) {
   const millisecondsPerDay = 24 * 60 * 60 * 1000;
 
@@ -853,6 +896,21 @@ function formatShortDate(date: Date) {
     month: "short",
     day: "numeric",
   }).format(date);
+}
+
+function formatFullDate(date: Date) {
+  return new Intl.DateTimeFormat("en-US", {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+  }).format(date);
+}
+
+function getEventTypeClassName(eventType: LookaheadEvent["type"]) {
+  if (eventType === "Sub Bid Due") return "sub-bid";
+  if (eventType === "Bid Review") return "review";
+
+  return "gc-bid";
 }
 
 function formatStatus(value: string) {
