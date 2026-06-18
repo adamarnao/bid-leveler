@@ -5,8 +5,8 @@ import Link from "next/link";
 import { CsiCodeLabel, CsiLevelBadge } from "@/components/csi";
 import AppShell from "@/components/layout/AppShell";
 import Panel from "@/components/ui/Panel";
-import { mockCsiDivisions } from "@/data/mockCsiDivisions";
 import {
+  getCsiDivisions,
   getNearestLevel2Ancestor,
   isCsiSectionItem,
   isCsiSubsectionItem,
@@ -1188,14 +1188,12 @@ function getDisplayedDivisionOptions(
 ) {
   const divisionOptions = new Map<string, { id: string; label: string }>();
 
-  mockCsiDivisions
-    .filter((division) => division.version === displayCsiVersion)
-    .forEach((division) => {
-      divisionOptions.set(division.id, {
-        id: division.id,
-        label: `Division ${division.number} - ${division.name}`,
-      });
+  getCsiDivisions(displayCsiVersion).forEach((division) => {
+    divisionOptions.set(division.id, {
+      id: division.id,
+      label: `Division ${division.number} - ${division.name}`,
     });
+  });
 
   subcontractors.forEach((subcontractor) => {
     displayedCoverageBySubcontractorId

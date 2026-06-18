@@ -1,5 +1,4 @@
 import { csiCrosswalkEntries } from "@/data/csiCrosswalk";
-import { mockCsiDivisions } from "@/data/mockCsiDivisions";
 import {
   getCrosswalkEntriesFor1995,
   getCrosswalkEntriesForCurrent,
@@ -102,7 +101,9 @@ export function getSelectedSectionGroups(
 }
 
 export function getDivisionName(divisionId: string) {
-  const division = mockCsiDivisions.find((item) => item.id === divisionId);
+  const division =
+    resolveCsiDivision("MASTERFORMAT_CURRENT", divisionId) ??
+    resolveCsiDivision("MASTERFORMAT_1995", divisionId);
 
   return division ? `${division.number} - ${division.name}` : divisionId;
 }
