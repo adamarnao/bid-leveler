@@ -28,6 +28,12 @@ const navSections = [
         isActive: (pathname: string) => pathname === "/",
       },
       {
+        href: "/projects/archive",
+        label: "Archive",
+        compactLabel: "AR",
+        isActive: (pathname: string) => pathname === "/projects/archive",
+      },
+      {
         href: "/subcontractors",
         label: "Subcontractors",
         compactLabel: "SC",

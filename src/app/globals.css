@@ -1813,6 +1813,14 @@ textarea:focus {
   text-transform: uppercase;
 }
 
+.command-header-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
 .command-nav {
   display: flex;
   flex-wrap: wrap;
@@ -1891,6 +1899,17 @@ textarea:focus {
   padding: 8px 10px;
   text-align: left;
   vertical-align: top;
+}
+
+.archive-page-shell {
+  display: grid;
+  gap: 18px;
+}
+
+.archive-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .badge-list {

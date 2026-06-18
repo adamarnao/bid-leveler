@@ -3,7 +3,12 @@
 import { useMemo, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { mockBidSubmissions } from "@/data/mockBidSubmissions";
-import { getMergedProjects, projectsStorageKey } from "@/lib/projects";
+import {
+  archiveProject,
+  getActiveProjects,
+  getMergedProjects,
+  projectsStorageKey,
+} from "@/lib/projects";
 import AppShell from "@/components/layout/AppShell";
 import { StoredProjectCsiSelection, StoredProjectCsiSelections } from "@/types/Csi";
 import { Project } from "@/types/Project";
@@ -92,10 +97,17 @@ export default function Home() {
   const [sortKey, setSortKey] = useState<ProjectSortKey>("dueSoon");
   const today = useMemo(() => startOfLocalDay(new Date()), []);
   const [selectedCalendarDate, setSelectedCalendarDate] = useState<Date>(today);
-  const activeProjects = useMemo(
-    () => projects.filter((project) => !project.archived),
-    [projects]
-  );
+  const activeProjects = useMemo(() => getActiveProjects(projects), [projects]);
+  function handleArchiveProject(project: Project) {
+    const confirmed = window.confirm(
+      `Archive ${project.name}? It will be removed from the active dashboard and can be restored from the project archive.`
+    );
+
+    if (!confirmed) return;
+
+    archiveProject(project.id);
+    window.dispatchEvent(new Event("storage"));
+  }
   const dashboardProjects = useMemo(
     () =>
       activeProjects.map((project) =>
@@ -197,6 +209,7 @@ export default function Home() {
                       key={dashboardProject.project.id}
                       dashboardProject={dashboardProject}
                       today={today}
+                      onArchive={handleArchiveProject}
                     />
                   ))}
                 </div>
@@ -337,9 +350,11 @@ export default function Home() {
 function ProjectHealthCard({
   dashboardProject,
   today,
+  onArchive,
 }: {
   dashboardProject: DashboardProject;
   today: Date;
+  onArchive: (project: Project) => void;
 }) {
   const { project } = dashboardProject;
 
@@ -397,6 +412,13 @@ function ProjectHealthCard({
         <Link href={`/projects/${project.id}/overview`} className="button-secondary">
           Overview
         </Link>
+        <button
+          type="button"
+          className="button-secondary"
+          onClick={() => onArchive(project)}
+        >
+          Archive
+        </button>
       </div>
     </article>
   );

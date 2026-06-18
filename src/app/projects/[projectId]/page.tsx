@@ -2,14 +2,19 @@
 
 import { useSyncExternalStore } from "react";
 import Link from "next/link";
-import { useParams } from "next/navigation";
-import { getMergedProjects, projectsStorageKey } from "@/lib/projects";
+import { useParams, useRouter } from "next/navigation";
+import {
+  archiveProject,
+  getMergedProjects,
+  projectsStorageKey,
+} from "@/lib/projects";
 import { Project } from "@/types/Project";
 import AppShell from "@/components/layout/AppShell";
 import Panel from "@/components/ui/Panel";
 
 export default function ProjectCommandCenterPage() {
   const params = useParams();
+  const router = useRouter();
   const rawProjectId = params.projectId;
   const projectId = Array.isArray(rawProjectId) ? rawProjectId[0] : rawProjectId;
   const projects = useProjectsSnapshot();
@@ -23,6 +28,20 @@ export default function ProjectCommandCenterPage() {
         <Link href="/">Back to Dashboard</Link>
       </AppShell>
     );
+  }
+
+  function handleArchiveProject() {
+    if (!project) return;
+
+    const confirmed = window.confirm(
+      `Archive ${project.name}? It will be removed from active project views and can be restored from the project archive.`
+    );
+
+    if (!confirmed) return;
+
+    archiveProject(project.id);
+    window.dispatchEvent(new Event("storage"));
+    router.push("/projects/archive");
   }
 
   return (
@@ -39,7 +58,16 @@ export default function ProjectCommandCenterPage() {
                 {project.bidDueDate}
               </p>
             </div>
-            <span className="command-status">{project.status}</span>
+            <div className="command-header-actions">
+              <span className="command-status">{project.status}</span>
+              <button
+                type="button"
+                className="button-secondary"
+                onClick={handleArchiveProject}
+              >
+                Archive Project
+              </button>
+            </div>
           </div>
         </Panel>
 
