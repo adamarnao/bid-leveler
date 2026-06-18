@@ -1276,6 +1276,181 @@ textarea:focus {
   text-decoration: none;
 }
 
+.project-setup-shell {
+  display: grid;
+  gap: 18px;
+}
+
+.project-setup-hero {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 20px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-panel);
+  background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--color-accent-primary) 10%, transparent),
+      transparent 46%
+    ),
+    var(--color-surface-1);
+}
+
+.project-setup-hero h1 {
+  margin: 4px 0 6px;
+}
+
+.project-setup-hero-actions,
+.project-setup-footer-actions,
+.project-setup-inline-cta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.project-setup-hero-actions {
+  justify-content: flex-end;
+  flex: 0 0 auto;
+}
+
+.project-setup-hero-actions a,
+.project-setup-footer-actions a,
+.project-setup-inline-cta a {
+  text-decoration: none;
+}
+
+.project-setup-status-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.project-setup-status-card {
+  display: grid;
+  gap: 6px;
+  min-height: 86px;
+  padding: 14px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  background: var(--color-surface-1);
+}
+
+.project-setup-status-card strong {
+  font-size: 15px;
+}
+
+.project-setup-workspace {
+  display: grid;
+  grid-template-columns: minmax(220px, 300px) minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.project-setup-stepper {
+  display: grid;
+  gap: 8px;
+}
+
+.project-setup-step {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr);
+  gap: 10px;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  color: var(--color-text-muted);
+  background: var(--color-surface-1);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 120ms ease, color 120ms ease, background 120ms ease,
+    transform 120ms ease;
+}
+
+.project-setup-step:hover,
+.project-setup-step:focus-visible {
+  border-color: var(--color-accent-primary);
+  color: var(--color-text);
+  background: var(--color-surface-2);
+}
+
+.project-setup-step-active {
+  border-color: var(--color-accent-primary);
+  color: var(--color-text);
+  background: color-mix(in srgb, var(--color-accent-primary) 12%, var(--color-surface-1));
+}
+
+.project-setup-step-complete {
+  border-color: color-mix(in srgb, var(--color-success) 42%, var(--color-border));
+}
+
+.project-setup-step-index {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-control);
+  color: var(--color-text);
+  font-size: 12px;
+  font-weight: 800;
+  background: var(--color-surface-2);
+}
+
+.project-setup-step-complete .project-setup-step-index {
+  border-color: var(--color-success);
+  color: var(--color-success);
+}
+
+.project-setup-step-title,
+.project-setup-step-state {
+  display: block;
+}
+
+.project-setup-step-title {
+  color: inherit;
+  font-weight: 800;
+}
+
+.project-setup-step-state {
+  margin-top: 4px;
+  color: var(--color-text-muted);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: var(--letter-spacing-label);
+  text-transform: uppercase;
+}
+
+.project-setup-step-content {
+  display: grid;
+  gap: 16px;
+}
+
+.project-setup-placeholder,
+.project-setup-inline-cta {
+  padding: 14px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  background: var(--color-surface-2);
+}
+
+.project-setup-placeholder p:last-child,
+.project-setup-inline-cta p:last-child {
+  margin-bottom: 0;
+}
+
+.project-setup-inline-cta {
+  justify-content: space-between;
+}
+
+.project-setup-footer-actions {
+  justify-content: flex-end;
+  padding-top: 4px;
+}
+
 .settings-actions {
   display: flex;
   align-items: center;
@@ -2601,6 +2776,25 @@ textarea:focus {
   }
 
   .dashboard-event-row {
+    grid-template-columns: 1fr;
+  }
+
+  .project-setup-hero,
+  .project-setup-workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .project-setup-hero {
+    display: grid;
+  }
+
+  .project-setup-hero-actions,
+  .project-setup-footer-actions,
+  .project-setup-inline-cta {
+    justify-content: flex-start;
+  }
+
+  .project-setup-status-grid {
     grid-template-columns: 1fr;
   }
 
