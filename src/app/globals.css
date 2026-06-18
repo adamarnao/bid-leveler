@@ -1,21 +1,56 @@
 @import "tailwindcss";
 
 :root {
-  --color-background: #0f1419;
-  --color-surface: #182028;
-  --color-surface-muted: #232d37;
-  --color-border: #3b4652;
-  --color-text: #f1f5f9;
-  --color-text-muted: #a8b4c2;
-  --color-accent-primary: #2563eb;
-  --color-accent-secondary: #64748b;
-  --color-success: #4ade80;
-  --color-warning: #fbbf24;
-  --color-danger: #f87171;
-  --radius-panel: 8px;
-  --radius-control: 6px;
-  --space-page: 20px;
-  --space-panel: 14px;
+  --color-bg: #080808;
+  --color-surface-1: #101010;
+  --color-surface-2: #171717;
+  --color-surface-3: #202020;
+  --color-border-subtle: #242424;
+  --color-border: #323232;
+  --color-border-strong: #4a4a4a;
+  --color-text: #f3f1ec;
+  --color-text-muted: #a8a59e;
+  --color-text-faint: #74716b;
+  --color-accent-primary: #d6a84f;
+  --color-accent-secondary: #9b9588;
+  --color-accent: var(--color-accent-primary);
+  --color-accent-contrast: #11100d;
+  --color-success: #77c98f;
+  --color-warning: #e6bb5d;
+  --color-danger: #ef7d73;
+  --color-info: #8ca7c7;
+  --color-status-success-bg: color-mix(in srgb, var(--color-success) 13%, var(--color-surface-1));
+  --color-status-warning-bg: color-mix(in srgb, var(--color-warning) 13%, var(--color-surface-1));
+  --color-status-danger-bg: color-mix(in srgb, var(--color-danger) 13%, var(--color-surface-1));
+  --color-status-muted-bg: var(--color-surface-3);
+  --color-background: var(--color-bg);
+  --color-surface: var(--color-surface-1);
+  --color-surface-muted: var(--color-surface-2);
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-panel: var(--radius-md);
+  --radius-card: var(--radius-md);
+  --radius-control: var(--radius-sm);
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-page: var(--space-5);
+  --space-panel: var(--space-4);
+  --control-height-sm: 28px;
+  --control-height: 36px;
+  --control-height-lg: 42px;
+  --focus-ring: 0 0 0 2px color-mix(in srgb, var(--color-accent-primary) 34%, transparent);
+  --shadow-popover: 0 12px 28px color-mix(in srgb, #000000 48%, transparent);
+  --shadow-modal: 0 24px 72px color-mix(in srgb, #000000 62%, transparent);
+  --font-label-size: 11px;
+  --font-label-weight: 800;
+  --font-label-transform: uppercase;
+  --letter-spacing-label: 0.04em;
   --sidebar-expanded-width: 248px;
   --sidebar-collapsed-width: 72px;
   --font-body: Arial, Helvetica, sans-serif;
@@ -32,28 +67,42 @@
 }
 
 [data-theme="light"] {
-  --color-background: #eef2f6;
-  --color-surface: #ffffff;
-  --color-surface-muted: #e4e9f0;
-  --color-border: #c8d0da;
+  --color-bg: #f4f3ef;
+  --color-surface-1: #ffffff;
+  --color-surface-2: #eceae4;
+  --color-surface-3: #e1ded6;
+  --color-border-subtle: #dad7ce;
+  --color-border: #c8c3b8;
+  --color-border-strong: #958d7f;
   --color-text: #17202a;
-  --color-text-muted: #5f6d7a;
-  --color-success: #16803c;
-  --color-warning: #b7791f;
-  --color-danger: #c53030;
+  --color-text-muted: #625d54;
+  --color-text-faint: #827b70;
+  --color-background: var(--color-bg);
+  --color-surface: var(--color-surface-1);
+  --color-surface-muted: var(--color-surface-2);
+  --color-success: #14733a;
+  --color-warning: #9f681b;
+  --color-danger: #b83b34;
   color-scheme: light;
 }
 
 [data-theme="dark"] {
-  --color-background: #0f1419;
-  --color-surface: #182028;
-  --color-surface-muted: #232d37;
-  --color-border: #3b4652;
-  --color-text: #f1f5f9;
-  --color-text-muted: #a8b4c2;
-  --color-success: #4ade80;
-  --color-warning: #fbbf24;
-  --color-danger: #f87171;
+  --color-bg: #080808;
+  --color-surface-1: #101010;
+  --color-surface-2: #171717;
+  --color-surface-3: #202020;
+  --color-border-subtle: #242424;
+  --color-border: #323232;
+  --color-border-strong: #4a4a4a;
+  --color-text: #f3f1ec;
+  --color-text-muted: #a8a59e;
+  --color-text-faint: #74716b;
+  --color-background: var(--color-bg);
+  --color-surface: var(--color-surface-1);
+  --color-surface-muted: var(--color-surface-2);
+  --color-success: #77c98f;
+  --color-warning: #e6bb5d;
+  --color-danger: #ef7d73;
   color-scheme: dark;
 }
 
@@ -74,6 +123,11 @@ body {
   line-height: var(--line-height-body);
 }
 
+::selection {
+  color: var(--color-accent-contrast);
+  background: var(--color-accent-primary);
+}
+
 h1,
 h2,
 h3 {
@@ -83,19 +137,23 @@ h3 {
 
 h1 {
   font-size: 28px;
+  letter-spacing: 0;
 }
 
 h2 {
   font-size: 18px;
+  letter-spacing: 0;
 }
 
 h3 {
   font-size: 16px;
+  letter-spacing: 0;
 }
 
 a {
   color: var(--color-accent-primary);
   font-weight: 600;
+  text-underline-offset: 3px;
 }
 
 button,
@@ -103,6 +161,11 @@ input,
 select,
 textarea {
   font: inherit;
+}
+
+:focus-visible {
+  outline: 0;
+  box-shadow: var(--focus-ring);
 }
 
 .visually-hidden {
@@ -122,7 +185,12 @@ textarea {
   width: 100%;
   min-width: 100%;
   min-height: 100vh;
-  background: var(--color-background);
+  background: radial-gradient(
+      circle at top left,
+      color-mix(in srgb, var(--color-surface-3) 26%, transparent),
+      transparent 320px
+    ),
+    var(--color-background);
   color: var(--color-text);
 }
 
@@ -134,9 +202,9 @@ textarea {
   height: 100vh;
   box-sizing: border-box;
   overflow-y: auto;
-  border-right: 1px solid var(--color-border);
+  border-right: 1px solid var(--color-border-subtle);
   padding: 20px 16px;
-  background: var(--color-surface);
+  background: color-mix(in srgb, var(--color-surface-1) 94%, #000000);
   z-index: 20;
 }
 
@@ -152,7 +220,7 @@ textarea {
   gap: 10px;
   padding-bottom: 20px;
   margin-bottom: 20px;
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border-subtle);
 }
 
 .app-shell-sidebar-collapsed .app-brand {
@@ -172,16 +240,17 @@ textarea {
   place-items: center;
   width: 40px;
   height: 40px;
-  border: 1px solid color-mix(in srgb, var(--color-accent-primary) 38%, var(--color-border));
+  border: 1px solid color-mix(in srgb, var(--color-accent-primary) 46%, var(--color-border));
   border-radius: var(--radius-control);
   color: var(--color-accent-primary);
-  background: var(--color-surface-muted);
+  background: var(--color-surface-2);
   font-weight: 800;
 }
 
 .app-brand-name {
   margin: 0;
-  font-size: 18px;
+  font-size: 15px;
+  letter-spacing: 0.02em;
 }
 
 .app-shell-sidebar-collapsed .app-brand-name {
@@ -198,13 +267,15 @@ textarea {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-control);
   color: var(--color-text);
-  background: var(--color-surface-muted);
+  background: var(--color-surface-2);
   cursor: pointer;
 }
 
-.app-sidebar-toggle:hover {
+.app-sidebar-toggle:hover,
+.app-sidebar-toggle:focus-visible {
   border-color: var(--color-accent-primary);
-  background: var(--color-surface);
+  color: var(--color-accent-primary);
+  background: var(--color-surface-3);
 }
 
 .app-shell-sidebar-collapsed .app-sidebar-toggle {
@@ -226,16 +297,16 @@ textarea {
 .app-nav-section + .app-nav-section {
   margin-top: 2px;
   padding-top: 12px;
-  border-top: 1px solid color-mix(in srgb, var(--color-border) 70%, transparent);
+  border-top: 1px solid var(--color-border-subtle);
 }
 
 .app-nav-section-label {
   margin: 0 0 6px 10px;
   color: var(--color-text-muted);
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0;
-  text-transform: uppercase;
+  font-size: var(--font-label-size);
+  font-weight: var(--font-label-weight);
+  letter-spacing: var(--letter-spacing-label);
+  text-transform: var(--font-label-transform);
 }
 
 .app-nav-section-items {
@@ -250,6 +321,7 @@ textarea {
   padding: 8px 10px;
   border-radius: var(--radius-control);
   color: var(--color-text);
+  font-size: 13px;
   text-decoration: none;
 }
 
@@ -286,6 +358,8 @@ textarea {
   display: inline;
   font-size: 12px;
   font-weight: 800;
+  letter-spacing: var(--letter-spacing-label);
+  text-transform: uppercase;
 }
 
 .app-nav-tooltip {
@@ -303,8 +377,8 @@ textarea {
   border-radius: var(--radius-control);
   padding: 6px 8px;
   color: var(--color-text);
-  background: var(--color-surface);
-  box-shadow: 0 8px 24px color-mix(in srgb, #000000 28%, transparent);
+  background: var(--color-surface-2);
+  box-shadow: var(--shadow-popover);
   font-size: 12px;
   font-weight: 700;
   pointer-events: none;
@@ -318,13 +392,13 @@ textarea {
 .app-nav-link:hover {
   border-left-color: var(--color-accent-primary);
   color: var(--color-accent-primary);
-  background: var(--color-surface-muted);
+  background: var(--color-surface-2);
 }
 
 .app-nav-link-active {
   border-left-color: var(--color-accent-primary);
   color: var(--color-accent-primary);
-  background: var(--color-surface-muted);
+  background: color-mix(in srgb, var(--color-accent-primary) 10%, var(--color-surface-2));
 }
 
 .app-content-area {
@@ -336,13 +410,17 @@ textarea {
   position: sticky;
   top: 0;
   z-index: 15;
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border-subtle);
   padding: 14px 20px;
-  background: var(--color-surface);
+  background: color-mix(in srgb, var(--color-surface-1) 94%, transparent);
+  backdrop-filter: blur(12px);
 }
 
 .app-page-title {
   margin: 0;
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
 }
 
 .app-main {
@@ -360,12 +438,16 @@ textarea {
   padding: var(--space-panel);
   margin-top: 16px;
   border-radius: var(--radius-panel);
-  background: var(--color-surface);
+  background: var(--color-surface-1);
 }
 
 .app-panel-title {
   margin-top: 0;
   margin-bottom: 12px;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: var(--letter-spacing-label);
+  text-transform: uppercase;
 }
 
 .form-grid {
@@ -389,7 +471,7 @@ textarea {
 .form-subsection {
   padding-top: 12px;
   margin-top: 12px;
-  border-top: 1px solid var(--color-border);
+  border-top: 1px solid var(--color-border-subtle);
 }
 
 .form-subsection:first-child {
@@ -414,7 +496,7 @@ textarea {
   margin-bottom: 10px;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-control);
-  background: var(--color-surface);
+  background: var(--color-surface-1);
   overflow: hidden;
 }
 
@@ -424,7 +506,7 @@ textarea {
   align-items: center;
   gap: 10px;
   padding: 8px 10px;
-  background: var(--color-surface-muted);
+  background: var(--color-surface-2);
 }
 
 .form-record-summary {
@@ -451,7 +533,7 @@ textarea {
   padding: 10px 12px;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-control);
-  background: var(--color-surface-muted);
+  background: var(--color-surface-2);
 }
 
 .contact-responsibility-summary ul {
@@ -464,7 +546,7 @@ textarea {
   padding: 12px;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-control);
-  background: var(--color-surface);
+  background: var(--color-surface-1);
 }
 
 .responsibility-scope-list {
@@ -509,7 +591,7 @@ textarea {
   padding: 10px 12px;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-control);
-  background: var(--color-surface-muted);
+  background: var(--color-surface-2);
 }
 
 .compliance-document-row .form-field {
@@ -520,20 +602,47 @@ textarea {
   margin-bottom: 12px;
 }
 
-.form-input {
+.form-input,
+input:not([type="checkbox"]):not([type="radio"]):not([type="color"]),
+select,
+textarea {
   width: 100%;
   box-sizing: border-box;
-  padding: 8px;
+  min-height: var(--control-height);
+  padding: 8px 10px;
   margin-top: 4px;
   color: var(--color-text);
-  background: var(--color-surface);
+  background: var(--color-surface-2);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-control);
 }
 
-.form-input:focus {
+.form-input:focus,
+input:not([type="checkbox"]):not([type="radio"]):not([type="color"]):focus,
+select:focus,
+textarea:focus {
   border-color: var(--color-accent-primary);
-  outline: 2px solid color-mix(in srgb, var(--color-accent-primary) 24%, transparent);
+  outline: 0;
+  box-shadow: var(--focus-ring);
+}
+
+.form-field > label,
+.label-text {
+  color: var(--color-text-muted);
+  font-size: var(--font-label-size);
+  font-weight: var(--font-label-weight);
+  letter-spacing: var(--letter-spacing-label);
+  text-transform: var(--font-label-transform);
+}
+
+.form-field > label input,
+.form-field > label select,
+.form-field > label textarea {
+  color: var(--color-text);
+  font-size: var(--font-size-body);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
 }
 
 .radio-group {
@@ -546,6 +655,11 @@ textarea {
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  color: var(--color-text);
+  font-size: var(--font-size-body);
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
 }
 
 .radio-option input {
@@ -565,7 +679,7 @@ textarea {
   flex: 0 0 28px;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-control);
-  box-shadow: inset 0 0 0 2px var(--color-surface);
+  box-shadow: inset 0 0 0 2px var(--color-surface-1);
 }
 
 .color-input {
@@ -574,7 +688,7 @@ textarea {
   padding: 2px;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-control);
-  background: var(--color-surface);
+  background: var(--color-surface-2);
   cursor: pointer;
 }
 
@@ -585,27 +699,154 @@ textarea {
 
 .button-primary,
 .button-secondary {
-  padding: 10px 16px;
+  min-height: var(--control-height);
+  padding: 8px 14px;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-control);
   cursor: pointer;
   color: var(--color-text);
-  background: var(--color-surface-muted);
+  background: var(--color-surface-2);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: var(--letter-spacing-label);
+  line-height: 1;
+  text-transform: uppercase;
 }
 
 .button-primary {
-  border-color: color-mix(in srgb, var(--color-accent-primary) 38%, var(--color-border));
-  box-shadow: inset 3px 0 0 var(--color-accent-primary);
+  border-color: color-mix(in srgb, var(--color-accent-primary) 72%, var(--color-border));
+  color: var(--color-accent-contrast);
+  background: var(--color-accent-primary);
+  box-shadow: none;
 }
 
 .button-secondary {
   border-color: var(--color-border);
+  color: var(--color-text);
+  background: var(--color-surface-2);
 }
 
 .button-primary:hover,
 .button-secondary:hover {
   border-color: var(--color-accent-primary);
-  background: var(--color-surface);
+}
+
+.button-primary:hover {
+  color: var(--color-accent-contrast);
+  background: color-mix(in srgb, var(--color-accent-primary) 86%, #ffffff);
+}
+
+.button-secondary:hover {
+  color: var(--color-accent-primary);
+  background: var(--color-surface-3);
+}
+
+.button-danger {
+  min-height: var(--control-height);
+  border: 1px solid color-mix(in srgb, var(--color-danger) 64%, var(--color-border));
+  border-radius: var(--radius-control);
+  padding: 8px 14px;
+  color: var(--color-danger);
+  background: color-mix(in srgb, var(--color-danger) 10%, var(--color-surface-1));
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: var(--letter-spacing-label);
+  text-transform: uppercase;
+}
+
+.button-ghost {
+  min-height: var(--control-height);
+  border: 1px solid transparent;
+  border-radius: var(--radius-control);
+  padding: 8px 12px;
+  color: var(--color-text-muted);
+  background: transparent;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: var(--letter-spacing-label);
+  text-transform: uppercase;
+}
+
+.button-ghost:hover,
+.button-danger:hover {
+  border-color: currentColor;
+  background: var(--color-surface-2);
+}
+
+.icon-button,
+.glyph-button {
+  display: inline-grid;
+  place-items: center;
+  width: var(--control-height);
+  height: var(--control-height);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-control);
+  padding: 0;
+  color: var(--color-text);
+  background: var(--color-surface-2);
+  cursor: pointer;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.glyph-button {
+  width: var(--control-height-sm);
+  height: var(--control-height-sm);
+  font-size: 12px;
+}
+
+.icon-button:hover,
+.glyph-button:hover,
+.icon-button:focus-visible,
+.glyph-button:focus-visible {
+  border-color: var(--color-accent-primary);
+  color: var(--color-accent-primary);
+  background: var(--color-surface-3);
+}
+
+.toggle-shell {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-text);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: var(--letter-spacing-label);
+  text-transform: uppercase;
+}
+
+.toggle-control {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 42px;
+  height: 22px;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-surface-3);
+}
+
+.toggle-control::after {
+  content: "";
+  position: absolute;
+  left: 3px;
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  background: var(--color-text-muted);
+  transition: transform 120ms ease, background 120ms ease;
+}
+
+.toggle-shell input:checked + .toggle-control {
+  border-color: var(--color-accent-primary);
+  background: color-mix(in srgb, var(--color-accent-primary) 22%, var(--color-surface-3));
+}
+
+.toggle-shell input:checked + .toggle-control::after {
+  transform: translateX(19px);
+  background: var(--color-accent-primary);
 }
 
 .dashboard-project-header {
@@ -655,8 +896,8 @@ textarea {
   border: 1px solid var(--color-border);
   border-left: 3px solid var(--color-accent-primary);
   border-radius: var(--radius-panel);
-  background: color-mix(in srgb, var(--color-surface) 94%, transparent);
-  backdrop-filter: blur(8px);
+  background: color-mix(in srgb, var(--color-surface-1) 92%, transparent);
+  backdrop-filter: blur(12px);
 }
 
 .form-action-bar > div:first-child {
@@ -685,16 +926,18 @@ textarea {
   align-items: center;
   justify-content: center;
   padding: 20px;
-  background: color-mix(in srgb, var(--color-background) 72%, transparent);
+  background: color-mix(in srgb, var(--color-background) 78%, transparent);
+  backdrop-filter: blur(5px);
 }
 
-.modal-panel {
+.modal-panel,
+.modal-card {
   width: min(100%, 460px);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-panel);
   padding: 18px;
-  background: var(--color-surface);
-  box-shadow: 0 18px 48px color-mix(in srgb, #000 22%, transparent);
+  background: var(--color-surface-1);
+  box-shadow: var(--shadow-modal);
 }
 
 .modal-panel-wide {
@@ -711,11 +954,14 @@ textarea {
 
 .modal-header {
   padding-bottom: 12px;
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border-subtle);
 }
 
 .modal-header h2 {
   margin: 0 0 4px;
+  font-size: 15px;
+  letter-spacing: var(--letter-spacing-label);
+  text-transform: uppercase;
 }
 
 .modal-footer {
@@ -723,7 +969,7 @@ textarea {
   justify-content: flex-end;
   gap: 8px;
   padding-top: 12px;
-  border-top: 1px solid var(--color-border);
+  border-top: 1px solid var(--color-border-subtle);
 }
 
 .modal-body-scroll {
@@ -763,13 +1009,15 @@ textarea {
   padding: 10px 12px;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-control);
-  background: var(--color-surface-muted);
+  background: var(--color-surface-2);
 }
 
 .coverage-summary-row > span:first-child {
   color: var(--color-text-muted);
-  font-size: 12px;
-  text-transform: uppercase;
+  font-size: var(--font-label-size);
+  font-weight: var(--font-label-weight);
+  letter-spacing: var(--letter-spacing-label);
+  text-transform: var(--font-label-transform);
 }
 
 .coverage-badge-list {
@@ -831,8 +1079,11 @@ textarea {
   border-radius: var(--radius-control);
   padding: 4px 8px;
   color: var(--color-accent-primary);
-  background: var(--color-surface-muted);
+  background: color-mix(in srgb, var(--color-accent-primary) 10%, var(--color-surface-1));
+  font-size: var(--font-label-size);
   font-weight: 700;
+  letter-spacing: var(--letter-spacing-label);
+  text-transform: uppercase;
 }
 
 .command-nav {
@@ -846,9 +1097,13 @@ textarea {
   border-left: 3px solid var(--color-accent-primary);
   border-radius: var(--radius-control);
   padding: 8px 12px;
-  background: var(--color-surface-muted);
+  background: var(--color-surface-2);
   color: var(--color-text);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: var(--letter-spacing-label);
   text-decoration: none;
+  text-transform: uppercase;
 }
 
 .command-nav-link:hover {
@@ -874,6 +1129,43 @@ textarea {
   text-align: left;
 }
 
+.compact-table th,
+.data-table th {
+  color: var(--color-text-muted);
+  background: var(--color-surface-2);
+  font-size: var(--font-label-size);
+  font-weight: var(--font-label-weight);
+  letter-spacing: var(--letter-spacing-label);
+  text-transform: var(--font-label-transform);
+}
+
+.compact-table tr:hover td,
+.data-table tr:hover td {
+  background: color-mix(in srgb, var(--color-surface-3) 54%, transparent);
+}
+
+.table-shell {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-panel);
+  background: var(--color-surface-1);
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.data-table th,
+.data-table td {
+  border-bottom: 1px solid var(--color-border-subtle);
+  padding: 8px 10px;
+  text-align: left;
+  vertical-align: top;
+}
+
 .badge-list {
   display: flex;
   flex-wrap: wrap;
@@ -890,11 +1182,13 @@ textarea {
   min-width: 0;
   margin-left: 6px;
   border: 1px solid var(--color-border);
-  border-radius: 999px;
-  padding: 2px 8px;
-  font-size: 12px;
-  font-weight: 700;
+  border-radius: var(--radius-xs);
+  padding: 2px 7px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: var(--letter-spacing-label);
   line-height: 1.4;
+  text-transform: uppercase;
   white-space: normal;
   overflow-wrap: anywhere;
   word-break: normal;
@@ -907,36 +1201,36 @@ textarea {
 .badge-primary {
   border-color: color-mix(in srgb, var(--color-accent-primary) 46%, var(--color-border));
   color: var(--color-accent-primary);
-  background: color-mix(in srgb, var(--color-accent-primary) 12%, var(--color-surface));
+  background: color-mix(in srgb, var(--color-accent-primary) 12%, var(--color-surface-1));
 }
 
 .badge-secondary {
   border-color: color-mix(in srgb, var(--color-accent-secondary) 46%, var(--color-border));
   color: var(--color-accent-secondary);
-  background: color-mix(in srgb, var(--color-accent-secondary) 12%, var(--color-surface));
+  background: color-mix(in srgb, var(--color-accent-secondary) 12%, var(--color-surface-1));
 }
 
 .badge-success {
   border-color: color-mix(in srgb, var(--color-success) 42%, var(--color-border));
   color: var(--color-success);
-  background: color-mix(in srgb, var(--color-success) 12%, var(--color-surface));
+  background: var(--color-status-success-bg);
 }
 
 .badge-warning {
   border-color: color-mix(in srgb, var(--color-warning) 48%, var(--color-border));
   color: var(--color-warning);
-  background: color-mix(in srgb, var(--color-warning) 14%, var(--color-surface));
+  background: var(--color-status-warning-bg);
 }
 
 .badge-danger {
   border-color: color-mix(in srgb, var(--color-danger) 46%, var(--color-border));
   color: var(--color-danger);
-  background: color-mix(in srgb, var(--color-danger) 12%, var(--color-surface));
+  background: var(--color-status-danger-bg);
 }
 
 .badge-muted {
   color: var(--color-text-muted);
-  background: var(--color-surface-muted);
+  background: var(--color-status-muted-bg);
 }
 
 .csi-code-label {
@@ -969,30 +1263,32 @@ textarea {
   width: fit-content;
   max-width: 100%;
   border: 1px solid var(--color-border);
-  border-radius: 999px;
+  border-radius: var(--radius-xs);
   padding: 2px 7px;
-  font-size: 0.72rem;
-  font-weight: 700;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: var(--letter-spacing-label);
   line-height: 1.2;
+  text-transform: uppercase;
   white-space: nowrap;
 }
 
 .csi-level-badge-primary {
   border-color: color-mix(in srgb, var(--color-accent-primary) 46%, var(--color-border));
   color: var(--color-accent-primary);
-  background: color-mix(in srgb, var(--color-accent-primary) 10%, var(--color-surface));
+  background: color-mix(in srgb, var(--color-accent-primary) 10%, var(--color-surface-1));
 }
 
 .csi-level-badge-secondary {
   border-color: color-mix(in srgb, var(--color-accent-secondary) 46%, var(--color-border));
   color: var(--color-accent-secondary);
-  background: color-mix(in srgb, var(--color-accent-secondary) 10%, var(--color-surface));
+  background: color-mix(in srgb, var(--color-accent-secondary) 10%, var(--color-surface-1));
 }
 
 .csi-level-badge-success {
   border-color: color-mix(in srgb, var(--color-success) 40%, var(--color-border));
   color: var(--color-success);
-  background: color-mix(in srgb, var(--color-success) 10%, var(--color-surface));
+  background: color-mix(in srgb, var(--color-success) 10%, var(--color-surface-1));
 }
 
 .csi-level-badge-muted {
@@ -1081,9 +1377,10 @@ textarea {
   min-height: 32px;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-control);
-  background: var(--color-surface-muted);
+  background: var(--color-surface-2);
   color: var(--color-text);
   cursor: pointer;
+  font-weight: 900;
 }
 
 .masterformat-tree-toggle:disabled {
@@ -1114,7 +1411,7 @@ textarea {
 .masterformat-tree-row-selected .masterformat-tree-item,
 .masterformat-search-row-selected {
   border-color: color-mix(in srgb, var(--color-accent-primary) 45%, var(--color-border));
-  background: color-mix(in srgb, var(--color-accent-primary) 10%, var(--color-surface));
+  background: color-mix(in srgb, var(--color-accent-primary) 10%, var(--color-surface-1));
 }
 
 .masterformat-tree-item:hover,
@@ -1178,7 +1475,7 @@ textarea {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-control);
   padding: 10px;
-  background: var(--color-surface-muted);
+  background: var(--color-surface-2);
 }
 
 .project-csi-section-header,
@@ -1202,7 +1499,7 @@ textarea {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-card);
   padding: 14px;
-  background: var(--color-surface);
+  background: var(--color-surface-1);
 }
 
 .project-csi-add-modal {
@@ -1236,7 +1533,7 @@ textarea {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-control);
   padding: 10px 12px;
-  background: var(--color-surface);
+  background: var(--color-surface-1);
   color: var(--color-text);
   text-align: left;
   cursor: pointer;
@@ -1269,9 +1566,10 @@ textarea {
   min-height: 28px;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-control);
-  background: var(--color-surface-muted);
+  background: var(--color-surface-2);
   color: var(--color-text);
   cursor: pointer;
+  font-weight: 900;
 }
 
 .project-csi-tree-toggle:disabled {
@@ -1288,7 +1586,7 @@ textarea {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-control);
   padding: 8px 10px;
-  background: var(--color-surface);
+  background: var(--color-surface-1);
 }
 
 .project-csi-tree-label {
@@ -1327,7 +1625,7 @@ textarea {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-control);
   padding: 8px 10px;
-  background: var(--color-surface-muted);
+  background: var(--color-surface-2);
   font-weight: 700;
 }
 
@@ -1339,7 +1637,7 @@ textarea {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-control);
   color: var(--color-accent-primary);
-  background: var(--color-surface);
+  background: var(--color-surface-1);
   font-weight: 800;
   line-height: 1;
 }
@@ -1349,13 +1647,25 @@ textarea {
   min-width: 980px;
   margin-top: 8px;
   border-collapse: collapse;
+  background: var(--color-surface-1);
 }
 
 .crm-vendor-table th {
-  font-size: 12px;
+  border: 1px solid var(--color-border);
+  font-size: var(--font-label-size);
+  font-weight: var(--font-label-weight);
+  letter-spacing: var(--letter-spacing-label);
   color: var(--color-text-muted);
-  background: var(--color-surface-muted);
-  text-transform: uppercase;
+  background: var(--color-surface-2);
+  text-transform: var(--font-label-transform);
+}
+
+.crm-vendor-table td {
+  border-color: var(--color-border-subtle);
+}
+
+.crm-vendor-table tbody tr:hover td {
+  background: color-mix(in srgb, var(--color-surface-3) 54%, transparent);
 }
 
 .invite-table-scroll {
@@ -1421,8 +1731,8 @@ textarea {
 .invite-sortable-header:focus-visible {
   background: color-mix(
     in srgb,
-    var(--color-accent-primary) 10%,
-    var(--color-surface-muted)
+  var(--color-accent-primary) 10%,
+    var(--color-surface-2)
   );
 }
 
@@ -1447,13 +1757,15 @@ textarea {
   flex: 0 0 auto;
   max-width: 72px;
   border: 1px solid var(--color-border);
-  border-radius: 999px;
+  border-radius: var(--radius-xs);
   padding: 1px 5px;
-  background: var(--color-surface);
+  background: var(--color-surface-1);
   color: var(--color-text-muted);
   font-size: 10px;
+  font-weight: 800;
+  letter-spacing: var(--letter-spacing-label);
   line-height: 1.2;
-  text-transform: none;
+  text-transform: uppercase;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
