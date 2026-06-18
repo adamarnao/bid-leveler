@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { CsiCodeLabel, CsiLevelBadge } from "@/components/csi";
 import AppShell from "@/components/layout/AppShell";
-import { mockProjects } from "@/data/mockProjects";
+import { getMergedProjects, projectsStorageKey } from "@/lib/projects";
 import {
   getProjectCsiTree,
   getSelectedProjectCsiSummary,
@@ -21,10 +21,13 @@ import {
   StoredProjectCsiSelection,
   StoredProjectCsiSelections,
 } from "@/types/Csi";
+import { Project } from "@/types/Project";
 
 const selectionStorageKey = "projectCsiSelections";
 const selectionChangeEvent = "projectCsiSelectionsChange";
 const EMPTY_PROJECT_CSI_SELECTIONS: StoredProjectCsiSelections = {};
+let cachedProjectsStorageValue: string | undefined;
+let cachedProjects: Project[] = getMergedProjects();
 let cachedSelectionsStorageValue: string | undefined;
 let cachedSelections: StoredProjectCsiSelections = EMPTY_PROJECT_CSI_SELECTIONS;
 
@@ -32,7 +35,8 @@ export default function ProjectSetupPage() {
   const params = useParams();
   const rawProjectId = params.projectId;
   const projectId = Array.isArray(rawProjectId) ? rawProjectId[0] : rawProjectId;
-  const project = mockProjects.find((p) => p.id === projectId);
+  const projects = useProjectsSnapshot();
+  const project = projects.find((p) => p.id === projectId);
   const storedSelections = useProjectCsiSelectionsSnapshot();
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [editingDivisionId, setEditingDivisionId] = useState<string | undefined>();
@@ -523,6 +527,37 @@ function readStoredSelections(): StoredProjectCsiSelections {
   } catch {
     return EMPTY_PROJECT_CSI_SELECTIONS;
   }
+}
+
+function useProjectsSnapshot(): Project[] {
+  return useSyncExternalStore(
+    subscribeToProjectStorage,
+    getProjectsSnapshot,
+    getServerProjectsSnapshot
+  );
+}
+
+function subscribeToProjectStorage(onStoreChange: () => void) {
+  window.addEventListener("storage", onStoreChange);
+
+  return () => {
+    window.removeEventListener("storage", onStoreChange);
+  };
+}
+
+function getServerProjectsSnapshot(): Project[] {
+  return cachedProjects;
+}
+
+function getProjectsSnapshot(): Project[] {
+  const storageValue = localStorage.getItem(projectsStorageKey) || "[]";
+
+  if (storageValue !== cachedProjectsStorageValue) {
+    cachedProjectsStorageValue = storageValue;
+    cachedProjects = getMergedProjects(storageValue);
+  }
+
+  return cachedProjects;
 }
 
 function useProjectCsiSelectionsSnapshot(): StoredProjectCsiSelections {
