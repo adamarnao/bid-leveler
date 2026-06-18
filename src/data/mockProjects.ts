@@ -34,5 +34,12 @@ export const mockProjects: Project[] = [
     createdDate: "2026-06-09",
 
     csiVersion: "MASTERFORMAT_CURRENT",
+
+    setupStatus: "IN_PROGRESS",
+    setupProgress: {
+      currentStepId: "project-scope",
+      completedStepIds: ["project-basics"],
+      lastEditedAt: "2026-06-09",
+    },
   },
 ];
