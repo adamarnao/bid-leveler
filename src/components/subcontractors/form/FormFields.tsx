@@ -1,4 +1,5 @@
 import {
+  formatPhoneInput,
   formatOptionalNumber,
   toOptionalNumber,
 } from "@/components/subcontractors/form/subcontractorFormNormalization";
@@ -8,6 +9,10 @@ type FormInputProps = {
   value: string;
   onChange: (value: string) => void;
   type?: string;
+  inputMode?: "text" | "search" | "email" | "tel" | "url" | "none" | "numeric" | "decimal";
+  className?: string;
+  maxLength?: number;
+  suffix?: string;
   required?: boolean;
 };
 
@@ -16,20 +21,39 @@ export function FormInput({
   value,
   onChange,
   type = "text",
+  inputMode,
+  className,
+  maxLength,
+  suffix,
   required = false,
 }: FormInputProps) {
+  const shouldFormatPhone = isPhoneInputLabel(label);
+  const displayValue = shouldFormatPhone ? formatPhoneInput(value) : value;
+  const fieldClassName = ["form-field", className].filter(Boolean).join(" ");
+
   return (
-    <div className="form-field">
+    <div className={fieldClassName}>
       <label>
         {label}
         <br />
-        <input
-          type={type}
-          value={value}
-          required={required}
-          onChange={(event) => onChange(event.target.value)}
-          className="form-input"
-        />
+        <span className={suffix ? "input-affix-shell" : undefined}>
+          <input
+            type={type}
+            inputMode={inputMode ?? (shouldFormatPhone ? "tel" : undefined)}
+            value={displayValue}
+            required={required}
+            maxLength={maxLength}
+            onChange={(event) =>
+              onChange(
+                shouldFormatPhone
+                  ? formatPhoneInput(event.target.value)
+                  : event.target.value
+              )
+            }
+            className="form-input"
+          />
+          {suffix && <span className="input-affix-suffix">{suffix}</span>}
+        </span>
       </label>
     </div>
   );
@@ -148,4 +172,14 @@ function defaultOptionLabel(value: string) {
     .split("_")
     .map((word) => word.charAt(0) + word.slice(1).toLowerCase())
     .join(" ");
+}
+
+function isPhoneInputLabel(label: string) {
+  const normalizedLabel = label.toLowerCase();
+
+  return (
+    normalizedLabel.includes("phone") &&
+    !normalizedLabel.includes("extension") &&
+    normalizedLabel !== "primary phone"
+  );
 }

@@ -492,6 +492,63 @@ textarea {
   align-items: start;
 }
 
+.company-phone-extension-field {
+  max-width: 88px;
+}
+
+.form-field-compact-extension {
+  max-width: 88px;
+}
+
+.form-field-compact-extension .form-input {
+  text-align: center;
+}
+
+.form-two-control-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: var(--control-height);
+}
+
+.form-two-control-row .form-field {
+  margin-bottom: 0;
+}
+
+.input-affix-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  margin-top: 4px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-control);
+  background: var(--color-surface-2);
+}
+
+.input-affix-shell:focus-within {
+  border-color: var(--color-accent-primary);
+  box-shadow: var(--focus-ring);
+}
+
+.input-affix-shell .form-input {
+  margin-top: 0;
+  border: 0;
+  background: transparent;
+}
+
+.input-affix-shell .form-input:focus {
+  box-shadow: none;
+}
+
+.input-affix-suffix {
+  padding: 0 10px 0 2px;
+  color: var(--color-text-muted);
+  font-size: var(--font-label-size);
+  font-weight: var(--font-label-weight);
+  letter-spacing: var(--letter-spacing-label);
+  text-transform: uppercase;
+}
+
 .form-record {
   margin-bottom: 10px;
   border: 1px solid var(--color-border);
@@ -2017,6 +2074,37 @@ textarea:focus {
   background: var(--color-surface-muted);
 }
 
+.csi-tree-toggle {
+  display: inline-grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-control);
+  color: var(--color-accent-primary);
+  background: var(--color-surface-1);
+  cursor: pointer;
+}
+
+.csi-tree-toggle:disabled {
+  cursor: default;
+  opacity: 0.38;
+}
+
+.csi-tree-caret {
+  width: 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 6px solid currentColor;
+  transform-origin: center;
+  transition: transform 120ms ease;
+}
+
+.csi-tree-caret-expanded {
+  transform: rotate(90deg);
+}
+
 .csi-picker-label,
 .csi-picker-section {
   display: flex;
@@ -2039,6 +2127,53 @@ textarea:focus {
 
 .csi-picker-section {
   justify-content: flex-start;
+}
+
+.csi-picker-tree-node {
+  display: grid;
+  gap: 4px;
+}
+
+.csi-picker-tree-row {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+  gap: 8px;
+  align-items: center;
+  padding-left: calc(var(--tree-depth, 0) * 18px);
+}
+
+.csi-picker-tree-children {
+  display: grid;
+  gap: 4px;
+}
+
+.csi-tree-level-1 {
+  font-weight: 900;
+  letter-spacing: var(--letter-spacing-label);
+  text-transform: uppercase;
+}
+
+.csi-tree-level-2 {
+  color: var(--color-text);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: var(--letter-spacing-label);
+  text-transform: uppercase;
+}
+
+.csi-tree-level-3 {
+  color: var(--color-text);
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.csi-tree-level-4 {
+  color: var(--color-text-muted);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
 }
 
 @media (max-width: 760px) {

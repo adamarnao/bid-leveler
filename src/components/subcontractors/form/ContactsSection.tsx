@@ -152,6 +152,9 @@ export default function ContactsSection({
                 <FormInput
                   label="Ext."
                   value={contact.officePhoneExtension ?? ""}
+                  className="form-field-compact-extension"
+                  inputMode="numeric"
+                  maxLength={8}
                   onChange={(value) =>
                     onUpdateContact(contact.id, {
                       officePhoneExtension: value,

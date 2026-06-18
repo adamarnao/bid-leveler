@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { CsiCodeLabel, CsiLevelBadge } from "@/components/csi";
 import {
   createEmptyContact,
   createEmptyContactScope,
@@ -23,24 +24,24 @@ import {
   uniqueStrings,
 } from "@/components/subcontractors/form/subcontractorFormNormalization";
 import {
-  CsiPickerSectionOption,
   csiDivisionIdsContain,
   csiSectionIdsContain,
   getBestPrimaryDivisionId,
   getCrosswalkIssueCount,
+  getCsiCoverageTree,
   getCsiDivisionOptions,
   getCsiSectionOptions,
   getDisplayedDivisionIds,
   getDisplayedSectionIds,
   getDivisionIdsForSections,
   getDivisionName,
+  getVisibleResponsibilityCsiTree,
   getSectionDivisionId,
   getSectionDivisionIdFromOptions,
   getSelectedSectionGroups,
-  getVisibleResponsibilityDivisions,
-  getVisibleResponsibilitySections,
   filterOutCsiDivisionIds,
   filterOutCsiSectionIds,
+  isRealCsiDivisionId,
 } from "@/components/subcontractors/form/subcontractorFormCsiHelpers";
 import {
   getContactName,
@@ -55,7 +56,10 @@ import ContactsSection from "@/components/subcontractors/form/ContactsSection";
 import LocationsSection from "@/components/subcontractors/form/LocationsSection";
 import VendorStatusComplianceSection from "@/components/subcontractors/form/VendorStatusComplianceSection";
 import VpiPerformanceSection from "@/components/subcontractors/form/VpiPerformanceSection";
-import { CsiDivision, CsiMasterFormatVersion } from "@/types/Csi";
+import {
+  CsiCatalogTreeNode,
+  CsiMasterFormatVersion,
+} from "@/types/Csi";
 import {
   Subcontractor,
   SubcontractorContact,
@@ -175,6 +179,10 @@ export default function SubcontractorForm({
       selectedSectionIds,
     ]
   );
+  const realSelectedDivisionIds = useMemo(
+    () => new Set(Array.from(selectedDivisionIds).filter(isRealCsiDivisionId)),
+    [selectedDivisionIds]
+  );
   const crosswalkIssueCount = useMemo(
     () => getCrosswalkIssueCount(draft, pickerDisplayVersion),
     [draft, pickerDisplayVersion]
@@ -187,48 +195,34 @@ export default function SubcontractorForm({
     useState<CsiMasterFormatVersion | null>(null);
   const [stagedExpandedCsiDivisionIds, setStagedExpandedCsiDivisionIds] =
     useState<string[]>([]);
+  const [stagedExpandedCsiItemIds, setStagedExpandedCsiItemIds] = useState<
+    string[]
+  >([]);
   const [stagedResponsibilitiesDraft, setStagedResponsibilitiesDraft] =
     useState<StagedResponsibilitiesDraft | null>(null);
+  const [
+    expandedResponsibilityCsiItemIds,
+    setExpandedResponsibilityCsiItemIds,
+  ] = useState<string[]>([]);
   const [showAllResponsibilityCsi, setShowAllResponsibilityCsi] =
     useState(false);
   const responsibilityCsiVersion =
     draft.csiCoverage.sourceVersion ?? "MASTERFORMAT_CURRENT";
-  const responsibilityDivisionOptions = useMemo(
-    () => getCsiDivisionOptions(responsibilityCsiVersion),
-    [responsibilityCsiVersion]
-  );
   const responsibilitySectionOptions = useMemo(
     () => getCsiSectionOptions(responsibilityCsiVersion),
     [responsibilityCsiVersion]
   );
-  const visibleResponsibilityDivisionOptions = useMemo(
+  const visibleResponsibilityCsiTree = useMemo(
     () =>
-      getVisibleResponsibilityDivisions(
-        responsibilityDivisionOptions,
-        responsibilitySectionOptions,
+      getVisibleResponsibilityCsiTree(
+        responsibilityCsiVersion,
         draft,
         stagedResponsibilitiesDraft?.inviteScopes ?? [],
         showAllResponsibilityCsi
       ),
     [
       draft,
-      responsibilityDivisionOptions,
-      responsibilitySectionOptions,
-      showAllResponsibilityCsi,
-      stagedResponsibilitiesDraft,
-    ]
-  );
-  const visibleResponsibilitySectionOptions = useMemo(
-    () =>
-      getVisibleResponsibilitySections(
-        responsibilitySectionOptions,
-        draft,
-        stagedResponsibilitiesDraft?.inviteScopes ?? [],
-        showAllResponsibilityCsi
-      ),
-    [
-      draft,
-      responsibilitySectionOptions,
+      responsibilityCsiVersion,
       showAllResponsibilityCsi,
       stagedResponsibilitiesDraft,
     ]
@@ -256,6 +250,10 @@ export default function SubcontractorForm({
   );
   const stagedCsiSectionOptions = useMemo(
     () => getCsiSectionOptions(effectiveStagedPickerDisplayVersion),
+    [effectiveStagedPickerDisplayVersion]
+  );
+  const stagedCsiTree = useMemo(
+    () => getCsiCoverageTree(effectiveStagedPickerDisplayVersion),
     [effectiveStagedPickerDisplayVersion]
   );
   const stagedSelectedSectionIds = useMemo(
@@ -326,7 +324,7 @@ export default function SubcontractorForm({
         ...draft.csiCoverage.divisionIds,
         ...normalizedSectionIds.map(getSectionDivisionId),
       ])
-    ).filter(Boolean);
+    ).filter(isRealCsiDivisionId);
     const normalizedLocations = normalizeLocations(draft.locations ?? []);
     const validLocationIds = new Set(
       normalizedLocations.map((location) => location.id)
@@ -471,13 +469,18 @@ export default function SubcontractorForm({
   function openResponsibilitiesModal(contact: SubcontractorContact) {
     setStagedResponsibilitiesDraft({
       contactId: contact.id,
-      inviteScopes: cloneInviteScopes(contact.inviteScopes ?? []),
+      inviteScopes:
+        contact.inviteScopes && contact.inviteScopes.length > 0
+          ? cloneInviteScopes(contact.inviteScopes)
+          : [createEmptyContactScope()],
     });
+    setExpandedResponsibilityCsiItemIds([]);
     setShowAllResponsibilityCsi(false);
   }
 
   function closeResponsibilitiesModal() {
     setStagedResponsibilitiesDraft(null);
+    setExpandedResponsibilityCsiItemIds([]);
     setShowAllResponsibilityCsi(false);
   }
 
@@ -607,6 +610,7 @@ export default function SubcontractorForm({
     });
     setStagedPickerDisplayVersion(pickerDisplayVersion);
     setStagedExpandedCsiDivisionIds([...expandedCsiDivisionIds]);
+    setStagedExpandedCsiItemIds([]);
     setIsCsiModalOpen(true);
   }
 
@@ -615,6 +619,7 @@ export default function SubcontractorForm({
     setStagedCsiDraft(null);
     setStagedPickerDisplayVersion(null);
     setStagedExpandedCsiDivisionIds([]);
+    setStagedExpandedCsiItemIds([]);
   }
 
   function applyCsiCoverage() {
@@ -775,43 +780,6 @@ export default function SubcontractorForm({
     }
   }
 
-  function updateStagedPrimaryDivision(divisionId: string) {
-    if (!stagedCsiDraft) return;
-
-    if (isStagedViewingEquivalentCoverage) {
-      const nextSectionIds = Array.from(stagedSelectedSectionIds);
-      const nextDivisionIds = Array.from(
-        new Set([...getDivisionIdsForSections(nextSectionIds), divisionId])
-      );
-
-      updateStagedCsiCoverage({
-        primaryDivisionId: divisionId,
-        csiCoverage: {
-          ...stagedCsiDraft.csiCoverage,
-          sourceVersion: effectiveStagedPickerDisplayVersion,
-          divisionIds: nextDivisionIds,
-          sectionIds: nextSectionIds,
-        },
-      });
-
-      setStagedExpandedCsiDivisionIds((divisionIds) =>
-        divisionIds.includes(divisionId) ? divisionIds : [...divisionIds, divisionId]
-      );
-
-      return;
-    }
-
-    updateStagedCsiCoverage({
-      primaryDivisionId: divisionId,
-      csiCoverage: {
-        ...stagedCsiDraft.csiCoverage,
-        divisionIds: Array.from(
-          new Set([...stagedCsiDraft.csiCoverage.divisionIds, divisionId])
-        ),
-      },
-    });
-  }
-
   function cancelEdit() {
     if (!isDirty) {
       window.history.back();
@@ -932,7 +900,7 @@ export default function SubcontractorForm({
               <div>
                 <h2 id="csi-coverage-modal-title">Edit CSI Coverage</h2>
                 <p className="muted-text">
-                  Select the divisions and sections this subcontractor performs.
+                  Select the CSI scopes this subcontractor performs.
                 </p>
               </div>
             </div>
@@ -964,101 +932,24 @@ export default function SubcontractorForm({
                     crosswalk mappings.
                   </p>
                 )}
-              <FormSelect
-                label="Primary Division"
-                value={stagedCsiDraft.primaryDivisionId}
-                options={stagedCsiDivisionOptions.map((division) => division.id)}
-                getOptionLabel={(divisionId) => getDivisionName(divisionId)}
-                onChange={updateStagedPrimaryDivision}
-              />
               <div className="form-field">
-                <strong>Divisions and Sections</strong>
+                <strong>CSI Scopes</strong>
                 <div className="csi-picker">
-                  {stagedCsiDivisionOptions.map((division) => {
-                    const sectionOptions = stagedCsiSectionOptions.filter(
-                      (section) => section.divisionId === division.id
-                    );
-                    const selectedSectionCount = sectionOptions.filter((section) =>
-                      stagedSelectedSectionIds.has(section.id)
-                    ).length;
-                    const isExpanded = stagedExpandedCsiDivisionIds.includes(
-                      division.id
-                    );
-
-                    return (
-                      <div key={division.id} className="csi-picker-division">
-                        <div className="csi-picker-division-row">
-                          <button
-                            type="button"
-                            className="crm-expand-button"
-                            aria-expanded={isExpanded}
-                            onClick={() =>
-                              toggleExpanded(
-                                division.id,
-                                setStagedExpandedCsiDivisionIds
-                              )
-                            }
-                          >
-                            {isExpanded ? "-" : "+"}
-                          </button>
-                          <label className="csi-picker-label">
-                            <input
-                              type="checkbox"
-                              checked={stagedSelectedDivisionIds.has(division.id)}
-                              onChange={(event) =>
-                                toggleStagedDivision(
-                                  division.id,
-                                  event.target.checked
-                                )
-                              }
-                            />
-                            <span>
-                              {division.number} - {division.name}
-                            </span>
-                          </label>
-                          <span className="muted-text">
-                            {selectedSectionCount} selected
-                          </span>
-                        </div>
-
-                        {isExpanded && (
-                          <div className="csi-picker-sections">
-                            {sectionOptions.length === 0 ? (
-                              <p className="muted-text">No sections available.</p>
-                            ) : (
-                              sectionOptions.map((section) => (
-                                <label
-                                  key={section.id}
-                                  className="csi-picker-section"
-                                >
-                                  <input
-                                    type="checkbox"
-                                    checked={stagedSelectedSectionIds.has(
-                                      section.id
-                                    )}
-                                    onChange={(event) =>
-                                      toggleStagedSection(
-                                        section.id,
-                                        event.target.checked
-                                      )
-                                    }
-                                  />
-                                  <span>
-                                    {section.number} - {section.name}
-                                  </span>
-                                  {section.additionalTitleCount > 0 && (
-                                    <span className="badge badge-muted">
-                                      +{section.additionalTitleCount} more titles
-                                    </span>
-                                  )}
-                                </label>
-                              ))
-                            )}
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })}
+                  {stagedCsiTree.map((divisionNode) => (
+                    <CompanyCsiCoverageDivisionNode
+                      key={divisionNode.item.id}
+                      node={divisionNode}
+                      csiVersion={effectiveStagedPickerDisplayVersion}
+                      selectedDivisionIds={stagedSelectedDivisionIds}
+                      selectedSectionIds={stagedSelectedSectionIds}
+                      expandedDivisionIds={stagedExpandedCsiDivisionIds}
+                      expandedItemIds={stagedExpandedCsiItemIds}
+                      onToggleExpanded={setStagedExpandedCsiDivisionIds}
+                      onToggleExpandedItem={setStagedExpandedCsiItemIds}
+                      onToggleDivision={toggleStagedDivision}
+                      onToggleSection={toggleStagedSection}
+                    />
+                  ))}
                 </div>
               </div>
             </div>
@@ -1117,7 +1008,7 @@ export default function SubcontractorForm({
                     setShowAllResponsibilityCsi(event.target.checked)
                   }
                 />
-                Show all source-version CSI divisions and sections
+                Show all source-version CSI scopes
               </label>
               {!showAllResponsibilityCsi && (
                 <p className="muted-text">
@@ -1141,11 +1032,14 @@ export default function SubcontractorForm({
                       scope={scope}
                       scopeIndex={index}
                       locations={draft.locations ?? []}
-                      divisions={visibleResponsibilityDivisionOptions}
-                      sections={visibleResponsibilitySectionOptions}
+                      csiTree={visibleResponsibilityCsiTree}
                       csiVersion={responsibilityCsiVersion}
                       companyDivisionIds={draft.csiCoverage.divisionIds}
                       companySectionIds={draft.csiCoverage.sectionIds}
+                      expandedCsiItemIds={expandedResponsibilityCsiItemIds}
+                      onToggleExpandedCsiItem={
+                        setExpandedResponsibilityCsiItemIds
+                      }
                       onChange={updateResponsibilityScope}
                       onRemove={removeResponsibilityScope}
                       onToggleDivision={toggleResponsibilityScopeDivision}
@@ -1204,21 +1098,6 @@ export default function SubcontractorForm({
           onToggleLocation={toggleExpanded}
         />
 
-        <ContactsSection
-          subcontractorId={draft.id}
-          contacts={draft.contacts}
-          locations={draft.locations}
-          expandedContactIds={expandedContactIds}
-          setExpandedContactIds={setExpandedContactIds}
-          onAddContact={addContact}
-          onUpdateContact={updateContact}
-          onRemoveContact={removeContact}
-          onMarkPrimaryContact={markPrimaryContact}
-          onMarkDefaultInviteRecipient={markDefaultInviteRecipient}
-          onOpenResponsibilities={openResponsibilitiesModal}
-          onToggleContact={toggleExpanded}
-        />
-
         <Panel title="CSI Coverage">
           <FormTextArea
             label="Specialty Scope Notes"
@@ -1234,18 +1113,22 @@ export default function SubcontractorForm({
             }
           />
           <div className="coverage-summary">
-            {selectedDivisionIds.size === 0 && selectedSectionIds.size === 0 ? (
+            {realSelectedDivisionIds.size === 0 && selectedSectionIds.size === 0 ? (
               <p className="muted-text">No CSI coverage selected.</p>
             ) : (
               <>
-                <div className="coverage-summary-row">
-                  <span>Primary Division</span>
-                  <strong>{getDivisionName(draft.primaryDivisionId)}</strong>
-                </div>
+                {getPrimaryCoverageDivisionName(realSelectedDivisionIds) && (
+                  <div className="coverage-summary-row">
+                    <span>Primary Division</span>
+                    <strong>
+                      {getPrimaryCoverageDivisionName(realSelectedDivisionIds)}
+                    </strong>
+                  </div>
+                )}
                 <div className="coverage-summary-row">
                   <span>Selected Divisions</span>
                   <div className="coverage-badge-list">
-                    {Array.from(selectedDivisionIds).map((divisionId) => (
+                    {Array.from(realSelectedDivisionIds).map((divisionId) => (
                       <span key={divisionId} className="badge badge-muted">
                         {getDivisionName(divisionId)}
                       </span>
@@ -1297,6 +1180,21 @@ export default function SubcontractorForm({
           </div>
         </Panel>
 
+        <ContactsSection
+          subcontractorId={draft.id}
+          contacts={draft.contacts}
+          locations={draft.locations}
+          expandedContactIds={expandedContactIds}
+          setExpandedContactIds={setExpandedContactIds}
+          onAddContact={addContact}
+          onUpdateContact={updateContact}
+          onRemoveContact={removeContact}
+          onMarkPrimaryContact={markPrimaryContact}
+          onMarkDefaultInviteRecipient={markDefaultInviteRecipient}
+          onOpenResponsibilities={openResponsibilitiesModal}
+          onToggleContact={toggleExpanded}
+        />
+
         <VendorStatusComplianceSection draft={draft} setDraft={setDraft} />
 
         <VpiPerformanceSection draft={draft} setDraft={setDraft} />
@@ -1305,15 +1203,211 @@ export default function SubcontractorForm({
   );
 }
 
+function CompanyCsiCoverageDivisionNode({
+  node,
+  csiVersion,
+  selectedDivisionIds,
+  selectedSectionIds,
+  expandedDivisionIds,
+  expandedItemIds,
+  onToggleExpanded,
+  onToggleExpandedItem,
+  onToggleDivision,
+  onToggleSection,
+}: {
+  node: CsiCatalogTreeNode;
+  csiVersion: CsiMasterFormatVersion;
+  selectedDivisionIds: Set<string>;
+  selectedSectionIds: Set<string>;
+  expandedDivisionIds: string[];
+  expandedItemIds: string[];
+  onToggleExpanded: React.Dispatch<React.SetStateAction<string[]>>;
+  onToggleExpandedItem: React.Dispatch<React.SetStateAction<string[]>>;
+  onToggleDivision: (divisionId: string, checked: boolean) => void;
+  onToggleSection: (sectionId: string, checked: boolean) => void;
+}) {
+  const divisionId = node.item.divisionId;
+  const isExpanded = expandedDivisionIds.includes(divisionId);
+  const selectedSectionCount = countSelectedCsiTreeItems(
+    node.children,
+    csiVersion,
+    selectedSectionIds
+  );
+
+  return (
+    <div className="csi-picker-division">
+      <div className="csi-picker-division-row">
+        <button
+          type="button"
+          className="csi-tree-toggle"
+          aria-label={`${isExpanded ? "Collapse" : "Expand"} ${node.item.number}`}
+          aria-expanded={isExpanded}
+          onClick={() => toggleExpanded(divisionId, onToggleExpanded)}
+        >
+          <span
+            className={`csi-tree-caret${isExpanded ? " csi-tree-caret-expanded" : ""}`}
+            aria-hidden="true"
+          />
+        </button>
+        <label className={`csi-picker-label csi-tree-level-${node.item.level}`}>
+          <input
+            type="checkbox"
+            checked={csiDivisionIdsContain(
+              csiVersion,
+              Array.from(selectedDivisionIds),
+              divisionId
+            )}
+            onChange={(event) =>
+              onToggleDivision(divisionId, event.target.checked)
+            }
+          />
+          <span>
+            <CsiCodeLabel item={node.item} />
+          </span>
+          <CsiLevelBadge item={node.item} />
+        </label>
+        <span className="muted-text">{selectedSectionCount} selected</span>
+      </div>
+
+      {isExpanded && (
+        <div className="csi-picker-sections">
+          {node.children.length === 0 ? (
+            <p className="muted-text">No CSI scopes available.</p>
+          ) : (
+            node.children.map((childNode) => (
+              <CompanyCsiCoverageTreeNode
+                key={childNode.item.id}
+                node={childNode}
+                csiVersion={csiVersion}
+                selectedSectionIds={selectedSectionIds}
+                expandedItemIds={expandedItemIds}
+                onToggleExpandedItem={onToggleExpandedItem}
+                depth={0}
+                onToggleSection={onToggleSection}
+              />
+            ))
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function CompanyCsiCoverageTreeNode({
+  node,
+  csiVersion,
+  selectedSectionIds,
+  expandedItemIds,
+  onToggleExpandedItem,
+  depth,
+  onToggleSection,
+}: {
+  node: CsiCatalogTreeNode;
+  csiVersion: CsiMasterFormatVersion;
+  selectedSectionIds: Set<string>;
+  expandedItemIds: string[];
+  onToggleExpandedItem: React.Dispatch<React.SetStateAction<string[]>>;
+  depth: number;
+  onToggleSection: (sectionId: string, checked: boolean) => void;
+}) {
+  const hasChildren = node.children.length > 0;
+  const isExpanded = expandedItemIds.includes(node.item.id);
+
+  return (
+    <div className="csi-picker-tree-node">
+      <div
+        className="csi-picker-tree-row"
+        style={{ "--tree-depth": depth } as React.CSSProperties}
+      >
+        <button
+          type="button"
+          className="csi-tree-toggle"
+          aria-label={
+            hasChildren
+              ? `${isExpanded ? "Collapse" : "Expand"} ${node.item.number}`
+              : `${node.item.number} has no child scopes`
+          }
+          aria-expanded={hasChildren ? isExpanded : undefined}
+          disabled={!hasChildren}
+          onClick={() => toggleExpanded(node.item.id, onToggleExpandedItem)}
+        >
+          {hasChildren && (
+            <span
+              className={`csi-tree-caret${isExpanded ? " csi-tree-caret-expanded" : ""}`}
+              aria-hidden="true"
+            />
+          )}
+        </button>
+        <label className={`csi-picker-section csi-tree-level-${node.item.level}`}>
+          <input
+            type="checkbox"
+            checked={csiSectionIdsContain(
+              csiVersion,
+              Array.from(selectedSectionIds),
+              node.item.id
+            )}
+            onChange={(event) =>
+              onToggleSection(node.item.id, event.target.checked)
+            }
+          />
+          <span>
+            <CsiCodeLabel item={node.item} />
+          </span>
+          <CsiLevelBadge item={node.item} />
+        </label>
+      </div>
+
+      {hasChildren && isExpanded && (
+        <div className="csi-picker-tree-children">
+          {node.children.map((childNode) => (
+            <CompanyCsiCoverageTreeNode
+              key={childNode.item.id}
+              node={childNode}
+              csiVersion={csiVersion}
+              selectedSectionIds={selectedSectionIds}
+              expandedItemIds={expandedItemIds}
+              onToggleExpandedItem={onToggleExpandedItem}
+              depth={depth + 1}
+              onToggleSection={onToggleSection}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function countSelectedCsiTreeItems(
+  nodes: CsiCatalogTreeNode[],
+  csiVersion: CsiMasterFormatVersion,
+  selectedSectionIds: Set<string>
+) {
+  const selectedIds = Array.from(selectedSectionIds);
+
+  function walk(node: CsiCatalogTreeNode): number {
+    const selectedSelf = csiSectionIdsContain(csiVersion, selectedIds, node.item.id)
+      ? 1
+      : 0;
+
+    return (
+      selectedSelf +
+      node.children.reduce((count, childNode) => count + walk(childNode), 0)
+    );
+  }
+
+  return nodes.reduce((count, node) => count + walk(node), 0);
+}
+
 function ResponsibilityScopeEditor({
   scope,
   scopeIndex,
   locations,
-  divisions,
-  sections,
+  csiTree,
   csiVersion,
   companyDivisionIds,
   companySectionIds,
+  expandedCsiItemIds,
+  onToggleExpandedCsiItem,
   onChange,
   onRemove,
   onToggleDivision,
@@ -1322,11 +1416,12 @@ function ResponsibilityScopeEditor({
   scope: SubcontractorContactScope;
   scopeIndex: number;
   locations: SubcontractorLocation[];
-  divisions: CsiDivision[];
-  sections: CsiPickerSectionOption[];
+  csiTree: CsiCatalogTreeNode[];
   csiVersion: CsiMasterFormatVersion;
   companyDivisionIds: string[];
   companySectionIds: string[];
+  expandedCsiItemIds: string[];
+  onToggleExpandedCsiItem: React.Dispatch<React.SetStateAction<string[]>>;
   onChange: (scopeIndex: number, scope: SubcontractorContactScope) => void;
   onRemove: (scopeIndex: number) => void;
   onToggleDivision: (
@@ -1432,97 +1527,28 @@ function ResponsibilityScopeEditor({
       </div>
 
       <div className="responsibility-section">
-        <strong>CSI Divisions and Sections</strong>
+        <strong>CSI Scopes</strong>
         <div className="csi-picker">
-          {divisions.map((division) => {
-            const divisionSections = sections.filter(
-              (section) => section.divisionId === division.id
-            );
-            const isOutsideCoverage = !csiDivisionIdsContain(
-              csiVersion,
-              companyDivisionIds,
-              division.id
-            );
-
-            return (
-              <div key={division.id} className="csi-picker-division">
-                <div className="csi-picker-division-row">
-                  <span className="crm-expand-button" aria-hidden="true">
-                    -
-                  </span>
-                  <label className="csi-picker-label">
-                    <input
-                      type="checkbox"
-                      checked={csiDivisionIdsContain(
-                        csiVersion,
-                        scope.divisionIds,
-                        division.id
-                      )}
-                      onChange={(event) =>
-                        onToggleDivision(
-                          scopeIndex,
-                          division.id,
-                          event.target.checked
-                        )
-                      }
-                    />
-                    <span>
-                      {division.number} - {division.name}
-                    </span>
-                  </label>
-                  {isOutsideCoverage && (
-                    <span className="badge badge-warning">
-                      Outside company coverage
-                    </span>
-                  )}
-                </div>
-
-                {divisionSections.length > 0 && (
-                  <div className="csi-picker-sections">
-                    {divisionSections.map((section) => {
-                      const sectionOutsideCoverage =
-                        !csiSectionIdsContain(
-                          csiVersion,
-                          companySectionIds,
-                          section.id
-                        );
-
-                      return (
-                        <label
-                          key={section.id}
-                          className="csi-picker-section"
-                        >
-                          <input
-                            type="checkbox"
-                            checked={csiSectionIdsContain(
-                              csiVersion,
-                              scope.sectionIds,
-                              section.id
-                            )}
-                            onChange={(event) =>
-                              onToggleSection(
-                                scopeIndex,
-                                section.id,
-                                event.target.checked
-                              )
-                            }
-                          />
-                          <span>
-                            {section.number} - {section.name}
-                          </span>
-                          {sectionOutsideCoverage && (
-                            <span className="badge badge-warning">
-                              Outside company coverage
-                            </span>
-                          )}
-                        </label>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
-            );
-          })}
+          {csiTree.length === 0 ? (
+            <p className="muted-text">No company CSI coverage selected.</p>
+          ) : (
+            csiTree.map((node) => (
+              <ResponsibilityCsiTreeNode
+                key={node.item.id}
+                node={node}
+                scope={scope}
+                scopeIndex={scopeIndex}
+                csiVersion={csiVersion}
+                companyDivisionIds={companyDivisionIds}
+                companySectionIds={companySectionIds}
+                expandedItemIds={expandedCsiItemIds}
+                onToggleExpandedItem={onToggleExpandedCsiItem}
+                depth={0}
+                onToggleDivision={onToggleDivision}
+                onToggleSection={onToggleSection}
+              />
+            ))
+          )}
         </div>
       </div>
 
@@ -1538,6 +1564,150 @@ function ResponsibilityScopeEditor({
       />
     </div>
   );
+}
+
+function ResponsibilityCsiTreeNode({
+  node,
+  scope,
+  scopeIndex,
+  csiVersion,
+  companyDivisionIds,
+  companySectionIds,
+  expandedItemIds,
+  onToggleExpandedItem,
+  depth,
+  onToggleDivision,
+  onToggleSection,
+}: {
+  node: CsiCatalogTreeNode;
+  scope: SubcontractorContactScope;
+  scopeIndex: number;
+  csiVersion: CsiMasterFormatVersion;
+  companyDivisionIds: string[];
+  companySectionIds: string[];
+  expandedItemIds: string[];
+  onToggleExpandedItem: React.Dispatch<React.SetStateAction<string[]>>;
+  depth: number;
+  onToggleDivision: (
+    scopeIndex: number,
+    divisionId: string,
+    checked: boolean
+  ) => void;
+  onToggleSection: (
+    scopeIndex: number,
+    sectionId: string,
+    checked: boolean
+  ) => void;
+}) {
+  const item = node.item;
+  const isDivision = item.level === 1;
+  const divisionId = item.divisionId;
+  const hasChildren = node.children.length > 0;
+  const isExpanded = expandedItemIds.includes(item.id);
+  const isChecked = isDivision
+    ? csiDivisionIdsContain(csiVersion, scope.divisionIds, divisionId)
+    : csiSectionIdsContain(csiVersion, scope.sectionIds, item.id);
+  const outsideCoverage = isResponsibilityItemOutsideCoverage(
+    csiVersion,
+    isDivision ? divisionId : item.id,
+    companyDivisionIds,
+    companySectionIds,
+    isDivision
+  );
+
+  return (
+    <div className="csi-picker-tree-node">
+      <div
+        className="csi-picker-tree-row"
+        style={{ "--tree-depth": depth } as React.CSSProperties}
+      >
+        <button
+          type="button"
+          className="csi-tree-toggle"
+          aria-label={
+            hasChildren
+              ? `${isExpanded ? "Collapse" : "Expand"} ${item.number}`
+              : `${item.number} has no child scopes`
+          }
+          aria-expanded={hasChildren ? isExpanded : undefined}
+          disabled={!hasChildren}
+          onClick={() => toggleExpanded(item.id, onToggleExpandedItem)}
+        >
+          {hasChildren && (
+            <span
+              className={`csi-tree-caret${isExpanded ? " csi-tree-caret-expanded" : ""}`}
+              aria-hidden="true"
+            />
+          )}
+        </button>
+        <label className={`csi-picker-section csi-tree-level-${item.level}`}>
+          <input
+            type="checkbox"
+            checked={isChecked}
+            onChange={(event) =>
+              isDivision
+                ? onToggleDivision(scopeIndex, divisionId, event.target.checked)
+                : onToggleSection(scopeIndex, item.id, event.target.checked)
+            }
+          />
+          <span>
+            {item.number} - {item.name}
+          </span>
+          {outsideCoverage && (
+            <span className="badge badge-warning">Outside company coverage</span>
+          )}
+        </label>
+      </div>
+
+      {hasChildren && isExpanded && (
+        <div className="csi-picker-tree-children">
+          {node.children.map((childNode) => (
+            <ResponsibilityCsiTreeNode
+              key={childNode.item.id}
+              node={childNode}
+              scope={scope}
+              scopeIndex={scopeIndex}
+              csiVersion={csiVersion}
+              companyDivisionIds={companyDivisionIds}
+              companySectionIds={companySectionIds}
+              expandedItemIds={expandedItemIds}
+              onToggleExpandedItem={onToggleExpandedItem}
+              depth={depth + 1}
+              onToggleDivision={onToggleDivision}
+              onToggleSection={onToggleSection}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function isResponsibilityItemOutsideCoverage(
+  csiVersion: CsiMasterFormatVersion,
+  itemId: string,
+  companyDivisionIds: string[],
+  companySectionIds: string[],
+  isDivision: boolean
+) {
+  if (isDivision) {
+    return !csiDivisionIdsContain(csiVersion, companyDivisionIds, itemId);
+  }
+
+  const divisionId = getSectionDivisionId(itemId);
+
+  return (
+    !csiSectionIdsContain(csiVersion, companySectionIds, itemId) &&
+    !csiDivisionIdsContain(csiVersion, companyDivisionIds, divisionId)
+  );
+}
+
+function getPrimaryCoverageDivisionName(selectedDivisionIds: Set<string>) {
+  const primaryDivisionId = Array.from(selectedDivisionIds).find(
+    isRealCsiDivisionId
+  );
+
+  return primaryDivisionId ? getDivisionName(primaryDivisionId) : "";
 }
 
 function toggleExpanded(

@@ -4,6 +4,7 @@ import {
   getCrosswalkEntriesForCurrent,
 } from "@/lib/csiCrosswalk";
 import {
+  getCsiCatalogTree,
   getCsiDivisions,
   getCsiSections,
   resolveCsiCatalogItem,
@@ -14,7 +15,11 @@ import {
   getSectionNumbersForSubcontractor,
   getSubcontractorCoverageForVersion,
 } from "@/lib/subcontractorCsiCoverage";
-import { CsiDivision, CsiMasterFormatVersion } from "@/types/Csi";
+import {
+  CsiCatalogTreeNode,
+  CsiDivision,
+  CsiMasterFormatVersion,
+} from "@/types/Csi";
 import {
   Subcontractor,
   SubcontractorContactScope,
@@ -27,6 +32,43 @@ export type CsiPickerSectionOption = {
   name: string;
   additionalTitleCount: number;
 };
+
+export function isRealCsiDivisionId(divisionId: string | undefined) {
+  if (!divisionId) return false;
+  if (divisionId === "unassigned") return false;
+
+  return Boolean(
+    resolveCsiDivision("MASTERFORMAT_CURRENT", divisionId) ??
+      resolveCsiDivision("MASTERFORMAT_1995", divisionId)
+  );
+}
+
+export function getVisibleResponsibilityCsiTree(
+  version: CsiMasterFormatVersion,
+  subcontractor: Subcontractor,
+  scopes: SubcontractorContactScope[],
+  showAll: boolean
+): CsiCatalogTreeNode[] {
+  const tree = getCsiCatalogTree(version);
+
+  if (showAll) return tree;
+
+  const visibleItemIds = getVisibleResponsibilityItemIds(
+    version,
+    subcontractor,
+    scopes
+  );
+
+  return tree
+    .map((node) => filterCsiTreeNode(node, visibleItemIds))
+    .filter(isDefined);
+}
+
+export function getCsiCoverageTree(
+  version: CsiMasterFormatVersion
+): CsiCatalogTreeNode[] {
+  return getCsiCatalogTree(version);
+}
 
 export function getVisibleResponsibilityDivisions(
   allDivisions: CsiDivision[],
@@ -101,6 +143,8 @@ export function getSelectedSectionGroups(
 }
 
 export function getDivisionName(divisionId: string) {
+  if (!isRealCsiDivisionId(divisionId)) return "";
+
   const division =
     resolveCsiDivision("MASTERFORMAT_CURRENT", divisionId) ??
     resolveCsiDivision("MASTERFORMAT_1995", divisionId);
@@ -382,6 +426,76 @@ function normalizeSectionNumber(value: string) {
 
 function getSubcontractorSourceVersion(subcontractor: Subcontractor) {
   return subcontractor.csiCoverage.sourceVersion ?? "MASTERFORMAT_CURRENT";
+}
+
+function getVisibleResponsibilityItemIds(
+  version: CsiMasterFormatVersion,
+  subcontractor: Subcontractor,
+  scopes: SubcontractorContactScope[]
+) {
+  const visibleItemIds = new Set<string>();
+
+  subcontractor.csiCoverage.divisionIds.forEach((divisionId) => {
+    addResolvedItemAndAncestors(visibleItemIds, version, divisionId);
+  });
+  subcontractor.csiCoverage.sectionIds.forEach((sectionId) => {
+    addResolvedItemAndAncestors(visibleItemIds, version, sectionId);
+  });
+  scopes.flatMap((scope) => scope.divisionIds ?? []).forEach((divisionId) => {
+    addResolvedItemAndAncestors(visibleItemIds, version, divisionId);
+  });
+  scopes.flatMap((scope) => scope.sectionIds ?? []).forEach((sectionId) => {
+    addResolvedItemAndAncestors(visibleItemIds, version, sectionId);
+  });
+
+  return visibleItemIds;
+}
+
+function addResolvedItemAndAncestors(
+  itemIds: Set<string>,
+  version: CsiMasterFormatVersion,
+  itemIdOrNumber: string | undefined
+) {
+  if (!itemIdOrNumber) return;
+
+  const item =
+    resolveCsiCatalogItem(version, itemIdOrNumber) ??
+    resolveCsiCatalogItem(version, resolveDivisionIdentity(version, itemIdOrNumber));
+
+  if (!item) return;
+
+  itemIds.add(item.id);
+
+  let parentId = item.parentId;
+  while (parentId) {
+    const parent = resolveCsiCatalogItem(version, parentId);
+    if (!parent) break;
+
+    itemIds.add(parent.id);
+    parentId = parent.parentId;
+  }
+}
+
+function filterCsiTreeNode(
+  node: CsiCatalogTreeNode,
+  visibleItemIds: Set<string>
+): CsiCatalogTreeNode | undefined {
+  const children = node.children
+    .map((child) => filterCsiTreeNode(child, visibleItemIds))
+    .filter(isDefined);
+
+  if (!visibleItemIds.has(node.item.id) && children.length === 0) {
+    return undefined;
+  }
+
+  return {
+    item: node.item,
+    children,
+  };
+}
+
+function isDefined<T>(value: T | undefined): value is T {
+  return value !== undefined;
 }
 
 function addResolvedDivisionId(

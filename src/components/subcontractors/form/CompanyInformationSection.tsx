@@ -6,9 +6,9 @@ import {
   FormTextArea,
 } from "@/components/subcontractors/form/FormFields";
 import {
-  formatOptionalNumber,
+  formatWholeNumberInput,
   splitList,
-  toOptionalNumber,
+  toOptionalWholeNumber,
 } from "@/components/subcontractors/form/subcontractorFormNormalization";
 import {
   isDoNotUseVendor,
@@ -55,24 +55,31 @@ export default function CompanyInformationSection({
             value={draft.mainPhone ?? ""}
             onChange={(value) => setDraft({ ...draft, mainPhone: value })}
           />
-          <FormInput
-            label="Main Phone Extension"
-            value={draft.mainPhoneExtension ?? ""}
-            onChange={(value) =>
-              setDraft({ ...draft, mainPhoneExtension: value })
-            }
-          />
-          <CheckboxField
-            label="Preferred Vendor"
-            checked={isPreferredVendor(draft)}
-            onChange={onPreferredChange}
-            disabled={isDoNotUseVendor(draft)}
-          />
-          <CheckboxField
-            label="Do Not Use"
-            checked={isDoNotUseVendor(draft)}
-            onChange={onDoNotUseChange}
-          />
+          <div className="company-phone-extension-field">
+            <FormInput
+              label="Ext."
+              value={draft.mainPhoneExtension ?? ""}
+              className="form-field-compact-extension"
+              inputMode="numeric"
+              maxLength={8}
+              onChange={(value) =>
+                setDraft({ ...draft, mainPhoneExtension: value })
+              }
+            />
+          </div>
+          <div className="form-two-control-row">
+            <CheckboxField
+              label="Preferred Vendor"
+              checked={isPreferredVendor(draft)}
+              onChange={onPreferredChange}
+              disabled={isDoNotUseVendor(draft)}
+            />
+            <CheckboxField
+              label="Do Not Use"
+              checked={isDoNotUseVendor(draft)}
+              onChange={onDoNotUseChange}
+            />
+          </div>
         </div>
       </div>
 
@@ -176,14 +183,17 @@ export default function CompanyInformationSection({
           />
           <FormInput
             label="Travel Radius"
-            type="number"
-            value={formatOptionalNumber(draft.serviceArea.travelRadiusMiles)}
+            inputMode="numeric"
+            suffix="mi"
+            value={formatWholeNumberInput(
+              String(draft.serviceArea.travelRadiusMiles ?? "")
+            )}
             onChange={(value) =>
               setDraft({
                 ...draft,
                 serviceArea: {
                   ...draft.serviceArea,
-                  travelRadiusMiles: toOptionalNumber(value),
+                  travelRadiusMiles: toOptionalWholeNumber(value),
                 },
               })
             }

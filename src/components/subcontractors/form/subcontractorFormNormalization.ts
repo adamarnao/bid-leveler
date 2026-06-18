@@ -262,12 +262,51 @@ export function formatOptionalNumber(value: number | undefined) {
   return value === undefined ? "" : String(value);
 }
 
+export function formatPhoneInput(value: string | undefined) {
+  const digits = getDigits(value).slice(0, 10);
+
+  if (digits.length <= 3) return digits;
+  if (digits.length <= 6) return `${digits.slice(0, 3)}-${digits.slice(3)}`;
+
+  return `${digits.slice(0, 3)}-${digits.slice(3, 6)}-${digits.slice(6)}`;
+}
+
+export function formatWholeNumberInput(value: string) {
+  return getDigits(value);
+}
+
+export function formatCurrencyInput(value: number | undefined) {
+  if (value === undefined) return "";
+
+  return new Intl.NumberFormat("en-US", {
+    maximumFractionDigits: 0,
+    style: "currency",
+    currency: "USD",
+  }).format(value);
+}
+
 export function toOptionalNumber(value: string) {
   if (value.trim() === "") return undefined;
 
   const numberValue = Number(value);
 
   return Number.isNaN(numberValue) ? undefined : numberValue;
+}
+
+export function toOptionalWholeNumber(value: string) {
+  const digits = getDigits(value);
+
+  return digits ? Number(digits) : undefined;
+}
+
+export function toOptionalCurrencyNumber(value: string) {
+  const normalizedValue = value.replace(/[^\d.]/g, "");
+
+  if (normalizedValue.trim() === "") return undefined;
+
+  const numberValue = Number(normalizedValue);
+
+  return Number.isNaN(numberValue) ? undefined : Math.round(numberValue);
 }
 
 export function toRequiredNumber(value: string) {
@@ -292,4 +331,8 @@ export function formatCsiSourceVersion(value: string) {
   if (value === "MASTERFORMAT_1995") return "MasterFormat 1995";
 
   return formatStatus(value);
+}
+
+function getDigits(value: string | undefined) {
+  return (value ?? "").replace(/\D/g, "");
 }

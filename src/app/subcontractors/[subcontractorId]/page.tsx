@@ -125,7 +125,10 @@ export default function SubcontractorProfilePage() {
         </div>
 
         <div className="profile-detail-grid">
-          <ProfileDetail label="Main Phone" value={subcontractor.mainPhone} />
+          <ProfileDetail
+            label="Main Phone"
+            value={formatMainPhone(subcontractor)}
+          />
           <ProfileDetail
             label="Website"
             value={
@@ -691,6 +694,13 @@ function formatAddress(subcontractor: Subcontractor) {
   return [address.line1, address.line2, address.city, address.state, address.zip]
     .filter(Boolean)
     .join(", ");
+}
+
+function formatMainPhone(subcontractor: Subcontractor) {
+  if (!subcontractor.mainPhone) return undefined;
+  if (!subcontractor.mainPhoneExtension) return subcontractor.mainPhone;
+
+  return `${subcontractor.mainPhone} ext. ${subcontractor.mainPhoneExtension}`;
 }
 
 function formatLocationAddress(location: SubcontractorLocation) {

@@ -7,8 +7,8 @@ import {
   FormTextArea,
 } from "@/components/subcontractors/form/FormFields";
 import {
-  formatOptionalNumber,
-  toOptionalNumber,
+  formatCurrencyInput,
+  toOptionalCurrencyNumber,
 } from "@/components/subcontractors/form/subcontractorFormNormalization";
 import { formatVendorStatus } from "@/lib/subcontractors";
 import {
@@ -58,14 +58,14 @@ export default function VendorStatusComplianceSection({
           />
           <FormInput
             label="Bonding Capacity"
-            type="number"
-            value={formatOptionalNumber(draft.prequalification.bondingCapacity)}
+            inputMode="decimal"
+            value={formatCurrencyInput(draft.prequalification.bondingCapacity)}
             onChange={(value) =>
               setDraft({
                 ...draft,
                 prequalification: {
                   ...draft.prequalification,
-                  bondingCapacity: toOptionalNumber(value),
+                  bondingCapacity: toOptionalCurrencyNumber(value),
                 },
               })
             }
