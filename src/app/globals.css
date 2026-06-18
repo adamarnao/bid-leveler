@@ -1429,6 +1429,79 @@ textarea:focus {
   gap: 16px;
 }
 
+.project-setup-field-sections {
+  display: grid;
+  gap: 14px;
+}
+
+.project-setup-form-card {
+  padding: 14px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  background: var(--color-surface-2);
+}
+
+.project-setup-card-header,
+.project-setup-row-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.project-setup-card-header {
+  margin-bottom: 14px;
+}
+
+.project-setup-card-header .muted-text {
+  margin: 4px 0 0;
+}
+
+.project-setup-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(180px, 1fr));
+  gap: 14px;
+  margin-top: 12px;
+}
+
+.project-setup-field-wide {
+  grid-column: 1 / -1;
+}
+
+.project-setup-row-list {
+  display: grid;
+  gap: 12px;
+}
+
+.project-setup-edit-row {
+  display: grid;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  background: var(--color-surface-1);
+}
+
+.project-setup-row-header strong {
+  overflow-wrap: anywhere;
+}
+
+.project-setup-toggle-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.project-setup-empty-note {
+  margin: 0;
+  padding: 14px;
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-card);
+  color: var(--color-text-muted);
+  background: var(--color-surface-1);
+}
+
 .project-setup-placeholder,
 .project-setup-inline-cta {
   padding: 14px;
@@ -2796,6 +2869,15 @@ textarea:focus {
 
   .project-setup-status-grid {
     grid-template-columns: 1fr;
+  }
+
+  .project-setup-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .project-setup-card-header,
+  .project-setup-row-header {
+    display: grid;
   }
 
   .form-action-bar {
