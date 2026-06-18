@@ -1413,6 +1413,30 @@ textarea {
   margin-bottom: 8px;
 }
 
+.invite-match-callout {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+  border: 1px solid color-mix(in srgb, var(--color-warning) 44%, var(--color-border));
+  border-radius: var(--radius-control);
+  padding: 10px 12px;
+  background: color-mix(in srgb, var(--color-warning) 10%, var(--color-surface));
+}
+
+.invite-possible-match-section {
+  display: grid;
+  gap: 8px;
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--color-border);
+}
+
+.invite-possible-match-section h3 {
+  margin: 0;
+}
+
 .profile-summary {
   display: flex;
   justify-content: space-between;

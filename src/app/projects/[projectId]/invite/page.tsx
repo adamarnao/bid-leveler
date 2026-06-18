@@ -116,6 +116,7 @@ export default function ProjectInvitePreviewPage() {
   const [sortKey, setSortKey] = useState<InviteSortKey>("company");
   const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
   const [saveMessage, setSaveMessage] = useState("");
+  const [showPossibleMatches, setShowPossibleMatches] = useState(false);
   const selectedCandidateCount = Object.keys(selectedCandidatesByKey).length;
 
   useEffect(() => {
@@ -261,6 +262,14 @@ export default function ProjectInvitePreviewPage() {
               <span className="save-confirmation">{saveMessage}</span>
             )}
           </div>
+          <label className="radio-option" style={{ marginTop: 12 }}>
+            <input
+              type="checkbox"
+              checked={showPossibleMatches}
+              onChange={(event) => setShowPossibleMatches(event.target.checked)}
+            />
+            <span>Show possible matches</span>
+          </label>
         </Panel>
 
         {selectedSectionIds.length === 0 ? (
@@ -276,9 +285,10 @@ export default function ProjectInvitePreviewPage() {
           </Panel>
         ) : (
           matchGroups.map((group) => {
-            const exactMatches = group.matches.filter(
-              (match) => match.matchType !== "DIVISION_ONLY"
-            );
+            const defaultMatches = group.matches.filter(isDefaultInviteMatch);
+            const possibleMatches = group.matches.filter(isPossibleInviteMatch);
+            const shouldShowLowDefaultCallout =
+              defaultMatches.length < 3 && possibleMatches.length > 0;
             const projectScopeItem = resolveCsiCatalogItem(
               project.csiVersion,
               group.projectSectionId ?? group.projectSectionNumber,
@@ -299,14 +309,30 @@ export default function ProjectInvitePreviewPage() {
                   />
                 </div>
                 <p className="muted-text">
-                  {exactMatches.length} exact CSI matches found.
+                  {defaultMatches.length} exact/specialized matches found.
                 </p>
 
-                {exactMatches.length === 0 ? (
-                  <p style={{ marginTop: 12 }}>No exact CSI matches.</p>
+                {shouldShowLowDefaultCallout && !showPossibleMatches && (
+                  <div className="invite-match-callout">
+                    <span>
+                      Only {defaultMatches.length} exact/specialized matches found.
+                      Show possible matches?
+                    </span>
+                    <button
+                      type="button"
+                      className="button-secondary"
+                      onClick={() => setShowPossibleMatches(true)}
+                    >
+                      Show possible matches
+                    </button>
+                  </div>
+                )}
+
+                {defaultMatches.length === 0 ? (
+                  <p style={{ marginTop: 12 }}>No exact or specialized matches.</p>
                 ) : (
                   <MatchTable
-                    matches={exactMatches}
+                    matches={defaultMatches}
                     sectionNumber={group.projectSectionNumber}
                     sortKey={sortKey}
                     sortDirection={sortDirection}
@@ -314,6 +340,28 @@ export default function ProjectInvitePreviewPage() {
                     selectedCandidatesByKey={selectedCandidatesByKey}
                     onToggleCandidate={toggleCandidate}
                   />
+                )}
+
+                {showPossibleMatches && (
+                  <div className="invite-possible-match-section">
+                    <h3>Possible Matches</h3>
+                    <p className="muted-text">
+                      {possibleMatches.length} broad or related CSI matches found.
+                    </p>
+                    {possibleMatches.length === 0 ? (
+                      <p style={{ marginTop: 12 }}>No possible matches.</p>
+                    ) : (
+                      <MatchTable
+                        matches={possibleMatches}
+                        sectionNumber={group.projectSectionNumber}
+                        sortKey={sortKey}
+                        sortDirection={sortDirection}
+                        onSortChange={updateSort}
+                        selectedCandidatesByKey={selectedCandidatesByKey}
+                        onToggleCandidate={toggleCandidate}
+                      />
+                    )}
+                  </div>
                 )}
               </Panel>
             );
@@ -634,7 +682,6 @@ function getProjectScopeTitle(
 }
 
 function getMatchDisplayLabel(match: ProjectSectionSubcontractorMatch) {
-  if (match.matchLabel) return match.matchLabel;
   if (match.matchType === "EXACT") return "Exact Match";
   if (match.matchType === "SPECIALIZED_COVERAGE") {
     return "Specialized Coverage";
@@ -643,8 +690,27 @@ function getMatchDisplayLabel(match: ProjectSectionSubcontractorMatch) {
   if (match.matchType === "RELATED_SCOPE") return "Related Scope";
   if (match.matchType === "DIRECT") return "Exact Match";
   if (match.matchType === "CROSSWALK_DERIVED") return "Exact Match";
+  if (match.matchType === "DIVISION_ONLY") return "Broad Coverage";
+  if (match.matchLabel) return match.matchLabel;
 
   return "CSI Match";
+}
+
+function isDefaultInviteMatch(match: ProjectSectionSubcontractorMatch) {
+  return (
+    match.matchType === "EXACT" ||
+    match.matchType === "SPECIALIZED_COVERAGE" ||
+    match.matchType === "DIRECT" ||
+    match.matchType === "CROSSWALK_DERIVED"
+  );
+}
+
+function isPossibleInviteMatch(match: ProjectSectionSubcontractorMatch) {
+  return (
+    match.matchType === "BROAD_COVERAGE" ||
+    match.matchType === "RELATED_SCOPE" ||
+    match.matchType === "DIVISION_ONLY"
+  );
 }
 
 function sortInviteMatches(
@@ -792,7 +858,7 @@ function buildVisibleCandidateMap(
 
   matchGroups.forEach((group) => {
     group.matches.forEach((match) => {
-      if (match.matchType === "DIVISION_ONLY") return;
+      if (!isDefaultInviteMatch(match) && !isPossibleInviteMatch(match)) return;
 
       const candidate = matchToStoredCandidate(match);
       candidatesByKey.set(getCandidateKey(candidate), candidate);
