@@ -1,81 +1,40 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import AppShell from "@/components/layout/AppShell";
+import SubcontractorForm from "@/components/subcontractors/SubcontractorForm";
+import { createEmptySubcontractor } from "@/components/subcontractors/form/subcontractorFormFactories";
+import { saveSubcontractor } from "@/lib/subcontractors";
+import { getCompanySettings } from "@/lib/settings";
+import { Subcontractor } from "@/types/Subcontractor";
 
 export default function NewSubcontractorPage() {
-  const [companyName, setCompanyName] = useState("");
-  const [trade, setTrade] = useState("");
-  const [contactName, setContactName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  const router = useRouter();
+  const initialSubcontractor = useMemo(
+    () => createEmptySubcontractor(getCompanySettings().defaultCsiVersion),
+    []
+  );
 
-  function submitForm(event: React.FormEvent) {
-    event.preventDefault();
-
-    const subcontractorApplication = {
-      companyName,
-      trade,
-      contactName,
-      email,
-      phone,
-    };
-
-    console.log("Subcontractor application:", subcontractorApplication);
-
-    alert("Subcontractor application captured. Database connection comes next.");
+  function createSubcontractor(subcontractor: Subcontractor) {
+    saveSubcontractor(subcontractor);
+    router.push(`/subcontractors/${subcontractor.id}`);
   }
 
   return (
     <AppShell title="Add Subcontractor">
-      <div style={{ maxWidth: 700 }}>
-        <h1>New Subcontractor Application</h1>
-        <p>Use this form to add or prequalify a subcontractor.</p>
-
-        <form onSubmit={submitForm}>
-          <div style={{ marginBottom: 12 }}>
-            <label>
-              Company Name
-              <br />
-              <input value={companyName} onChange={(e) => setCompanyName(e.target.value)} />
-            </label>
-          </div>
-
-          <div style={{ marginBottom: 12 }}>
-            <label>
-              Trade
-              <br />
-              <input value={trade} onChange={(e) => setTrade(e.target.value)} />
-            </label>
-          </div>
-
-          <div style={{ marginBottom: 12 }}>
-            <label>
-              Contact Name
-              <br />
-              <input value={contactName} onChange={(e) => setContactName(e.target.value)} />
-            </label>
-          </div>
-
-          <div style={{ marginBottom: 12 }}>
-            <label>
-              Email
-              <br />
-              <input value={email} onChange={(e) => setEmail(e.target.value)} />
-            </label>
-          </div>
-
-          <div style={{ marginBottom: 12 }}>
-            <label>
-              Phone
-              <br />
-              <input value={phone} onChange={(e) => setPhone(e.target.value)} />
-            </label>
-          </div>
-
-          <button type="submit">Submit Application</button>
-        </form>
+      <div className="command-nav">
+        <Link href="/subcontractors" className="command-nav-link">
+          {"<-"} Back to Subcontractors
+        </Link>
       </div>
+
+      <SubcontractorForm
+        initialSubcontractor={initialSubcontractor}
+        submitLabel="Create Subcontractor"
+        onSubmit={createSubcontractor}
+      />
     </AppShell>
   );
 }
