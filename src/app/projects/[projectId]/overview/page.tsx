@@ -3,18 +3,24 @@
 import { Fragment, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { CsiCodeLabel, CsiHierarchyPath, CsiLevelBadge } from "@/components/csi";
 import { mockSectionCosts } from "@/data/mockSectionCosts";
 import ProjectCostSummaryTable from "@/components/projects/ProjectCostSummaryTable";
 import { mockProjectCosts } from "@/data/mockProjectCosts";
+import { getNearestLevel2Ancestor } from "@/lib/csiCatalog";
 import { getMergedProjects, projectsStorageKey } from "@/lib/projects";
 import {
   getProjectCsiDivisions,
   getProjectCsiSectionsByDivision,
   projectCsiIdsReferToSameItem,
+  resolveProjectCsiItem,
   validateProjectCsiSelection,
 } from "@/lib/projectCsiSelections";
 import { Project } from "@/types/Project";
 import {
+  CsiCatalogItem,
+  CsiDivision,
+  CsiSection,
   StoredProjectCsiSelections,
 } from "@/types/Csi";
 
@@ -155,14 +161,14 @@ export default function ProjectOverviewPage() {
       </section>
 
       <section style={panel}>
-        <h2>CSI Division / Section Summary</h2>
+        <h2>CSI Scope Summary</h2>
 
         <table style={{ borderCollapse: "collapse", minWidth: 1000 }}>
           <thead>
             <tr>
               <th style={cell}></th>
               <th style={cell}>Division</th>
-              <th style={cell}>Division / Section</th>
+              <th style={cell}>CSI scopes</th>
               <th style={cell}>Budget</th>
               <th style={cell}>Low Bid</th>
               <th style={cell}>Selected Cost</th>
@@ -189,6 +195,11 @@ export default function ProjectOverviewPage() {
                     )
                   )
                 : allSections;
+              const divisionItem = divisionToCatalogItem(division);
+              const broadDivisionSelected = Boolean(
+                csiSelection?.divisionIds.includes(division.id)
+              );
+              const subdivisionGroups = groupCsiScopesBySubdivision(sections);
 
               const divisionBudget = sections.reduce((sum, section) => {
                 const cost = getSectionCost(section.id);
@@ -229,9 +240,26 @@ export default function ProjectOverviewPage() {
                         {isExpanded ? "-" : "+"}
                       </button>
                     </td>
-                    <td style={cell}>{division.number}</td>
                     <td style={cell}>
-                      <strong>{division.name}</strong>
+                      <CsiCodeLabel item={divisionItem} showLevelBadge />
+                    </td>
+                    <td style={cell}>
+                      <div style={scopeSummary}>
+                        {broadDivisionSelected ? (
+                          <span className="badge badge-primary">
+                            Division Selected
+                          </span>
+                        ) : null}
+                        <span className="muted-text">
+                          {subdivisionGroups.length} subdivision
+                          {subdivisionGroups.length === 1 ? "" : "s"}
+                          {sections.length > 0
+                            ? `, ${sections.length} selected CSI scope${
+                                sections.length === 1 ? "" : "s"
+                              }`
+                            : ""}
+                        </span>
+                      </div>
                     </td>
                     <td style={cell}>${divisionBudget.toLocaleString()}</td>
                     <td style={cell}>${divisionLowBid.toLocaleString()}</td>
@@ -248,42 +276,26 @@ export default function ProjectOverviewPage() {
                   {isExpanded && sections.length === 0 && (
                     <tr>
                       <td style={childCell} />
-                      <td style={childCell} />
-                      <td style={childCell}>No sections added yet.</td>
-                      <td style={childCell} />
-                      <td style={childCell} />
-                      <td style={childCell} />
-                      <td style={childCell} />
-                      <td style={childCell} />
+                      <td style={childCell} colSpan={7}>
+                        <span className="muted-text">
+                          No subdivision, section, or subsection CSI scopes
+                          selected.
+                        </span>
+                      </td>
                     </tr>
                   )}
                   {isExpanded &&
-                    sections.map((section) => {
-                      const cost = getSectionCost(section.id);
-                      const variance =
-                        (cost?.selectedCost ?? 0) - (cost?.budget ?? 0);
-
-                      return (
-                        <tr key={section.id}>
-                          <td style={childCell} />
-                          <td style={childCell}>{section.number}</td>
-                          <td style={childCell}>{section.name}</td>
-                          <td style={childCell}>
-                            ${(cost?.budget ?? 0).toLocaleString()}
-                          </td>
-                          <td style={childCell}>
-                            ${(cost?.lowBid ?? 0).toLocaleString()}
-                          </td>
-                          <td style={childCell}>
-                            ${(cost?.selectedCost ?? 0).toLocaleString()}
-                          </td>
-                          <td style={childCell}>
-                            ${variance.toLocaleString()}
-                          </td>
-                          <td style={childCell} />
-                        </tr>
-                      );
-                    })}
+                    subdivisionGroups.map((group) => (
+                      <tr key={group.subdivision?.id ?? group.key}>
+                        <td style={childCell} />
+                        <td style={childCell} colSpan={7}>
+                          <SubdivisionScopeGroup
+                            group={group}
+                            getSectionCost={getSectionCost}
+                          />
+                        </td>
+                      </tr>
+                    ))}
                 </Fragment>
               );
             })}
@@ -330,6 +342,182 @@ const expandButton: React.CSSProperties = {
   lineHeight: "20px",
   padding: 0,
 };
+
+const scopeSummary: React.CSSProperties = {
+  display: "flex",
+  flexWrap: "wrap",
+  alignItems: "center",
+  gap: "6px 10px",
+};
+
+const subdivisionCard: React.CSSProperties = {
+  display: "grid",
+  gap: 8,
+  border: "1px solid var(--color-border)",
+  borderRadius: "var(--radius-control)",
+  padding: 10,
+  background: "var(--color-surface-muted)",
+};
+
+const subdivisionHeader: React.CSSProperties = {
+  display: "flex",
+  flexWrap: "wrap",
+  justifyContent: "space-between",
+  gap: 10,
+  alignItems: "flex-start",
+};
+
+const detailTagContent: React.CSSProperties = {
+  display: "grid",
+  gap: 2,
+  minWidth: 0,
+};
+
+type SectionCost = {
+  budget: number;
+  lowBid: number;
+  selectedCost: number;
+};
+
+type SubdivisionScopeGroupData = {
+  key: string;
+  subdivision?: CsiCatalogItem;
+  detailItems: CsiCatalogItem[];
+};
+
+function SubdivisionScopeGroup({
+  group,
+  getSectionCost,
+}: {
+  group: SubdivisionScopeGroupData;
+  getSectionCost: (sectionId: string) => SectionCost | undefined;
+}) {
+  const subdivisionItems = group.subdivision ? [group.subdivision] : [];
+  const costItems = [...subdivisionItems, ...group.detailItems];
+  const budget = costItems.reduce(
+    (sum, item) => sum + (getSectionCost(item.id)?.budget ?? 0),
+    0
+  );
+  const lowBid = costItems.reduce(
+    (sum, item) => sum + (getSectionCost(item.id)?.lowBid ?? 0),
+    0
+  );
+  const selectedCost = costItems.reduce(
+    (sum, item) => sum + (getSectionCost(item.id)?.selectedCost ?? 0),
+    0
+  );
+  const variance = selectedCost - budget;
+
+  return (
+    <article style={subdivisionCard}>
+      <div style={subdivisionHeader}>
+        <div>
+          {group.subdivision ? (
+            <CsiCodeLabel item={group.subdivision} showLevelBadge />
+          ) : (
+            <span className="muted-text">Ungrouped CSI scopes</span>
+          )}
+        </div>
+        <div className="badge-list">
+          <span className="badge badge-muted">Budget ${budget.toLocaleString()}</span>
+          <span className="badge badge-muted">Low Bid ${lowBid.toLocaleString()}</span>
+          <span className="badge badge-muted">
+            Selected ${selectedCost.toLocaleString()}
+          </span>
+          <span className="badge badge-muted">Variance ${variance.toLocaleString()}</span>
+        </div>
+      </div>
+
+      {group.detailItems.length > 0 ? (
+        <div className="badge-list">
+          {group.detailItems.map((item) => (
+            <span key={item.id} className="badge badge-muted">
+              <span style={detailTagContent}>
+                <CsiCodeLabel item={item} />
+                <CsiHierarchyPath item={item} />
+              </span>
+              <CsiLevelBadge item={item} />
+            </span>
+          ))}
+        </div>
+      ) : (
+        <span className="muted-text">
+          No section or subsection detail scopes selected.
+        </span>
+      )}
+    </article>
+  );
+}
+
+function groupCsiScopesBySubdivision(
+  selectedSections: CsiSection[]
+): SubdivisionScopeGroupData[] {
+  const groupsByKey = new Map<string, SubdivisionScopeGroupData>();
+
+  selectedSections.forEach((section) => {
+    const item = resolveProjectCsiItem(section.version, section.id);
+    if (!item || item.level === 1) return;
+
+    const subdivision =
+      item.level === 2 ? item : getNearestLevel2Ancestor(item.version, item.id);
+    const key = subdivision?.id ?? `ungrouped-${item.divisionId}`;
+    const group =
+      groupsByKey.get(key) ??
+      {
+        key,
+        subdivision,
+        detailItems: [],
+      };
+
+    if (item.level > 2) {
+      group.detailItems.push(item);
+    }
+
+    groupsByKey.set(key, group);
+  });
+
+  groupsByKey.forEach((group) => {
+    group.detailItems.sort(compareCsiCatalogItems);
+  });
+
+  return Array.from(groupsByKey.values()).sort((groupA, groupB) =>
+    compareOptionalSubdivisionGroups(groupA, groupB)
+  );
+}
+
+function compareOptionalSubdivisionGroups(
+  groupA: SubdivisionScopeGroupData,
+  groupB: SubdivisionScopeGroupData
+) {
+  const subdivisionA = groupA.subdivision;
+  const subdivisionB = groupB.subdivision;
+
+  if (!subdivisionA && !subdivisionB) return groupA.key.localeCompare(groupB.key);
+  if (!subdivisionA) return 1;
+  if (!subdivisionB) return -1;
+
+  return compareCsiCatalogItems(subdivisionA, subdivisionB);
+}
+
+function compareCsiCatalogItems(itemA: CsiCatalogItem, itemB: CsiCatalogItem) {
+  return (
+    itemA.sortOrder - itemB.sortOrder ||
+    itemA.number.localeCompare(itemB.number, undefined, { numeric: true })
+  );
+}
+
+function divisionToCatalogItem(division: CsiDivision): CsiCatalogItem {
+  return {
+    id: division.id,
+    version: division.version,
+    number: division.number,
+    name: division.name,
+    level: division.level ?? 1,
+    divisionId: division.id,
+    parentId: division.parentId,
+    sortOrder: division.sortOrder ?? 0,
+  };
+}
 
 let cachedProjectsStorageValue: string | undefined;
 let cachedProjects: Project[] = getMergedProjects();
