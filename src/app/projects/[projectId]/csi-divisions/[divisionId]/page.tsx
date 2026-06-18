@@ -4,6 +4,7 @@ import { useSyncExternalStore } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { CsiCodeLabel, CsiHierarchyPath, CsiLevelBadge } from "@/components/csi";
+import AppShell from "@/components/layout/AppShell";
 import { mockBidSubmissions } from "@/data/mockBidSubmissions";
 import { mockSectionCosts } from "@/data/mockSectionCosts";
 import { getNearestLevel2Ancestor } from "@/lib/csiCatalog";
@@ -41,11 +42,11 @@ export default function DivisionPage() {
 
   if (!project) {
     return (
-      <main style={{ padding: 24 }}>
+      <AppShell title="Project Not Found">
         <h1>Project Not Found</h1>
         <p>Requested project ID: {projectId}</p>
         <Link href="/">Back to Dashboard</Link>
-      </main>
+      </AppShell>
     );
   }
 
@@ -55,11 +56,11 @@ export default function DivisionPage() {
 
   if (!division) {
     return (
-      <main style={{ padding: 24 }}>
+      <AppShell title="CSI Scope Detail">
         <h1>Division Not Found</h1>
         <p>Requested Division ID: {divisionId}</p>
         <Link href={`/projects/${project.id}`}>Back to Project Dashboard</Link>
-      </main>
+      </AppShell>
     );
   }
 
@@ -85,7 +86,7 @@ export default function DivisionPage() {
   const groups = groupDivisionScopes(project.id, project.csiVersion, scopes);
 
   return (
-    <main style={{ padding: 24 }}>
+    <AppShell title="Project CSI Scope Detail">
       <Link href={`/projects/${project.id}`}>{"<-"} Back to Project Dashboard</Link>
 
       <section style={panel}>
@@ -115,7 +116,7 @@ export default function DivisionPage() {
           <SubdivisionBidGroup key={group.key} group={group} />
         ))
       )}
-    </main>
+    </AppShell>
   );
 }
 

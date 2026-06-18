@@ -4,6 +4,7 @@ import { Fragment, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { CsiCodeLabel, CsiHierarchyPath, CsiLevelBadge } from "@/components/csi";
+import AppShell from "@/components/layout/AppShell";
 import { mockSectionCosts } from "@/data/mockSectionCosts";
 import ProjectCostSummaryTable from "@/components/projects/ProjectCostSummaryTable";
 import { mockProjectCosts } from "@/data/mockProjectCosts";
@@ -38,11 +39,11 @@ export default function ProjectOverviewPage() {
 
   if (!project) {
     return (
-      <main style={{ padding: 24 }}>
+      <AppShell title="Project Not Found">
         <h1>Project Not Found</h1>
         <p>Requested project ID: {projectId}</p>
         <Link href="/">Back to Dashboard</Link>
-      </main>
+      </AppShell>
     );
   }
 
@@ -76,7 +77,7 @@ export default function ProjectOverviewPage() {
   const projectTotal = totalSelectedCost + mockGcCosts;
 
   return (
-    <main style={{ padding: 24 }}>
+    <AppShell title="Project Overview">
       <Link href={`/projects/${project.id}`}>{"<-"} Back to Command Center</Link>
 
       <h1>{project.name} Overview</h1>
@@ -313,7 +314,7 @@ export default function ProjectOverviewPage() {
           Open Proposal Draft
         </Link>
       </section>
-    </main>
+    </AppShell>
   );
 }
 

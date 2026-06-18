@@ -17,48 +17,62 @@ import { CompanySettings, UserSettings } from "@/types/Settings";
 
 const sidebarCollapsedStorageKey = "appShellSidebarCollapsed";
 
-const navItems = [
+const navSections = [
   {
-    href: "/",
-    label: "Dashboard",
-    compactLabel: "DB",
-    isActive: (pathname: string) => pathname === "/",
+    label: "Workspace",
+    items: [
+      {
+        href: "/",
+        label: "Dashboard",
+        compactLabel: "DB",
+        isActive: (pathname: string) => pathname === "/",
+      },
+      {
+        href: "/subcontractors",
+        label: "Subcontractors",
+        compactLabel: "SC",
+        isActive: (pathname: string) => pathname.startsWith("/subcontractors"),
+      },
+    ],
   },
   {
-    href: "/projects/new",
-    label: "Create Project",
-    compactLabel: "+P",
-    isActive: (pathname: string) => pathname === "/projects/new",
+    label: "Reference",
+    items: [
+      {
+        href: "/masterformat",
+        label: "MasterFormat",
+        compactLabel: "MF",
+        isActive: (pathname: string) => pathname.startsWith("/masterformat"),
+      },
+    ],
   },
   {
-    href: "/subcontractors",
-    label: "Subcontractors",
-    compactLabel: "SC",
-    isActive: (pathname: string) => pathname.startsWith("/subcontractors"),
+    label: "Reporting",
+    items: [
+      {
+        href: "/budgets",
+        label: "Budgets",
+        compactLabel: "BG",
+        isActive: (pathname: string) => pathname.startsWith("/budgets"),
+      },
+      {
+        href: "/reports",
+        label: "Reports",
+        compactLabel: "RP",
+        isActive: (pathname: string) => pathname.startsWith("/reports"),
+      },
+    ],
   },
   {
-    href: "/masterformat",
-    label: "MasterFormat",
-    compactLabel: "MF",
-    isActive: (pathname: string) => pathname.startsWith("/masterformat"),
-  },
-  {
-    href: "/budgets",
-    label: "Budgets",
-    compactLabel: "BG",
-    isActive: (pathname: string) => pathname.startsWith("/budgets"),
-  },
-  {
-    href: "/reports",
-    label: "Reports",
-    compactLabel: "RP",
-    isActive: (pathname: string) => pathname.startsWith("/reports"),
-  },
-  {
-    href: "/settings",
-    label: "Settings",
-    compactLabel: "ST",
-    isActive: (pathname: string) => pathname === "/settings",
+    label: "Admin",
+    items: [
+      {
+        href: "/settings",
+        label: "Settings",
+        compactLabel: "ST",
+        isActive: (pathname: string) => pathname === "/settings",
+      },
+    ],
   },
 ];
 
@@ -203,22 +217,37 @@ export default function AppShell({
           aria-expanded={!sidebarCollapsed}
           onClick={toggleSidebarCollapsed}
         >
-          <span className="app-sidebar-toggle-expanded">Collapse</span>
-          <span className="app-sidebar-toggle-collapsed">Expand</span>
+          <span aria-hidden="true" className="app-sidebar-toggle-icon">
+            {sidebarCollapsed ? ">" : "<"}
+          </span>
+          <span className="visually-hidden">
+            {sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+          </span>
         </button>
 
-        <nav className="app-nav">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={getNavLinkClassName(item.isActive(pathname))}
-              title={item.label}
-              aria-label={item.label}
-            >
-              <span className="app-nav-label">{item.label}</span>
-              <span className="app-nav-compact-label">{item.compactLabel}</span>
-            </Link>
+        <nav className="app-nav" aria-label="Primary navigation">
+          {navSections.map((section) => (
+            <div className="app-nav-section" key={section.label}>
+              <div className="app-nav-section-label">{section.label}</div>
+              <div className="app-nav-section-items">
+                {section.items.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={getNavLinkClassName(item.isActive(pathname))}
+                    aria-label={item.label}
+                  >
+                    <span className="app-nav-label">{item.label}</span>
+                    <span className="app-nav-compact-label" aria-hidden="true">
+                      {item.compactLabel}
+                    </span>
+                    <span className="app-nav-tooltip" aria-hidden="true">
+                      {item.label}
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            </div>
           ))}
         </nav>
       </aside>

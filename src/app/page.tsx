@@ -13,14 +13,17 @@ export default function Home() {
 
   return (
     <AppShell title="Dashboard">
-
-      <div style={{ marginBottom: 24 }}>
-        <Link href="/projects/new">Create New Project</Link>
-        {" | "}
-        <Link href="/subcontractors">Subcontractors</Link>
+      <div className="dashboard-project-header">
+        <h2>Active Projects</h2>
+        <div className="dashboard-project-actions">
+          <Link href="/projects/new" className="button-primary">
+            New Project
+          </Link>
+          <Link href="/subcontractors" className="button-secondary">
+            Subcontractors
+          </Link>
+        </div>
       </div>
-
-      <h2>Active Projects</h2>
 
       <table style={{ borderCollapse: "collapse", minWidth: 1000 }}>
         <thead>
