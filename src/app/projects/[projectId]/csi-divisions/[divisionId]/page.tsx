@@ -112,7 +112,12 @@ export default function DivisionPage() {
       {groups.length === 0 ? (
         <section style={panel}>
           <p className="muted-text">No CSI scopes or bid rows for this Division.</p>
-          <Link href={`/projects/${project.id}/bids/new`}>Add Manual Bid</Link>
+          <div className="settings-actions">
+            <Link href={`/projects/${project.id}/bids`} className="button-secondary">
+              Bids
+            </Link>
+            <Link href={`/projects/${project.id}/bids/new`}>Add Manual Bid</Link>
+          </div>
         </section>
       ) : (
         groups.map((group) => (
@@ -167,6 +172,12 @@ function SubdivisionBidGroup({
           <span className="badge badge-muted">
             Selected Bids ${selectedBidTotal.toLocaleString()}
           </span>
+          <Link
+            href={`/projects/${projectId}/bids`}
+            className="button-secondary"
+          >
+            Bids
+          </Link>
           <Link
             href={`/projects/${projectId}/bids/new${
               group.subdivision ? `?scopeItemId=${group.subdivision.id}` : ""
