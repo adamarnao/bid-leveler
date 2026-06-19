@@ -1,8 +1,12 @@
 "use client";
 
-import { useMemo, useState, useSyncExternalStore } from "react";
+import { useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import Panel from "@/components/ui/Panel";
+import {
+  getProjectBidPackages,
+  projectBidPackagesStorageKey,
+} from "@/lib/projectBids";
 import {
   getProjectSetupProgress,
   getProjectSetupStatus,
@@ -35,59 +39,104 @@ import {
   ProjectTakeoffStatus,
 } from "@/types/Project";
 import { CsiMasterFormatVersion, StoredProjectCsiSelections } from "@/types/Csi";
+import { ProjectBidPackage } from "@/types/Bid";
 
 const setupSteps = [
   {
-    id: "basics",
-    title: "Basics",
+    id: "project-basics",
+    group: "ITB Launch Readiness",
+    title: "Project Basics",
     summary:
-      "Confirm project identity, client, location, status, delivery method, and high-level bid context.",
+      "Confirm the minimum project identity and location details needed to start a credible ITB.",
   },
   {
-    id: "internal-team",
-    title: "Internal Team",
+    id: "communication-contacts",
+    group: "ITB Launch Readiness",
+    title: "Project Team / Communication Contacts",
     summary:
-      "Assign estimating, operations, accounting, and support contacts with setup, invite, and bid review permissions.",
+      "Identify the internal bid contact, reply-to owner, client contact, and RFI/design routing context needed for ITBs.",
   },
   {
-    id: "external-team-rfi-routing",
-    title: "External Team & RFI Routing",
+    id: "bid-dates-events",
+    group: "ITB Launch Readiness",
+    title: "Bid Dates & Project Events",
     summary:
-      "Track owner, client, design, consultant, and default RFI recipients for project communication.",
+      "Set bid deadlines and note project events such as RFI deadlines, site walks, or pre-bid meetings.",
   },
   {
-    id: "schedule-milestones",
-    title: "Schedule & Milestones",
+    id: "documents-bid-instructions",
+    group: "ITB Launch Readiness",
+    title: "Documents / Bid Instructions",
     summary:
-      "Review sub bid due dates, GC bid due dates, walkthroughs, addenda deadlines, and bid review timing.",
+      "Capture document links and bid access instructions subs need before responding to an ITB.",
+  },
+  {
+    id: "project-scope-csi",
+    group: "ITB Launch Readiness",
+    title: "Project Scope / CSI",
+    summary:
+      "Review selected CSI scopes that drive matching, Bid Packages, and bid coverage.",
+  },
+  {
+    id: "bid-packages",
+    group: "ITB Launch Readiness",
+    title: "Bid Packages",
+    summary:
+      "Group selected CSI scopes into estimator-facing packages that can be invited and leveled.",
+  },
+  {
+    id: "itb-launch",
+    group: "ITB Launch Readiness",
+    title: "ITB Invite List / Launch",
+    summary:
+      "Confirm the project has enough information to send ITBs. Full setup can continue after invites are sent.",
+  },
+  {
+    id: "extended-internal-team",
+    group: "Post-Invite Setup",
+    title: "Extended Internal Team",
+    summary:
+      "Complete broader internal assignments, permissions, notifications, and review responsibilities.",
+  },
+  {
+    id: "extended-external-team-rfi-routing",
+    group: "Post-Invite Setup",
+    title: "Extended External Team & RFI Routing",
+    summary:
+      "Complete the owner, client, design, consultant, and RFI contact matrix after ITBs are moving.",
   },
   {
     id: "bid-contract-requirements",
+    group: "Post-Invite Setup",
     title: "Bid / Contract Requirements",
     summary:
       "Capture bid type, contract terms, bonds, wage requirements, alternates, allowances, unit prices, and required coverage.",
   },
   {
-    id: "plans-characteristics-scope",
-    title: "Plans, Characteristics & Scope",
-    summary:
-      "Organize drawing/spec links, project conditions, complexity, phasing, and CSI scope readiness.",
-  },
-  {
     id: "budget-pricing-readiness",
+    group: "Post-Invite Setup",
     title: "Budget / Pricing Readiness",
     summary:
       "Placeholder until takeoffs, historical pricing, ROM assumptions, and budget confidence inputs are available.",
   },
   {
-    id: "review-launch",
-    title: "Review / Launch",
+    id: "final-setup-review",
+    group: "Post-Invite Setup",
+    title: "Final Setup Review",
     summary:
-      "Final setup review before the project is ready for invite preparation and bid coverage workflows.",
+      "Review non-blocking setup details after ITB launch readiness has been handled.",
   },
 ];
 
 const defaultStepId = setupSteps[0].id;
+const legacyStepIdAliases: Record<string, string> = {
+  basics: "project-basics",
+  "internal-team": "communication-contacts",
+  "external-team-rfi-routing": "communication-contacts",
+  "schedule-milestones": "bid-dates-events",
+  "plans-characteristics-scope": "documents-bid-instructions",
+  "review-launch": "itb-launch",
+};
 
 const projectStatusOptions: ProjectStatus[] = [
   "PLAN_REVIEW",
@@ -229,6 +278,8 @@ type ProjectSetupDraft = Partial<
     | "zip"
     | "estimator"
     | "status"
+    | "planLink"
+    | "documentNotes"
     | "subcontractorBidDueDate"
     | "bidReviewDate"
     | "bidDueDate"
@@ -264,7 +315,7 @@ type SetupReviewStatus = "complete" | "incomplete" | "optional";
 type SetupReadinessRow = {
   stepId: string;
   stepName: string;
-  requirement: "required" | "recommended" | "optional";
+  requirement: "required" | "recommended" | "post-invite" | "optional";
   status: SetupReviewStatus;
   summary: string;
   blocking: boolean;
@@ -280,10 +331,14 @@ type SetupReadinessSummary = {
 
 const projectCsiSelectionsStorageKey = "projectCsiSelections";
 const projectCsiSelectionsChangeEvent = "projectCsiSelectionsChange";
+const projectBidPackagesChangeEvent = "projectBidPackagesChange";
 const EMPTY_PROJECT_CSI_SELECTIONS: StoredProjectCsiSelections = {};
 let cachedProjectCsiSelectionsStorageValue: string | undefined;
 let cachedProjectCsiSelections: StoredProjectCsiSelections =
   EMPTY_PROJECT_CSI_SELECTIONS;
+let cachedBidPackagesStorageValue: string | undefined;
+let cachedBidPackagesProjectId: string | undefined;
+let cachedBidPackages: ProjectBidPackage[] = [];
 
 export default function ProjectSetupFlow({
   mode,
@@ -306,19 +361,29 @@ export default function ProjectSetupFlow({
   const setupProgress = getProjectSetupProgress(project);
   const setupStatus = getProjectSetupStatus(project);
   const [selectedStepId, setSelectedStepId] = useState<string | null>(null);
+  const normalizedSelectedStepId = selectedStepId
+    ? normalizeSetupStepId(selectedStepId)
+    : undefined;
+  const normalizedProgressStepId = setupProgress.currentStepId
+    ? normalizeSetupStepId(setupProgress.currentStepId)
+    : undefined;
   const activeStepId =
-    selectedStepId ?? setupProgress.currentStepId ?? defaultStepId;
+    normalizedSelectedStepId ?? normalizedProgressStepId ?? defaultStepId;
 
   const activeStep =
     setupSteps.find((step) => step.id === activeStepId) ?? setupSteps[0];
-  const completedStepIds = useMemo(
-    () => new Set(setupProgress.completedStepIds ?? []),
-    [setupProgress.completedStepIds]
+  const completedStepIds = new Set(
+    (setupProgress.completedStepIds ?? []).map(normalizeSetupStepId)
   );
   const completedStepCount = completedStepIds.size;
   const selectedCsiScopeCount = projectId
     ? getProjectCsiScopeCount(projectCsiSelections, projectId)
     : 0;
+  const bidPackages = useProjectBidPackagesSnapshot(projectId || "");
+  const activeBidPackages = bidPackages.filter(
+    (packageRecord) =>
+      packageRecord.status !== "CLOSED" && packageRecord.scopeItemIds.length > 0
+  );
   const currentProject = project;
   const draftKey = currentProject.id || "new";
   const currentDraft =
@@ -326,7 +391,8 @@ export default function ProjectSetupFlow({
   const effectiveProject: Project = { ...currentProject, ...currentDraft };
   const readinessSummary = getSetupReadinessSummary(
     effectiveProject,
-    selectedCsiScopeCount
+    selectedCsiScopeCount,
+    activeBidPackages
   );
 
   function updateDraft<K extends keyof ProjectSetupDraft>(
@@ -347,13 +413,13 @@ export default function ProjectSetupFlow({
   function persistProject(nextProject: Project, exitAfterSave = false) {
     if (mode === "create" && !currentProject.id) {
       appendProject(nextProject);
-      window.location.href = `/projects/${nextProject.id}/setup`;
+      window.location.assign(`/projects/${nextProject.id}/setup`);
       return;
     }
 
     saveProject(nextProject);
     if (exitAfterSave) {
-      window.location.href = `/projects/${nextProject.id}`;
+      window.location.assign(`/projects/${nextProject.id}`);
       return;
     }
 
@@ -476,7 +542,7 @@ export default function ProjectSetupFlow({
 
         <section className="project-setup-status-grid" aria-label="Setup status">
           <div className="project-setup-status-card">
-            <span className="label-text">Setup Status</span>
+            <span className="label-text">ITB Launch Status</span>
             <strong>{formatSetupStatus(setupStatus)}</strong>
           </div>
           <div className="project-setup-status-card">
@@ -500,33 +566,42 @@ export default function ProjectSetupFlow({
             {setupSteps.map((step, index) => {
               const isActive = step.id === activeStep.id;
               const isComplete = completedStepIds.has(step.id);
+              const previousStep = setupSteps[index - 1];
+              const showGroupLabel =
+                index === 0 || previousStep?.group !== step.group;
 
               return (
-                <button
-                  key={step.id}
-                  type="button"
-                  className={[
-                    "project-setup-step",
-                    isActive ? "project-setup-step-active" : "",
-                    isComplete ? "project-setup-step-complete" : "",
-                  ]
-                    .filter(Boolean)
-                    .join(" ")}
-                  aria-current={isActive ? "step" : undefined}
-                  onClick={() => setSelectedStepId(step.id)}
-                >
-                  <span className="project-setup-step-index">
-                    {isComplete ? "Done" : index + 1}
-                  </span>
-                  <span>
-                    <span className="project-setup-step-title">
-                      {step.title}
+                <div key={step.id}>
+                  {showGroupLabel ? (
+                    <div className="project-setup-step-group">
+                      {step.group}
+                    </div>
+                  ) : null}
+                  <button
+                    type="button"
+                    className={[
+                      "project-setup-step",
+                      isActive ? "project-setup-step-active" : "",
+                      isComplete ? "project-setup-step-complete" : "",
+                    ]
+                      .filter(Boolean)
+                      .join(" ")}
+                    aria-current={isActive ? "step" : undefined}
+                    onClick={() => setSelectedStepId(step.id)}
+                  >
+                    <span className="project-setup-step-index">
+                      {isComplete ? "Done" : index + 1}
                     </span>
-                    <span className="project-setup-step-state">
-                      {isComplete ? "Complete" : isActive ? "Active" : "Pending"}
+                    <span>
+                      <span className="project-setup-step-title">
+                        {step.title}
+                      </span>
+                      <span className="project-setup-step-state">
+                        {isComplete ? "Complete" : isActive ? "Active" : "Pending"}
+                      </span>
                     </span>
-                  </span>
-                </button>
+                  </button>
+                </div>
               );
             })}
           </nav>
@@ -534,27 +609,50 @@ export default function ProjectSetupFlow({
           <Panel title={activeStep.title}>
             <div className="project-setup-step-content">
               <p className="muted-text">{activeStep.summary}</p>
-              {activeStep.id === "basics" ? (
+              {activeStep.id === "project-basics" ? (
                 <ProjectBasicsFields
                   draft={currentDraft}
                   errors={validationErrors}
                   project={currentProject}
                   onChange={updateDraft}
                 />
-              ) : activeStep.id === "internal-team" ? (
+              ) : activeStep.id === "communication-contacts" ? (
+                <ProjectCommunicationContactsFields
+                  draft={currentDraft}
+                  project={currentProject}
+                  onChange={updateDraft}
+                />
+              ) : activeStep.id === "bid-dates-events" ? (
+                <ProjectScheduleFields
+                  draft={currentDraft}
+                  project={currentProject}
+                  onChange={updateDraft}
+                />
+              ) : activeStep.id === "documents-bid-instructions" ? (
+                <ProjectDocumentsBidInstructionsFields
+                  draft={currentDraft}
+                  project={currentProject}
+                  onChange={updateDraft}
+                />
+              ) : activeStep.id === "project-scope-csi" ? (
+                <ProjectScopeCsiStep
+                  project={currentProject}
+                  selectedCsiScopeCount={selectedCsiScopeCount}
+                />
+              ) : activeStep.id === "bid-packages" ? (
+                <ProjectBidPackagesStep
+                  project={currentProject}
+                  bidPackages={bidPackages}
+                  activeBidPackages={activeBidPackages}
+                />
+              ) : activeStep.id === "extended-internal-team" ? (
                 <ProjectInternalTeamFields
                   draft={currentDraft}
                   project={currentProject}
                   onChange={updateDraft}
                 />
-              ) : activeStep.id === "external-team-rfi-routing" ? (
+              ) : activeStep.id === "extended-external-team-rfi-routing" ? (
                 <ProjectExternalTeamFields
-                  draft={currentDraft}
-                  project={currentProject}
-                  onChange={updateDraft}
-                />
-              ) : activeStep.id === "schedule-milestones" ? (
-                <ProjectScheduleFields
                   draft={currentDraft}
                   project={currentProject}
                   onChange={updateDraft}
@@ -579,7 +677,7 @@ export default function ProjectSetupFlow({
                   project={currentProject}
                   onChange={updateDraft}
                 />
-              ) : activeStep.id === "review-launch" ? (
+              ) : activeStep.id === "itb-launch" ? (
                 <ProjectReviewLaunchFields
                   project={effectiveProject}
                   readinessSummary={readinessSummary}
@@ -589,6 +687,8 @@ export default function ProjectSetupFlow({
                   onJumpToStep={setSelectedStepId}
                   onMarkReadyForInvites={handleMarkReadyForInvites}
                 />
+              ) : activeStep.id === "final-setup-review" ? (
+                <ProjectFinalSetupReviewFields />
               ) : (
                 <div className="project-setup-placeholder">
                   <p className="label-text">Future Fields</p>
@@ -651,6 +751,43 @@ function getProjectCsiSelectionsSnapshot(): StoredProjectCsiSelections {
   }
 
   return cachedProjectCsiSelections;
+}
+
+function useProjectBidPackagesSnapshot(projectId: string): ProjectBidPackage[] {
+  return useSyncExternalStore(
+    subscribeToProjectBidPackagesStorage,
+    () => getProjectBidPackagesSnapshot(projectId),
+    getServerProjectBidPackagesSnapshot
+  );
+}
+
+function subscribeToProjectBidPackagesStorage(onStoreChange: () => void) {
+  window.addEventListener("storage", onStoreChange);
+  window.addEventListener(projectBidPackagesChangeEvent, onStoreChange);
+
+  return () => {
+    window.removeEventListener("storage", onStoreChange);
+    window.removeEventListener(projectBidPackagesChangeEvent, onStoreChange);
+  };
+}
+
+function getServerProjectBidPackagesSnapshot(): ProjectBidPackage[] {
+  return cachedBidPackages;
+}
+
+function getProjectBidPackagesSnapshot(projectId: string): ProjectBidPackage[] {
+  const storageValue = localStorage.getItem(projectBidPackagesStorageKey) || "[]";
+
+  if (
+    storageValue !== cachedBidPackagesStorageValue ||
+    projectId !== cachedBidPackagesProjectId
+  ) {
+    cachedBidPackagesStorageValue = storageValue;
+    cachedBidPackagesProjectId = projectId;
+    cachedBidPackages = projectId ? getProjectBidPackages(projectId) : [];
+  }
+
+  return cachedBidPackages;
 }
 
 function parseProjectCsiSelections(
@@ -728,6 +865,10 @@ function createProjectId() {
   }
 
   return Date.now().toString();
+}
+
+function normalizeSetupStepId(stepId: string) {
+  return legacyStepIdAliases[stepId] ?? stepId;
 }
 
 function ProjectBasicsFields({
@@ -882,6 +1023,42 @@ function ProjectScheduleFields({
           </label>
         </div>
       </div>
+    </div>
+  );
+}
+
+function ProjectCommunicationContactsFields({
+  draft,
+  project,
+  onChange,
+}: {
+  draft: ProjectSetupDraft;
+  project: Project;
+  onChange: <K extends keyof ProjectSetupDraft>(
+    field: K,
+    value: ProjectSetupDraft[K]
+  ) => void;
+}) {
+  return (
+    <div className="project-setup-field-sections">
+      <div className="project-setup-form-card">
+        <p className="label-text">ITB Communication Contacts</p>
+        <p className="muted-text">
+          For launch readiness, make sure there is an estimator or internal bid
+          contact and enough client/RFI context for subcontractors to respond.
+          Full team permissions can be finished after ITBs are sent.
+        </p>
+      </div>
+      <ProjectInternalTeamFields
+        draft={draft}
+        project={project}
+        onChange={onChange}
+      />
+      <ProjectExternalTeamFields
+        draft={draft}
+        project={project}
+        onChange={onChange}
+      />
     </div>
   );
 }
@@ -1058,6 +1235,193 @@ function ProjectInternalTeamFields({
             ))}
           </div>
         )}
+      </div>
+    </div>
+  );
+}
+
+function ProjectDocumentsBidInstructionsFields({
+  draft,
+  project,
+  onChange,
+}: {
+  draft: ProjectSetupDraft;
+  project: Project;
+  onChange: <K extends keyof ProjectSetupDraft>(
+    field: K,
+    value: ProjectSetupDraft[K]
+  ) => void;
+}) {
+  const documents = draft.projectDocuments ?? project.projectDocuments ?? {};
+
+  function updateDocuments(updates: Partial<ProjectDocuments>) {
+    onChange("projectDocuments", { ...documents, ...updates });
+  }
+
+  return (
+    <div className="project-setup-field-sections">
+      <div className="project-setup-form-card">
+        <p className="label-text">Documents / Bid Instructions</p>
+        <p className="muted-text">
+          Capture the document access and bid instructions needed for a credible
+          ITB. Detailed project characteristics can be completed later.
+        </p>
+        <div className="project-setup-form-grid">
+          <label className="form-field">
+            Plans Link
+            <input
+              value={documents.plansLink ?? draft.planLink ?? project.planLink ?? ""}
+              onChange={(event) =>
+                updateDocuments({ plansLink: event.target.value })
+              }
+            />
+          </label>
+          <label className="form-field">
+            Specs Link
+            <input
+              value={documents.specsLink ?? ""}
+              onChange={(event) =>
+                updateDocuments({ specsLink: event.target.value })
+              }
+            />
+          </label>
+          <label className="form-field">
+            Addenda Link
+            <input
+              value={documents.addendaLink ?? ""}
+              onChange={(event) =>
+                updateDocuments({ addendaLink: event.target.value })
+              }
+            />
+          </label>
+          <label className="form-field">
+            Bid Form Link
+            <input
+              value={documents.bidFormLink ?? ""}
+              onChange={(event) =>
+                updateDocuments({ bidFormLink: event.target.value })
+              }
+            />
+          </label>
+          <label className="form-field">
+            Drawing Date
+            <input
+              type="date"
+              value={documents.drawingDate ?? ""}
+              onChange={(event) =>
+                updateDocuments({ drawingDate: event.target.value })
+              }
+            />
+          </label>
+          <label className="form-field">
+            Drawing Set Name
+            <input
+              value={documents.drawingSetName ?? ""}
+              onChange={(event) =>
+                updateDocuments({ drawingSetName: event.target.value })
+              }
+            />
+          </label>
+          <label className="form-field project-setup-field-wide">
+            Document Access / Bid Instructions
+            <textarea
+              rows={3}
+              value={draft.documentNotes ?? project.documentNotes ?? ""}
+              onChange={(event) => onChange("documentNotes", event.target.value)}
+            />
+          </label>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ProjectScopeCsiStep({
+  project,
+  selectedCsiScopeCount,
+}: {
+  project: Project;
+  selectedCsiScopeCount: number;
+}) {
+  return (
+    <div className="project-setup-field-sections">
+      <div className="project-setup-form-card">
+        <div className="project-setup-card-header">
+          <div>
+            <p className="label-text">Project Scope / CSI</p>
+            <h3>{selectedCsiScopeCount} selected CSI scope(s)</h3>
+            <p className="muted-text">
+              CSI scope selection remains on the dedicated Project Scope page.
+              These scopes drive Bid Packages, invite matching, and bid leveling.
+            </p>
+          </div>
+          {project.id ? (
+            <Link href={`/projects/${project.id}/scope`} className="button-primary">
+              Open Project Scope
+            </Link>
+          ) : (
+            <span className="button-secondary project-setup-disabled-action">
+              Save the project before opening Project Scope.
+            </span>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ProjectBidPackagesStep({
+  project,
+  bidPackages,
+  activeBidPackages,
+}: {
+  project: Project;
+  bidPackages: ProjectBidPackage[];
+  activeBidPackages: ProjectBidPackage[];
+}) {
+  const mappedScopeCount = activeBidPackages.reduce(
+    (total, packageRecord) => total + packageRecord.scopeItemIds.length,
+    0
+  );
+
+  return (
+    <div className="project-setup-field-sections">
+      <div className="project-setup-form-card">
+        <div className="project-setup-card-header">
+          <div>
+            <p className="label-text">Bid Packages</p>
+            <h3>{activeBidPackages.length} active bid package(s)</h3>
+            <p className="muted-text">
+              Bid Packages are the estimator-facing groups that will be invited
+              and leveled. At least one active package with mapped CSI scopes is
+              required for ITB launch readiness.
+            </p>
+          </div>
+          {project.id ? (
+            <Link href={`/projects/${project.id}/scope`} className="button-primary">
+              Manage Bid Packages
+            </Link>
+          ) : (
+            <span className="button-secondary project-setup-disabled-action">
+              Save the project before managing Bid Packages.
+            </span>
+          )}
+        </div>
+        <div className="badge-list">
+          <span className="badge badge-muted">{bidPackages.length} total</span>
+          <span className="badge badge-muted">
+            {mappedScopeCount} mapped CSI scope(s)
+          </span>
+        </div>
+        {activeBidPackages.length === 0 ? (
+          <div className="project-setup-review-callout">
+            <strong>No active Bid Packages are ready.</strong>
+            <p className="muted-text">
+              Open Project Scope, generate packages from selected CSI scopes, or
+              add packages manually.
+            </p>
+          </div>
+        ) : null}
       </div>
     </div>
   );
@@ -1950,6 +2314,23 @@ function ProjectBudgetReadinessFields({
   );
 }
 
+function ProjectFinalSetupReviewFields() {
+  return (
+    <div className="project-setup-field-sections">
+      <div className="project-setup-form-card">
+        <p className="label-text">Final Setup Review</p>
+        <h3>Post-invite setup can continue after ITBs are launched.</h3>
+        <p className="muted-text">
+          Use this stage to finish non-blocking project details such as extended
+          characteristics, full team routing, contract requirements, and budget
+          readiness. ITB Launch Ready does not mean every setup detail is
+          complete.
+        </p>
+      </div>
+    </div>
+  );
+}
+
 function ProjectReviewLaunchFields({
   project,
   readinessSummary,
@@ -1971,22 +2352,33 @@ function ProjectReviewLaunchFields({
     projectSaved &&
     (setupStatus === "READY_FOR_INVITES" || readinessSummary.requiredReady);
   const blockingRows = readinessSummary.rows.filter((row) => row.blocking);
+  const requiredRows = readinessSummary.rows.filter(
+    (row) => row.requirement === "required"
+  );
+  const recommendedRows = readinessSummary.rows.filter(
+    (row) => row.requirement === "recommended"
+  );
+  const postInviteRows = readinessSummary.rows.filter(
+    (row) => row.requirement === "post-invite" || row.requirement === "optional"
+  );
 
   return (
     <div className="project-setup-field-sections">
       <div className="project-setup-form-card">
         <div className="project-setup-card-header">
           <div>
-            <p className="label-text">Invite Readiness</p>
+            <p className="label-text">ITB Launch Readiness</p>
             <h3 className="project-setup-review-title">
               {readinessSummary.requiredReady
-                ? "Required setup is ready"
-                : "Required setup needs attention"}
+                ? "Required ITB launch information is ready"
+                : "Required ITB launch information needs attention"}
             </h3>
             <p className="muted-text">
+              This means the project has enough information to send ITBs. Full
+              project setup can continue after invites are sent.{" "}
               {readinessSummary.completeRequiredCount} /{" "}
-              {readinessSummary.requiredCount} required areas complete.{" "}
-              {readinessSummary.warningCount} checklist warning(s).{" "}
+              {readinessSummary.requiredCount} required ITB areas complete.{" "}
+              {readinessSummary.warningCount} recommendation(s) need attention.{" "}
               {selectedCsiScopeCount} CSI scopes selected.
             </p>
           </div>
@@ -2001,7 +2393,7 @@ function ProjectReviewLaunchFields({
 
         {!readinessSummary.requiredReady && (
           <div className="project-setup-review-callout">
-            <strong>Mark Ready for Invites is blocked.</strong>
+            <strong>Mark ITB Launch Ready is blocked.</strong>
             <p className="muted-text">
               Complete the required items first:{" "}
               {blockingRows.map((row) => row.stepName).join(", ")}.
@@ -2009,31 +2401,21 @@ function ProjectReviewLaunchFields({
           </div>
         )}
 
-        <div className="project-setup-review-list">
-          {readinessSummary.rows.map((row) => (
-            <div className="project-setup-review-row" key={row.stepId}>
-              <div>
-                <strong>{row.stepName}</strong>
-                <p className="muted-text">{row.summary}</p>
-              </div>
-              <div className="project-setup-review-meta">
-                <span className={getReadinessBadgeClassName(row)}>
-                  {getReadinessStatusLabel(row)}
-                </span>
-                <span className="badge badge-muted">
-                  {formatSetupStatus(row.requirement)}
-                </span>
-                <button
-                  type="button"
-                  className="button-secondary"
-                  onClick={() => onJumpToStep(row.stepId)}
-                >
-                  Jump
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
+        <ReadinessGroup
+          title="Required for ITB Launch"
+          rows={requiredRows}
+          onJumpToStep={onJumpToStep}
+        />
+        <ReadinessGroup
+          title="Recommended Before ITB"
+          rows={recommendedRows}
+          onJumpToStep={onJumpToStep}
+        />
+        <ReadinessGroup
+          title="Post-Invite Setup"
+          rows={postInviteRows}
+          onJumpToStep={onJumpToStep}
+        />
       </div>
 
       <div className="project-setup-form-card">
@@ -2041,7 +2423,7 @@ function ProjectReviewLaunchFields({
           <div>
             <p className="label-text">Launch Actions</p>
             <p className="muted-text">
-              Move into scope review, invites, overview, or the command center.
+            Move into scope review, invites, overview, or the command center.
             </p>
           </div>
           <button
@@ -2050,7 +2432,7 @@ function ProjectReviewLaunchFields({
             disabled={!projectSaved || !readinessSummary.requiredReady}
             onClick={onMarkReadyForInvites}
           >
-            Mark Ready for Invites
+            Mark ITB Launch Ready
           </button>
         </div>
 
@@ -2087,6 +2469,47 @@ function ProjectReviewLaunchFields({
   );
 }
 
+function ReadinessGroup({
+  title,
+  rows,
+  onJumpToStep,
+}: {
+  title: string;
+  rows: SetupReadinessRow[];
+  onJumpToStep: (stepId: string) => void;
+}) {
+  if (rows.length === 0) return null;
+
+  return (
+    <div className="project-setup-review-list">
+      <p className="label-text">{title}</p>
+      {rows.map((row) => (
+        <div className="project-setup-review-row" key={row.stepId}>
+          <div>
+            <strong>{row.stepName}</strong>
+            <p className="muted-text">{row.summary}</p>
+          </div>
+          <div className="project-setup-review-meta">
+            <span className={getReadinessBadgeClassName(row)}>
+              {getReadinessStatusLabel(row)}
+            </span>
+            <span className="badge badge-muted">
+              {formatSetupStatus(row.requirement)}
+            </span>
+            <button
+              type="button"
+              className="button-secondary"
+              onClick={() => onJumpToStep(row.stepId)}
+            >
+              Jump
+            </button>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function ListTextareaField({
   label,
   value,
@@ -2111,15 +2534,20 @@ function ListTextareaField({
 
 function getSetupReadinessSummary(
   project: Project,
-  selectedCsiScopeCount: number
+  selectedCsiScopeCount: number,
+  activeBidPackages: ProjectBidPackage[]
 ): SetupReadinessSummary {
   const rows = [
     getBasicsReadiness(project),
-    getInternalTeamReadiness(project),
-    getExternalTeamReadiness(project),
+    getCommunicationContactReadiness(project),
     getScheduleReadiness(project),
+    getDocumentsBidInstructionsReadiness(project),
+    getProjectScopeCsiReadiness(selectedCsiScopeCount),
+    getBidPackageReadiness(activeBidPackages),
+    getExternalTeamReadiness(project),
     getBidRequirementsReadiness(project),
-    getPlansCharacteristicsScopeReadiness(project, selectedCsiScopeCount),
+    getInternalTeamReadiness(project),
+    getExtendedCharacteristicsReadiness(project),
     getBudgetReadiness(project),
   ];
   const requiredRows = rows.filter((row) => row.requirement === "required");
@@ -2141,11 +2569,36 @@ function getBasicsReadiness(project: Project): SetupReadinessRow {
   ].filter(isDefined);
 
   return buildReadinessRow({
-    stepId: "basics",
-    stepName: "Basics",
+    stepId: "project-basics",
+    stepName: "Project Basics",
     requirement: "required",
     missingItems,
     completeSummary: "Project name, client, and estimator are set.",
+  });
+}
+
+function getCommunicationContactReadiness(project: Project): SetupReadinessRow {
+  const internalTeam = project.internalTeam ?? [];
+  const hasInternalBidContact =
+    hasText(project.estimator) ||
+    internalTeam.some(
+      (member) =>
+        hasText(member.name) &&
+        (member.isPrimaryContact ||
+          member.canSendInvites ||
+          member.role === "Estimator" ||
+          member.role === "Estimating Coordinator")
+    );
+  const missingItems = [
+    hasInternalBidContact ? undefined : "estimator or internal bid contact",
+  ].filter(isDefined);
+
+  return buildReadinessRow({
+    stepId: "communication-contacts",
+    stepName: "Project Team / Communication Contacts",
+    requirement: "required",
+    missingItems,
+    completeSummary: "Internal bid contact is ready for ITB communication.",
   });
 }
 
@@ -2153,9 +2606,9 @@ function getInternalTeamReadiness(project: Project): SetupReadinessRow {
   const hasInternalTeam = (project.internalTeam ?? []).length > 0;
 
   return buildReadinessRow({
-    stepId: "internal-team",
-    stepName: "Internal Team",
-    requirement: "recommended",
+    stepId: "extended-internal-team",
+    stepName: "Extended Internal Team",
+    requirement: "post-invite",
     missingItems: hasInternalTeam ? [] : ["add at least one internal team member"],
     completeSummary: `${project.internalTeam?.length ?? 0} internal team member(s) assigned.`,
   });
@@ -2180,8 +2633,8 @@ function getExternalTeamReadiness(project: Project): SetupReadinessRow {
   ].filter(isDefined);
 
   return buildReadinessRow({
-    stepId: "external-team-rfi-routing",
-    stepName: "External Team & RFI Routing",
+    stepId: "extended-external-team-rfi-routing",
+    stepName: "External RFI / Design Contact",
     requirement: "recommended",
     missingItems,
     completeSummary: `${externalTeam.length} external contact(s) with RFI/design routing context.`,
@@ -2200,11 +2653,15 @@ function getScheduleReadiness(project: Project): SetupReadinessRow {
     : ["recommended: bid review date"];
 
   return buildReadinessRow({
-    stepId: "schedule-milestones",
-    stepName: "Schedule & Milestones",
+    stepId: "bid-dates-events",
+    stepName: "Bid Dates & Project Events",
     requirement: "required",
     missingItems,
-    recommendedItems,
+    recommendedItems: [
+      ...recommendedItems,
+      "recommended: RFI due date when known",
+      "recommended: site walk or pre-bid meeting when scheduled",
+    ],
     completeSummary: "Sub bid due date and GC bid due date are set.",
   });
 }
@@ -2231,25 +2688,8 @@ function getBidRequirementsReadiness(project: Project): SetupReadinessRow {
   });
 }
 
-function getPlansCharacteristicsScopeReadiness(
-  project: Project,
-  selectedCsiScopeCount: number
-): SetupReadinessRow {
-  const documents = project.projectDocuments;
+function getExtendedCharacteristicsReadiness(project: Project): SetupReadinessRow {
   const characteristics = project.projectCharacteristics;
-  const hasDocumentSignal = Boolean(
-    documents &&
-      [
-        documents.plansLink,
-        documents.specsLink,
-        documents.addendaLink,
-        documents.bidFormLink,
-        documents.drawingDate,
-        documents.drawingSetName,
-        documents.drawingSetVersion,
-        documents.lastAddendumReceived,
-      ].some(hasText)
-  );
   const hasCharacteristicSignal = Boolean(
     characteristics &&
       [
@@ -2270,17 +2710,76 @@ function getPlansCharacteristicsScopeReadiness(
       ].some(Boolean)
   );
   const missingItems = [
-    hasDocumentSignal ? undefined : "document link or drawing set/date",
-    hasCharacteristicSignal ? undefined : "at least one project characteristic",
-    selectedCsiScopeCount > 0 ? undefined : "at least one CSI scope",
+    hasCharacteristicSignal ? undefined : "extended project characteristics",
   ].filter(isDefined);
 
   return buildReadinessRow({
-    stepId: "plans-characteristics-scope",
-    stepName: "Plans, Characteristics & Scope",
-    requirement: "required",
+    stepId: "final-setup-review",
+    stepName: "Extended Characteristics",
+    requirement: "post-invite",
     missingItems,
-    completeSummary: `Documents, characteristics, and ${selectedCsiScopeCount} CSI scope(s) are ready.`,
+    completeSummary: "Extended project characteristics have been captured.",
+  });
+}
+
+function getDocumentsBidInstructionsReadiness(project: Project): SetupReadinessRow {
+  const documents = project.projectDocuments;
+  const hasDocumentSignal = Boolean(
+    project.planLink ||
+      project.documentNotes ||
+      (documents &&
+        [
+          documents.plansLink,
+          documents.specsLink,
+          documents.addendaLink,
+          documents.bidFormLink,
+          documents.drawingDate,
+          documents.drawingSetName,
+          documents.drawingSetVersion,
+        ].some(hasText))
+  );
+
+  return buildReadinessRow({
+    stepId: "documents-bid-instructions",
+    stepName: "Documents / Bid Instructions",
+    requirement: "required",
+    missingItems: hasDocumentSignal
+      ? []
+      : ["document link or document access/bid instructions"],
+    completeSummary: "Document access or bid instructions are captured.",
+  });
+}
+
+function getProjectScopeCsiReadiness(
+  selectedCsiScopeCount: number
+): SetupReadinessRow {
+  return buildReadinessRow({
+    stepId: "project-scope-csi",
+    stepName: "Project Scope / CSI",
+    requirement: "required",
+    missingItems:
+      selectedCsiScopeCount > 0 ? [] : ["at least one selected CSI scope"],
+    completeSummary: `${selectedCsiScopeCount} CSI scope(s) selected.`,
+  });
+}
+
+function getBidPackageReadiness(
+  activeBidPackages: ProjectBidPackage[]
+): SetupReadinessRow {
+  const mappedScopeCount = activeBidPackages.reduce(
+    (total, packageRecord) => total + packageRecord.scopeItemIds.length,
+    0
+  );
+
+  return buildReadinessRow({
+    stepId: "bid-packages",
+    stepName: "Bid Packages",
+    requirement: "required",
+    missingItems:
+      activeBidPackages.length > 0
+        ? []
+        : ["at least one active Bid Package with mapped CSI scopes"],
+    completeSummary: `${activeBidPackages.length} active Bid Package(s) with ${mappedScopeCount} mapped CSI scope(s).`,
   });
 }
 
@@ -2314,12 +2813,13 @@ function buildReadinessRow({
 }: {
   stepId: string;
   stepName: string;
-  requirement: "required" | "recommended";
+  requirement: "required" | "recommended" | "post-invite";
   missingItems: string[];
   recommendedItems?: string[];
   completeSummary: string;
 }): SetupReadinessRow {
   const isComplete = missingItems.length === 0;
+  const isPostInvite = requirement === "post-invite";
   const summaryParts = [
     isComplete ? completeSummary : `Missing: ${missingItems.join(", ")}.`,
     recommendedItems.length > 0 ? recommendedItems.join(", ") + "." : undefined,
@@ -2329,7 +2829,7 @@ function buildReadinessRow({
     stepId,
     stepName,
     requirement,
-    status: isComplete ? "complete" : "incomplete",
+    status: isComplete ? "complete" : isPostInvite ? "optional" : "incomplete",
     blocking: requirement === "required" && !isComplete,
     summary: summaryParts.join(" "),
   };
@@ -2498,6 +2998,9 @@ function createSetupRowId(prefix: string) {
 }
 
 function formatSetupStatus(status: string) {
+  if (status === "READY_FOR_INVITES") return "ITB Launch Ready";
+  if (status === "post-invite") return "Post-Invite";
+
   return status
     .split("_")
     .map((word) => word.charAt(0) + word.slice(1).toLowerCase())
