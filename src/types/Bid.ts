@@ -8,6 +8,27 @@ export type ProjectBidSubmissionStatus =
   | "SELECTED"
   | "REJECTED";
 
+export type ProjectBidPackageStatus = "DRAFT" | "ACTIVE" | "CLOSED";
+
+export type ProjectBidPackageSource =
+  | "MANUAL"
+  | "GENERATED"
+  | "COMPANY_DEFAULT";
+
+export type ProjectBidPackage = {
+  id: string;
+  projectId: string;
+  name: string;
+  description?: string;
+  csiVersion: string;
+  scopeItemIds: string[];
+  sortOrder?: number;
+  status?: ProjectBidPackageStatus;
+  source?: ProjectBidPackageSource;
+  createdAt: string;
+  updatedAt: string;
+};
+
 export type BidPricingItemCategory =
   | "ALTERNATE"
   | "LEVELING_ADJUSTMENT"

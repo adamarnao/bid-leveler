@@ -1,16 +1,24 @@
 import {
+  getNearestLevel2Ancestor,
+  resolveCsiCatalogItem,
+} from "@/lib/csiCatalog";
+import {
   BidPricingItem,
   BidPricingItemDirection,
   ProjectBidLevelingDecision,
+  ProjectBidPackage,
+  ProjectBidPackageSource,
+  ProjectBidPackageStatus,
   ProjectBidReviewStatus,
   ProjectBidSubmission,
   ProjectBidSubmissionStatus,
 } from "@/types/Bid";
-import { StoredProjectCsiSelection } from "@/types/Csi";
+import { CsiCatalogItem, CsiMasterFormatVersion, StoredProjectCsiSelection } from "@/types/Csi";
 
 export const projectBidSubmissionsStorageKey = "projectBidSubmissions";
 export const projectBidLevelingDecisionsStorageKey =
   "projectBidLevelingDecisions";
+export const projectBidPackagesStorageKey = "projectBidPackages";
 const bidSubmissionStatuses: ProjectBidSubmissionStatus[] = [
   "DRAFT",
   "RECEIVED",
@@ -25,6 +33,20 @@ const bidReviewStatuses: ProjectBidReviewStatus[] = [
   "REVIEWED",
   "APPROVED",
   "REJECTED",
+];
+const bidPackageStatuses: ProjectBidPackageStatus[] = [
+  "DRAFT",
+  "ACTIVE",
+  "CLOSED",
+];
+const bidPackageSources: ProjectBidPackageSource[] = [
+  "MANUAL",
+  "GENERATED",
+  "COMPANY_DEFAULT",
+];
+const csiMasterFormatVersions: CsiMasterFormatVersion[] = [
+  "MASTERFORMAT_1995",
+  "MASTERFORMAT_CURRENT",
 ];
 const pricingItemDirections: BidPricingItemDirection[] = [
   "ADD",
@@ -79,6 +101,132 @@ export function saveProjectBidSubmission(submission: ProjectBidSubmission) {
     projectBidSubmissionsStorageKey,
     JSON.stringify(nextSubmissions)
   );
+}
+
+export function getProjectBidPackages(projectId: string): ProjectBidPackage[] {
+  return getAllProjectBidPackages()
+    .filter((packageRecord) => packageRecord.projectId === projectId)
+    .sort(compareBidPackages);
+}
+
+export function getAllProjectBidPackages(): ProjectBidPackage[] {
+  if (typeof window === "undefined") return [];
+
+  return parseProjectBidPackages(
+    window.localStorage.getItem(projectBidPackagesStorageKey) || "[]"
+  );
+}
+
+export function saveProjectBidPackage(packageRecord: ProjectBidPackage) {
+  if (typeof window === "undefined") return;
+
+  const packageRecords = getAllProjectBidPackages();
+  const nextPackageRecords = [
+    ...packageRecords.filter((item) => item.id !== packageRecord.id),
+    packageRecord,
+  ];
+
+  window.localStorage.setItem(
+    projectBidPackagesStorageKey,
+    JSON.stringify(nextPackageRecords)
+  );
+}
+
+export function deleteProjectBidPackage(
+  projectId: string,
+  packageId: string
+) {
+  if (typeof window === "undefined") return;
+
+  const nextPackageRecords = getAllProjectBidPackages().filter(
+    (packageRecord) =>
+      packageRecord.projectId !== projectId || packageRecord.id !== packageId
+  );
+
+  window.localStorage.setItem(
+    projectBidPackagesStorageKey,
+    JSON.stringify(nextPackageRecords)
+  );
+}
+
+export function deleteProjectBidPackages(projectId: string) {
+  if (typeof window === "undefined") return;
+
+  const nextPackageRecords = getAllProjectBidPackages().filter(
+    (packageRecord) => packageRecord.projectId !== projectId
+  );
+
+  window.localStorage.setItem(
+    projectBidPackagesStorageKey,
+    JSON.stringify(nextPackageRecords)
+  );
+}
+
+export function getBidPackageById(
+  projectId: string,
+  packageId: string
+): ProjectBidPackage | undefined {
+  return getProjectBidPackages(projectId).find(
+    (packageRecord) => packageRecord.id === packageId
+  );
+}
+
+export function generateBidPackagesFromProjectScopes(
+  projectId: string,
+  csiVersion: string,
+  selectedScopeItemIds: string[]
+): ProjectBidPackage[] {
+  const version = getSupportedCsiVersion(csiVersion);
+  if (!version) return [];
+
+  const packageGroups = new Map<
+    string,
+    {
+      groupingItem: CsiCatalogItem;
+      scopeItemIds: Set<string>;
+    }
+  >();
+
+  selectedScopeItemIds.forEach((scopeItemId) => {
+    const item = resolveCsiCatalogItem(version, scopeItemId);
+    if (!item) return;
+
+    const groupingItem = getNearestLevel2Ancestor(version, item.id) ?? item;
+    const group =
+      packageGroups.get(groupingItem.id) ?? {
+        groupingItem,
+        scopeItemIds: new Set<string>(),
+      };
+
+    group.scopeItemIds.add(item.id);
+    packageGroups.set(groupingItem.id, group);
+  });
+
+  const now = new Date().toISOString();
+
+  return Array.from(packageGroups.values())
+    .sort((left, right) =>
+      compareCsiCatalogItems(left.groupingItem, right.groupingItem)
+    )
+    .map((group, index) => ({
+      id: createGeneratedBidPackageId(projectId, group.groupingItem.id),
+      projectId,
+      name: group.groupingItem.name,
+      csiVersion,
+      scopeItemIds: Array.from(group.scopeItemIds).sort((leftId, rightId) => {
+        const leftItem = resolveCsiCatalogItem(version, leftId);
+        const rightItem = resolveCsiCatalogItem(version, rightId);
+
+        if (!leftItem || !rightItem) return leftId.localeCompare(rightId);
+
+        return compareCsiCatalogItems(leftItem, rightItem);
+      }),
+      sortOrder: index,
+      status: "DRAFT",
+      source: "GENERATED",
+      createdAt: now,
+      updatedAt: now,
+    }));
 }
 
 export function deleteProjectBidSubmission(submissionId: string) {
@@ -183,6 +331,7 @@ export function deleteProjectBidData(projectId: string) {
     projectBidLevelingDecisionsStorageKey,
     JSON.stringify(nextDecisions)
   );
+  deleteProjectBidPackages(projectId);
 }
 
 export function getProjectBidSummary(
@@ -312,6 +461,18 @@ function parseProjectBidSubmissions(
   }
 }
 
+function parseProjectBidPackages(storageValue: string): ProjectBidPackage[] {
+  try {
+    const parsedValue = JSON.parse(storageValue);
+
+    return Array.isArray(parsedValue)
+      ? parsedValue.filter(isProjectBidPackage)
+      : [];
+  } catch {
+    return [];
+  }
+}
+
 function parseProjectBidLevelingDecisions(
   storageValue: string
 ): ProjectBidLevelingDecision[] {
@@ -340,6 +501,22 @@ function isProjectBidSubmission(
     value.scopeItemIds.every((scopeItemId) => typeof scopeItemId === "string") &&
     typeof value.status === "string" &&
     bidSubmissionStatuses.includes(value.status as ProjectBidSubmissionStatus) &&
+    typeof value.createdAt === "string" &&
+    typeof value.updatedAt === "string"
+  );
+}
+
+function isProjectBidPackage(value: unknown): value is ProjectBidPackage {
+  return (
+    isRecord(value) &&
+    typeof value.id === "string" &&
+    typeof value.projectId === "string" &&
+    typeof value.name === "string" &&
+    typeof value.csiVersion === "string" &&
+    Array.isArray(value.scopeItemIds) &&
+    value.scopeItemIds.every((scopeItemId) => typeof scopeItemId === "string") &&
+    isOptionalBidPackageStatus(value.status) &&
+    isOptionalBidPackageSource(value.source) &&
     typeof value.createdAt === "string" &&
     typeof value.updatedAt === "string"
   );
@@ -383,6 +560,30 @@ function isOptionalReviewStatus(value: unknown) {
     (typeof value === "string" &&
       bidReviewStatuses.includes(value as ProjectBidReviewStatus))
   );
+}
+
+function isOptionalBidPackageStatus(value: unknown) {
+  return (
+    value === undefined ||
+    (typeof value === "string" &&
+      bidPackageStatuses.includes(value as ProjectBidPackageStatus))
+  );
+}
+
+function isOptionalBidPackageSource(value: unknown) {
+  return (
+    value === undefined ||
+    (typeof value === "string" &&
+      bidPackageSources.includes(value as ProjectBidPackageSource))
+  );
+}
+
+function getSupportedCsiVersion(
+  csiVersion: string
+): CsiMasterFormatVersion | undefined {
+  return csiMasterFormatVersions.includes(csiVersion as CsiMasterFormatVersion)
+    ? (csiVersion as CsiMasterFormatVersion)
+    : undefined;
 }
 
 function getSelectedScopeItemIds(csiSelection: StoredProjectCsiSelection | undefined) {
@@ -466,6 +667,37 @@ function bidCoversScopeItem(
 
 function isSelectedSubmission(submission: ProjectBidSubmission) {
   return submission.status === "SELECTED";
+}
+
+function compareBidPackages(
+  packageA: ProjectBidPackage,
+  packageB: ProjectBidPackage
+) {
+  if (packageA.sortOrder !== undefined || packageB.sortOrder !== undefined) {
+    return (packageA.sortOrder ?? 0) - (packageB.sortOrder ?? 0);
+  }
+
+  return packageA.name.localeCompare(packageB.name);
+}
+
+function compareCsiCatalogItems(
+  itemA: CsiCatalogItem,
+  itemB: CsiCatalogItem
+) {
+  return itemA.number.localeCompare(itemB.number, undefined, {
+    numeric: true,
+    sensitivity: "base",
+  });
+}
+
+function createGeneratedBidPackageId(projectId: string, groupingItemId: string) {
+  return `generated-bid-package-${sanitizeIdPart(projectId)}-${sanitizeIdPart(
+    groupingItemId
+  )}`;
+}
+
+function sanitizeIdPart(value: string) {
+  return value.replace(/[^a-zA-Z0-9_-]/g, "-");
 }
 
 function isBidPricingItem(value: unknown): value is BidPricingItem {
