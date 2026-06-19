@@ -104,6 +104,12 @@ export default function ProjectCommandCenterPage() {
               Bids
             </Link>
             <Link
+              href={`/projects/${project.id}/leveling`}
+              className="command-nav-link"
+            >
+              Bid Leveling
+            </Link>
+            <Link
               href={`/projects/${project.id}/bids/new`}
               className="command-nav-link"
             >

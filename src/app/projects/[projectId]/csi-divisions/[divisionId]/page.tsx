@@ -113,6 +113,12 @@ export default function DivisionPage() {
         <section style={panel}>
           <p className="muted-text">No CSI scopes or bid rows for this Division.</p>
           <div className="settings-actions">
+            <Link
+              href={`/projects/${project.id}/leveling`}
+              className="button-secondary"
+            >
+              Bid Leveling
+            </Link>
             <Link href={`/projects/${project.id}/bids`} className="button-secondary">
               Bids
             </Link>
@@ -177,6 +183,12 @@ function SubdivisionBidGroup({
             className="button-secondary"
           >
             Bids
+          </Link>
+          <Link
+            href={`/projects/${projectId}/leveling`}
+            className="button-secondary"
+          >
+            Bid Leveling
           </Link>
           <Link
             href={`/projects/${projectId}/bids/new${
