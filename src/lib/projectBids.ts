@@ -94,6 +94,31 @@ export function deleteProjectBidSubmission(submissionId: string) {
   );
 }
 
+export function deleteProjectBidSubmissionAndDependencies(
+  projectId: string,
+  submissionId: string
+) {
+  if (typeof window === "undefined") return;
+
+  const nextSubmissions = getAllProjectBidSubmissions().filter(
+    (submission) => submission.id !== submissionId
+  );
+  const nextDecisions = getAllProjectBidLevelingDecisions().filter(
+    (decision) =>
+      decision.projectId !== projectId ||
+      decision.bidSubmissionId !== submissionId
+  );
+
+  window.localStorage.setItem(
+    projectBidSubmissionsStorageKey,
+    JSON.stringify(nextSubmissions)
+  );
+  window.localStorage.setItem(
+    projectBidLevelingDecisionsStorageKey,
+    JSON.stringify(nextDecisions)
+  );
+}
+
 export function getProjectBidLevelingDecisions(
   projectId: string
 ): ProjectBidLevelingDecision[] {

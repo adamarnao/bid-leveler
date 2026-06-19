@@ -7,7 +7,7 @@ import { CsiCodeLabel } from "@/components/csi";
 import AppShell from "@/components/layout/AppShell";
 import Panel from "@/components/ui/Panel";
 import {
-  deleteProjectBidSubmission,
+  deleteProjectBidSubmissionAndDependencies,
   getProjectBidSubmissions,
   getSubmittedBidAmount,
   projectBidSubmissionsStorageKey,
@@ -48,12 +48,14 @@ export default function ProjectBidsPage() {
 
   function handleDeleteBid(bid: ProjectBidSubmission) {
     const confirmed = window.confirm(
-      `Delete bid from ${bid.subcontractorName ?? "this subcontractor"}?`
+      `Delete bid from ${
+        bid.subcontractorName ?? "this subcontractor"
+      }? This will also remove leveling decisions tied to this bid.`
     );
 
     if (!confirmed) return;
 
-    deleteProjectBidSubmission(bid.id);
+    deleteProjectBidSubmissionAndDependencies(bid.projectId, bid.id);
     window.dispatchEvent(new Event("storage"));
   }
 

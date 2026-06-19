@@ -7,7 +7,7 @@ import { CsiCodeLabel } from "@/components/csi";
 import AppShell from "@/components/layout/AppShell";
 import Panel from "@/components/ui/Panel";
 import {
-  deleteProjectBidSubmission,
+  deleteProjectBidSubmissionAndDependencies,
   getProjectBidSubmissions,
   projectBidSubmissionsStorageKey,
   saveProjectBidSubmission,
@@ -320,12 +320,14 @@ function EditBidForm({
 
   function handleDelete() {
     const confirmed = window.confirm(
-      `Delete bid from ${bid.subcontractorName ?? "this subcontractor"}?`
+      `Delete bid from ${
+        bid.subcontractorName ?? "this subcontractor"
+      }? This will also remove leveling decisions tied to this bid.`
     );
 
     if (!confirmed) return;
 
-    deleteProjectBidSubmission(bid.id);
+    deleteProjectBidSubmissionAndDependencies(project.id, bid.id);
     onDeleted();
   }
 
