@@ -223,6 +223,17 @@ export type ProjectBudgetReadiness = {
   notes?: string;
 };
 
+export type ProjectItbInstructions = {
+  documentAccessInstructions?: string;
+  bidSubmissionInstructions?: string;
+  rfiInstructions?: string;
+  siteWalkInstructions?: string;
+  specialInstructions?: string;
+  replyToName?: string;
+  replyToEmail?: string;
+  replyToPhone?: string;
+};
+
 export type Project = {
   id: string;
 
@@ -272,4 +283,5 @@ export type Project = {
   projectScope?: ProjectScopeSetup;
   bidRequirements?: ProjectBidRequirements;
   budgetReadiness?: ProjectBudgetReadiness;
+  itbInstructions?: ProjectItbInstructions;
 };

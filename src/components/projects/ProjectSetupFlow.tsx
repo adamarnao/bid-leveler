@@ -32,6 +32,7 @@ import {
   ProjectFinishLevel,
   ProjectInternalTeamMember,
   ProjectInternalTeamRole,
+  ProjectItbInstructions,
   ProjectPlanReviewStatus,
   ProjectPricingConfidence,
   ProjectScopeSetup,
@@ -290,6 +291,7 @@ type ProjectSetupDraft = Partial<
     | "projectCharacteristics"
     | "projectScope"
     | "budgetReadiness"
+    | "itbInstructions"
   >
 >;
 
@@ -847,6 +849,7 @@ function createUnsavedProject(csiVersion: CsiMasterFormatVersion): Project {
       currentStepId: "basics",
       completedStepIds: [],
     },
+    itbInstructions: {},
   };
 }
 
@@ -986,6 +989,12 @@ function ProjectScheduleFields({
     value: ProjectSetupDraft[K]
   ) => void;
 }) {
+  const itbInstructions = draft.itbInstructions ?? project.itbInstructions ?? {};
+
+  function updateItbInstructions(updates: Partial<ProjectItbInstructions>) {
+    onChange("itbInstructions", { ...itbInstructions, ...updates });
+  }
+
   return (
     <div className="project-setup-field-sections">
       <div className="project-setup-form-card">
@@ -1021,6 +1030,18 @@ function ProjectScheduleFields({
               onChange={(event) => onChange("bidDueDate", event.target.value)}
             />
           </label>
+          <label className="form-field project-setup-field-wide">
+            Site Walk / Pre-Bid Instructions
+            <textarea
+              rows={3}
+              value={itbInstructions.siteWalkInstructions ?? ""}
+              onChange={(event) =>
+                updateItbInstructions({
+                  siteWalkInstructions: event.target.value,
+                })
+              }
+            />
+          </label>
         </div>
       </div>
     </div>
@@ -1039,6 +1060,12 @@ function ProjectCommunicationContactsFields({
     value: ProjectSetupDraft[K]
   ) => void;
 }) {
+  const itbInstructions = draft.itbInstructions ?? project.itbInstructions ?? {};
+
+  function updateItbInstructions(updates: Partial<ProjectItbInstructions>) {
+    onChange("itbInstructions", { ...itbInstructions, ...updates });
+  }
+
   return (
     <div className="project-setup-field-sections">
       <div className="project-setup-form-card">
@@ -1048,6 +1075,46 @@ function ProjectCommunicationContactsFields({
           contact and enough client/RFI context for subcontractors to respond.
           Full team permissions can be finished after ITBs are sent.
         </p>
+        <div className="project-setup-form-grid" style={{ marginTop: 16 }}>
+          <label className="form-field">
+            Reply-To Name
+            <input
+              value={itbInstructions.replyToName ?? ""}
+              onChange={(event) =>
+                updateItbInstructions({ replyToName: event.target.value })
+              }
+            />
+          </label>
+          <label className="form-field">
+            Reply-To Email
+            <input
+              type="email"
+              value={itbInstructions.replyToEmail ?? ""}
+              onChange={(event) =>
+                updateItbInstructions({ replyToEmail: event.target.value })
+              }
+            />
+          </label>
+          <label className="form-field">
+            Reply-To Phone
+            <input
+              value={itbInstructions.replyToPhone ?? ""}
+              onChange={(event) =>
+                updateItbInstructions({ replyToPhone: event.target.value })
+              }
+            />
+          </label>
+          <label className="form-field project-setup-field-wide">
+            RFI Instructions
+            <textarea
+              rows={3}
+              value={itbInstructions.rfiInstructions ?? ""}
+              onChange={(event) =>
+                updateItbInstructions({ rfiInstructions: event.target.value })
+              }
+            />
+          </label>
+        </div>
       </div>
       <ProjectInternalTeamFields
         draft={draft}
@@ -1253,9 +1320,14 @@ function ProjectDocumentsBidInstructionsFields({
   ) => void;
 }) {
   const documents = draft.projectDocuments ?? project.projectDocuments ?? {};
+  const itbInstructions = draft.itbInstructions ?? project.itbInstructions ?? {};
 
   function updateDocuments(updates: Partial<ProjectDocuments>) {
     onChange("projectDocuments", { ...documents, ...updates });
+  }
+
+  function updateItbInstructions(updates: Partial<ProjectItbInstructions>) {
+    onChange("itbInstructions", { ...itbInstructions, ...updates });
   }
 
   return (
@@ -1326,8 +1398,39 @@ function ProjectDocumentsBidInstructionsFields({
             Document Access / Bid Instructions
             <textarea
               rows={3}
-              value={draft.documentNotes ?? project.documentNotes ?? ""}
-              onChange={(event) => onChange("documentNotes", event.target.value)}
+              value={
+                itbInstructions.documentAccessInstructions ??
+                draft.documentNotes ??
+                project.documentNotes ??
+                ""
+              }
+              onChange={(event) =>
+                updateItbInstructions({
+                  documentAccessInstructions: event.target.value,
+                })
+              }
+            />
+          </label>
+          <label className="form-field project-setup-field-wide">
+            Bid Submission Instructions
+            <textarea
+              rows={3}
+              value={itbInstructions.bidSubmissionInstructions ?? ""}
+              onChange={(event) =>
+                updateItbInstructions({
+                  bidSubmissionInstructions: event.target.value,
+                })
+              }
+            />
+          </label>
+          <label className="form-field project-setup-field-wide">
+            Special Instructions
+            <textarea
+              rows={3}
+              value={itbInstructions.specialInstructions ?? ""}
+              onChange={(event) =>
+                updateItbInstructions({ specialInstructions: event.target.value })
+              }
             />
           </label>
         </div>
@@ -2579,7 +2682,12 @@ function getBasicsReadiness(project: Project): SetupReadinessRow {
 
 function getCommunicationContactReadiness(project: Project): SetupReadinessRow {
   const internalTeam = project.internalTeam ?? [];
+  const itbInstructions = project.itbInstructions;
+  const hasReplyTo = Boolean(
+    hasText(itbInstructions?.replyToName) || hasText(itbInstructions?.replyToEmail)
+  );
   const hasInternalBidContact =
+    hasReplyTo ||
     hasText(project.estimator) ||
     internalTeam.some(
       (member) =>
@@ -2616,6 +2724,7 @@ function getInternalTeamReadiness(project: Project): SetupReadinessRow {
 
 function getExternalTeamReadiness(project: Project): SetupReadinessRow {
   const externalTeam = project.externalTeam ?? [];
+  const hasRfiInstructions = hasText(project.itbInstructions?.rfiInstructions);
   const hasExternalTeam = externalTeam.length > 0;
   const hasDesignOrRfiContact = externalTeam.some(
     (contact) =>
@@ -2627,9 +2736,9 @@ function getExternalTeamReadiness(project: Project): SetupReadinessRow {
   );
   const missingItems = [
     hasExternalTeam ? undefined : "add at least one external contact",
-    hasDesignOrRfiContact
+    hasDesignOrRfiContact || hasRfiInstructions
       ? undefined
-      : "identify an architect, design, or RFI contact",
+      : "identify an architect, design, or RFI contact, or add RFI instructions",
   ].filter(isDefined);
 
   return buildReadinessRow({
@@ -2724,9 +2833,10 @@ function getExtendedCharacteristicsReadiness(project: Project): SetupReadinessRo
 
 function getDocumentsBidInstructionsReadiness(project: Project): SetupReadinessRow {
   const documents = project.projectDocuments;
+  const itbInstructions = project.itbInstructions;
   const hasDocumentSignal = Boolean(
-    project.planLink ||
-      project.documentNotes ||
+    itbInstructions?.documentAccessInstructions ||
+      project.planLink ||
       (documents &&
         [
           documents.plansLink,
