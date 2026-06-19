@@ -97,6 +97,12 @@ export default function ProjectCommandCenterPage() {
             >
               Invites
             </Link>
+            <Link
+              href={`/projects/${project.id}/bids/new`}
+              className="command-nav-link"
+            >
+              Manual Bid Entry
+            </Link>
           </nav>
         </Panel>
 

@@ -112,17 +112,28 @@ export default function DivisionPage() {
       {groups.length === 0 ? (
         <section style={panel}>
           <p className="muted-text">No CSI scopes or bid rows for this Division.</p>
+          <Link href={`/projects/${project.id}/bids/new`}>Add Manual Bid</Link>
         </section>
       ) : (
         groups.map((group) => (
-          <SubdivisionBidGroup key={group.key} group={group} />
+          <SubdivisionBidGroup
+            key={group.key}
+            group={group}
+            projectId={project.id}
+          />
         ))
       )}
     </AppShell>
   );
 }
 
-function SubdivisionBidGroup({ group }: { group: SubdivisionGroup }) {
+function SubdivisionBidGroup({
+  group,
+  projectId,
+}: {
+  group: SubdivisionGroup;
+  projectId: string;
+}) {
   const bidTotal = group.bids.reduce(
     (sum, bid) => sum + getSubmittedBidAmount(bid),
     0
@@ -156,6 +167,14 @@ function SubdivisionBidGroup({ group }: { group: SubdivisionGroup }) {
           <span className="badge badge-muted">
             Selected Bids ${selectedBidTotal.toLocaleString()}
           </span>
+          <Link
+            href={`/projects/${projectId}/bids/new${
+              group.subdivision ? `?scopeItemId=${group.subdivision.id}` : ""
+            }`}
+            className="button-secondary"
+          >
+            Add Manual Bid
+          </Link>
         </div>
       </div>
 
