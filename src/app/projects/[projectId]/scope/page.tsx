@@ -3,8 +3,16 @@
 import { useMemo, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { CsiCodeLabel, CsiLevelBadge } from "@/components/csi";
+import { CsiCodeLabel, CsiHierarchyPath, CsiLevelBadge } from "@/components/csi";
 import AppShell from "@/components/layout/AppShell";
+import { getNearestLevel2Ancestor } from "@/lib/csiCatalog";
+import {
+  deleteProjectBidPackage,
+  generateBidPackagesFromProjectScopes,
+  getProjectBidPackages,
+  projectBidPackagesStorageKey,
+  saveProjectBidPackage,
+} from "@/lib/projectBids";
 import { getMergedProjects, projectsStorageKey } from "@/lib/projects";
 import {
   getProjectCsiTree,
@@ -21,15 +29,25 @@ import {
   StoredProjectCsiSelection,
   StoredProjectCsiSelections,
 } from "@/types/Csi";
+import { ProjectBidPackage, ProjectBidPackageStatus } from "@/types/Bid";
 import { Project } from "@/types/Project";
 
 const selectionStorageKey = "projectCsiSelections";
 const selectionChangeEvent = "projectCsiSelectionsChange";
+const bidPackagesChangeEvent = "projectBidPackagesChange";
 const EMPTY_PROJECT_CSI_SELECTIONS: StoredProjectCsiSelections = {};
+const bidPackageStatuses: ProjectBidPackageStatus[] = [
+  "DRAFT",
+  "ACTIVE",
+  "CLOSED",
+];
 let cachedProjectsStorageValue: string | undefined;
 let cachedProjects: Project[] = getMergedProjects();
 let cachedSelectionsStorageValue: string | undefined;
 let cachedSelections: StoredProjectCsiSelections = EMPTY_PROJECT_CSI_SELECTIONS;
+let cachedBidPackagesStorageValue: string | undefined;
+let cachedBidPackagesProjectId: string | undefined;
+let cachedBidPackages: ProjectBidPackage[] = [];
 
 export default function ProjectScopePage() {
   const params = useParams();
@@ -38,8 +56,11 @@ export default function ProjectScopePage() {
   const projects = useProjectsSnapshot();
   const project = projects.find((p) => p.id === projectId);
   const storedSelections = useProjectCsiSelectionsSnapshot();
+  const bidPackages = useProjectBidPackagesSnapshot(projectId ?? "");
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [editingDivisionId, setEditingDivisionId] = useState<string | undefined>();
+  const [editingBidPackage, setEditingBidPackage] =
+    useState<ProjectBidPackage | null>();
   const [stagedSelection, setStagedSelection] =
     useState<StoredProjectCsiSelection | undefined>();
   const [modalOpenedItemIds, setModalOpenedItemIds] = useState<string[]>([]);
@@ -58,6 +79,9 @@ export default function ProjectScopePage() {
   const selectedItemCount =
     (csiSelection?.divisionIds.length ?? 0) +
     (csiSelection?.sectionIds.length ?? 0);
+  const selectedPackageScopeItems = selectedSummary.flatMap(
+    (summary) => summary.items
+  );
   const selectedSummaryByDivisionId = new Map(
     selectedSummary.map((summary) => [summary.division.divisionId, summary])
   );
@@ -77,6 +101,47 @@ export default function ProjectScopePage() {
     storedSelections[project.id] = nextSelection;
     localStorage.setItem(selectionStorageKey, JSON.stringify(storedSelections));
     window.dispatchEvent(new Event(selectionChangeEvent));
+  }
+
+  function saveBidPackage(packageRecord: ProjectBidPackage) {
+    saveProjectBidPackage(packageRecord);
+    window.dispatchEvent(new Event(bidPackagesChangeEvent));
+  }
+
+  function generateBidPackages() {
+    if (!project || !csiSelection) return;
+
+    const selectedScopeItemIds = [
+      ...csiSelection.divisionIds,
+      ...csiSelection.sectionIds,
+    ];
+
+    if (selectedScopeItemIds.length === 0) {
+      window.alert("Select CSI scopes before generating bid packages.");
+      return;
+    }
+
+    const generatedPackages = generateBidPackagesFromProjectScopes(
+      project.id,
+      project.csiVersion,
+      selectedScopeItemIds
+    );
+
+    generatedPackages.forEach(saveProjectBidPackage);
+    window.dispatchEvent(new Event(bidPackagesChangeEvent));
+  }
+
+  function deleteBidPackage(packageRecord: ProjectBidPackage) {
+    if (!project) return;
+
+    const shouldDelete = window.confirm(
+      `Delete bid package ${packageRecord.name}? This will not delete CSI selections or bids.`
+    );
+
+    if (!shouldDelete) return;
+
+    deleteProjectBidPackage(project.id, packageRecord.id);
+    window.dispatchEvent(new Event(bidPackagesChangeEvent));
   }
 
   function openAddScopeModal() {
@@ -223,6 +288,62 @@ export default function ProjectScopePage() {
         )}
       </section>
 
+      <section style={panel}>
+        <div className="project-csi-section-header">
+          <div>
+            <h2>Bid Packages</h2>
+            <p className="muted-text">
+              Group selected CSI scopes into the bid packages estimators actually
+              level and invite.
+            </p>
+          </div>
+          <div className="settings-actions">
+            <Link
+              href={`/projects/${project.id}/leveling`}
+              className="button-secondary"
+            >
+              Bid Leveling
+            </Link>
+            <button
+              type="button"
+              className="button-secondary"
+              onClick={generateBidPackages}
+            >
+              Generate from Selected Scopes
+            </button>
+            <button
+              type="button"
+              className="button-primary"
+              onClick={() => setEditingBidPackage(null)}
+            >
+              Add Bid Package
+            </button>
+          </div>
+        </div>
+
+        {selectedPackageScopeItems.length === 0 ? (
+          <p className="muted-text">
+            Select project CSI scopes before creating bid packages.
+          </p>
+        ) : null}
+
+        {bidPackages.length === 0 ? (
+          <p className="muted-text">No bid packages created yet.</p>
+        ) : (
+          <div className="project-csi-division-card-grid">
+            {bidPackages.map((packageRecord) => (
+              <BidPackageCard
+                key={packageRecord.id}
+                packageRecord={packageRecord}
+                csiVersion={project.csiVersion}
+                onEdit={() => setEditingBidPackage(packageRecord)}
+                onDelete={() => deleteBidPackage(packageRecord)}
+              />
+            ))}
+          </div>
+        )}
+      </section>
+
       {addModalOpen && (
         <div className="modal-backdrop" role="presentation">
           <section
@@ -332,6 +453,20 @@ export default function ProjectScopePage() {
           </section>
         </div>
       )}
+
+      {editingBidPackage !== undefined && (
+        <BidPackageEditorModal
+          project={project}
+          packageRecord={editingBidPackage}
+          selectedSummary={selectedSummary}
+          selectedScopeItems={selectedPackageScopeItems}
+          onCancel={() => setEditingBidPackage(undefined)}
+          onSave={(packageRecord) => {
+            saveBidPackage(packageRecord);
+            setEditingBidPackage(undefined);
+          }}
+        />
+      )}
     </AppShell>
   );
 }
@@ -385,6 +520,325 @@ function DivisionScopeCard({
         </div>
       )}
     </article>
+  );
+}
+
+function BidPackageCard({
+  packageRecord,
+  csiVersion,
+  onEdit,
+  onDelete,
+}: {
+  packageRecord: ProjectBidPackage;
+  csiVersion: Project["csiVersion"];
+  onEdit: () => void;
+  onDelete: () => void;
+}) {
+  const mappedItems = packageRecord.scopeItemIds
+    .map((scopeItemId) => resolveProjectCsiItem(csiVersion, scopeItemId))
+    .filter(isDefined);
+
+  return (
+    <article className="project-csi-division-card">
+      <div className="project-csi-division-card-header">
+        <div>
+          <h3 style={{ marginTop: 0 }}>{packageRecord.name}</h3>
+          {packageRecord.description ? (
+            <p className="muted-text">{packageRecord.description}</p>
+          ) : null}
+          <div className="badge-list">
+            <span className="badge badge-muted">
+              {packageRecord.scopeItemIds.length} mapped CSI scopes
+            </span>
+            <span className="badge badge-primary">
+              {formatStatus(packageRecord.status ?? "DRAFT")}
+            </span>
+            {packageRecord.source ? (
+              <span className="badge badge-muted">
+                {formatStatus(packageRecord.source)}
+              </span>
+            ) : null}
+          </div>
+        </div>
+        <div className="settings-actions">
+          <button type="button" className="button-secondary" onClick={onEdit}>
+            Edit
+          </button>
+          <button type="button" className="button-secondary" onClick={onDelete}>
+            Delete
+          </button>
+        </div>
+      </div>
+
+      {mappedItems.length === 0 ? (
+        <p className="muted-text">No mapped CSI scopes.</p>
+      ) : (
+        <div className="badge-list">
+          {mappedItems.map((item) => (
+            <span key={item.id} className="badge badge-muted">
+              <CsiCodeLabel item={item} showLevelBadge />
+            </span>
+          ))}
+        </div>
+      )}
+    </article>
+  );
+}
+
+function BidPackageEditorModal({
+  project,
+  packageRecord,
+  selectedSummary,
+  selectedScopeItems,
+  onCancel,
+  onSave,
+}: {
+  project: Project;
+  packageRecord: ProjectBidPackage | null;
+  selectedSummary: Array<{ division: CsiCatalogItem; items: CsiCatalogItem[] }>;
+  selectedScopeItems: CsiCatalogItem[];
+  onCancel: () => void;
+  onSave: (packageRecord: ProjectBidPackage) => void;
+}) {
+  const [name, setName] = useState(packageRecord?.name ?? "");
+  const [description, setDescription] = useState(
+    packageRecord?.description ?? ""
+  );
+  const [status, setStatus] = useState<ProjectBidPackageStatus>(
+    packageRecord?.status ?? "DRAFT"
+  );
+  const [scopeItemIds, setScopeItemIds] = useState<string[]>(
+    packageRecord?.scopeItemIds ?? []
+  );
+  const [error, setError] = useState<string | undefined>();
+  const validSelectedScopeItemIds = new Set(
+    selectedScopeItems.map((item) => item.id)
+  );
+
+  function toggleScope(scopeItemId: string, checked: boolean) {
+    setScopeItemIds((currentIds) =>
+      checked
+        ? addUnique(currentIds, scopeItemId)
+        : currentIds.filter((itemId) => itemId !== scopeItemId)
+    );
+  }
+
+  function handleSave() {
+    const trimmedName = name.trim();
+    const validScopeItemIds = scopeItemIds.filter((scopeItemId) =>
+      validSelectedScopeItemIds.has(scopeItemId)
+    );
+
+    if (!trimmedName) {
+      setError("Enter a bid package name.");
+      return;
+    }
+
+    const now = new Date().toISOString();
+
+    onSave({
+      id: packageRecord?.id ?? createBidPackageId(project.id),
+      projectId: project.id,
+      name: trimmedName,
+      description: description.trim() || undefined,
+      csiVersion: project.csiVersion,
+      scopeItemIds: validScopeItemIds,
+      sortOrder: packageRecord?.sortOrder,
+      status,
+      source: packageRecord?.source ?? "MANUAL",
+      createdAt: packageRecord?.createdAt ?? now,
+      updatedAt: now,
+    });
+  }
+
+  return (
+    <div className="modal-backdrop" role="presentation">
+      <section
+        className="modal-card project-csi-editor-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="bid-package-editor-title"
+      >
+        <div className="modal-header">
+          <div>
+            <h2 id="bid-package-editor-title">
+              {packageRecord ? "Edit Bid Package" : "Add Bid Package"}
+            </h2>
+            <p className="muted-text">
+              Assign only CSI scopes already selected for this project.
+            </p>
+          </div>
+        </div>
+
+        <div className="modal-body project-csi-modal-body">
+          {error ? <p className="form-error">{error}</p> : null}
+
+          <div className="project-setup-card-grid">
+            <label>
+              <span className="label-text">Package Name</span>
+              <input
+                value={name}
+                onChange={(event) => setName(event.target.value)}
+              />
+            </label>
+            <label>
+              <span className="label-text">Status</span>
+              <select
+                value={status}
+                onChange={(event) =>
+                  setStatus(event.target.value as ProjectBidPackageStatus)
+                }
+              >
+                {bidPackageStatuses.map((packageStatus) => (
+                  <option key={packageStatus} value={packageStatus}>
+                    {formatStatus(packageStatus)}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
+
+          <label>
+            <span className="label-text">Description</span>
+            <textarea
+              value={description}
+              rows={3}
+              onChange={(event) => setDescription(event.target.value)}
+            />
+          </label>
+
+          <div style={{ marginTop: 16 }}>
+            <h3>Mapped CSI Scopes</h3>
+            {selectedScopeItems.length === 0 ? (
+              <p className="muted-text">
+                No project CSI scopes are selected yet.
+              </p>
+            ) : (
+              <div className="project-csi-tree">
+                {selectedSummary.map((summary) => (
+                  <BidPackageScopeDivision
+                    key={summary.division.id}
+                    division={summary.division}
+                    items={summary.items}
+                    selectedScopeItemIds={scopeItemIds}
+                    onToggleScope={toggleScope}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="modal-footer">
+          <button type="button" className="button-secondary" onClick={onCancel}>
+            Cancel
+          </button>
+          <button type="button" className="button-primary" onClick={handleSave}>
+            Save Bid Package
+          </button>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function BidPackageScopeDivision({
+  division,
+  items,
+  selectedScopeItemIds,
+  onToggleScope,
+}: {
+  division: CsiCatalogItem;
+  items: CsiCatalogItem[];
+  selectedScopeItemIds: string[];
+  onToggleScope: (scopeItemId: string, checked: boolean) => void;
+}) {
+  const divisionItem = items.find((item) => item.level === 1);
+  const childItems = items.filter((item) => item.level > 1);
+  const subdivisionGroups = groupPackageScopeItems(division.version, childItems);
+
+  return (
+    <div className="project-csi-tree-node">
+      <div className="project-csi-tree-row" style={{ "--tree-depth": 0 } as React.CSSProperties}>
+        <span className="project-csi-tree-toggle" />
+        <div className="project-csi-tree-item">
+          <span className="project-csi-tree-label">
+            <CsiCodeLabel item={division} showLevelBadge />
+          </span>
+        </div>
+      </div>
+
+      {divisionItem ? (
+        <BidPackageScopeCheckbox
+          item={divisionItem}
+          depth={1}
+          checked={selectedScopeItemIds.includes(divisionItem.id)}
+          onToggleScope={onToggleScope}
+        />
+      ) : null}
+
+      {subdivisionGroups.map((group) => (
+        <div key={group.key} className="project-csi-tree-node">
+          <div
+            className="project-csi-tree-row"
+            style={{ "--tree-depth": 1 } as React.CSSProperties}
+          >
+            <span className="project-csi-tree-toggle" />
+            <div className="project-csi-tree-item">
+              <span className="project-csi-tree-label">
+                {group.subdivision ? (
+                  <CsiCodeLabel item={group.subdivision} showLevelBadge />
+                ) : (
+                  "Ungrouped CSI scopes"
+                )}
+              </span>
+            </div>
+          </div>
+          {group.items.map((item) => (
+            <BidPackageScopeCheckbox
+              key={item.id}
+              item={item}
+              depth={2}
+              checked={selectedScopeItemIds.includes(item.id)}
+              onToggleScope={onToggleScope}
+            />
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function BidPackageScopeCheckbox({
+  item,
+  depth,
+  checked,
+  onToggleScope,
+}: {
+  item: CsiCatalogItem;
+  depth: number;
+  checked: boolean;
+  onToggleScope: (scopeItemId: string, checked: boolean) => void;
+}) {
+  return (
+    <div
+      className="project-csi-tree-row"
+      style={{ "--tree-depth": depth } as React.CSSProperties}
+    >
+      <span className="project-csi-tree-toggle" />
+      <label className="project-csi-tree-item">
+        <input
+          type="checkbox"
+          checked={checked}
+          onChange={(event) => onToggleScope(item.id, event.target.checked)}
+        />
+        <span className="project-csi-tree-label">
+          <CsiCodeLabel item={item} />
+          {item.level > 1 ? <CsiHierarchyPath item={item} /> : null}
+        </span>
+        <CsiLevelBadge item={item} />
+      </label>
+    </div>
   );
 }
 
@@ -595,6 +1049,43 @@ function getProjectCsiSelectionsSnapshot(): StoredProjectCsiSelections {
   return cachedSelections;
 }
 
+function useProjectBidPackagesSnapshot(projectId: string): ProjectBidPackage[] {
+  return useSyncExternalStore(
+    subscribeToProjectBidPackagesStorage,
+    () => getProjectBidPackagesSnapshot(projectId),
+    getServerProjectBidPackagesSnapshot
+  );
+}
+
+function subscribeToProjectBidPackagesStorage(onStoreChange: () => void) {
+  window.addEventListener("storage", onStoreChange);
+  window.addEventListener(bidPackagesChangeEvent, onStoreChange);
+
+  return () => {
+    window.removeEventListener("storage", onStoreChange);
+    window.removeEventListener(bidPackagesChangeEvent, onStoreChange);
+  };
+}
+
+function getServerProjectBidPackagesSnapshot(): ProjectBidPackage[] {
+  return [];
+}
+
+function getProjectBidPackagesSnapshot(projectId: string): ProjectBidPackage[] {
+  const storageValue = localStorage.getItem(projectBidPackagesStorageKey) || "[]";
+
+  if (
+    storageValue !== cachedBidPackagesStorageValue ||
+    projectId !== cachedBidPackagesProjectId
+  ) {
+    cachedBidPackagesStorageValue = storageValue;
+    cachedBidPackagesProjectId = projectId;
+    cachedBidPackages = getProjectBidPackages(projectId);
+  }
+
+  return cachedBidPackages;
+}
+
 function parseStoredSelections(storageValue: string): StoredProjectCsiSelections {
   try {
     const parsed = JSON.parse(storageValue);
@@ -611,8 +1102,70 @@ function addUnique(values: string[], ...newValues: string[]) {
   return Array.from(new Set([...values, ...newValues]));
 }
 
+function groupPackageScopeItems(
+  csiVersion: Project["csiVersion"],
+  items: CsiCatalogItem[]
+) {
+  const groups = new Map<
+    string,
+    {
+      key: string;
+      subdivision?: CsiCatalogItem;
+      items: CsiCatalogItem[];
+    }
+  >();
+
+  items.forEach((item) => {
+    const subdivision =
+      item.level === 2 ? item : getNearestLevel2Ancestor(csiVersion, item.id);
+    const key = subdivision?.id ?? "ungrouped";
+    const group =
+      groups.get(key) ??
+      {
+        key,
+        subdivision,
+        items: [],
+      };
+
+    group.items.push(item);
+    groups.set(key, group);
+  });
+
+  return Array.from(groups.values()).map((group) => ({
+    ...group,
+    items: group.items.sort(compareCsiItems),
+  }));
+}
+
+function compareCsiItems(itemA: CsiCatalogItem, itemB: CsiCatalogItem) {
+  return itemA.number.localeCompare(itemB.number, undefined, {
+    numeric: true,
+    sensitivity: "base",
+  });
+}
+
+function createBidPackageId(projectId: string) {
+  const randomPart =
+    typeof crypto !== "undefined" && "randomUUID" in crypto
+      ? crypto.randomUUID()
+      : Date.now().toString();
+
+  return `bid-package-${projectId}-${randomPart}`;
+}
+
 function formatCsiMasterFormatVersion(value: string) {
   if (value === "MASTERFORMAT_1995") return "MasterFormat 1995";
 
   return "Current MasterFormat";
+}
+
+function formatStatus(value: string) {
+  return value
+    .split("_")
+    .map((word) => word.charAt(0) + word.slice(1).toLowerCase())
+    .join(" ");
+}
+
+function isDefined<T>(value: T | undefined): value is T {
+  return value !== undefined;
 }
