@@ -1,4 +1,5 @@
 import { mockProjects } from "@/data/mockProjects";
+import { deleteProjectBidData } from "@/lib/projectBids";
 import {
   Project,
   ProjectSetupProgress,
@@ -96,6 +97,7 @@ export function deleteProjectPermanently(projectId: string) {
     projectDraftInviteSelectionsStorageKey,
     projectId
   );
+  deleteProjectBidData(projectId);
 }
 
 export function getActiveProjects(projects: Project[]): Project[] {
