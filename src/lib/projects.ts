@@ -1,5 +1,6 @@
 import { mockProjects } from "@/data/mockProjects";
 import { deleteProjectBidData } from "@/lib/projectBids";
+import { deleteProjectInviteRecipientsForProject } from "@/lib/projectInvites";
 import {
   Project,
   ProjectSetupProgress,
@@ -98,6 +99,7 @@ export function deleteProjectPermanently(projectId: string) {
     projectId
   );
   deleteProjectBidData(projectId);
+  deleteProjectInviteRecipientsForProject(projectId);
 }
 
 export function getActiveProjects(projects: Project[]): Project[] {
