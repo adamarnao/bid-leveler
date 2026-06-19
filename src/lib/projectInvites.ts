@@ -195,7 +195,7 @@ function upsertRecipient(
 ) {
   const recipientKey = getRecipientDedupeKey(recipient);
   const existingRecipientIndex = recipients.findIndex(
-    (item) => getRecipientDedupeKey(item) === recipientKey
+    (item) => item.id === recipient.id || getRecipientDedupeKey(item) === recipientKey
   );
 
   if (existingRecipientIndex === -1) return [...recipients, recipient];

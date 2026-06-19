@@ -14,6 +14,7 @@ import {
   generateInviteRecipientsFromBidPackageMatches,
   getProjectInviteRecipients,
   projectInviteRecipientsStorageKey,
+  saveProjectInviteRecipient,
   saveProjectInviteRecipients,
 } from "@/lib/projectInvites";
 import { getMergedProjects, projectsStorageKey } from "@/lib/projects";
@@ -26,7 +27,7 @@ import { matchSubcontractorsToBidPackages } from "@/lib/subcontractorMatching";
 import { ProjectBidPackage } from "@/types/Bid";
 import { ProjectInviteRecipient } from "@/types/Invite";
 import { Project } from "@/types/Project";
-import { Subcontractor } from "@/types/Subcontractor";
+import { Subcontractor, SubcontractorContact } from "@/types/Subcontractor";
 
 const projectDraftInviteSelectionsStorageKey = "projectDraftInviteSelections";
 const projectInviteRecipientsChangeEvent = "projectInviteRecipientsChange";
@@ -183,6 +184,10 @@ export default function ProjectInvitesPage() {
               recipients={inviteRecipients.filter(
                 (recipient) => recipient.bidPackageId === bidPackage.id
               )}
+              onRecipientChanged={(nextMessage) => {
+                window.dispatchEvent(new Event(projectInviteRecipientsChangeEvent));
+                setMessage(nextMessage);
+              }}
             />
           ))
         )}
@@ -196,11 +201,13 @@ function BidPackageInviteSection({
   bidPackage,
   subcontractors,
   recipients,
+  onRecipientChanged,
 }: {
   project: Project;
   bidPackage: ProjectBidPackage;
   subcontractors: Subcontractor[];
   recipients: ProjectInviteRecipient[];
+  onRecipientChanged: (message: string) => void;
 }) {
   const draftRecipients = recipients.filter((recipient) =>
     isDraftRecipient(recipient)
@@ -213,6 +220,29 @@ function BidPackageInviteSection({
   const packageScopeItems = bidPackage.scopeItemIds
     .map((scopeItemId) => resolveProjectCsiItem(project.csiVersion, scopeItemId))
     .filter(isDefined);
+
+  function saveRecipient(recipient: ProjectInviteRecipient) {
+    saveProjectInviteRecipient({
+      ...recipient,
+      status: "DRAFT",
+      updatedAt: new Date().toISOString(),
+    });
+    onRecipientChanged("Recipient updated.");
+  }
+
+  function removeRecipient(recipient: ProjectInviteRecipient) {
+    saveProjectInviteRecipient({
+      ...recipient,
+      status: "REMOVED",
+      updatedAt: new Date().toISOString(),
+    });
+    onRecipientChanged("Recipient removed from this bid package.");
+  }
+
+  function addManualRecipient(recipient: ProjectInviteRecipient) {
+    saveProjectInviteRecipient(recipient);
+    onRecipientChanged("Manual recipient added.");
+  }
 
   return (
     <Panel title={bidPackage.name}>
@@ -234,9 +264,6 @@ function BidPackageInviteSection({
           <button type="button" className="button-secondary" disabled>
             Send Package ITB
           </button>
-          <button type="button" className="button-secondary" disabled>
-            Add Recipient
-          </button>
           <span className="muted-text">Sending will be wired in a later phase.</span>
         </div>
       </div>
@@ -251,15 +278,26 @@ function BidPackageInviteSection({
         </div>
       ) : null}
 
+      <ManualRecipientForm
+        project={project}
+        bidPackage={bidPackage}
+        subcontractors={subcontractors}
+        onAddRecipient={addManualRecipient}
+      />
+
       <RecipientGroup
         title="Selected / Draft Recipients"
         recipients={draftRecipients}
         subcontractors={subcontractors}
+        onSaveRecipient={saveRecipient}
+        onRemoveRecipient={removeRecipient}
       />
       <RecipientGroup
         title="Possible Matches"
         recipients={possibleRecipients}
         subcontractors={subcontractors}
+        onSaveRecipient={saveRecipient}
+        onRemoveRecipient={removeRecipient}
       />
     </Panel>
   );
@@ -269,10 +307,14 @@ function RecipientGroup({
   title,
   recipients,
   subcontractors,
+  onSaveRecipient,
+  onRemoveRecipient,
 }: {
   title: string;
   recipients: ProjectInviteRecipient[];
   subcontractors: Subcontractor[];
+  onSaveRecipient: (recipient: ProjectInviteRecipient) => void;
+  onRemoveRecipient: (recipient: ProjectInviteRecipient) => void;
 }) {
   return (
     <div style={{ marginTop: 20 }}>
@@ -297,29 +339,15 @@ function RecipientGroup({
             </thead>
             <tbody>
               {recipients.map((recipient) => (
-                <tr key={recipient.id}>
-                  <td>{getRecipientSubcontractorName(recipient, subcontractors)}</td>
-                  <td>{recipient.contactId ?? recipient.email ?? "Company default"}</td>
-                  <td>{recipient.matchLabel ?? recipient.matchType ?? "Manual"}</td>
-                  <td>
-                    <span className="badge badge-muted">
-                      {recipient.confidence ?? "LOW"}
-                    </span>
-                  </td>
-                  <td>{formatCoverageRatio(recipient.coverageRatio)}</td>
-                  <td>
-                    <span className={getStatusBadgeClassName(recipient.status)}>
-                      {formatStatus(recipient.status)}
-                    </span>
-                  </td>
-                  <td>{recipient.source}</td>
-                  <td>{recipient.selectedScopeItemIds.length}</td>
-                  <td>
-                    <button type="button" className="button-secondary" disabled>
-                      Send / Resend Recipient
-                    </button>
-                  </td>
-                </tr>
+                <RecipientRow
+                  key={recipient.id}
+                  recipient={recipient}
+                  subcontractor={subcontractors.find(
+                    (item) => item.id === recipient.subcontractorId
+                  )}
+                  onSaveRecipient={onSaveRecipient}
+                  onRemoveRecipient={onRemoveRecipient}
+                />
               ))}
             </tbody>
           </table>
@@ -329,12 +357,245 @@ function RecipientGroup({
   );
 }
 
+function ManualRecipientForm({
+  project,
+  bidPackage,
+  subcontractors,
+  onAddRecipient,
+}: {
+  project: Project;
+  bidPackage: ProjectBidPackage;
+  subcontractors: Subcontractor[];
+  onAddRecipient: (recipient: ProjectInviteRecipient) => void;
+}) {
+  const sortedSubcontractors = [...subcontractors].sort((a, b) =>
+    a.companyName.localeCompare(b.companyName)
+  );
+  const [subcontractorId, setSubcontractorId] = useState("");
+  const [contactId, setContactId] = useState("");
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
+  const subcontractor = sortedSubcontractors.find(
+    (item) => item.id === subcontractorId
+  );
+  const contacts = getInviteEligibleContacts(subcontractor);
+  const selectedContact = contacts.find((contact) => contact.id === contactId);
+  const hasContactOrEmail = Boolean(selectedContact?.email || email.trim());
+
+  function handleSubcontractorChange(nextSubcontractorId: string) {
+    const nextSubcontractor = sortedSubcontractors.find(
+      (item) => item.id === nextSubcontractorId
+    );
+    const defaultContact = getInviteEligibleContacts(nextSubcontractor)[0];
+
+    setSubcontractorId(nextSubcontractorId);
+    setContactId(defaultContact?.id ?? "");
+    setEmail(defaultContact?.email ?? "");
+    setError("");
+  }
+
+  function handleContactChange(nextContactId: string) {
+    const nextContact = contacts.find((contact) => contact.id === nextContactId);
+
+    setContactId(nextContactId);
+    setEmail(nextContact?.email ?? "");
+    setError("");
+  }
+
+  function handleAddRecipient() {
+    if (!subcontractor) {
+      setError("Select a subcontractor.");
+      return;
+    }
+
+    if (!hasContactOrEmail) {
+      setError("Select a contact with email or enter a manual email.");
+      return;
+    }
+
+    const now = new Date().toISOString();
+
+    onAddRecipient({
+      id: createInviteRecipientId(project.id, bidPackage.id),
+      projectId: project.id,
+      bidPackageId: bidPackage.id,
+      subcontractorId: subcontractor.id,
+      contactId: contactId || undefined,
+      email: email.trim() || selectedContact?.email,
+      selectedScopeItemIds: bidPackage.scopeItemIds,
+      source: "MANUAL",
+      status: "DRAFT",
+      addedAt: now,
+      updatedAt: now,
+    });
+    setError("");
+  }
+
+  return (
+    <div className="project-setup-form-card" style={{ marginTop: 18 }}>
+      <div className="project-setup-card-header">
+        <div>
+          <p className="label-text">Add Recipient</p>
+          <p className="muted-text">
+            Add a subcontractor/contact to this Bid Package only.
+          </p>
+        </div>
+      </div>
+      <div className="project-setup-form-grid">
+        <label className="form-field">
+          Subcontractor
+          <select
+            value={subcontractorId}
+            onChange={(event) => handleSubcontractorChange(event.target.value)}
+          >
+            <option value="">Select subcontractor</option>
+            {sortedSubcontractors.map((item) => (
+              <option key={item.id} value={item.id}>
+                {item.companyName}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="form-field">
+          Contact
+          <select
+            value={contactId}
+            onChange={(event) => handleContactChange(event.target.value)}
+            disabled={!subcontractor}
+          >
+            <option value="">Manual email / company default</option>
+            {contacts.map((contact) => (
+              <option key={contact.id} value={contact.id}>
+                {contact.name} {contact.email ? `- ${contact.email}` : "- no email"}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="form-field">
+          Email
+          <input
+            type="email"
+            value={email}
+            onChange={(event) => {
+              setEmail(event.target.value);
+              setError("");
+            }}
+          />
+        </label>
+      </div>
+      {subcontractor && contacts.length === 0 ? (
+        <p className="muted-text">No active contacts with email are available.</p>
+      ) : null}
+      {error ? <p className="form-error">{error}</p> : null}
+      <div className="settings-actions">
+        <button type="button" className="button-secondary" onClick={handleAddRecipient}>
+          Add Recipient
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function RecipientRow({
+  recipient,
+  subcontractor,
+  onSaveRecipient,
+  onRemoveRecipient,
+}: {
+  recipient: ProjectInviteRecipient;
+  subcontractor?: Subcontractor;
+  onSaveRecipient: (recipient: ProjectInviteRecipient) => void;
+  onRemoveRecipient: (recipient: ProjectInviteRecipient) => void;
+}) {
+  const contacts = getInviteEligibleContacts(subcontractor);
+  const [contactId, setContactId] = useState(recipient.contactId ?? "");
+  const [email, setEmail] = useState(recipient.email ?? "");
+  const selectedContact = contacts.find((contact) => contact.id === contactId);
+
+  function saveRecipient() {
+    onSaveRecipient({
+      ...recipient,
+      contactId: contactId || undefined,
+      email: email.trim() || selectedContact?.email,
+    });
+  }
+
+  return (
+    <tr>
+      <td>{subcontractor?.companyName ?? recipient.subcontractorId}</td>
+      <td>
+        <div style={{ display: "grid", gap: 8 }}>
+          <select
+            value={contactId}
+            onChange={(event) => {
+              const nextContact = contacts.find(
+                (contact) => contact.id === event.target.value
+              );
+
+              setContactId(event.target.value);
+              if (nextContact?.email) setEmail(nextContact.email);
+            }}
+          >
+            <option value="">Manual email / company default</option>
+            {contacts.map((contact) => (
+              <option key={contact.id} value={contact.id}>
+                {contact.name} {contact.email ? `- ${contact.email}` : "- no email"}
+              </option>
+            ))}
+          </select>
+          <input
+            type="email"
+            value={email}
+            placeholder="email@example.com"
+            onChange={(event) => setEmail(event.target.value)}
+          />
+          {!selectedContact?.email && !email.trim() ? (
+            <span className="badge badge-warning">No email</span>
+          ) : null}
+        </div>
+      </td>
+      <td>{recipient.matchLabel ?? recipient.matchType ?? "Manual"}</td>
+      <td>
+        <span className="badge badge-muted">{recipient.confidence ?? "LOW"}</span>
+      </td>
+      <td>{formatCoverageRatio(recipient.coverageRatio)}</td>
+      <td>
+        <span className={getStatusBadgeClassName(recipient.status)}>
+          {formatStatus(recipient.status)}
+        </span>
+      </td>
+      <td>{recipient.source}</td>
+      <td>{recipient.selectedScopeItemIds.length}</td>
+      <td>
+        <div className="settings-actions">
+          <button type="button" className="button-secondary" onClick={saveRecipient}>
+            Save
+          </button>
+          <button type="button" className="button-secondary" disabled>
+            Send / Resend Recipient
+          </button>
+          <button
+            type="button"
+            className="button-danger"
+            onClick={() => onRemoveRecipient(recipient)}
+          >
+            Remove
+          </button>
+        </div>
+      </td>
+    </tr>
+  );
+}
+
 function isDraftRecipient(recipient: ProjectInviteRecipient) {
   return recipient.status !== "REMOVED" && !isPossibleRecipient(recipient);
 }
 
 function isPossibleRecipient(recipient: ProjectInviteRecipient) {
-  return recipient.confidence === "LOW" || (recipient.coverageRatio ?? 1) < 0.5;
+  return (
+    recipient.status !== "REMOVED" &&
+    (recipient.confidence === "LOW" || (recipient.coverageRatio ?? 1) < 0.5)
+  );
 }
 
 function formatCoverageRatio(value: number | undefined) {
@@ -351,14 +612,29 @@ function getStatusBadgeClassName(status: ProjectInviteRecipient["status"]) {
   return "badge badge-muted";
 }
 
-function getRecipientSubcontractorName(
-  recipient: ProjectInviteRecipient,
-  subcontractors: Subcontractor[]
-) {
-  return (
-    subcontractors.find((subcontractor) => subcontractor.id === recipient.subcontractorId)
-      ?.companyName ?? recipient.subcontractorId
+function getInviteEligibleContacts(
+  subcontractor: Subcontractor | undefined
+): SubcontractorContact[] {
+  if (!subcontractor) return [];
+
+  return subcontractor.contacts.filter(
+    (contact) => contact.active !== false && Boolean(contact.email?.trim())
   );
+}
+
+function createInviteRecipientId(projectId: string, bidPackageId: string) {
+  const randomPart =
+    typeof crypto !== "undefined" && "randomUUID" in crypto
+      ? crypto.randomUUID()
+      : Date.now().toString();
+
+  return `invite-recipient-${sanitizeIdPart(projectId)}-${sanitizeIdPart(
+    bidPackageId
+  )}-${randomPart}`;
+}
+
+function sanitizeIdPart(value: string) {
+  return value.replace(/[^a-zA-Z0-9_-]/g, "-");
 }
 
 function useProjectsSnapshot(): Project[] {
