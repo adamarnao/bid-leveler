@@ -5,10 +5,12 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { CsiCodeLabel, CsiHierarchyPath, CsiLevelBadge } from "@/components/csi";
 import AppShell from "@/components/layout/AppShell";
-import { mockSectionCosts } from "@/data/mockSectionCosts";
-import ProjectCostSummaryTable from "@/components/projects/ProjectCostSummaryTable";
-import { mockProjectCosts } from "@/data/mockProjectCosts";
 import { getNearestLevel2Ancestor } from "@/lib/csiCatalog";
+import {
+  getMissingBidCoverage,
+  getProjectBidSummary,
+  getProjectScopeBidCoverage,
+} from "@/lib/projectBids";
 import { getMergedProjects, projectsStorageKey } from "@/lib/projects";
 import {
   getProjectCsiDivisions,
@@ -58,23 +60,7 @@ export default function ProjectOverviewPage() {
         csiSelection?.divisionIds.includes(division.id)
       )
     : allDivisions;
-
-  const getSectionCost = (sectionId: string) =>
-    mockSectionCosts.find((cost) =>
-      projectCsiIdsReferToSameItem(
-        project.csiVersion,
-        cost.sectionId,
-        sectionId
-      )
-    );
-
-  const totalSelectedCost = mockSectionCosts.reduce(
-    (sum, item) => sum + item.selectedCost,
-    0
-  );
-
-  const mockGcCosts = 68500;
-  const projectTotal = totalSelectedCost + mockGcCosts;
+  const bidSummary = getProjectBidSummary(project.id, csiSelection);
 
   return (
     <AppShell title="Overview">
@@ -109,56 +95,33 @@ export default function ProjectOverviewPage() {
 
       <section style={panel}>
         <h2>Project Cost Summary</h2>
-
-        <ProjectCostSummaryTable
-          rows={[
-            {
-              label: "General Conditions",
-              amount: mockGcCosts,
-              squareFootage: project.squareFootage ?? 0,
-              totalProjectCost: projectTotal,
-              constructionCost: totalSelectedCost,
-              durationMonths: project.projectDurationMonths ?? 0,
-            },
-            {
-              label: "Fee",
-              amount:
-                mockProjectCosts.find((c) => c.category === "GC_FEE")
-                  ?.amount ?? 0,
-              squareFootage: project.squareFootage ?? 0,
-              totalProjectCost: projectTotal,
-              constructionCost: totalSelectedCost,
-              durationMonths: project.projectDurationMonths ?? 0,
-            },
-            {
-              label: "Insurance",
-              amount:
-                mockProjectCosts.find((c) => c.category === "INSURANCE")
-                  ?.amount ?? 0,
-              squareFootage: project.squareFootage ?? 0,
-              totalProjectCost: projectTotal,
-              constructionCost: totalSelectedCost,
-              durationMonths: project.projectDurationMonths ?? 0,
-            },
-            {
-              label: "Construction Total",
-              amount: totalSelectedCost,
-              squareFootage: project.squareFootage ?? 0,
-              totalProjectCost: projectTotal,
-              constructionCost: totalSelectedCost,
-              durationMonths: project.projectDurationMonths ?? 0,
-            },
-            {
-              label: "TOTAL",
-              amount: projectTotal,
-              squareFootage: project.squareFootage ?? 0,
-              totalProjectCost: projectTotal,
-              constructionCost: totalSelectedCost,
-              durationMonths: project.projectDurationMonths ?? 0,
-              bold: true,
-            },
-          ]}
-        />
+        {bidSummary.submissionCount === 0 ? (
+          <div style={pendingState}>
+            <strong>No bid totals available yet.</strong>
+            <p className="muted-text">
+              Bid and cost summaries will appear after bids are entered and
+              leveled.
+            </p>
+          </div>
+        ) : (
+          <div className="badge-list">
+            <span className="badge badge-muted">
+              Bids Received {bidSummary.submissionCount}
+            </span>
+            <span className="badge badge-muted">
+              Selected Bids {bidSummary.selectedBidCount}
+            </span>
+            <span className="badge badge-muted">
+              Selected Total ${bidSummary.selectedBidTotal.toLocaleString()}
+            </span>
+            <span className="badge badge-muted">
+              Unreviewed {bidSummary.unreviewedBidCount}
+            </span>
+            <span className="badge badge-muted">
+              Missing Coverage {bidSummary.missingCoverageCount}
+            </span>
+          </div>
+        )}
       </section>
 
       <section style={panel}>
@@ -170,10 +133,9 @@ export default function ProjectOverviewPage() {
               <th style={cell}></th>
               <th style={cell}>Division</th>
               <th style={cell}>CSI scopes</th>
-              <th style={cell}>Budget</th>
-              <th style={cell}>Low Bid</th>
-              <th style={cell}>Selected Cost</th>
-              <th style={cell}>Variance</th>
+              <th style={cell}>Bids Received</th>
+              <th style={cell}>Selected Bids</th>
+              <th style={cell}>Missing Coverage</th>
               <th style={cell}>Action</th>
             </tr>
           </thead>
@@ -201,23 +163,25 @@ export default function ProjectOverviewPage() {
                 csiSelection?.divisionIds.includes(division.id)
               );
               const subdivisionGroups = groupCsiScopesBySubdivision(sections);
-
-              const divisionBudget = sections.reduce((sum, section) => {
-                const cost = getSectionCost(section.id);
-                return sum + (cost?.budget ?? 0);
-              }, 0);
-
-              const divisionLowBid = sections.reduce((sum, section) => {
-                const cost = getSectionCost(section.id);
-                return sum + (cost?.lowBid ?? 0);
-              }, 0);
-
-              const divisionSelected = sections.reduce((sum, section) => {
-                const cost = getSectionCost(section.id);
-                return sum + (cost?.selectedCost ?? 0);
-              }, 0);
-
-              const divisionVariance = divisionSelected - divisionBudget;
+              const selectedScopeItemIds = sections.map((section) => section.id);
+              const coverage = getProjectScopeBidCoverage(project.id, {
+                version: project.csiVersion,
+                divisionIds: [division.id],
+                sectionIds: selectedScopeItemIds,
+                updatedAt: csiSelection?.updatedAt ?? "",
+              });
+              const bidsReceived = coverage.reduce(
+                (count, scopeCoverage) => count + scopeCoverage.bidCount,
+                0
+              );
+              const selectedBids = coverage.reduce(
+                (count, scopeCoverage) => count + scopeCoverage.selectedBidCount,
+                0
+              );
+              const missingCoverage = getMissingBidCoverage(
+                project.id,
+                selectedScopeItemIds
+              ).length;
               const isExpanded = expandedDivisionIds.includes(division.id);
 
               return (
@@ -262,10 +226,9 @@ export default function ProjectOverviewPage() {
                         </span>
                       </div>
                     </td>
-                    <td style={cell}>${divisionBudget.toLocaleString()}</td>
-                    <td style={cell}>${divisionLowBid.toLocaleString()}</td>
-                    <td style={cell}>${divisionSelected.toLocaleString()}</td>
-                    <td style={cell}>${divisionVariance.toLocaleString()}</td>
+                    <td style={cell}>{bidsReceived}</td>
+                    <td style={cell}>{selectedBids}</td>
+                    <td style={cell}>{missingCoverage}</td>
                     <td style={cell}>
                       <Link
                         href={`/projects/${project.id}/csi-divisions/${division.number}`}
@@ -277,7 +240,7 @@ export default function ProjectOverviewPage() {
                   {isExpanded && sections.length === 0 && (
                     <tr>
                       <td style={childCell} />
-                      <td style={childCell} colSpan={7}>
+                      <td style={childCell} colSpan={6}>
                         <span className="muted-text">
                           No subdivision, section, or subsection CSI scopes
                           selected.
@@ -289,10 +252,10 @@ export default function ProjectOverviewPage() {
                     subdivisionGroups.map((group) => (
                       <tr key={group.subdivision?.id ?? group.key}>
                         <td style={childCell} />
-                        <td style={childCell} colSpan={7}>
+                        <td style={childCell} colSpan={6}>
                           <SubdivisionScopeGroup
                             group={group}
-                            getSectionCost={getSectionCost}
+                            projectId={project.id}
                           />
                         </td>
                       </tr>
@@ -351,6 +314,11 @@ const scopeSummary: React.CSSProperties = {
   gap: "6px 10px",
 };
 
+const pendingState: React.CSSProperties = {
+  display: "grid",
+  gap: 8,
+};
+
 const subdivisionCard: React.CSSProperties = {
   display: "grid",
   gap: 8,
@@ -374,12 +342,6 @@ const detailTagContent: React.CSSProperties = {
   minWidth: 0,
 };
 
-type SectionCost = {
-  budget: number;
-  lowBid: number;
-  selectedCost: number;
-};
-
 type SubdivisionScopeGroupData = {
   key: string;
   subdivision?: CsiCatalogItem;
@@ -388,26 +350,37 @@ type SubdivisionScopeGroupData = {
 
 function SubdivisionScopeGroup({
   group,
-  getSectionCost,
+  projectId,
 }: {
   group: SubdivisionScopeGroupData;
-  getSectionCost: (sectionId: string) => SectionCost | undefined;
+  projectId: string;
 }) {
   const subdivisionItems = group.subdivision ? [group.subdivision] : [];
-  const costItems = [...subdivisionItems, ...group.detailItems];
-  const budget = costItems.reduce(
-    (sum, item) => sum + (getSectionCost(item.id)?.budget ?? 0),
+  const scopeItems = [...subdivisionItems, ...group.detailItems];
+  const coverage = getProjectScopeBidCoverage(projectId, {
+    version: scopeItems[0]?.version ?? "MASTERFORMAT_CURRENT",
+    divisionIds: group.subdivision ? [group.subdivision.divisionId] : [],
+    sectionIds: scopeItems.map((item) => item.id),
+    updatedAt: "",
+  });
+  const bidsReceived = coverage.reduce(
+    (count, scopeCoverage) => count + scopeCoverage.bidCount,
     0
   );
-  const lowBid = costItems.reduce(
-    (sum, item) => sum + (getSectionCost(item.id)?.lowBid ?? 0),
+  const selectedBids = coverage.reduce(
+    (count, scopeCoverage) => count + scopeCoverage.selectedBidCount,
     0
   );
-  const selectedCost = costItems.reduce(
-    (sum, item) => sum + (getSectionCost(item.id)?.selectedCost ?? 0),
-    0
-  );
-  const variance = selectedCost - budget;
+  const missingCoverage = coverage.filter(
+    (scopeCoverage) => scopeCoverage.missingCoverage
+  ).length;
+
+  const displayBidsReceived =
+    scopeItems.length === 0 ? "Pending" : bidsReceived.toLocaleString();
+  const displaySelectedBids =
+    scopeItems.length === 0 ? "Pending" : selectedBids.toLocaleString();
+  const displayMissingCoverage =
+    scopeItems.length === 0 ? "Pending" : missingCoverage.toLocaleString();
 
   return (
     <article style={subdivisionCard}>
@@ -420,12 +393,13 @@ function SubdivisionScopeGroup({
           )}
         </div>
         <div className="badge-list">
-          <span className="badge badge-muted">Budget ${budget.toLocaleString()}</span>
-          <span className="badge badge-muted">Low Bid ${lowBid.toLocaleString()}</span>
+          <span className="badge badge-muted">Bids {displayBidsReceived}</span>
           <span className="badge badge-muted">
-            Selected ${selectedCost.toLocaleString()}
+            Selected {displaySelectedBids}
           </span>
-          <span className="badge badge-muted">Variance ${variance.toLocaleString()}</span>
+          <span className="badge badge-muted">
+            Missing {displayMissingCoverage}
+          </span>
         </div>
       </div>
 

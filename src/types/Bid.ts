@@ -8,6 +8,44 @@ export type ProjectBidSubmissionStatus =
   | "SELECTED"
   | "REJECTED";
 
+export type BidPricingItemCategory =
+  | "ALTERNATE"
+  | "LEVELING_ADJUSTMENT"
+  | "ALLOWANCE"
+  | "UNIT_PRICE"
+  | "CONTINGENCY"
+  | "TAX"
+  | "BOND"
+  | "FEE"
+  | "OTHER";
+
+export type BidPricingItemDirection =
+  | "ADD"
+  | "DEDUCT"
+  | "INCLUDED"
+  | "EXCLUDED"
+  | "INFORMATIONAL";
+
+export type BidPricingItemSource =
+  | "SUBMITTED"
+  | "ESTIMATOR_ADJUSTMENT"
+  | "OWNER_REQUEST"
+  | "SYSTEM";
+
+export type BidPricingItem = {
+  id: string;
+  category: BidPricingItemCategory;
+  direction: BidPricingItemDirection;
+  label: string;
+  amount?: number;
+  quantity?: number;
+  unit?: string;
+  unitRate?: number;
+  notes?: string;
+  isAccepted?: boolean;
+  source?: BidPricingItemSource;
+};
+
 export type ProjectBidLineItem = {
   id: string;
   label: string;
@@ -37,6 +75,7 @@ export type ProjectBidSubmission = {
   primaryScopeItemId?: string;
   divisionId?: string;
   subdivisionId?: string;
+  baseBidAmount?: number;
   amount?: number;
   status: ProjectBidSubmissionStatus;
   submittedAt?: string;
@@ -47,6 +86,7 @@ export type ProjectBidSubmission = {
   clarifications?: string[];
   qualifications?: string[];
   notes?: string;
+  pricingItems?: BidPricingItem[];
   alternates?: ProjectBidLineItem[];
   allowances?: ProjectBidLineItem[];
   unitPrices?: ProjectBidUnitPrice[];
@@ -57,12 +97,11 @@ export type ProjectBidSubmission = {
 
 export type ProjectBidLevelingAdjustmentType = "ADD" | "DEDUCT";
 
-export type ProjectBidLevelingAdjustment = {
+export type ProjectBidLevelingAdjustment = BidPricingItem & {
   id: string;
   label: string;
   amount: number;
-  type: ProjectBidLevelingAdjustmentType;
-  notes?: string;
+  type?: ProjectBidLevelingAdjustmentType;
 };
 
 export type ProjectBidClarificationStatus =
@@ -87,7 +126,8 @@ export type ProjectBidLevelingDecision = {
   bidSubmissionId: string;
   isSelected?: boolean;
   leveledAmount?: number;
-  adjustments?: ProjectBidLevelingAdjustment[];
+  adjustments?: BidPricingItem[];
+  acceptedPricingItemIds?: string[];
   scopeGapNotes?: string;
   normalizedInclusions?: string[];
   normalizedExclusions?: string[];

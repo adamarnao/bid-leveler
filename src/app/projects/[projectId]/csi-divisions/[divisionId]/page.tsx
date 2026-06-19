@@ -5,9 +5,11 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { CsiCodeLabel, CsiHierarchyPath, CsiLevelBadge } from "@/components/csi";
 import AppShell from "@/components/layout/AppShell";
-import { mockBidSubmissions } from "@/data/mockBidSubmissions";
-import { mockSectionCosts } from "@/data/mockSectionCosts";
 import { getNearestLevel2Ancestor } from "@/lib/csiCatalog";
+import {
+  getProjectBidSubmissions,
+  getSubmittedBidAmount,
+} from "@/lib/projectBids";
 import { getMergedProjects, projectsStorageKey } from "@/lib/projects";
 import {
   getProjectCsiSectionsByDivision,
@@ -16,7 +18,7 @@ import {
   resolveProjectCsiItem,
   validateProjectCsiSelection,
 } from "@/lib/projectCsiSelections";
-import { BidSubmission } from "@/types/BidSubmission";
+import { ProjectBidSubmission } from "@/types/Bid";
 import {
   CsiCatalogItem,
   CsiSection,
@@ -121,10 +123,13 @@ export default function DivisionPage() {
 }
 
 function SubdivisionBidGroup({ group }: { group: SubdivisionGroup }) {
-  const estimate = getEstimateTotals(group.scopeItems);
-  const bidTotal = group.bids.reduce((sum, bid) => sum + bid.amount, 0);
+  const bidTotal = group.bids.reduce(
+    (sum, bid) => sum + getSubmittedBidAmount(bid),
+    0
+  );
   const selectedBidTotal = group.bids.reduce(
-    (sum, bid) => sum + (bid.isSelected ? bid.amount : 0),
+    (sum, bid) =>
+      sum + (bid.status === "SELECTED" ? getSubmittedBidAmount(bid) : 0),
     0
   );
 
@@ -144,12 +149,7 @@ function SubdivisionBidGroup({ group }: { group: SubdivisionGroup }) {
           ) : null}
         </div>
         <div className="badge-list">
-          <span className="badge badge-muted">
-            Estimate ${estimate.selectedCost.toLocaleString()}
-          </span>
-          <span className="badge badge-muted">
-            Low Bid ${estimate.lowBid.toLocaleString()}
-          </span>
+          <span className="badge badge-muted">Bids {group.bids.length}</span>
           <span className="badge badge-muted">
             Bid Total ${bidTotal.toLocaleString()}
           </span>
@@ -181,12 +181,17 @@ function SubdivisionBidGroup({ group }: { group: SubdivisionGroup }) {
       )}
 
       {group.bids.length === 0 ? (
-        <p>No bids received for this Subdivision.</p>
+        <div style={pendingState}>
+          <strong>No bids have been entered for this scope yet.</strong>
+          <p className="muted-text">
+            Bid leveling will become available after bid submissions are added.
+          </p>
+        </div>
       ) : (
         <table style={{ borderCollapse: "collapse", minWidth: 1000 }}>
           <thead>
             <tr>
-              <th style={cell}>Selected</th>
+              <th style={cell}>Status</th>
               <th style={cell}>Subcontractor</th>
               <th style={cell}>CSI scope</th>
               <th style={cell}>Amount</th>
@@ -200,13 +205,13 @@ function SubdivisionBidGroup({ group }: { group: SubdivisionGroup }) {
             {group.bids.map((bid) => {
               const bidScope = resolveProjectCsiItem(
                 group.version,
-                bid.sectionId
+                bid.primaryScopeItemId ?? bid.scopeItemIds[0] ?? ""
               );
 
               return (
                 <tr key={bid.id}>
-                  <td style={cell}>{bid.isSelected ? "Yes" : ""}</td>
-                  <td style={cell}>{bid.subcontractorName}</td>
+                  <td style={cell}>{formatBidStatus(bid.status)}</td>
+                  <td style={cell}>{bid.subcontractorName ?? "Unassigned"}</td>
                   <td style={cell}>
                     {bidScope ? (
                       <div style={bidScopeCell}>
@@ -214,13 +219,13 @@ function SubdivisionBidGroup({ group }: { group: SubdivisionGroup }) {
                         <CsiHierarchyPath item={bidScope} />
                       </div>
                     ) : (
-                      bid.sectionId
+                      bid.primaryScopeItemId ?? bid.scopeItemIds[0] ?? "Unassigned"
                     )}
                   </td>
-                  <td style={cell}>${bid.amount.toLocaleString()}</td>
-                  <td style={cell}>{bid.inclusions}</td>
-                  <td style={cell}>{bid.exclusions}</td>
-                  <td style={cell}>{bid.clarifications}</td>
+                  <td style={cell}>{formatCurrency(getSubmittedBidAmount(bid))}</td>
+                  <td style={cell}>{formatBidList(bid.inclusions)}</td>
+                  <td style={cell}>{formatBidList(bid.exclusions)}</td>
+                  <td style={cell}>{formatBidList(bid.clarifications)}</td>
                 </tr>
               );
             })}
@@ -237,7 +242,7 @@ type SubdivisionGroup = {
   subdivision?: CsiCatalogItem;
   scopeItems: CsiCatalogItem[];
   detailItems: CsiCatalogItem[];
-  bids: BidSubmission[];
+  bids: ProjectBidSubmission[];
 };
 
 function groupDivisionScopes(
@@ -271,10 +276,13 @@ function groupDivisionScopes(
     groupsByKey.set(key, group);
   });
 
-  mockBidSubmissions
+  getProjectBidSubmissions(projectId)
     .filter((bid) => bid.projectId === projectId)
     .forEach((bid) => {
-      const bidScope = resolveProjectCsiItem(version, bid.sectionId);
+      const primaryBidScopeId = bid.primaryScopeItemId ?? bid.scopeItemIds[0];
+      const bidScope = primaryBidScopeId
+        ? resolveProjectCsiItem(version, primaryBidScopeId)
+        : undefined;
       if (!bidScope) return;
 
       const subdivision =
@@ -300,18 +308,23 @@ function groupDivisionScopes(
 
 function bidBelongsToGroup(
   version: Project["csiVersion"],
-  bid: BidSubmission,
+  bid: ProjectBidSubmission,
   group: SubdivisionGroup
 ) {
   if (
     group.scopeItems.some((item) =>
-      projectCsiIdsReferToSameItem(version, bid.sectionId, item.id)
+      bid.scopeItemIds.some((scopeItemId) =>
+        projectCsiIdsReferToSameItem(version, scopeItemId, item.id)
+      )
     )
   ) {
     return true;
   }
 
-  const bidScope = resolveProjectCsiItem(version, bid.sectionId);
+  const primaryBidScopeId = bid.primaryScopeItemId ?? bid.scopeItemIds[0];
+  const bidScope = primaryBidScopeId
+    ? resolveProjectCsiItem(version, primaryBidScopeId)
+    : undefined;
   const bidSubdivision =
     bidScope &&
     (bidScope.level === 2
@@ -321,24 +334,8 @@ function bidBelongsToGroup(
   return Boolean(
     bidSubdivision &&
       group.subdivision &&
-      bidSubdivision.id === group.subdivision.id
-  );
-}
-
-function getEstimateTotals(items: CsiCatalogItem[]) {
-  return items.reduce(
-    (totals, item) => {
-      const cost = mockSectionCosts.find((sectionCost) =>
-        projectCsiIdsReferToSameItem(item.version, sectionCost.sectionId, item.id)
-      );
-
-      return {
-        budget: totals.budget + (cost?.budget ?? 0),
-        lowBid: totals.lowBid + (cost?.lowBid ?? 0),
-        selectedCost: totals.selectedCost + (cost?.selectedCost ?? 0),
-      };
-    },
-    { budget: 0, lowBid: 0, selectedCost: 0 }
+      (bidSubdivision.id === group.subdivision.id ||
+        bid.subdivisionId === group.subdivision.id)
   );
 }
 
@@ -364,11 +361,15 @@ function compareCsiItems(itemA: CsiCatalogItem, itemB: CsiCatalogItem) {
   );
 }
 
-function compareBids(bidA: BidSubmission, bidB: BidSubmission) {
+function compareBids(bidA: ProjectBidSubmission, bidB: ProjectBidSubmission) {
   return (
-    bidA.sectionId.localeCompare(bidB.sectionId, undefined, { numeric: true }) ||
-    bidA.amount - bidB.amount ||
-    bidA.subcontractorName.localeCompare(bidB.subcontractorName)
+    (bidA.primaryScopeItemId ?? bidA.scopeItemIds[0] ?? "").localeCompare(
+      bidB.primaryScopeItemId ?? bidB.scopeItemIds[0] ?? "",
+      undefined,
+      { numeric: true }
+    ) ||
+    getSubmittedBidAmount(bidA) - getSubmittedBidAmount(bidB) ||
+    (bidA.subcontractorName ?? "").localeCompare(bidB.subcontractorName ?? "")
   );
 }
 
@@ -403,6 +404,11 @@ const detailSection: React.CSSProperties = {
   display: "grid",
   gap: 8,
   marginTop: 12,
+};
+
+const pendingState: React.CSSProperties = {
+  display: "grid",
+  gap: 8,
 };
 
 const detailTagContent: React.CSSProperties = {
@@ -500,4 +506,19 @@ function parseStoredSelections(storageValue: string): StoredProjectCsiSelections
 
 function isDefined<T>(value: T | undefined): value is T {
   return value !== undefined;
+}
+
+function formatCurrency(value: number | undefined) {
+  return value === undefined ? "Not priced" : `$${value.toLocaleString()}`;
+}
+
+function formatBidList(values: string[] | undefined) {
+  return values && values.length > 0 ? values.join("; ") : "None";
+}
+
+function formatBidStatus(status: string) {
+  return status
+    .split("_")
+    .map((word) => word.charAt(0) + word.slice(1).toLowerCase())
+    .join(" ");
 }

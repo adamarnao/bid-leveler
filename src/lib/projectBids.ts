@@ -1,9 +1,12 @@
 import {
+  BidPricingItem,
+  BidPricingItemDirection,
   ProjectBidLevelingDecision,
   ProjectBidReviewStatus,
   ProjectBidSubmission,
   ProjectBidSubmissionStatus,
 } from "@/types/Bid";
+import { StoredProjectCsiSelection } from "@/types/Csi";
 
 export const projectBidSubmissionsStorageKey = "projectBidSubmissions";
 export const projectBidLevelingDecisionsStorageKey =
@@ -23,6 +26,29 @@ const bidReviewStatuses: ProjectBidReviewStatus[] = [
   "APPROVED",
   "REJECTED",
 ];
+const pricingItemDirections: BidPricingItemDirection[] = [
+  "ADD",
+  "DEDUCT",
+  "INCLUDED",
+  "EXCLUDED",
+  "INFORMATIONAL",
+];
+
+export type ProjectBidSummary = {
+  submissionCount: number;
+  selectedBidCount: number;
+  selectedBidTotal: number;
+  unreviewedBidCount: number;
+  missingCoverageCount: number;
+};
+
+export type ProjectScopeBidCoverage = {
+  scopeItemId: string;
+  bidCount: number;
+  selectedBidCount: number;
+  hasCoverage: boolean;
+  missingCoverage: boolean;
+};
 
 export function getProjectBidSubmissions(
   projectId: string
@@ -134,6 +160,119 @@ export function deleteProjectBidData(projectId: string) {
   );
 }
 
+export function getProjectBidSummary(
+  projectId: string,
+  csiSelection?: StoredProjectCsiSelection
+): ProjectBidSummary {
+  const submissions = getProjectBidSubmissions(projectId);
+  const selectedBidCount = submissions.filter(isSelectedSubmission).length;
+
+  return {
+    submissionCount: submissions.length,
+    selectedBidCount,
+    selectedBidTotal: getSelectedBidTotal(projectId),
+    unreviewedBidCount: getUnreviewedBidCount(projectId),
+    missingCoverageCount: getMissingBidCoverage(
+      projectId,
+      getSelectedScopeItemIds(csiSelection)
+    ).length,
+  };
+}
+
+export function getProjectScopeBidCoverage(
+  projectId: string,
+  csiSelection?: StoredProjectCsiSelection
+): ProjectScopeBidCoverage[] {
+  const submissions = getProjectBidSubmissions(projectId);
+
+  return getSelectedScopeItemIds(csiSelection).map((scopeItemId) => {
+    const bids = submissions.filter((submission) =>
+      bidCoversScopeItem(submission, scopeItemId)
+    );
+    const selectedBidCount = bids.filter(isSelectedSubmission).length;
+
+    return {
+      scopeItemId,
+      bidCount: bids.length,
+      selectedBidCount,
+      hasCoverage: bids.length > 0,
+      missingCoverage: bids.length === 0,
+    };
+  });
+}
+
+export function getScopeGroupBidSubmissions(
+  projectId: string,
+  scopeGroupIdOrScopeItemId: string
+): ProjectBidSubmission[] {
+  return getProjectBidSubmissions(projectId).filter(
+    (submission) =>
+      submission.scopeItemIds.includes(scopeGroupIdOrScopeItemId) ||
+      submission.primaryScopeItemId === scopeGroupIdOrScopeItemId ||
+      submission.subdivisionId === scopeGroupIdOrScopeItemId ||
+      submission.divisionId === scopeGroupIdOrScopeItemId
+  );
+}
+
+export function getSelectedBidTotal(projectId: string): number {
+  const submissions = getProjectBidSubmissions(projectId);
+  const submissionsById = new Map(
+    submissions.map((submission) => [submission.id, submission])
+  );
+  const selectedDecisions = getProjectBidLevelingDecisions(projectId).filter(
+    (decision) => decision.isSelected
+  );
+
+  if (selectedDecisions.length > 0) {
+    return selectedDecisions.reduce((total, decision) => {
+      const submission = submissionsById.get(decision.bidSubmissionId);
+      if (!submission) return total;
+
+      return total + getLeveledBidAmount(submission, decision);
+    }, 0);
+  }
+
+  return submissions
+    .filter(isSelectedSubmission)
+    .reduce(
+      (total, submission) => total + getSubmittedBidAmount(submission),
+      0
+    );
+}
+
+export function getUnreviewedBidCount(projectId: string): number {
+  const decisionsBySubmissionId = new Map(
+    getProjectBidLevelingDecisions(projectId).map((decision) => [
+      decision.bidSubmissionId,
+      decision,
+    ])
+  );
+
+  return getProjectBidSubmissions(projectId).filter((submission) => {
+    const decision = decisionsBySubmissionId.get(submission.id);
+
+    if (decision?.reviewStatus) {
+      return decision.reviewStatus === "UNREVIEWED";
+    }
+
+    return submission.status === "DRAFT" || submission.status === "RECEIVED";
+  }).length;
+}
+
+export function getMissingBidCoverage(
+  projectId: string,
+  selectedScopeItemIds: string[]
+): string[] {
+  const submissions = getProjectBidSubmissions(projectId);
+
+  return selectedScopeItemIds.filter(
+    (scopeItemId) =>
+      !submissions.some((submission) =>
+        bidCoversScopeItem(submission, scopeItemId)
+      )
+  );
+}
+
 function parseProjectBidSubmissions(
   storageValue: string
 ): ProjectBidSubmission[] {
@@ -155,7 +294,9 @@ function parseProjectBidLevelingDecisions(
     const parsedValue = JSON.parse(storageValue);
 
     return Array.isArray(parsedValue)
-      ? parsedValue.filter(isProjectBidLevelingDecision)
+      ? parsedValue
+          .map(normalizeProjectBidLevelingDecision)
+          .filter(isDefined)
       : [];
   } catch {
     return [];
@@ -179,20 +320,29 @@ function isProjectBidSubmission(
   );
 }
 
-function isProjectBidLevelingDecision(
+function normalizeProjectBidLevelingDecision(
   value: unknown
-): value is ProjectBidLevelingDecision {
-  return (
-    isRecord(value) &&
-    typeof value.id === "string" &&
-    typeof value.projectId === "string" &&
-    typeof value.scopeGroupId === "string" &&
-    typeof value.bidSubmissionId === "string" &&
-    isOptionalStringArray(value.scopeItemIds) &&
-    isOptionalReviewStatus(value.reviewStatus) &&
-    typeof value.createdAt === "string" &&
-    typeof value.updatedAt === "string"
-  );
+): ProjectBidLevelingDecision | undefined {
+  if (
+    !isRecord(value) ||
+    typeof value.id !== "string" ||
+    typeof value.projectId !== "string" ||
+    typeof value.scopeGroupId !== "string" ||
+    typeof value.bidSubmissionId !== "string" ||
+    !isOptionalStringArray(value.scopeItemIds) ||
+    !isOptionalStringArray(value.acceptedPricingItemIds) ||
+    !isOptionalReviewStatus(value.reviewStatus) ||
+    typeof value.createdAt !== "string" ||
+    typeof value.updatedAt !== "string"
+  ) {
+    return undefined;
+  }
+
+  return {
+    ...(value as ProjectBidLevelingDecision),
+    adjustments: normalizeBidPricingItems(value.adjustments),
+    acceptedPricingItemIds: value.acceptedPricingItemIds,
+  };
 }
 
 function isOptionalStringArray(value: unknown) {
@@ -208,6 +358,145 @@ function isOptionalReviewStatus(value: unknown) {
     (typeof value === "string" &&
       bidReviewStatuses.includes(value as ProjectBidReviewStatus))
   );
+}
+
+function getSelectedScopeItemIds(csiSelection: StoredProjectCsiSelection | undefined) {
+  return csiSelection?.sectionIds ?? [];
+}
+
+export function getSubmittedBidAmount(submission: ProjectBidSubmission): number {
+  return (
+    getBaseBidAmount(submission) +
+    getAcceptedSubmittedPricingItems(submission).reduce(
+      (total, item) => total + getPricingItemSignedAmount(item),
+      0
+    )
+  );
+}
+
+export function getLeveledBidAmount(
+  submission: ProjectBidSubmission,
+  decision: ProjectBidLevelingDecision
+): number {
+  if (decision.leveledAmount !== undefined) return decision.leveledAmount;
+
+  return (
+    getBaseBidAmount(submission) +
+    getAcceptedSubmittedPricingItems(submission, decision).reduce(
+      (total, item) => total + getPricingItemSignedAmount(item),
+      0
+    ) +
+    (decision.adjustments ?? []).reduce(
+      (total, item) => total + getPricingItemSignedAmount(item),
+      0
+    )
+  );
+}
+
+function getBaseBidAmount(submission: ProjectBidSubmission): number {
+  return submission.baseBidAmount ?? submission.amount ?? 0;
+}
+
+function getAcceptedSubmittedPricingItems(
+  submission: ProjectBidSubmission,
+  decision?: ProjectBidLevelingDecision
+) {
+  const acceptedPricingItemIds = new Set(decision?.acceptedPricingItemIds ?? []);
+
+  return (submission.pricingItems ?? []).filter((item) => {
+    if (item.source && item.source !== "SUBMITTED") return false;
+    if (acceptedPricingItemIds.size > 0) return acceptedPricingItemIds.has(item.id);
+
+    return item.isAccepted === true;
+  });
+}
+
+function getPricingItemSignedAmount(item: BidPricingItem): number {
+  const amount = getPricingItemAmount(item);
+
+  if (item.direction === "DEDUCT") return -amount;
+  if (item.direction === "ADD" || item.direction === "INCLUDED") return amount;
+
+  return 0;
+}
+
+function getPricingItemAmount(item: BidPricingItem): number {
+  if (item.amount !== undefined) return item.amount;
+  if (item.quantity !== undefined && item.unitRate !== undefined) {
+    return item.quantity * item.unitRate;
+  }
+
+  return 0;
+}
+
+function bidCoversScopeItem(
+  submission: ProjectBidSubmission,
+  scopeItemId: string
+) {
+  return (
+    submission.scopeItemIds.includes(scopeItemId) ||
+    submission.primaryScopeItemId === scopeItemId
+  );
+}
+
+function isSelectedSubmission(submission: ProjectBidSubmission) {
+  return submission.status === "SELECTED";
+}
+
+function isBidPricingItem(value: unknown): value is BidPricingItem {
+  return (
+    isRecord(value) &&
+    typeof value.id === "string" &&
+    typeof value.category === "string" &&
+    typeof value.direction === "string" &&
+    pricingItemDirections.includes(value.direction as BidPricingItemDirection) &&
+    typeof value.label === "string"
+  );
+}
+
+function normalizeBidPricingItems(value: unknown): BidPricingItem[] | undefined {
+  if (value === undefined) return undefined;
+  if (!Array.isArray(value)) return undefined;
+
+  return value.map(normalizeBidPricingItem).filter(isDefined);
+}
+
+function normalizeBidPricingItem(value: unknown): BidPricingItem | undefined {
+  if (isBidPricingItem(value)) return value;
+  if (!isLegacyLevelingAdjustment(value)) return undefined;
+
+  return {
+    id: value.id,
+    category: "LEVELING_ADJUSTMENT",
+    direction: value.type,
+    label: value.label,
+    amount: value.amount,
+    notes: value.notes,
+    source: "ESTIMATOR_ADJUSTMENT",
+  };
+}
+
+function isLegacyLevelingAdjustment(
+  value: unknown
+): value is {
+  id: string;
+  label: string;
+  amount: number;
+  type: "ADD" | "DEDUCT";
+  notes?: string;
+} {
+  return (
+    isRecord(value) &&
+    typeof value.id === "string" &&
+    typeof value.label === "string" &&
+    typeof value.amount === "number" &&
+    (value.type === "ADD" || value.type === "DEDUCT") &&
+    (value.notes === undefined || typeof value.notes === "string")
+  );
+}
+
+function isDefined<T>(value: T | undefined): value is T {
+  return value !== undefined;
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
