@@ -26,6 +26,10 @@ import {
 } from "@/types/Csi";
 import { PrequalificationStatus, Subcontractor } from "@/types/Subcontractor";
 import {
+  BidPackageMatchSummary,
+  BidPackageScopeMatchDetail,
+  BidPackageSubcontractorMatch,
+  MatchSubcontractorsToBidPackagesInput,
   MatchProjectLocationInput,
   MatchProjectSectionInput,
   MatchSubcontractorsToProjectSectionsInput,
@@ -85,6 +89,72 @@ export function matchSubcontractorsToProjectSections({
         a.subcontractor.companyName.localeCompare(b.subcontractor.companyName)
       ),
   }));
+}
+
+export function matchSubcontractorsToBidPackages({
+  projectId,
+  csiVersion,
+  bidPackages,
+  subcontractors,
+  includePossibleMatches = true,
+  options,
+}: MatchSubcontractorsToBidPackagesInput): BidPackageMatchSummary[] {
+  return bidPackages.map((bidPackage) => {
+    const scopeMatchGroups = matchSubcontractorsToProjectSections({
+      projectId,
+      projectCsiVersion: csiVersion,
+      selectedProjectSections: bidPackage.scopeItemIds,
+      subcontractors,
+      options,
+    });
+    const matchesBySubcontractorId = new Map<
+      string,
+      ProjectSectionSubcontractorMatch[]
+    >();
+
+    scopeMatchGroups.forEach((scopeMatchGroup) => {
+      scopeMatchGroup.matches.forEach((match) => {
+        const matches =
+          matchesBySubcontractorId.get(match.subcontractor.id) ?? [];
+
+        matches.push(match);
+        matchesBySubcontractorId.set(match.subcontractor.id, matches);
+      });
+    });
+
+    const matches = Array.from(matchesBySubcontractorId.values())
+      .map((scopeMatches) =>
+        buildBidPackageSubcontractorMatch(
+          projectId,
+          csiVersion,
+          bidPackage,
+          scopeMatchGroups,
+          scopeMatches
+        )
+      )
+      .filter((match) => includePossibleMatches || !match.isPossibleMatch)
+      .sort(compareBidPackageMatches);
+    const defaultMatches = matches.filter((match) => !match.isPossibleMatch);
+    const possibleMatches = matches.filter((match) => match.isPossibleMatch);
+    const matchedScopeItemIds = new Set(
+      matches.flatMap((match) => match.matchedScopeItemIds)
+    );
+
+    return {
+      projectId,
+      csiVersion,
+      bidPackage,
+      bidPackageId: bidPackage.id,
+      bidPackageName: bidPackage.name,
+      scopeItemIds: bidPackage.scopeItemIds,
+      matches,
+      defaultMatches,
+      possibleMatches,
+      unmatchedScopeItemIds: bidPackage.scopeItemIds.filter(
+        (scopeItemId) => !matchedScopeItemIds.has(scopeItemId)
+      ),
+    };
+  });
 }
 
 export function matchSubcontractorToProjectSection(
@@ -238,6 +308,229 @@ function getMatchType(
   if (hierarchyRelationship === "ANCESTOR") return "BROAD_COVERAGE";
 
   return "RELATED_SCOPE";
+}
+
+function buildBidPackageSubcontractorMatch(
+  projectId: string,
+  csiVersion: CsiMasterFormatVersion,
+  bidPackage: MatchSubcontractorsToBidPackagesInput["bidPackages"][number],
+  scopeMatchGroups: ProjectSectionSubcontractorMatches[],
+  scopeMatches: ProjectSectionSubcontractorMatch[]
+): BidPackageSubcontractorMatch {
+  const subcontractor = scopeMatches[0].subcontractor;
+  const matchesByScopeItemId = new Map(
+    scopeMatches.map((match) => [
+      match.projectSectionId ?? match.projectSectionNumber,
+      match,
+    ])
+  );
+  const matchedScopeItemIds = bidPackage.scopeItemIds.filter((scopeItemId) =>
+    matchesByScopeItemId.has(scopeItemId)
+  );
+  const unmatchedScopeItemIds = bidPackage.scopeItemIds.filter(
+    (scopeItemId) => !matchesByScopeItemId.has(scopeItemId)
+  );
+  const coverageRatio =
+    bidPackage.scopeItemIds.length === 0
+      ? 0
+      : matchedScopeItemIds.length / bidPackage.scopeItemIds.length;
+  const bestMatch = [...scopeMatches].sort(compareScopeMatchesByQuality)[0];
+  const hasDefaultMatch = scopeMatches.some(isDefaultPackageScopeMatch);
+  const hasOnlyPossibleMatches = !hasDefaultMatch;
+  const packageWarnings = getBidPackageMatchWarnings(
+    coverageRatio,
+    unmatchedScopeItemIds,
+    bidPackage.scopeItemIds.length
+  );
+
+  return {
+    projectId,
+    csiVersion,
+    bidPackageId: bidPackage.id,
+    bidPackageName: bidPackage.name,
+    subcontractorId: subcontractor.id,
+    subcontractorName: subcontractor.companyName,
+    subcontractor,
+    defaultContactIds: getDefaultInviteContactIds(subcontractor),
+    matchType: bestMatch.matchType,
+    matchLabel: getPackageMatchLabel(bestMatch.matchType, coverageRatio),
+    isPossibleMatch: hasOnlyPossibleMatches || coverageRatio < 0.5,
+    matchedScopeItemIds,
+    unmatchedScopeItemIds,
+    coverageRatio,
+    scopeMatchDetails: buildScopeMatchDetails(
+      csiVersion,
+      bidPackage.scopeItemIds,
+      scopeMatchGroups,
+      matchesByScopeItemId
+    ),
+    score: getBidPackageMatchScore(scopeMatches, coverageRatio),
+    rankingReasons: uniqueStrings(
+      scopeMatches.flatMap((match) => match.rankingReasons)
+    ),
+    warnings: uniqueStrings([
+      ...scopeMatches.flatMap((match) => match.warnings),
+      ...packageWarnings,
+    ]),
+    complianceAlerts: uniqueStrings(
+      scopeMatches.flatMap((match) => match.complianceAlerts)
+    ),
+    serviceAreaFit: getBestServiceAreaFit(scopeMatches),
+  };
+}
+
+function buildScopeMatchDetails(
+  csiVersion: CsiMasterFormatVersion,
+  scopeItemIds: string[],
+  scopeMatchGroups: ProjectSectionSubcontractorMatches[],
+  matchesByScopeItemId: Map<string, ProjectSectionSubcontractorMatch>
+): BidPackageScopeMatchDetail[] {
+  const scopeGroupsById = new Map(
+    scopeMatchGroups.map((group) => [
+      group.projectSectionId ?? group.projectSectionNumber,
+      group,
+    ])
+  );
+
+  return scopeItemIds.map((scopeItemId) => {
+    const item = resolveCsiCatalogItem(csiVersion, scopeItemId);
+    const group = scopeGroupsById.get(scopeItemId);
+
+    return {
+      scopeItemId,
+      scopeNumber: item?.number ?? group?.projectSectionNumber ?? scopeItemId,
+      scopeName: item?.name ?? group?.projectSectionName,
+      match: matchesByScopeItemId.get(scopeItemId),
+    };
+  });
+}
+
+function isDefaultPackageScopeMatch(match: ProjectSectionSubcontractorMatch) {
+  return (
+    match.matchType === "EXACT" ||
+    match.matchType === "SPECIALIZED_COVERAGE" ||
+    match.matchType === "DIRECT" ||
+    match.matchType === "CROSSWALK_DERIVED"
+  );
+}
+
+function getPackageMatchLabel(
+  matchType: SubcontractorMatchType,
+  coverageRatio: number
+) {
+  if (coverageRatio < 0.5) return "Partial Package Coverage";
+
+  return getMatchLabel(matchType);
+}
+
+function getBidPackageMatchWarnings(
+  coverageRatio: number,
+  unmatchedScopeItemIds: string[],
+  packageScopeCount: number
+) {
+  const warnings: string[] = [];
+
+  if (coverageRatio < 1 && unmatchedScopeItemIds.length > 0) {
+    warnings.push(`${unmatchedScopeItemIds.length} package scope(s) unmatched`);
+  }
+
+  if (packageScopeCount > 1 && coverageRatio < 0.5) {
+    warnings.push("Low package coverage");
+  }
+
+  return warnings;
+}
+
+function getBidPackageMatchScore(
+  scopeMatches: ProjectSectionSubcontractorMatch[],
+  coverageRatio: number
+) {
+  const bestScopeScore = Math.max(...scopeMatches.map((match) => match.score));
+  const coverageScore = Math.round(coverageRatio * 20);
+
+  return clampScore(bestScopeScore + coverageScore);
+}
+
+function getBestServiceAreaFit(scopeMatches: ProjectSectionSubcontractorMatch[]) {
+  return [...scopeMatches].sort(
+    (matchA, matchB) =>
+      getServiceAreaFitRank(matchA.serviceAreaFit) -
+      getServiceAreaFitRank(matchB.serviceAreaFit)
+  )[0].serviceAreaFit;
+}
+
+function getServiceAreaFitRank(serviceAreaFit: SubcontractorServiceAreaFit) {
+  if (serviceAreaFit === "STRONG") return 0;
+  if (serviceAreaFit === "PARTIAL") return 1;
+  if (serviceAreaFit === "UNKNOWN") return 2;
+
+  return 3;
+}
+
+function compareScopeMatchesByQuality(
+  matchA: ProjectSectionSubcontractorMatch,
+  matchB: ProjectSectionSubcontractorMatch
+) {
+  return (
+    getPackageMatchTypeRank(matchA.matchType) -
+      getPackageMatchTypeRank(matchB.matchType) ||
+    matchB.score - matchA.score ||
+    matchA.subcontractor.companyName.localeCompare(matchB.subcontractor.companyName)
+  );
+}
+
+function compareBidPackageMatches(
+  matchA: BidPackageSubcontractorMatch,
+  matchB: BidPackageSubcontractorMatch
+) {
+  if (matchA.isPossibleMatch !== matchB.isPossibleMatch) {
+    return matchA.isPossibleMatch ? 1 : -1;
+  }
+
+  return (
+    matchB.coverageRatio - matchA.coverageRatio ||
+    getPackageMatchTypeRank(matchA.matchType) -
+      getPackageMatchTypeRank(matchB.matchType) ||
+    matchB.score - matchA.score ||
+    matchA.subcontractorName.localeCompare(matchB.subcontractorName)
+  );
+}
+
+function getPackageMatchTypeRank(matchType: SubcontractorMatchType) {
+  if (
+    matchType === "EXACT" ||
+    matchType === "DIRECT" ||
+    matchType === "CROSSWALK_DERIVED"
+  ) {
+    return 0;
+  }
+
+  if (matchType === "SPECIALIZED_COVERAGE") return 1;
+  if (matchType === "BROAD_COVERAGE" || matchType === "DIVISION_ONLY") return 2;
+
+  return 3;
+}
+
+function getDefaultInviteContactIds(subcontractor: Subcontractor) {
+  const activeContactsWithEmail = subcontractor.contacts.filter(
+    (contact) => contact.active !== false && Boolean(contact.email?.trim())
+  );
+  const defaultInviteContactIds = activeContactsWithEmail
+    .filter((contact) => contact.isDefaultInviteRecipient)
+    .map((contact) => contact.id);
+
+  if (defaultInviteContactIds.length > 0) return defaultInviteContactIds;
+
+  const primaryContact = activeContactsWithEmail.find((contact) => contact.isPrimary);
+  if (primaryContact) return [primaryContact.id];
+
+  const estimatorContactIds = activeContactsWithEmail
+    .filter((contact) => contact.role === "ESTIMATOR")
+    .map((contact) => contact.id);
+
+  if (estimatorContactIds.length > 0) return estimatorContactIds;
+
+  return activeContactsWithEmail.map((contact) => contact.id);
 }
 
 function getMatchConfidence(

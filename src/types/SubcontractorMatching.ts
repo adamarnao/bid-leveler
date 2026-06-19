@@ -2,6 +2,7 @@ import {
   CsiHierarchyRelationship,
   CsiMasterFormatVersion,
 } from "@/types/Csi";
+import { ProjectBidPackage } from "@/types/Bid";
 import { Subcontractor } from "@/types/Subcontractor";
 
 export type SubcontractorMatchType =
@@ -83,4 +84,56 @@ export type ProjectSectionSubcontractorMatches = {
   projectSectionName?: string;
   projectDivisionNumber: string;
   matches: ProjectSectionSubcontractorMatch[];
+};
+
+export type BidPackageScopeMatchDetail = {
+  scopeItemId: string;
+  scopeNumber: string;
+  scopeName?: string;
+  match?: ProjectSectionSubcontractorMatch;
+};
+
+export type BidPackageSubcontractorMatch = {
+  projectId: string;
+  csiVersion: CsiMasterFormatVersion;
+  bidPackageId: string;
+  bidPackageName: string;
+  subcontractorId: string;
+  subcontractorName: string;
+  subcontractor: Subcontractor;
+  defaultContactIds: string[];
+  matchType: SubcontractorMatchType;
+  matchLabel: string;
+  isPossibleMatch: boolean;
+  matchedScopeItemIds: string[];
+  unmatchedScopeItemIds: string[];
+  coverageRatio: number;
+  scopeMatchDetails: BidPackageScopeMatchDetail[];
+  score: number;
+  rankingReasons: string[];
+  warnings: string[];
+  complianceAlerts: string[];
+  serviceAreaFit: SubcontractorServiceAreaFit;
+};
+
+export type BidPackageMatchSummary = {
+  projectId: string;
+  csiVersion: CsiMasterFormatVersion;
+  bidPackage: ProjectBidPackage;
+  bidPackageId: string;
+  bidPackageName: string;
+  scopeItemIds: string[];
+  matches: BidPackageSubcontractorMatch[];
+  defaultMatches: BidPackageSubcontractorMatch[];
+  possibleMatches: BidPackageSubcontractorMatch[];
+  unmatchedScopeItemIds: string[];
+};
+
+export type MatchSubcontractorsToBidPackagesInput = {
+  projectId: string;
+  csiVersion: CsiMasterFormatVersion;
+  bidPackages: ProjectBidPackage[];
+  subcontractors: Subcontractor[];
+  includePossibleMatches?: boolean;
+  options?: MatchSubcontractorsToProjectSectionsOptions;
 };
