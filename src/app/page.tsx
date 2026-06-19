@@ -161,7 +161,7 @@ export default function Home() {
           </div>
           <div className="dashboard-primary-actions">
             <Link href="/projects/new" className="button-primary">
-              New Project
+              Create Project
             </Link>
             <Link href="/subcontractors/new" className="button-secondary">
               Add Subcontractor
@@ -199,7 +199,7 @@ export default function Home() {
                 <div className="dashboard-empty-state">
                   <p className="muted-text">No active projects yet.</p>
                   <Link href="/projects/new" className="button-primary">
-                    New Project
+                    Create Project
                   </Link>
                 </div>
               ) : (
@@ -401,7 +401,7 @@ function ProjectHealthCard({
 
       <div className="dashboard-project-card-actions">
         <Link href={`/projects/${project.id}`} className="button-secondary">
-          Open
+          Command Center
         </Link>
         <Link href={`/projects/${project.id}/scope`} className="button-secondary">
           Project Scope

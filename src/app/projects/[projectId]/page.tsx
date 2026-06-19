@@ -83,31 +83,19 @@ export default function ProjectCommandCenterPage() {
               href={`/projects/${project.id}/setup`}
               className="command-nav-link"
             >
-              Setup
+              Project Setup
             </Link>
             <Link
-              href={`/projects/${project.id}/budget`}
+              href={`/projects/${project.id}/scope`}
               className="command-nav-link"
             >
-              Budget
+              Project Scope
             </Link>
             <Link
               href={`/projects/${project.id}/invite`}
               className="command-nav-link"
             >
-              Invite Preview
-            </Link>
-            <Link
-              href={`/projects/${project.id}/proposal`}
-              className="command-nav-link"
-            >
-              Proposal
-            </Link>
-            <Link
-              href={`/projects/${project.id}/setup`}
-              className="command-nav-link"
-            >
-              Project Setup
+              Invites
             </Link>
           </nav>
         </Panel>

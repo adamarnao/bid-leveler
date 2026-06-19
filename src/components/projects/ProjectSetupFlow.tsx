@@ -2070,7 +2070,7 @@ function ProjectReviewLaunchFields({
                 href={`/projects/${project.id}/overview`}
                 className="button-secondary"
               >
-                Project Overview
+                Overview
               </Link>
               <Link href={`/projects/${project.id}`} className="button-secondary">
                 Project Command Center

@@ -77,7 +77,7 @@ export default function ProjectOverviewPage() {
   const projectTotal = totalSelectedCost + mockGcCosts;
 
   return (
-    <AppShell title="Project Overview">
+    <AppShell title="Overview">
       <Link href={`/projects/${project.id}`}>{"<-"} Back to Command Center</Link>
 
       <h1>{project.name} Overview</h1>

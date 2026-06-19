@@ -164,6 +164,8 @@ export default function ProjectScopePage() {
 
   return (
     <AppShell title={`${project.name} - Project Scope`}>
+      <Link href={`/projects/${project.id}`}>{"<-"} Back to Command Center</Link>
+
       <p>
         Select the MasterFormat CSI scopes that apply to this project. Later,
         these selections will control budgeting, bid invites, bid leveling, and

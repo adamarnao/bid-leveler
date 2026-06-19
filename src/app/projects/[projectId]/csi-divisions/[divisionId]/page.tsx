@@ -59,7 +59,7 @@ export default function DivisionPage() {
       <AppShell title="CSI Scope Detail">
         <h1>Division Not Found</h1>
         <p>Requested Division ID: {divisionId}</p>
-        <Link href={`/projects/${project.id}`}>Back to Project Dashboard</Link>
+        <Link href={`/projects/${project.id}`}>Back to Command Center</Link>
       </AppShell>
     );
   }
@@ -87,7 +87,7 @@ export default function DivisionPage() {
 
   return (
     <AppShell title="Project CSI Scope Detail">
-      <Link href={`/projects/${project.id}`}>{"<-"} Back to Project Dashboard</Link>
+      <Link href={`/projects/${project.id}`}>{"<-"} Back to Command Center</Link>
 
       <section style={panel}>
         <div style={pageHeader}>

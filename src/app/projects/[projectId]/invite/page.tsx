@@ -208,14 +208,14 @@ export default function ProjectInvitePreviewPage() {
   }
 
   return (
-    <AppShell title={`${project.name} - Invite Preview`}>
+    <AppShell title={`${project.name} - Invites`}>
       <div className="command-center">
         <Link href={`/projects/${project.id}`}>{"<-"} Back to Command Center</Link>
 
-        <Panel title="Invite Preview">
+        <Panel title="Invites">
           <p className="muted-text">
-            This is a read-only preview of matching subcontractors. No invites
-            have been sent and no invite records have been created.
+            Review invite candidates before sending. No invites have been sent
+            and no invite records have been created.
           </p>
           <table className="compact-table" style={{ marginTop: 12 }}>
             <tbody>
