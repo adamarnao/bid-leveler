@@ -1,8 +1,11 @@
 import {
+  getCsiAncestors,
   getNearestLevel2Ancestor,
   resolveCsiCatalogItem,
 } from "@/lib/csiCatalog";
+import { bidPackageTemplates } from "@/data/bidPackageTemplates";
 import {
+  BidPackageTemplate,
   BidPricingItem,
   BidPricingItemDirection,
   ProjectBidLevelingDecision,
@@ -182,7 +185,9 @@ export function generateBidPackagesFromProjectScopes(
   const packageGroups = new Map<
     string,
     {
-      groupingItem: CsiCatalogItem;
+      name: string;
+      description?: string;
+      sortReferenceItem: CsiCatalogItem;
       scopeItemIds: Set<string>;
     }
   >();
@@ -191,27 +196,39 @@ export function generateBidPackagesFromProjectScopes(
     const item = resolveCsiCatalogItem(version, scopeItemId);
     if (!item) return;
 
+    const matchingTemplate = getBestBidPackageTemplate(version, item);
     const groupingItem = getNearestLevel2Ancestor(version, item.id) ?? item;
+    const groupKey = matchingTemplate
+      ? `template-${matchingTemplate.id}`
+      : `fallback-${groupingItem.id}`;
     const group =
-      packageGroups.get(groupingItem.id) ?? {
-        groupingItem,
+      packageGroups.get(groupKey) ?? {
+        name: matchingTemplate?.name ?? groupingItem.name,
+        description:
+          matchingTemplate?.description ??
+          "Generated fallback package grouped by nearest CSI subdivision.",
+        sortReferenceItem: groupingItem,
         scopeItemIds: new Set<string>(),
       };
 
     group.scopeItemIds.add(item.id);
-    packageGroups.set(groupingItem.id, group);
+    packageGroups.set(groupKey, group);
   });
 
   const now = new Date().toISOString();
 
-  return Array.from(packageGroups.values())
+  return Array.from(packageGroups.entries())
     .sort((left, right) =>
-      compareCsiCatalogItems(left.groupingItem, right.groupingItem)
+      compareCsiCatalogItems(
+        left[1].sortReferenceItem,
+        right[1].sortReferenceItem
+      )
     )
-    .map((group, index) => ({
-      id: createGeneratedBidPackageId(projectId, group.groupingItem.id),
+    .map(([groupKey, group], index) => ({
+      id: createGeneratedBidPackageId(projectId, groupKey),
       projectId,
-      name: group.groupingItem.name,
+      name: group.name,
+      description: group.description,
       csiVersion,
       scopeItemIds: Array.from(group.scopeItemIds).sort((leftId, rightId) => {
         const leftItem = resolveCsiCatalogItem(version, leftId);
@@ -688,6 +705,62 @@ function compareCsiCatalogItems(
     numeric: true,
     sensitivity: "base",
   });
+}
+
+function getBestBidPackageTemplate(
+  version: CsiMasterFormatVersion,
+  item: CsiCatalogItem
+): BidPackageTemplate | undefined {
+  return bidPackageTemplates
+    .filter((template) => isTemplateAvailableForVersion(template, version))
+    .filter((template) => doesBidPackageTemplateMatchItem(template, item))
+    .sort((left, right) => (right.priority ?? 0) - (left.priority ?? 0))[0];
+}
+
+function isTemplateAvailableForVersion(
+  template: BidPackageTemplate,
+  version: CsiMasterFormatVersion
+) {
+  return template.csiVersion === "ALL" || template.csiVersion === version;
+}
+
+function doesBidPackageTemplateMatchItem(
+  template: BidPackageTemplate,
+  item: CsiCatalogItem
+) {
+  const normalizedItemCode = normalizeCsiCode(item.number);
+  const searchableTitle = normalizeSearchText(
+    [
+      item.name,
+      ...getCsiAncestors(item.version, item.id).map(
+        (ancestor) => ancestor.name
+      ),
+    ].join(" ")
+  );
+  const matchesCode = (template.codePatterns ?? []).some((pattern) =>
+    doesCodePatternMatch(normalizedItemCode, pattern)
+  );
+  const matchesTitle = (template.titleKeywords ?? []).some((keyword) =>
+    searchableTitle.includes(normalizeSearchText(keyword))
+  );
+
+  return matchesCode || matchesTitle;
+}
+
+function doesCodePatternMatch(normalizedItemCode: string, pattern: string) {
+  const normalizedPattern = normalizeCsiCode(pattern.replace(/\*$/, ""));
+
+  if (!normalizedPattern) return false;
+
+  return normalizedItemCode.startsWith(normalizedPattern);
+}
+
+function normalizeCsiCode(value: string) {
+  return value.replace(/[^0-9]/g, "");
+}
+
+function normalizeSearchText(value: string) {
+  return value.trim().toLowerCase().replace(/\s+/g, " ");
 }
 
 function createGeneratedBidPackageId(projectId: string, groupingItemId: string) {

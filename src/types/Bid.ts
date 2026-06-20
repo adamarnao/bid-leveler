@@ -36,6 +36,16 @@ export type ProjectBidPackage = {
   updatedAt: string;
 };
 
+export type BidPackageTemplate = {
+  id: string;
+  name: string;
+  description?: string;
+  csiVersion: string;
+  codePatterns?: string[];
+  titleKeywords?: string[];
+  priority?: number;
+};
+
 export type BidPricingItemCategory =
   | "ALTERNATE"
   | "LEVELING_ADJUSTMENT"

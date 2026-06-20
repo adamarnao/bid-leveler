@@ -349,7 +349,8 @@ export default function ProjectScopePage() {
             <h2>Bid Packages</h2>
             <p className="muted-text">
               Bid Packages are the invitation and leveling units estimators work
-              from. Mapped CSI tags stay attached for matching and scope clarity.
+              from. Generate trade-based packages, then use mapped CSI tags for
+              matching and scope clarity.
             </p>
           </div>
           <div className="settings-actions">
@@ -364,7 +365,7 @@ export default function ProjectScopePage() {
               className="button-secondary"
               onClick={generateBidPackages}
             >
-              Generate from Selected Scopes
+              Generate Bid Packages
             </button>
             <button
               type="button"
