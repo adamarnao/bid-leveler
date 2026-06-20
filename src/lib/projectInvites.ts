@@ -254,18 +254,23 @@ function createMatchedRecipients(
       getRecipientDedupeKey(draftRecipient)
     );
 
-    return existingRecipient
-      ? {
-          ...existingRecipient,
-          selectedScopeItemIds: draftRecipient.selectedScopeItemIds,
-          matchType: draftRecipient.matchType,
-          matchLabel: draftRecipient.matchLabel,
-          confidence: draftRecipient.confidence,
-          coverageRatio: draftRecipient.coverageRatio,
-          source: "MATCHED" as const,
-          updatedAt: draftRecipient.updatedAt,
-        }
-      : draftRecipient;
+    if (!existingRecipient) return draftRecipient;
+    if (existingRecipient.source === "MANUAL") return existingRecipient;
+
+    const shouldRestoreRemovedMatch = existingRecipient.status === "REMOVED";
+
+    return {
+      ...existingRecipient,
+      selectedScopeItemIds: draftRecipient.selectedScopeItemIds,
+      matchType: draftRecipient.matchType,
+      matchLabel: draftRecipient.matchLabel,
+      confidence: draftRecipient.confidence,
+      coverageRatio: draftRecipient.coverageRatio,
+      source: "MATCHED" as const,
+      status: shouldRestoreRemovedMatch ? "DRAFT" : existingRecipient.status,
+      lastError: shouldRestoreRemovedMatch ? undefined : existingRecipient.lastError,
+      updatedAt: draftRecipient.updatedAt,
+    };
   });
 }
 

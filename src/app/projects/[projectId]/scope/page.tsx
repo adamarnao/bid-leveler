@@ -144,6 +144,35 @@ export default function ProjectScopePage() {
     window.dispatchEvent(new Event(bidPackagesChangeEvent));
   }
 
+  function pruneBidPackageScopes(packageRecord: ProjectBidPackage) {
+    if (!project) return;
+
+    const nextScopeItemIds = packageRecord.scopeItemIds.filter((scopeItemId) =>
+      isScopeItemCurrentlySelected(
+        project.csiVersion,
+        scopeItemId,
+        selectedPackageScopeItems
+      )
+    );
+    const staleScopeCount = packageRecord.scopeItemIds.length - nextScopeItemIds.length;
+
+    if (staleScopeCount === 0) return;
+
+    const shouldPrune = window.confirm(
+      `Prune ${staleScopeCount} removed CSI scope${
+        staleScopeCount === 1 ? "" : "s"
+      } from ${packageRecord.name}? This will not delete bids or CSI selections.`
+    );
+
+    if (!shouldPrune) return;
+
+    saveBidPackage({
+      ...packageRecord,
+      scopeItemIds: nextScopeItemIds,
+      updatedAt: new Date().toISOString(),
+    });
+  }
+
   function openAddScopeModal() {
     setAddModalOpen(true);
   }
@@ -336,8 +365,10 @@ export default function ProjectScopePage() {
                 key={packageRecord.id}
                 packageRecord={packageRecord}
                 csiVersion={project.csiVersion}
+                selectedScopeItems={selectedPackageScopeItems}
                 onEdit={() => setEditingBidPackage(packageRecord)}
                 onDelete={() => deleteBidPackage(packageRecord)}
+                onPruneRemovedScopes={() => pruneBidPackageScopes(packageRecord)}
               />
             ))}
           </div>
@@ -526,17 +557,30 @@ function DivisionScopeCard({
 function BidPackageCard({
   packageRecord,
   csiVersion,
+  selectedScopeItems,
   onEdit,
   onDelete,
+  onPruneRemovedScopes,
 }: {
   packageRecord: ProjectBidPackage;
   csiVersion: Project["csiVersion"];
+  selectedScopeItems: CsiCatalogItem[];
   onEdit: () => void;
   onDelete: () => void;
+  onPruneRemovedScopes: () => void;
 }) {
   const mappedItems = packageRecord.scopeItemIds
     .map((scopeItemId) => resolveProjectCsiItem(csiVersion, scopeItemId))
     .filter(isDefined);
+  const staleScopeItemIds = packageRecord.scopeItemIds.filter(
+    (scopeItemId) =>
+      !isScopeItemCurrentlySelected(csiVersion, scopeItemId, selectedScopeItems)
+  );
+  const staleItems = staleScopeItemIds.map((scopeItemId) => ({
+    id: scopeItemId,
+    item: resolveProjectCsiItem(csiVersion, scopeItemId),
+  }));
+  const packageNeedsAttention = packageRecord.scopeItemIds.length === 0;
 
   return (
     <article className="project-csi-division-card">
@@ -558,9 +602,27 @@ function BidPackageCard({
                 {formatStatus(packageRecord.source)}
               </span>
             ) : null}
+            {staleScopeItemIds.length > 0 ? (
+              <span className="badge badge-warning">
+                {staleScopeItemIds.length} removed scope
+                {staleScopeItemIds.length === 1 ? "" : "s"}
+              </span>
+            ) : null}
+            {packageNeedsAttention ? (
+              <span className="badge badge-warning">Needs Attention</span>
+            ) : null}
           </div>
         </div>
         <div className="settings-actions">
+          {staleScopeItemIds.length > 0 ? (
+            <button
+              type="button"
+              className="button-secondary"
+              onClick={onPruneRemovedScopes}
+            >
+              Prune Removed Scopes
+            </button>
+          ) : null}
           <button type="button" className="button-secondary" onClick={onEdit}>
             Edit
           </button>
@@ -570,8 +632,27 @@ function BidPackageCard({
         </div>
       </div>
 
+      {staleScopeItemIds.length > 0 ? (
+        <div style={{ marginBottom: 12 }}>
+          <p className="form-error">
+            This package includes CSI scopes that are no longer selected for the
+            project.
+          </p>
+          <div className="badge-list">
+            {staleItems.map(({ id, item }) => (
+              <span key={id} className="badge badge-warning">
+                {item ? <CsiCodeLabel item={item} showLevelBadge /> : id}
+              </span>
+            ))}
+          </div>
+        </div>
+      ) : null}
+
       {mappedItems.length === 0 ? (
-        <p className="muted-text">No mapped CSI scopes.</p>
+        <p className="muted-text">
+          No mapped CSI scopes. This package needs mapped scopes before it can
+          drive invites or leveling.
+        </p>
       ) : (
         <div className="badge-list">
           {mappedItems.map((item) => (
@@ -1135,6 +1216,16 @@ function groupPackageScopeItems(
     ...group,
     items: group.items.sort(compareCsiItems),
   }));
+}
+
+function isScopeItemCurrentlySelected(
+  csiVersion: Project["csiVersion"],
+  scopeItemId: string,
+  selectedScopeItems: CsiCatalogItem[]
+) {
+  return selectedScopeItems.some((item) =>
+    projectCsiIdsReferToSameItem(csiVersion, scopeItemId, item.id)
+  );
 }
 
 function compareCsiItems(itemA: CsiCatalogItem, itemB: CsiCatalogItem) {
