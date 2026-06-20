@@ -557,7 +557,7 @@ export default async function TradeTaxonomyWorkbenchPage({
 
   return (
     <AppShell title="Trade Taxonomy Workbench">
-      <div className="dashboard-shell">
+      <div className="dashboard-shell taxonomy-workbench">
         <div className="page-header">
           <div>
             <p className="label-text">Internal Dev Tool</p>
@@ -570,6 +570,14 @@ export default async function TradeTaxonomyWorkbenchPage({
             Dashboard
           </Link>
         </div>
+
+        <section className="app-panel taxonomy-workbench-note">
+          <p>
+            This is a read-only workbench for inspecting the company trade taxonomy,
+            sector visibility rules, cross-trade mappings, and CSI-to-trade package
+            suggestions. Editing will be handled later in Trade Taxonomy Settings.
+          </p>
+        </section>
 
         <section className="app-panel">
           <div className="panel-header">
@@ -591,12 +599,14 @@ export default async function TradeTaxonomyWorkbenchPage({
             </div>
           </div>
 
-          <div className="stack gap-2" style={{ marginTop: 16 }}>
-            <span className="label-text">Sector filter</span>
-            <div className="cluster gap-2">
+          <div className="taxonomy-filter-section">
+            <span className="label-text">Sector visibility filters</span>
+            <div className="taxonomy-filter-list" aria-label="Sector visibility filters">
               <Link
                 href="/dev/trade-taxonomy"
-                className={selectedSector ? "button-secondary" : "button-primary"}
+                className={`taxonomy-filter-button ${
+                  selectedSector ? "button-secondary" : "button-primary"
+                }`}
               >
                 Default
               </Link>
@@ -604,7 +614,9 @@ export default async function TradeTaxonomyWorkbenchPage({
                 <Link
                   key={sectorTag}
                   href={`/dev/trade-taxonomy?sector=${sectorTag}`}
-                  className={selectedSector === sectorTag ? "button-primary" : "button-secondary"}
+                  className={`taxonomy-filter-button ${
+                    selectedSector === sectorTag ? "button-primary" : "button-secondary"
+                  }`}
                 >
                   {formatSectorTag(sectorTag)}
                 </Link>
@@ -638,6 +650,33 @@ export default async function TradeTaxonomyWorkbenchPage({
         </section>
 
         <CrossTradeMappingSection mappings={defaultCrossTradeMappings} />
+
+        <section className="app-panel taxonomy-fixture-guide">
+          <div className="panel-header">
+            <div>
+              <p className="label-text">Fixture Inspection Guide</p>
+              <h2>How to Read Generated Results</h2>
+              <p className="muted-text">
+                Fixture data shows how sample CSI tags move through the taxonomy generator.
+              </p>
+            </div>
+          </div>
+
+          <ul className="taxonomy-instruction-list">
+            <li>Input CSI items are sample scope tags.</li>
+            <li>Suggested packages are the trade packages the system would create.</li>
+            <li>Assignments show which trade each CSI item mapped to.</li>
+            <li>Confidence indicates how strong the mapping is.</li>
+            <li>
+              Warnings identify ambiguous or cross-trade items that may need estimator review.
+            </li>
+            <li>Unassigned items need manual mapping or taxonomy rule improvement.</li>
+          </ul>
+          <p className="muted-text">
+            No edits are saved from this page. Use this screen to validate taxonomy behavior
+            before integrating it into Project Scope.
+          </p>
+        </section>
 
         <div className="stack gap-4">
           {scenarioResults.map((scenario) => (
