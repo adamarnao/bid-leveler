@@ -1888,6 +1888,7 @@ textarea:focus {
 .context-help {
   position: relative;
   display: inline-flex;
+  flex: 0 0 auto;
   align-items: center;
   margin-left: 4px;
   vertical-align: middle;
@@ -1919,10 +1920,13 @@ textarea:focus {
 
 .context-help-popover {
   position: absolute;
-  z-index: 30;
+  z-index: 60;
   left: 50%;
-  bottom: calc(100% + 8px);
-  width: min(280px, calc(100vw - 32px));
+  bottom: calc(100% + 10px);
+  box-sizing: border-box;
+  width: max-content;
+  min-width: min(220px, calc(100vw - 32px));
+  max-width: min(360px, calc(100vw - 32px));
   transform: translateX(-50%) translateY(4px);
   visibility: hidden;
   opacity: 0;
@@ -1936,6 +1940,11 @@ textarea:focus {
   font-size: 12px;
   font-weight: 600;
   line-height: 1.45;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: normal;
+  hyphens: auto;
+  text-align: left;
   text-transform: none;
   transition: opacity 120ms ease, transform 120ms ease, visibility 120ms ease;
 }
@@ -2163,6 +2172,8 @@ textarea:focus {
   .context-help-popover {
     left: auto;
     right: 0;
+    min-width: min(220px, calc(100vw - 24px));
+    max-width: min(320px, calc(100vw - 24px));
     transform: translateY(4px);
   }
 
