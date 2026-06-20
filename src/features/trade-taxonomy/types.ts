@@ -1,33 +1,17 @@
+import type {
+  ProjectContextTagId,
+  ProjectSectorId,
+  ProjectWorkTypeId,
+} from "@/features/project-classification";
+
 export type TradePackageMode =
   | "UMBRELLA"
   | "SPLIT_BY_CHILD"
   | "USER_CHOICE";
 
-export type ProjectSectorTag =
-  | "commercial"
-  | "residential"
-  | "multifamily"
-  | "healthcare"
-  | "hospitality"
-  | "restaurant"
-  | "education"
-  | "industrial"
-  | "laboratory"
-  | "cleanroom"
-  | "civil"
-  | "sitework"
-  | "retail"
-  | "office"
-  | "warehouse"
-  | "transportation"
-  | "airport"
-  | "marine"
-  | "sports"
-  | "mission_critical"
-  | "government"
-  | "detention"
-  | "renewable_energy"
-  | "agricultural";
+export type ProjectSectorTag = ProjectSectorId;
+export type ProjectWorkTypeTag = ProjectWorkTypeId;
+export type ProjectContextTag = ProjectContextTagId;
 
 export type TradeSpecialtyTag =
   | "core"
@@ -54,10 +38,19 @@ export type TradeTaxonomyNode = {
   isCommon?: boolean;
   defaultHidden?: boolean;
   sectorTags?: ProjectSectorTag[];
+  workTypeTags?: ProjectWorkTypeTag[];
+  contextTags?: ProjectContextTag[];
   specialtyTags?: TradeSpecialtyTag[];
   relatedTradeIds?: string[];
   splitRecommendation?: string;
   estimatingNotes?: string;
+};
+
+export type TradeVisibilityContext = {
+  sectorTags?: ProjectSectorTag[];
+  workTypeTags?: ProjectWorkTypeTag[];
+  contextTags?: ProjectContextTag[];
+  includeHidden?: boolean;
 };
 
 export type TradeCsiMatchStrength =

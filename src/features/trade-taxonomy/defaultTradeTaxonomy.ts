@@ -1,4 +1,10 @@
-import { ProjectSectorTag, TradeTaxonomyNode } from "./types";
+import {
+  ProjectContextTag,
+  ProjectSectorTag,
+  ProjectWorkTypeTag,
+  TradeTaxonomyNode,
+  TradeVisibilityContext,
+} from "./types";
 
 type TradeSpecializationInput = {
   id: string;
@@ -13,10 +19,195 @@ type TradeSpecializationInput = {
   isCommon?: boolean;
   defaultHidden?: boolean;
   sectorTags?: TradeTaxonomyNode["sectorTags"];
+  workTypeTags?: TradeTaxonomyNode["workTypeTags"];
+  contextTags?: TradeTaxonomyNode["contextTags"];
   specialtyTags?: TradeTaxonomyNode["specialtyTags"];
   relatedTradeIds?: string[];
   splitRecommendation?: string;
   estimatingNotes?: string;
+};
+
+const workTypeTriggeredTradeIds: Partial<Record<ProjectWorkTypeTag, string[]>> = {
+  tenant_improvement: [
+    "specialties",
+    "countertops",
+    "wallcovering",
+    "decorative-finishes",
+    "operable-partitions",
+    "accordion-folding-partitions",
+    "window-treatments",
+    "blinds-shades",
+    "systems-furniture",
+  ],
+  fit_out: [
+    "specialties",
+    "countertops",
+    "wallcovering",
+    "decorative-finishes",
+    "window-treatments",
+    "blinds-shades",
+  ],
+  build_out: [
+    "specialties",
+    "countertops",
+    "wallcovering",
+    "decorative-finishes",
+    "window-treatments",
+    "blinds-shades",
+  ],
+  interior_renovation: [
+    "specialties",
+    "hazardous-materials-abatement",
+    "asbestos-abatement",
+    "lead-paint-abatement",
+    "mold-remediation",
+    "wallcovering",
+    "decorative-finishes",
+  ],
+  occupied_renovation: [
+    "specialties",
+    "hazardous-materials-abatement",
+    "asbestos-abatement",
+    "lead-paint-abatement",
+    "mold-remediation",
+    "temporary-protection",
+  ],
+  ground_up: ["conveying", "elevators", "fire-pump", "standpipes"],
+  core_and_shell: ["conveying", "elevators", "fire-pump", "standpipes"],
+  shell_completion: ["specialties", "conveying", "elevators"],
+  white_box: ["specialties", "window-treatments", "blinds-shades"],
+  addition: ["conveying", "elevators", "fire-pump", "standpipes"],
+  remodel: ["specialties", "hazardous-materials-abatement", "asbestos-abatement"],
+  adaptive_reuse: [
+    "specialties",
+    "hazardous-materials-abatement",
+    "asbestos-abatement",
+    "lead-paint-abatement",
+    "mold-remediation",
+    "building-relocation-salvage",
+  ],
+  restoration: [
+    "masonry-restoration",
+    "tuckpointing-repointing",
+    "hazardous-materials-abatement",
+    "asbestos-abatement",
+    "lead-paint-abatement",
+  ],
+  sitework_only: [
+    "soil-stabilization",
+    "dewatering",
+    "shoring-sheeting",
+    "traffic-control",
+    "traffic-signals",
+  ],
+  demolition_only: [
+    "hazardous-materials-abatement",
+    "asbestos-abatement",
+    "lead-paint-abatement",
+    "mold-remediation",
+    "pcb-mercury-universal-waste-removal",
+    "underground-storage-tank-removal",
+    "building-relocation-salvage",
+  ],
+  maintenance_repair: ["concrete-repair-restoration", "masonry-restoration"],
+  phased_renovation: [
+    "specialties",
+    "hazardous-materials-abatement",
+    "asbestos-abatement",
+    "temporary-protection",
+  ],
+};
+
+const contextTriggeredTradeIds: Partial<Record<ProjectContextTag, string[]>> = {
+  medical_office: [
+    "healthcare-systems",
+    "medical-gas",
+    "nurse-call",
+    "clean-agent-fire-suppression",
+    "cubicle-curtains-tracks",
+  ],
+  hospital: [
+    "healthcare-systems",
+    "medical-gas",
+    "nurse-call",
+    "pneumatic-tube-systems",
+    "radiation-shielding",
+    "clean-agent-fire-suppression",
+    "emergency-power",
+    "generator",
+    "ups",
+  ],
+  surgery_center: [
+    "healthcare-systems",
+    "medical-gas",
+    "nurse-call",
+    "clean-agent-fire-suppression",
+    "infection-control",
+  ],
+  imaging: ["radiation-shielding", "medical-equipment", "healthcare-systems"],
+  lab: [
+    "laboratory-cleanroom-systems",
+    "laboratory-equipment",
+    "medical-gas",
+    "compressed-air",
+    "vacuum-systems",
+    "plumbing-process-piping",
+    "lab-exhaust",
+  ],
+  cleanroom: [
+    "laboratory-cleanroom-systems",
+    "process-systems",
+    "high-speed-doors",
+    "high-performance-coatings",
+    "lab-exhaust",
+  ],
+  commercial_kitchen: [
+    "food-service-systems",
+    "food-service-equipment",
+    "commercial-kitchen-equipment",
+    "kitchen-exhaust",
+    "kitchen-hood-fire-suppression",
+    "grease-interceptors",
+  ],
+  occupied_building: ["temporary-protection", "final-cleaning"],
+  night_work: ["temporary-protection", "site-safety"],
+  public_bid: ["permits-fees", "bonds-insurance"],
+  prevailing_wage: ["general-requirements"],
+  secure_facility: [
+    "security-hardening-ballistic-protection",
+    "intrusion-detection",
+    "access-control",
+    "detention-equipment",
+  ],
+  high_rise: ["conveying", "elevators", "fire-pump", "standpipes"],
+  tilt_up: ["tilt-up-concrete", "precast-concrete"],
+  precast: ["precast-concrete"],
+  pre_engineered_metal_building: ["structural-steel"],
+  cold_storage: ["rigid-insulation", "refrigerant-piping", "high-speed-doors"],
+  food_processing: [
+    "food-service-systems",
+    "process-systems",
+    "grease-interceptors",
+    "high-performance-coatings",
+    "frp-panels",
+  ],
+  data_center: [
+    "clean-agent-fire-suppression",
+    "emergency-power",
+    "generator",
+    "ups",
+    "controls",
+    "das-cellular-enhancement",
+  ],
+  airport_secure_area: ["airport-airfield", "security-hardening-ballistic-protection"],
+  marine_waterfront: ["marine-waterfront", "shotcrete", "oil-gas-fuel-systems"],
+  historic_restoration: [
+    "masonry-restoration",
+    "tuckpointing-repointing",
+    "lead-paint-abatement",
+  ],
+  flood_zone: ["waterproofing", "dewatering"],
+  infection_control: ["healthcare-systems", "temporary-protection"],
 };
 
 function createTradeSpecializations(
@@ -1971,22 +2162,20 @@ export function getVisibleTradesForSector(
   sectorTags: ProjectSectorTag[]
 ): TradeTaxonomyNode[] {
   return taxonomy
-    .filter((node) => shouldShowTradeForSector(node, sectorTags, false))
+    .filter((node) => shouldShowTradeForProject(node, { sectorTags }))
     .sort(compareTradeNodes)
     .map((node) => ({ ...node }));
 }
 
-export function getVisibleTradeTaxonomyForProject({
-  taxonomy,
-  sectorTags,
-  includeHidden,
-}: {
-  taxonomy: TradeTaxonomyNode[];
-  sectorTags: ProjectSectorTag[];
-  includeHidden?: boolean;
-}): TradeTaxonomyNode[] {
+export function getVisibleTradeTaxonomyForProject(
+  context: {
+    taxonomy: TradeTaxonomyNode[];
+  } & TradeVisibilityContext
+): TradeTaxonomyNode[] {
+  const { taxonomy } = context;
+
   return taxonomy
-    .filter((node) => shouldShowTradeForSector(node, sectorTags, Boolean(includeHidden)))
+    .filter((node) => shouldShowTradeForProject(node, context))
     .sort(compareTradeNodes)
     .map((node) => ({ ...node }));
 }
@@ -1996,23 +2185,34 @@ export function shouldShowTradeForSector(
   sectorTags: ProjectSectorTag[],
   includeHidden: boolean
 ): boolean {
+  return shouldShowTradeForProject(trade, { sectorTags, includeHidden });
+}
+
+export function shouldShowTradeForProject(
+  trade: TradeTaxonomyNode,
+  context: TradeVisibilityContext = {}
+): boolean {
   if (!trade.isActive) return false;
-  if (includeHidden) return true;
+  if (context.includeHidden) return true;
   if (!trade.defaultHidden) return true;
-  if (!trade.sectorTags?.length) return false;
 
-  const selectedSectorTags = new Set(sectorTags);
-
-  return trade.sectorTags.some((sectorTag) => selectedSectorTags.has(sectorTag));
+  return isTradeTriggeredForProject(trade, context);
 }
 
 export function getSectorTriggeredTrades(
   taxonomy: TradeTaxonomyNode[],
   sectorTags: ProjectSectorTag[]
 ): TradeTaxonomyNode[] {
+  return getTriggeredTradesForProject(taxonomy, { sectorTags });
+}
+
+export function getTriggeredTradesForProject(
+  taxonomy: TradeTaxonomyNode[],
+  context: TradeVisibilityContext = {}
+): TradeTaxonomyNode[] {
   return taxonomy
     .filter((node) => node.defaultHidden)
-    .filter((node) => shouldShowTradeForSector(node, sectorTags, false))
+    .filter((node) => shouldShowTradeForProject(node, context))
     .sort(compareTradeNodes)
     .map((node) => ({ ...node }));
 }
@@ -2075,4 +2275,37 @@ function compareTradeNodes(
   rightNode: TradeTaxonomyNode
 ) {
   return leftNode.sortOrder - rightNode.sortOrder;
+}
+
+function isTradeTriggeredForProject(
+  trade: TradeTaxonomyNode,
+  context: TradeVisibilityContext
+): boolean {
+  const sectorTags = new Set(context.sectorTags ?? []);
+  const workTypeTags = new Set(context.workTypeTags ?? []);
+  const contextTags = new Set(context.contextTags ?? []);
+
+  if (trade.sectorTags?.some((tag) => sectorTags.has(tag))) return true;
+  if (trade.workTypeTags?.some((tag) => workTypeTags.has(tag))) return true;
+  if (trade.contextTags?.some((tag) => contextTags.has(tag))) return true;
+
+  return getTriggeredTradeIdsForContext(context).has(trade.id);
+}
+
+function getTriggeredTradeIdsForContext(context: TradeVisibilityContext): Set<string> {
+  const triggeredTradeIds = new Set<string>();
+
+  context.workTypeTags?.forEach((workTypeTag) => {
+    workTypeTriggeredTradeIds[workTypeTag]?.forEach((tradeId) => {
+      triggeredTradeIds.add(tradeId);
+    });
+  });
+
+  context.contextTags?.forEach((contextTag) => {
+    contextTriggeredTradeIds[contextTag]?.forEach((tradeId) => {
+      triggeredTradeIds.add(tradeId);
+    });
+  });
+
+  return triggeredTradeIds;
 }

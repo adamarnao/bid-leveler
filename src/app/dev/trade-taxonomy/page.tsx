@@ -3,6 +3,11 @@ import Link from "next/link";
 import AppShell from "@/components/layout/AppShell";
 import ContextHelp from "@/components/ui/ContextHelp";
 import {
+  getProjectContextTagOptions,
+  getProjectSectorOptions,
+  getProjectWorkTypeOptions,
+} from "@/features/project-classification";
+import {
   defaultCrossTradeMappings,
   defaultTradeCsiMappings,
   drywallFramingCsiFixture,
@@ -12,16 +17,17 @@ import {
   getDefaultTradeTaxonomy,
   getHiddenTrades,
   getRelatedTrades,
-  getSectorTriggeredTrades,
+  getTriggeredTradesForProject,
   getVisibleTradeTaxonomyForProject,
-  getVisibleTradesForSector,
   healthcareCsiFixture,
   industrialLabCsiFixture,
   mepCsiFixture,
   officeTenantImprovementCsiFixture,
   restaurantCsiFixture,
   type CrossTradeMapping,
+  type ProjectContextTag,
   type ProjectSectorTag,
+  type ProjectWorkTypeTag,
   type TradeCsiAssignment,
   type TradePackageGenerationResult,
   type TradePackageSuggestion,
@@ -35,6 +41,8 @@ type FixtureScenario = {
   description: string;
   csiItems: TradeTaxonomyCsiItem[];
   sectorTags?: ProjectSectorTag[];
+  workTypeTags?: ProjectWorkTypeTag[];
+  contextTags?: ProjectContextTag[];
 };
 
 type FixtureScenarioResult = FixtureScenario & {
@@ -44,33 +52,68 @@ type FixtureScenarioResult = FixtureScenario & {
 type TradeTaxonomyWorkbenchPageProps = {
   searchParams?: Promise<{
     sector?: string;
+    workType?: string;
+    context?: string;
+    includeHidden?: string;
   }>;
 };
 
 const taxonomy = getDefaultTradeTaxonomy();
+const sectorOptions = getProjectSectorOptions();
+const workTypeOptions = getProjectWorkTypeOptions();
+const contextTagOptions = getProjectContextTagOptions();
 
-const sectorOptions: ProjectSectorTag[] = [
-  "commercial",
-  "healthcare",
-  "hospitality",
-  "restaurant",
-  "education",
-  "industrial",
-  "laboratory",
-  "cleanroom",
-  "sitework",
-  "retail",
-  "office",
-  "warehouse",
-  "transportation",
-  "airport",
-  "marine",
-  "mission_critical",
-  "government",
-  "detention",
-  "renewable_energy",
-  "sports",
-  "agricultural",
+type WorkbenchFilterState = {
+  sectorTags: ProjectSectorTag[];
+  workTypeTags: ProjectWorkTypeTag[];
+  contextTags: ProjectContextTag[];
+  includeHidden: boolean;
+};
+
+type WorkbenchPreset = {
+  label: string;
+  sectorTags: ProjectSectorTag[];
+  workTypeTags: ProjectWorkTypeTag[];
+  contextTags: ProjectContextTag[];
+};
+
+const workbenchPresets: WorkbenchPreset[] = [
+  {
+    label: "Office + Tenant Improvement",
+    sectorTags: ["office"],
+    workTypeTags: ["tenant_improvement"],
+    contextTags: [],
+  },
+  {
+    label: "Healthcare + Tenant Improvement + Medical Office",
+    sectorTags: ["healthcare"],
+    workTypeTags: ["tenant_improvement"],
+    contextTags: ["medical_office"],
+  },
+  {
+    label: "Restaurant + Tenant Improvement + Commercial Kitchen",
+    sectorTags: ["restaurant"],
+    workTypeTags: ["tenant_improvement"],
+    contextTags: ["commercial_kitchen"],
+  },
+  {
+    label: "Civil + Sitework Only",
+    sectorTags: ["civil"],
+    workTypeTags: ["sitework_only"],
+    contextTags: [],
+  },
+  {
+    label: "Industrial + Ground-Up",
+    sectorTags: ["industrial"],
+    workTypeTags: ["ground_up"],
+    contextTags: [],
+  },
+  {
+    label: "Laboratory + Renovation + Lab/Cleanroom Context",
+    sectorTags: ["laboratory"],
+    workTypeTags: ["interior_renovation"],
+    contextTags: ["lab", "cleanroom"],
+  },
 ];
 
 const fixtureScenarios: FixtureScenario[] = [
@@ -99,9 +142,11 @@ const fixtureScenarios: FixtureScenario[] = [
     id: "healthcare",
     title: "Healthcare fixture",
     description:
-      "Verifies sector-triggered healthcare systems and ambiguous medical gas, nurse call, and fire alarm scope.",
+      "Verifies classification-triggered healthcare systems and ambiguous medical gas, nurse call, and fire alarm scope.",
     csiItems: healthcareCsiFixture,
     sectorTags: ["healthcare"],
+    workTypeTags: ["tenant_improvement"],
+    contextTags: ["medical_office"],
   },
   {
     id: "restaurant",
@@ -110,6 +155,8 @@ const fixtureScenarios: FixtureScenario[] = [
       "Verifies kitchen hood, food service equipment, grease interceptor, and hood suppression ambiguity.",
     csiItems: restaurantCsiFixture,
     sectorTags: ["restaurant"],
+    workTypeTags: ["tenant_improvement"],
+    contextTags: ["commercial_kitchen"],
   },
   {
     id: "office-ti",
@@ -118,6 +165,7 @@ const fixtureScenarios: FixtureScenario[] = [
       "Verifies a typical office tenant improvement set without hidden specialty clutter.",
     csiItems: officeTenantImprovementCsiFixture,
     sectorTags: ["office"],
+    workTypeTags: ["tenant_improvement"],
   },
   {
     id: "industrial-lab",
@@ -126,6 +174,8 @@ const fixtureScenarios: FixtureScenario[] = [
       "Verifies process piping, lab gases, lab exhaust, and cleanroom sector-specific ambiguity.",
     csiItems: industrialLabCsiFixture,
     sectorTags: ["industrial", "laboratory", "cleanroom"],
+    workTypeTags: ["interior_renovation"],
+    contextTags: ["lab", "cleanroom"],
   },
 ];
 
@@ -200,14 +250,68 @@ function getMatchSummaryLabel(matchStrength: string, confidence: string): string
 }
 
 function formatSectorTag(sectorTag: ProjectSectorTag): string {
-  return sectorTag
-    .split("_")
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join(" ");
+  return formatClassificationTag(sectorTag, sectorOptions);
 }
 
-function isProjectSectorTag(value: string | undefined): value is ProjectSectorTag {
-  return Boolean(value && sectorOptions.includes(value as ProjectSectorTag));
+function formatWorkTypeTag(workTypeTag: ProjectWorkTypeTag): string {
+  return formatClassificationTag(workTypeTag, workTypeOptions);
+}
+
+function formatContextTag(contextTag: ProjectContextTag): string {
+  return formatClassificationTag(contextTag, contextTagOptions);
+}
+
+function formatClassificationTag(
+  value: string,
+  options: readonly { id: string; label: string }[]
+): string {
+  return options.find((option) => option.id === value)?.label ?? formatEnumLabel(value);
+}
+
+function parseTagList<TTag extends string>(
+  value: string | undefined,
+  options: readonly { id: TTag }[]
+): TTag[] {
+  if (!value) return [];
+
+  const validIds = new Set(options.map((option) => option.id));
+  const selectedIds: TTag[] = [];
+  const seenIds = new Set<TTag>();
+
+  value
+    .split(",")
+    .map((part) => part.trim())
+    .filter(Boolean)
+    .forEach((part) => {
+      if (!validIds.has(part as TTag)) return;
+
+      const selectedId = part as TTag;
+      if (seenIds.has(selectedId)) return;
+
+      seenIds.add(selectedId);
+      selectedIds.push(selectedId);
+    });
+
+  return selectedIds;
+}
+
+function buildWorkbenchHref(filters: WorkbenchFilterState): string {
+  const params = new URLSearchParams();
+
+  if (filters.sectorTags.length) params.set("sector", filters.sectorTags.join(","));
+  if (filters.workTypeTags.length) params.set("workType", filters.workTypeTags.join(","));
+  if (filters.contextTags.length) params.set("context", filters.contextTags.join(","));
+  if (filters.includeHidden) params.set("includeHidden", "true");
+
+  const queryString = params.toString();
+
+  return queryString ? `/dev/trade-taxonomy?${queryString}` : "/dev/trade-taxonomy";
+}
+
+function toggleFilterTag<TTag extends string>(selectedTags: TTag[], tag: TTag): TTag[] {
+  return selectedTags.includes(tag)
+    ? selectedTags.filter((selectedTag) => selectedTag !== tag)
+    : [...selectedTags, tag];
 }
 
 function TradeMetadataBadges({ trade }: { trade: TradeTaxonomyNode }) {
@@ -277,6 +381,18 @@ function TradeNodeCard({
             <p className="muted-text">
               <span className="label-text">Sectors</span>{" "}
               {trade.sectorTags.map(formatSectorTag).join(", ")}
+            </p>
+          ) : null}
+          {trade.workTypeTags?.length ? (
+            <p className="muted-text">
+              <span className="label-text">Work Types</span>{" "}
+              {trade.workTypeTags.map(formatWorkTypeTag).join(", ")}
+            </p>
+          ) : null}
+          {trade.contextTags?.length ? (
+            <p className="muted-text">
+              <span className="label-text">Context Tags</span>{" "}
+              {trade.contextTags.map(formatContextTag).join(", ")}
             </p>
           ) : null}
           {relatedTrades.length ? (
@@ -370,7 +486,7 @@ function WorkbenchLegend() {
           <LegendItem
             label="Hidden"
             className="taxonomy-status-chip taxonomy-status-hidden"
-            content="Hidden unless sector-triggered or manually enabled later."
+            content="Hidden unless sector, work type, context, or manual enablement makes it relevant later."
           />
           <LegendItem
             label="Inactive"
@@ -413,8 +529,8 @@ function WorkbenchLegend() {
           />
           <LegendItem
             label="Sector-Specific"
-            content="Hidden until project sector makes it relevant."
-            help="Hidden by default unless the project sector makes it relevant. Example: Medical Gas appears for healthcare projects; Food Service Equipment appears for restaurant or hospitality projects."
+            content="Hidden until project classification makes it relevant."
+            help="Hidden by default unless project sector, work type, or context makes it relevant. Example: Medical Gas appears for healthcare projects; Food Service Equipment appears for restaurant or commercial kitchen projects."
           />
           <LegendItem
             label="Cross-Trade"
@@ -452,6 +568,85 @@ function WorkbenchLegend() {
         TODO: app-wide guidance settings can later control how much context help appears.
       </p>
     </section>
+  );
+}
+
+function WorkbenchFilterGroup<TTag extends string>({
+  label,
+  selectedTags,
+  options,
+  buildHref,
+}: {
+  label: string;
+  selectedTags: TTag[];
+  options: readonly { id: TTag; label: string }[];
+  buildHref: (nextTags: TTag[]) => string;
+}) {
+  return (
+    <div className="taxonomy-filter-section">
+      <span className="label-text">{label}</span>
+      <div className="taxonomy-filter-list" aria-label={`${label} filters`}>
+        {options.map((option) => {
+          const isSelected = selectedTags.includes(option.id);
+
+          return (
+            <Link
+              key={option.id}
+              href={buildHref(toggleFilterTag(selectedTags, option.id))}
+              className={`taxonomy-filter-button ${
+                isSelected ? "button-primary" : "button-secondary"
+              }`}
+            >
+              {option.label}
+            </Link>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function WorkbenchPresetFilters({
+  selectedFilters,
+}: {
+  selectedFilters: WorkbenchFilterState;
+}) {
+  return (
+    <div className="taxonomy-filter-section">
+      <span className="label-text">Preset examples</span>
+      <div className="taxonomy-filter-list" aria-label="Preset classification filters">
+        <Link
+          href={buildWorkbenchHref({
+            sectorTags: [],
+            workTypeTags: [],
+            contextTags: [],
+            includeHidden: false,
+          })}
+          className={`taxonomy-filter-button ${
+            selectedFilters.sectorTags.length ||
+            selectedFilters.workTypeTags.length ||
+            selectedFilters.contextTags.length ||
+            selectedFilters.includeHidden
+              ? "button-secondary"
+              : "button-primary"
+          }`}
+        >
+          Default
+        </Link>
+        {workbenchPresets.map((preset) => (
+          <Link
+            key={preset.label}
+            href={buildWorkbenchHref({
+              ...preset,
+              includeHidden: selectedFilters.includeHidden,
+            })}
+            className="taxonomy-filter-button button-secondary"
+          >
+            {preset.label}
+          </Link>
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -586,6 +781,18 @@ function FixtureInspection({ scenario }: { scenario: FixtureScenarioResult }) {
               {scenario.sectorTags.map(formatSectorTag).join(", ")}
             </p>
           ) : null}
+          {scenario.workTypeTags?.length ? (
+            <p className="muted-text">
+              <span className="label-text">Work type context</span>{" "}
+              {scenario.workTypeTags.map(formatWorkTypeTag).join(", ")}
+            </p>
+          ) : null}
+          {scenario.contextTags?.length ? (
+            <p className="muted-text">
+              <span className="label-text">Context tags</span>{" "}
+              {scenario.contextTags.map(formatContextTag).join(", ")}
+            </p>
+          ) : null}
         </div>
         <span className="taxonomy-meta-chip">
           {scenario.result.suggestions.length} suggestions
@@ -712,21 +919,23 @@ export default async function TradeTaxonomyWorkbenchPage({
   searchParams,
 }: TradeTaxonomyWorkbenchPageProps) {
   const resolvedSearchParams = await searchParams;
-  const selectedSector = isProjectSectorTag(resolvedSearchParams?.sector)
-    ? resolvedSearchParams.sector
-    : undefined;
+  const selectedFilters: WorkbenchFilterState = {
+    sectorTags: parseTagList<ProjectSectorTag>(resolvedSearchParams?.sector, sectorOptions),
+    workTypeTags: parseTagList<ProjectWorkTypeTag>(
+      resolvedSearchParams?.workType,
+      workTypeOptions
+    ),
+    contextTags: parseTagList<ProjectContextTag>(
+      resolvedSearchParams?.context,
+      contextTagOptions
+    ),
+    includeHidden: resolvedSearchParams?.includeHidden === "true",
+  };
   const visibleTaxonomy = getVisibleTradeTaxonomyForProject({
     taxonomy,
-    sectorTags: selectedSector ? [selectedSector] : [],
+    ...selectedFilters,
   });
-  const legacyVisibleTaxonomy = getVisibleTradesForSector(
-    taxonomy,
-    selectedSector ? [selectedSector] : []
-  );
-  const sectorTriggeredTrades = getSectorTriggeredTrades(
-    taxonomy,
-    selectedSector ? [selectedSector] : []
-  );
+  const triggeredTrades = getTriggeredTradesForProject(taxonomy, selectedFilters);
   const rootTrades = visibleTaxonomy.filter((trade) => !trade.parentId).sort(sortTrades);
   const commonTrades = getCommonTrades(taxonomy);
   const hiddenTrades = getHiddenTrades(taxonomy);
@@ -741,6 +950,12 @@ export default async function TradeTaxonomyWorkbenchPage({
       csiVersion: "MASTERFORMAT_CURRENT",
     }),
   }));
+  const activeFilterLabel = [
+    ...selectedFilters.sectorTags.map(formatSectorTag),
+    ...selectedFilters.workTypeTags.map(formatWorkTypeTag),
+    ...selectedFilters.contextTags.map(formatContextTag),
+    selectedFilters.includeHidden ? "Include Hidden" : undefined,
+  ].filter((label): label is string => Boolean(label));
 
   return (
     <AppShell title="Trade Taxonomy Workbench">
@@ -783,46 +998,79 @@ export default async function TradeTaxonomyWorkbenchPage({
               <span className="taxonomy-meta-chip">{commonTrades.length} common</span>
               <span className="taxonomy-status-chip taxonomy-status-hidden">{hiddenTrades.length} hidden</span>
               <span className="taxonomy-meta-chip">
-                {sectorTriggeredTrades.length} sector-triggered
+                {triggeredTrades.length} triggered
               </span>
             </div>
           </div>
 
+          <WorkbenchPresetFilters selectedFilters={selectedFilters} />
+
+          <WorkbenchFilterGroup
+            label="Sector"
+            selectedTags={selectedFilters.sectorTags}
+            options={sectorOptions}
+            buildHref={(nextTags) =>
+              buildWorkbenchHref({ ...selectedFilters, sectorTags: nextTags })
+            }
+          />
+
+          <WorkbenchFilterGroup
+            label="Work Type"
+            selectedTags={selectedFilters.workTypeTags}
+            options={workTypeOptions}
+            buildHref={(nextTags) =>
+              buildWorkbenchHref({ ...selectedFilters, workTypeTags: nextTags })
+            }
+          />
+
+          <WorkbenchFilterGroup
+            label="Context Tags"
+            selectedTags={selectedFilters.contextTags}
+            options={contextTagOptions}
+            buildHref={(nextTags) =>
+              buildWorkbenchHref({ ...selectedFilters, contextTags: nextTags })
+            }
+          />
+
           <div className="taxonomy-filter-section">
-            <span className="label-text">Sector visibility filters</span>
-            <div className="taxonomy-filter-list" aria-label="Sector visibility filters">
+            <span className="label-text">Hidden Trades</span>
+            <div className="taxonomy-filter-list" aria-label="Hidden trade visibility filter">
               <Link
-                href="/dev/trade-taxonomy"
+                href={buildWorkbenchHref({
+                  ...selectedFilters,
+                  includeHidden: !selectedFilters.includeHidden,
+                })}
                 className={`taxonomy-filter-button ${
-                  selectedSector ? "button-secondary" : "button-primary"
+                  selectedFilters.includeHidden ? "button-primary" : "button-secondary"
                 }`}
               >
-                Default
+                Include Hidden
               </Link>
-              {sectorOptions.map((sectorTag) => (
-                <Link
-                  key={sectorTag}
-                  href={`/dev/trade-taxonomy?sector=${sectorTag}`}
-                  className={`taxonomy-filter-button ${
-                    selectedSector === sectorTag ? "button-primary" : "button-secondary"
-                  }`}
-                >
-                  {formatSectorTag(sectorTag)}
-                </Link>
-              ))}
             </div>
             <p className="muted-text">
-              Hidden specialty trades appear when their sector trigger matches the selected
-              filter. Legacy and new visibility helpers agree on{" "}
-              {legacyVisibleTaxonomy.length} visible records for this filter.
+              Hidden specialty trades appear when selected sector, work type, or context tag
+              triggers match. Core/common trades remain visible by default in this phase.
             </p>
           </div>
 
-          {sectorTriggeredTrades.length ? (
+          {activeFilterLabel.length ? (
             <div className="stack gap-2" style={{ marginTop: 16 }}>
-              <span className="label-text">Sector-triggered hidden trades</span>
+              <span className="label-text">Active Classification Filters</span>
               <div className="taxonomy-meta-list">
-                {sectorTriggeredTrades.map((trade) => (
+                {activeFilterLabel.map((label) => (
+                  <span key={label} className="taxonomy-meta-chip">
+                    {label}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ) : null}
+
+          {triggeredTrades.length ? (
+            <div className="stack gap-2" style={{ marginTop: 16 }}>
+              <span className="label-text">Triggered hidden trades</span>
+              <div className="taxonomy-meta-list">
+                {triggeredTrades.map((trade) => (
                   <span key={trade.id} className="taxonomy-meta-chip">
                     {trade.name}
                   </span>

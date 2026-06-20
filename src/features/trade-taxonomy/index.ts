@@ -11,8 +11,10 @@ export {
   getTradeChildren,
   getTradesBySector,
   getTradeSpecializations,
+  getTriggeredTradesForProject,
   getVisibleTradeTaxonomyForProject,
   getVisibleTradesForSector,
+  shouldShowTradeForProject,
   shouldShowTradeForSector,
 } from "./defaultTradeTaxonomy";
 export {
