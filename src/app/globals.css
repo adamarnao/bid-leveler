@@ -2318,6 +2318,26 @@ textarea:focus {
   background: var(--color-surface-1);
 }
 
+.project-csi-selected-hierarchy {
+  display: grid;
+  gap: 10px;
+}
+
+.project-csi-selected-group {
+  display: grid;
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-control);
+  background: var(--color-surface-2);
+}
+
+.project-csi-selected-group-heading {
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+  font-weight: 800;
+}
+
 .project-csi-add-modal {
   max-width: min(760px, calc(100vw - 32px));
 }
@@ -2333,6 +2353,21 @@ textarea:focus {
 
 .project-csi-modal-heading {
   margin-top: 6px;
+}
+
+.project-csi-search {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: end;
+  margin-bottom: 12px;
+}
+
+.project-csi-search-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
 }
 
 .project-csi-division-picker {
@@ -2378,6 +2413,10 @@ textarea:focus {
   padding-left: calc(var(--tree-depth, 0) * 20px);
 }
 
+.project-csi-tree-row-partial {
+  color: var(--color-text);
+}
+
 .project-csi-tree-toggle {
   min-height: 28px;
   border: 1px solid var(--color-border);
@@ -2405,12 +2444,35 @@ textarea:focus {
   background: var(--color-surface-1);
 }
 
+.project-csi-tree-item-partial {
+  border-color: color-mix(in srgb, var(--color-warning) 48%, var(--color-border));
+  background: color-mix(in srgb, var(--color-warning) 8%, var(--color-surface-1));
+}
+
 .project-csi-tree-label {
   min-width: 0;
 }
 
+.project-csi-tree-meta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  white-space: nowrap;
+}
+
 .project-csi-broad-row {
   margin-bottom: 6px;
+}
+
+@media (max-width: 760px) {
+  .project-csi-search {
+    grid-template-columns: 1fr;
+  }
+
+  .project-csi-search-actions {
+    justify-content: space-between;
+  }
 }
 
 .crm-expand-row {

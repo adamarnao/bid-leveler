@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { CsiCodeLabel, CsiHierarchyPath, CsiLevelBadge } from "@/components/csi";
 import AppShell from "@/components/layout/AppShell";
-import { getNearestLevel2Ancestor } from "@/lib/csiCatalog";
+import { getCsiAncestors, getNearestLevel2Ancestor } from "@/lib/csiCatalog";
 import {
   deleteProjectBidPackage,
   generateBidPackagesFromProjectScopes,
@@ -64,6 +64,7 @@ export default function ProjectScopePage() {
   const [stagedSelection, setStagedSelection] =
     useState<StoredProjectCsiSelection | undefined>();
   const [modalOpenedItemIds, setModalOpenedItemIds] = useState<string[]>([]);
+  const [csiSearchQuery, setCsiSearchQuery] = useState("");
 
   const csiTree = useMemo(
     () => (project ? getProjectCsiTree(project.csiVersion) : []),
@@ -88,6 +89,17 @@ export default function ProjectScopePage() {
   const editingDivisionNode = editingDivisionId
     ? divisionNodes.find((node) => node.item.divisionId === editingDivisionId)
     : undefined;
+  const filteredDivisionNodes = csiSearchQuery.trim()
+    ? divisionNodes.filter((divisionNode) =>
+        doesCsiTreeNodeMatchSearch(divisionNode, csiSearchQuery)
+      )
+    : divisionNodes;
+  const visibleEditingDivisionChildren = editingDivisionNode
+    ? getVisibleCsiTreeNodes(editingDivisionNode.children, csiSearchQuery)
+    : [];
+  const visibleModalOpenedItemIds = csiSearchQuery.trim()
+    ? getExpandableTreeNodeIds(visibleEditingDivisionChildren)
+    : modalOpenedItemIds;
 
   function saveSelection(selection: StoredProjectCsiSelection) {
     if (!project) return;
@@ -174,25 +186,32 @@ export default function ProjectScopePage() {
   }
 
   function openAddScopeModal() {
+    setCsiSearchQuery("");
     setAddModalOpen(true);
   }
 
   function closeAddScopeModal() {
+    setCsiSearchQuery("");
     setAddModalOpen(false);
   }
 
-  function openDivisionEditor(divisionNode: CsiCatalogTreeNode) {
+  function openDivisionEditor(
+    divisionNode: CsiCatalogTreeNode,
+    initialSearchQuery = ""
+  ) {
     if (!project || !csiSelection) return;
 
     setAddModalOpen(false);
     setEditingDivisionId(divisionNode.item.divisionId);
     setStagedSelection({ ...csiSelection });
+    setCsiSearchQuery(initialSearchQuery);
     setModalOpenedItemIds(getInitiallyExpandedIds(divisionNode, csiSelection));
   }
 
   function closeDivisionEditor() {
     setEditingDivisionId(undefined);
     setStagedSelection(undefined);
+    setCsiSearchQuery("");
     setModalOpenedItemIds([]);
   }
 
@@ -394,13 +413,23 @@ export default function ProjectScopePage() {
               <div>
                 <h2 id="add-csi-scope-title">Add CSI Scope</h2>
                 <p className="muted-text">
-                  Choose a Division to add or edit project CSI scopes.
+                  Search by CSI code, title, or parent text, then choose a
+                  Division to add or edit project CSI scopes.
                 </p>
               </div>
             </div>
             <div className="modal-body project-csi-modal-body">
+              <CsiScopeSearchField
+                value={csiSearchQuery}
+                resultCount={filteredDivisionNodes.length}
+                onChange={setCsiSearchQuery}
+                onClear={() => setCsiSearchQuery("")}
+              />
               <div className="project-csi-division-picker">
-                {divisionNodes.map((divisionNode) => {
+                {filteredDivisionNodes.length === 0 ? (
+                  <p className="muted-text">No CSI scopes match this search.</p>
+                ) : null}
+                {filteredDivisionNodes.map((divisionNode) => {
                   const summary = selectedSummaryByDivisionId.get(
                     divisionNode.item.divisionId
                   );
@@ -410,7 +439,9 @@ export default function ProjectScopePage() {
                       type="button"
                       key={divisionNode.item.id}
                       className="project-csi-division-choice"
-                      onClick={() => openDivisionEditor(divisionNode)}
+                      onClick={() =>
+                        openDivisionEditor(divisionNode, csiSearchQuery)
+                      }
                     >
                       <span>
                         <CsiCodeLabel item={divisionNode.item} showLevelBadge />
@@ -453,19 +484,36 @@ export default function ProjectScopePage() {
               </div>
             </div>
             <div className="modal-body project-csi-modal-body">
+              <CsiScopeSearchField
+                value={csiSearchQuery}
+                resultCount={visibleEditingDivisionChildren.length}
+                onChange={setCsiSearchQuery}
+                onClear={() => setCsiSearchQuery("")}
+              />
+              <p className="muted-text">
+                Selecting child scopes keeps their parent division active for
+                context. Clearing a parent row does not remove selected child
+                scopes.
+              </p>
               <div className="project-csi-tree">
                 <BroadDivisionRow
                   division={editingDivisionNode.item}
                   stagedSelection={stagedSelection}
                   onToggle={toggleStagedItem}
                 />
-                {editingDivisionNode.children.map((childNode) => (
+                {visibleEditingDivisionChildren.length === 0 ? (
+                  <p className="muted-text">
+                    No CSI scopes in this division match this search.
+                  </p>
+                ) : null}
+                {visibleEditingDivisionChildren.map((childNode) => (
                   <ProjectCsiTreeNode
                     key={childNode.item.id}
                     node={childNode}
                     depth={0}
-                    openedItemIds={modalOpenedItemIds}
+                    openedItemIds={visibleModalOpenedItemIds}
                     stagedSelection={stagedSelection}
+                    showHierarchyPath={Boolean(csiSearchQuery.trim())}
                     onToggleExpanded={toggleExpandedModalItem}
                     onToggleItem={toggleStagedItem}
                   />
@@ -522,6 +570,7 @@ function DivisionScopeCard({
 }) {
   const childItems = selectedItems.filter((item) => item.level > 1);
   const divisionSelected = selectedItems.some((item) => item.level === 1);
+  const subdivisionGroups = groupPackageScopeItems(division.version, childItems);
 
   return (
     <article className="project-csi-division-card">
@@ -549,15 +598,63 @@ function DivisionScopeCard({
       {childItems.length === 0 ? (
         <p className="muted-text">No subdivision, section, or subsection scopes selected.</p>
       ) : (
-        <div className="badge-list">
-          {childItems.map((item) => (
-            <span key={item.id} className="badge badge-muted">
-              <CsiCodeLabel item={item} showLevelBadge />
-            </span>
+        <div className="project-csi-selected-hierarchy">
+          {subdivisionGroups.map((group) => (
+            <div className="project-csi-selected-group" key={group.key}>
+              <div className="project-csi-selected-group-heading">
+                {group.subdivision ? (
+                  <CsiCodeLabel item={group.subdivision} showLevelBadge />
+                ) : (
+                  <span>Ungrouped CSI scopes</span>
+                )}
+              </div>
+              <div className="badge-list">
+                {group.items.map((item) => (
+                  <span key={item.id} className="badge badge-muted">
+                    <CsiCodeLabel item={item} showLevelBadge />
+                  </span>
+                ))}
+              </div>
+            </div>
           ))}
         </div>
       )}
     </article>
+  );
+}
+
+function CsiScopeSearchField({
+  value,
+  resultCount,
+  onChange,
+  onClear,
+}: {
+  value: string;
+  resultCount: number;
+  onChange: (value: string) => void;
+  onClear: () => void;
+}) {
+  return (
+    <div className="project-csi-search">
+      <label className="form-field">
+        Search CSI scopes
+        <input
+          value={value}
+          placeholder="Search code, title, division, or parent..."
+          onChange={(event) => onChange(event.target.value)}
+        />
+      </label>
+      <div className="project-csi-search-actions">
+        <span className="badge badge-muted">
+          {value.trim() ? `${resultCount} result group(s)` : "All scopes"}
+        </span>
+        {value.trim() ? (
+          <button type="button" className="button-secondary" onClick={onClear}>
+            Clear
+          </button>
+        ) : null}
+      </div>
+    </div>
   );
 }
 
@@ -939,17 +1036,40 @@ function BroadDivisionRow({
   stagedSelection: StoredProjectCsiSelection;
   onToggle: (item: CsiCatalogItem, checked: boolean) => void;
 }) {
+  const divisionSelected = stagedSelection.divisionIds.includes(
+    division.divisionId
+  );
+  const hasSelectedChildScopes = stagedSelection.sectionIds.some((sectionId) => {
+    const selectedItem = resolveProjectCsiItem(division.version, sectionId);
+
+    return selectedItem?.divisionId === division.divisionId;
+  });
+  const isPartiallySelected = !divisionSelected && hasSelectedChildScopes;
+
   return (
-    <label className="project-csi-tree-item project-csi-broad-row">
+    <label
+      className={[
+        "project-csi-tree-item",
+        "project-csi-broad-row",
+        isPartiallySelected ? "project-csi-tree-item-partial" : "",
+      ]
+        .filter(Boolean)
+        .join(" ")}
+    >
       <input
         type="checkbox"
-        checked={stagedSelection.divisionIds.includes(division.divisionId)}
+        checked={divisionSelected}
         onChange={(event) => onToggle(division, event.target.checked)}
       />
       <span className="project-csi-tree-label">
         <CsiCodeLabel item={division} />
       </span>
-      <span className="badge badge-primary">Division-wide scope</span>
+      <span className="project-csi-tree-meta">
+        <span className="badge badge-primary">Division parent</span>
+        {isPartiallySelected ? (
+          <span className="badge badge-warning">Partial</span>
+        ) : null}
+      </span>
     </label>
   );
 }
@@ -959,6 +1079,7 @@ function ProjectCsiTreeNode({
   depth,
   openedItemIds,
   stagedSelection,
+  showHierarchyPath,
   onToggleExpanded,
   onToggleItem,
 }: {
@@ -966,6 +1087,7 @@ function ProjectCsiTreeNode({
   depth: number;
   openedItemIds: string[];
   stagedSelection: StoredProjectCsiSelection;
+  showHierarchyPath: boolean;
   onToggleExpanded: (itemId: string) => void;
   onToggleItem: (item: CsiCatalogItem, checked: boolean) => void;
 }) {
@@ -976,11 +1098,19 @@ function ProjectCsiTreeNode({
     stagedSelection.sectionIds,
     node.item.id
   );
+  const hasSelectedDescendants =
+    getSelectedDescendantCount(node, stagedSelection) > 0;
+  const isPartiallySelected = !isSelected && hasSelectedDescendants;
 
   return (
     <div className="project-csi-tree-node">
       <div
-        className="project-csi-tree-row"
+        className={[
+          "project-csi-tree-row",
+          isPartiallySelected ? "project-csi-tree-row-partial" : "",
+        ]
+          .filter(Boolean)
+          .join(" ")}
         style={{ "--tree-depth": depth } as React.CSSProperties}
       >
         <button
@@ -998,7 +1128,14 @@ function ProjectCsiTreeNode({
           {hasChildren ? (isExpanded ? "-" : "+") : ""}
         </button>
 
-        <label className="project-csi-tree-item">
+        <label
+          className={[
+            "project-csi-tree-item",
+            isPartiallySelected ? "project-csi-tree-item-partial" : "",
+          ]
+            .filter(Boolean)
+            .join(" ")}
+        >
           <input
             type="checkbox"
             checked={isSelected}
@@ -1006,8 +1143,16 @@ function ProjectCsiTreeNode({
           />
           <span className="project-csi-tree-label">
             <CsiCodeLabel item={node.item} />
+            {showHierarchyPath && node.item.level > 1 ? (
+              <CsiHierarchyPath item={node.item} />
+            ) : null}
           </span>
-          <CsiLevelBadge item={node.item} />
+          <span className="project-csi-tree-meta">
+            <CsiLevelBadge item={node.item} />
+            {isPartiallySelected ? (
+              <span className="badge badge-warning">Partial</span>
+            ) : null}
+          </span>
         </label>
       </div>
 
@@ -1019,6 +1164,7 @@ function ProjectCsiTreeNode({
             depth={depth + 1}
             openedItemIds={openedItemIds}
             stagedSelection={stagedSelection}
+            showHierarchyPath={showHierarchyPath}
             onToggleExpanded={onToggleExpanded}
             onToggleItem={onToggleItem}
           />
@@ -1058,6 +1204,93 @@ function getInitiallyExpandedIds(
   divisionNode.children.forEach(walk);
 
   return Array.from(expandedIds);
+}
+
+function getVisibleCsiTreeNodes(
+  nodes: CsiCatalogTreeNode[],
+  searchQuery: string
+): CsiCatalogTreeNode[] {
+  const normalizedQuery = normalizeCsiSearchText(searchQuery);
+
+  if (!normalizedQuery) return nodes;
+
+  return nodes
+    .map((node) => filterCsiTreeNodeBySearch(node, normalizedQuery))
+    .filter(isDefined);
+}
+
+function filterCsiTreeNodeBySearch(
+  node: CsiCatalogTreeNode,
+  normalizedQuery: string
+): CsiCatalogTreeNode | undefined {
+  if (doesCsiItemMatchSearch(node.item, normalizedQuery)) return node;
+
+  const children = node.children
+    .map((childNode) => filterCsiTreeNodeBySearch(childNode, normalizedQuery))
+    .filter(isDefined);
+
+  return children.length > 0 ? { ...node, children } : undefined;
+}
+
+function doesCsiTreeNodeMatchSearch(
+  node: CsiCatalogTreeNode,
+  searchQuery: string
+) {
+  return Boolean(
+    filterCsiTreeNodeBySearch(node, normalizeCsiSearchText(searchQuery))
+  );
+}
+
+function doesCsiItemMatchSearch(
+  item: CsiCatalogItem,
+  normalizedQuery: string
+) {
+  if (!normalizedQuery) return true;
+
+  const parentText = getCsiAncestors(item.version, item.id)
+    .map((ancestor) => `${ancestor.number} ${ancestor.name}`)
+    .join(" ");
+  const searchableText = normalizeCsiSearchText(
+    `${item.number} ${item.name} ${parentText}`
+  );
+
+  return searchableText.includes(normalizedQuery);
+}
+
+function normalizeCsiSearchText(value: string) {
+  return value.trim().toLowerCase().replace(/\s+/g, " ");
+}
+
+function getExpandableTreeNodeIds(nodes: CsiCatalogTreeNode[]) {
+  const itemIds = new Set<string>();
+
+  function walk(node: CsiCatalogTreeNode) {
+    if (node.children.length > 0) itemIds.add(node.item.id);
+    node.children.forEach(walk);
+  }
+
+  nodes.forEach(walk);
+
+  return Array.from(itemIds);
+}
+
+function getSelectedDescendantCount(
+  node: CsiCatalogTreeNode,
+  selection: StoredProjectCsiSelection
+): number {
+  return node.children.reduce((count, childNode) => {
+    const childSelected = isProjectCsiItemSelected(
+      childNode.item.version,
+      selection.sectionIds,
+      childNode.item.id
+    );
+
+    return (
+      count +
+      (childSelected ? 1 : 0) +
+      getSelectedDescendantCount(childNode, selection)
+    );
+  }, 0);
 }
 
 function readStoredSelections(): StoredProjectCsiSelections {
