@@ -41,6 +41,7 @@ const bidPackageStatuses: ProjectBidPackageStatus[] = [
   "ACTIVE",
   "CLOSED",
 ];
+const EMPTY_PROJECT_BID_PACKAGES: ProjectBidPackage[] = [];
 let cachedProjectsStorageValue: string | undefined;
 let cachedProjects: Project[] = getMergedProjects();
 let cachedSelectionsStorageValue: string | undefined;
@@ -129,7 +130,7 @@ export default function ProjectScopePage() {
     ];
 
     if (selectedScopeItemIds.length === 0) {
-      window.alert("Select CSI scopes before generating bid packages.");
+      window.alert("Select CSI tags before generating bid packages.");
       return;
     }
 
@@ -171,7 +172,7 @@ export default function ProjectScopePage() {
     if (staleScopeCount === 0) return;
 
     const shouldPrune = window.confirm(
-      `Prune ${staleScopeCount} removed CSI scope${
+      `Prune ${staleScopeCount} removed CSI tag${
         staleScopeCount === 1 ? "" : "s"
       } from ${packageRecord.name}? This will not delete bids or CSI selections.`
     );
@@ -247,7 +248,7 @@ export default function ProjectScopePage() {
     if (!project || !csiSelection) return;
 
     const shouldRemove = window.confirm(
-      `Remove ${division.number} - ${division.name} and all selected CSI scopes under this division?`
+      `Remove ${division.number} - ${division.name} and all selected CSI tags under this division?`
     );
 
     if (!shouldRemove) return;
@@ -276,54 +277,148 @@ export default function ProjectScopePage() {
   }
 
   return (
-    <AppShell title={`${project.name} - Project Scope`}>
-      <div className="settings-actions">
-        <Link href={`/projects/${project.id}/setup`} className="button-secondary">
-          {"<-"} Back to Project Setup
-        </Link>
-        <Link href={`/projects/${project.id}`} className="button-secondary">
-          Command Center
-        </Link>
+    <AppShell title="Project Scope / Bid Packages">
+      <div className="page-header">
+        <div>
+          <Link href={`/projects/${project.id}/setup`}>
+            {"<-"} Back to Project Setup
+          </Link>
+          <p className="muted-text">
+            {project.name} | {project.client} |{" "}
+            {formatCsiMasterFormatVersion(project.csiVersion)}
+          </p>
+          <p className="project-scope-subtitle">
+            Bid Packages are what subcontractors bid. CSI codes are tags used
+            for scope clarity, matching, and leveling.
+          </p>
+        </div>
+        <div className="page-header-actions">
+          <Link
+            href={`/projects/${project.id}/leveling`}
+            className="button-secondary"
+          >
+            Bid Leveling
+          </Link>
+          <Link href={`/projects/${project.id}`} className="button-secondary">
+            Command Center
+          </Link>
+        </div>
       </div>
 
-      <p>
-        Build the Bid Packages subcontractors will be invited to bid. CSI codes
-        are supporting tags used for matching, leveling, and scope clarity.
-      </p>
-
-      <section style={panel}>
-        <h2>Project</h2>
-        <p>
-          <strong>Client:</strong> {project.client}
-        </p>
-        <p>
-          <strong>CSI Version:</strong> {formatCsiMasterFormatVersion(project.csiVersion)}
-        </p>
-      </section>
-
-      <section style={panel}>
+      <section className="project-scope-primary-section">
         <div className="project-csi-section-header">
           <div>
-            <h2>CSI Scope Selection</h2>
+            <p className="label-text">Primary Scope Builder</p>
+            <h2>Bid Packages</h2>
             <p className="muted-text">
-              {selectedItemCount} selected CSI tags across{" "}
-              {selectedSummary.length} divisions. Use CSI to describe and match
-              scope, then group that scope into Bid Packages.
+              Generate trade-based packages where rules exist, then use CSI
+              hierarchy fallback for scope that needs review.
+            </p>
+          </div>
+          <div className="settings-actions">
+            <button
+              type="button"
+              className="button-secondary"
+              onClick={generateBidPackages}
+            >
+              Generate Bid Packages
+            </button>
+            <button
+              type="button"
+              className="button-primary"
+              onClick={() => setEditingBidPackage(null)}
+            >
+              Add Bid Package
+            </button>
+          </div>
+        </div>
+
+        <div className="project-scope-metrics">
+          <span className="badge badge-muted">
+            {bidPackages.length} bid package{bidPackages.length === 1 ? "" : "s"}
+          </span>
+          <span className="badge badge-muted">
+            {selectedItemCount} selected CSI tag{selectedItemCount === 1 ? "" : "s"}
+          </span>
+          <span className="badge badge-muted">
+            {selectedSummary.length} division{selectedSummary.length === 1 ? "" : "s"}
+          </span>
+        </div>
+
+        {selectedPackageScopeItems.length === 0 ? (
+          <div className="project-scope-empty-state">
+            <strong>Select CSI tags before generating packages.</strong>
+            <p className="muted-text">
+              CSI tags feed trade-package generation and give each package the
+              scope context used for matching and leveling.
+            </p>
+            <button
+              type="button"
+              className="button-secondary"
+              onClick={openAddScopeModal}
+            >
+              Add CSI Tags
+            </button>
+          </div>
+        ) : null}
+
+        {bidPackages.length === 0 ? (
+          <div className="project-scope-empty-state">
+            <strong>No bid packages created yet.</strong>
+            <p className="muted-text">
+              Generate initial packages from selected CSI tags, then adjust the
+              package list to match how subcontractors will bid the project.
+            </p>
+            <button
+              type="button"
+              className="button-secondary"
+              onClick={generateBidPackages}
+              disabled={selectedPackageScopeItems.length === 0}
+            >
+              Generate Bid Packages
+            </button>
+          </div>
+        ) : (
+          <div className="project-bid-package-grid">
+            {bidPackages.map((packageRecord) => (
+              <BidPackageCard
+                key={packageRecord.id}
+                packageRecord={packageRecord}
+                csiVersion={project.csiVersion}
+                selectedScopeItems={selectedPackageScopeItems}
+                onEdit={() => setEditingBidPackage(packageRecord)}
+                onDelete={() => deleteBidPackage(packageRecord)}
+                onPruneRemovedScopes={() => pruneBidPackageScopes(packageRecord)}
+              />
+            ))}
+          </div>
+        )}
+      </section>
+
+      <section className="project-csi-support-section">
+        <div className="project-csi-section-header">
+          <div>
+            <p className="label-text">Supporting Tags</p>
+            <h2>CSI Tags</h2>
+            <p className="muted-text">
+              Add CSI tags to support package scope. Search by code, title,
+              division, or parent context; selected child tags remain grouped
+              under their Division and Subdivision.
             </p>
           </div>
           <button
             type="button"
-            className="button-primary"
+            className="button-secondary"
             onClick={openAddScopeModal}
           >
-            Add CSI Scope
+            Add CSI Tags
           </button>
         </div>
 
         {selectedSummary.length === 0 ? (
-          <p className="muted-text">No CSI scopes selected yet.</p>
+          <p className="muted-text">No CSI tags selected yet.</p>
         ) : (
-          <div className="project-csi-division-card-grid">
+          <div className="project-csi-division-card-grid project-csi-support-grid">
             {selectedSummary.map((summary) => (
               <DivisionScopeCard
                 key={summary.division.id}
@@ -343,65 +438,6 @@ export default function ProjectScopePage() {
         )}
       </section>
 
-      <section style={panel}>
-        <div className="project-csi-section-header">
-          <div>
-            <h2>Bid Packages</h2>
-            <p className="muted-text">
-              Bid Packages are the invitation and leveling units estimators work
-              from. Generate trade-based packages, then use mapped CSI tags for
-              matching and scope clarity.
-            </p>
-          </div>
-          <div className="settings-actions">
-            <Link
-              href={`/projects/${project.id}/leveling`}
-              className="button-secondary"
-            >
-              Bid Leveling
-            </Link>
-            <button
-              type="button"
-              className="button-secondary"
-              onClick={generateBidPackages}
-            >
-              Generate Bid Packages
-            </button>
-            <button
-              type="button"
-              className="button-primary"
-              onClick={() => setEditingBidPackage(null)}
-            >
-              Add Bid Package
-            </button>
-          </div>
-        </div>
-
-        {selectedPackageScopeItems.length === 0 ? (
-          <p className="muted-text">
-            Select project CSI scopes before creating bid packages.
-          </p>
-        ) : null}
-
-        {bidPackages.length === 0 ? (
-          <p className="muted-text">No bid packages created yet.</p>
-        ) : (
-          <div className="project-csi-division-card-grid">
-            {bidPackages.map((packageRecord) => (
-              <BidPackageCard
-                key={packageRecord.id}
-                packageRecord={packageRecord}
-                csiVersion={project.csiVersion}
-                selectedScopeItems={selectedPackageScopeItems}
-                onEdit={() => setEditingBidPackage(packageRecord)}
-                onDelete={() => deleteBidPackage(packageRecord)}
-                onPruneRemovedScopes={() => pruneBidPackageScopes(packageRecord)}
-              />
-            ))}
-          </div>
-        )}
-      </section>
-
       {addModalOpen && (
         <div className="modal-backdrop" role="presentation">
           <section
@@ -412,10 +448,10 @@ export default function ProjectScopePage() {
           >
             <div className="modal-header">
               <div>
-                <h2 id="add-csi-scope-title">Add CSI Scope</h2>
+                <h2 id="add-csi-scope-title">Add CSI Tags</h2>
                 <p className="muted-text">
                   Search by CSI code, title, or parent text, then choose a
-                  Division to add or edit project CSI scopes.
+                  Division to add or edit project CSI tags.
                 </p>
               </div>
             </div>
@@ -428,7 +464,7 @@ export default function ProjectScopePage() {
               />
               <div className="project-csi-division-picker">
                 {filteredDivisionNodes.length === 0 ? (
-                  <p className="muted-text">No CSI scopes match this search.</p>
+                  <p className="muted-text">No CSI tags match this search.</p>
                 ) : null}
                 {filteredDivisionNodes.map((divisionNode) => {
                   const summary = selectedSummaryByDivisionId.get(
@@ -478,7 +514,7 @@ export default function ProjectScopePage() {
           >
             <div className="modal-header">
               <div>
-                <h2 id="edit-csi-division-title">Edit Division CSI Scopes</h2>
+                <h2 id="edit-csi-division-title">Edit Division CSI Tags</h2>
                 <div className="project-csi-modal-heading">
                   <CsiCodeLabel item={editingDivisionNode.item} showLevelBadge />
                 </div>
@@ -492,9 +528,9 @@ export default function ProjectScopePage() {
                 onClear={() => setCsiSearchQuery("")}
               />
               <p className="muted-text">
-                Selecting child scopes keeps their parent division active for
+                Selecting child tags keeps their parent division active for
                 context. Clearing a parent row does not remove selected child
-                scopes.
+                tags.
               </p>
               <div className="project-csi-tree">
                 <BroadDivisionRow
@@ -504,7 +540,7 @@ export default function ProjectScopePage() {
                 />
                 {visibleEditingDivisionChildren.length === 0 ? (
                   <p className="muted-text">
-                    No CSI scopes in this division match this search.
+                    No CSI tags in this division match this search.
                   </p>
                 ) : null}
                 {visibleEditingDivisionChildren.map((childNode) => (
@@ -579,7 +615,7 @@ function DivisionScopeCard({
         <div>
           <CsiCodeLabel item={division} showLevelBadge />
           <p className="muted-text">
-            {getSelectedItemCount(selectedItems)} selected CSI scopes
+            {getSelectedItemCount(selectedItems)} selected CSI tags
           </p>
         </div>
         <div className="settings-actions">
@@ -597,7 +633,7 @@ function DivisionScopeCard({
       )}
 
       {childItems.length === 0 ? (
-        <p className="muted-text">No subdivision, section, or subsection scopes selected.</p>
+        <p className="muted-text">No subdivision, section, or subsection tags selected.</p>
       ) : (
         <div className="project-csi-selected-hierarchy">
           {subdivisionGroups.map((group) => (
@@ -606,7 +642,7 @@ function DivisionScopeCard({
                 {group.subdivision ? (
                   <CsiCodeLabel item={group.subdivision} showLevelBadge />
                 ) : (
-                  <span>Ungrouped CSI scopes</span>
+                  <span>Ungrouped CSI tags</span>
                 )}
               </div>
               <div className="badge-list">
@@ -638,16 +674,16 @@ function CsiScopeSearchField({
   return (
     <div className="project-csi-search">
       <label className="form-field">
-        Search CSI scopes
+        Search CSI tags
         <input
           value={value}
-          placeholder="Search code, title, division, or parent..."
+        placeholder="Search code, title, division, or parent..."
           onChange={(event) => onChange(event.target.value)}
         />
       </label>
       <div className="project-csi-search-actions">
         <span className="badge badge-muted">
-          {value.trim() ? `${resultCount} result group(s)` : "All scopes"}
+          {value.trim() ? `${resultCount} result group(s)` : "All tags"}
         </span>
         {value.trim() ? (
           <button type="button" className="button-secondary" onClick={onClear}>
@@ -688,7 +724,7 @@ function BidPackageCard({
   const packageNeedsAttention = packageRecord.scopeItemIds.length === 0;
 
   return (
-    <article className="project-csi-division-card">
+    <article className="project-bid-package-card">
       <div className="project-csi-division-card-header">
         <div>
           <h3 style={{ marginTop: 0 }}>{packageRecord.name}</h3>
@@ -697,7 +733,8 @@ function BidPackageCard({
           ) : null}
           <div className="badge-list">
             <span className="badge badge-muted">
-              {packageRecord.scopeItemIds.length} mapped CSI scopes
+              {packageRecord.scopeItemIds.length} CSI tag
+              {packageRecord.scopeItemIds.length === 1 ? "" : "s"}
             </span>
             <span className="badge badge-primary">
               {formatStatus(packageRecord.status ?? "DRAFT")}
@@ -709,7 +746,7 @@ function BidPackageCard({
             ) : null}
             {staleScopeItemIds.length > 0 ? (
               <span className="badge badge-warning">
-                {staleScopeItemIds.length} removed scope
+                {staleScopeItemIds.length} removed tag
                 {staleScopeItemIds.length === 1 ? "" : "s"}
               </span>
             ) : null}
@@ -725,7 +762,7 @@ function BidPackageCard({
               className="button-secondary"
               onClick={onPruneRemovedScopes}
             >
-              Prune Removed Scopes
+              Prune Removed Tags
             </button>
           ) : null}
           <button type="button" className="button-secondary" onClick={onEdit}>
@@ -740,7 +777,7 @@ function BidPackageCard({
       {staleScopeItemIds.length > 0 ? (
         <div style={{ marginBottom: 12 }}>
           <p className="form-error">
-            This package includes CSI scopes that are no longer selected for the
+            This package includes CSI tags that are no longer selected for the
             project.
           </p>
           <div className="badge-list">
@@ -755,7 +792,7 @@ function BidPackageCard({
 
       {mappedItems.length === 0 ? (
         <p className="muted-text">
-          No mapped CSI scopes. This package needs mapped scopes before it can
+          No mapped CSI tags. This package needs mapped tags before it can
           drive invites or leveling.
         </p>
       ) : (
@@ -851,7 +888,7 @@ function BidPackageEditorModal({
               {packageRecord ? "Edit Bid Package" : "Add Bid Package"}
             </h2>
             <p className="muted-text">
-              Assign only CSI scopes already selected for this project.
+              Assign only CSI tags already selected for this project.
             </p>
           </div>
         </div>
@@ -894,10 +931,10 @@ function BidPackageEditorModal({
           </label>
 
           <div style={{ marginTop: 16 }}>
-            <h3>Mapped CSI Scopes</h3>
+            <h3>Mapped CSI Tags</h3>
             {selectedScopeItems.length === 0 ? (
               <p className="muted-text">
-                No project CSI scopes are selected yet.
+                No project CSI tags are selected yet.
               </p>
             ) : (
               <div className="project-csi-tree">
@@ -975,7 +1012,7 @@ function BidPackageScopeDivision({
                 {group.subdivision ? (
                   <CsiCodeLabel item={group.subdivision} showLevelBadge />
                 ) : (
-                  "Ungrouped CSI scopes"
+                  "Ungrouped CSI tags"
                 )}
               </span>
             </div>
@@ -1173,13 +1210,6 @@ function ProjectCsiTreeNode({
     </div>
   );
 }
-
-const panel: React.CSSProperties = {
-  border: "1px solid #555",
-  padding: 16,
-  marginTop: 24,
-  borderRadius: 8,
-};
 
 function getSelectedItemCount(items: CsiCatalogItem[]) {
   return items.length;
@@ -1390,7 +1420,7 @@ function subscribeToProjectBidPackagesStorage(onStoreChange: () => void) {
 }
 
 function getServerProjectBidPackagesSnapshot(): ProjectBidPackage[] {
-  return [];
+  return EMPTY_PROJECT_BID_PACKAGES;
 }
 
 function getProjectBidPackagesSnapshot(projectId: string): ProjectBidPackage[] {

@@ -2315,6 +2315,76 @@ textarea:focus {
   background: var(--color-surface-2);
 }
 
+.project-scope-subtitle {
+  max-width: 760px;
+  margin: 8px 0 0;
+  color: var(--color-text);
+  font-size: 15px;
+}
+
+.project-scope-primary-section,
+.project-csi-support-section {
+  min-width: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-panel);
+  padding: var(--space-panel);
+  margin-top: 18px;
+  background: var(--color-surface-1);
+}
+
+.project-scope-primary-section {
+  border-color: color-mix(in srgb, var(--color-accent-primary) 28%, var(--color-border));
+  background: color-mix(in srgb, var(--color-surface-1) 86%, var(--color-surface-2));
+}
+
+.project-csi-support-section {
+  background: color-mix(in srgb, var(--color-surface-1) 72%, var(--color-background));
+}
+
+.project-scope-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.project-scope-empty-state {
+  display: grid;
+  gap: 8px;
+  justify-items: start;
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-card);
+  padding: 14px;
+  margin-top: 14px;
+  background: var(--color-surface-2);
+}
+
+.project-bid-package-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(360px, 100%), 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.project-bid-package-card {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: 14px;
+  background: var(--color-surface-1);
+}
+
+.project-bid-package-card:hover,
+.project-bid-package-card:focus-within {
+  border-color: color-mix(in srgb, var(--color-accent-primary) 55%, var(--color-border));
+}
+
+.project-csi-support-grid {
+  opacity: 0.92;
+}
+
 .project-csi-section-header,
 .project-csi-division-card-header {
   display: flex;
