@@ -37,6 +37,18 @@ const healthcareLabSpecificPackageIds = new Set([
   "laboratory-cleanroom-systems",
 ]);
 
+const foodServiceSpecificPackageIds = new Set([
+  "food-service-systems",
+  "food-service-equipment",
+  "commercial-kitchen-equipment",
+  "kitchen-hood",
+  "kitchen-exhaust",
+  "grease-duct",
+  "kitchen-hood-fire-suppression",
+  "walk-in-coolers-freezers",
+  "refrigeration",
+]);
+
 export function matchCsiItemToTrades(
   csiItem: TradeTaxonomyCsiItem,
   rules: TradeCsiMappingRule[],
@@ -426,12 +438,16 @@ function shouldKeepSpecificPackageTrade(
 ): boolean {
   if (assignment.classificationPreferredTradeId === assignedTrade.id) return true;
   if (healthcareLabSpecificPackageIds.has(assignedTrade.id)) return true;
+  if (foodServiceSpecificPackageIds.has(assignedTrade.id)) return true;
 
   const parentTrade = assignedTrade.parentId
     ? taxonomy.find((node) => node.id === assignedTrade.parentId)
     : undefined;
 
-  return parentTrade ? healthcareLabSpecificPackageIds.has(parentTrade.id) : false;
+  return parentTrade
+    ? healthcareLabSpecificPackageIds.has(parentTrade.id) ||
+        foodServiceSpecificPackageIds.has(parentTrade.id)
+    : false;
 }
 
 function getRuleAssignment(

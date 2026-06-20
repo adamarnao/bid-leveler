@@ -152,7 +152,7 @@ const fixtureScenarios: FixtureScenario[] = [
     id: "restaurant",
     title: "Restaurant fixture",
     description:
-      "Verifies kitchen hood, food service equipment, grease interceptor, and hood suppression ambiguity.",
+      "Verifies food service equipment, commercial kitchen equipment, walk-ins, refrigeration, kitchen exhaust, grease interceptors, and hood suppression ambiguity.",
     csiItems: restaurantCsiFixture,
     sectorTags: ["restaurant"],
     workTypeTags: ["tenant_improvement"],

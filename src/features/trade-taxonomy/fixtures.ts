@@ -146,10 +146,34 @@ export const restaurantCsiFixture: TradeTaxonomyCsiItem[] = [
     name: "Food Service Equipment",
   },
   {
+    id: "fixture-restaurant-114100",
+    version: "MASTERFORMAT_CURRENT",
+    number: "11 41 00",
+    name: "Commercial Kitchen Equipment",
+  },
+  {
+    id: "fixture-restaurant-114600",
+    version: "MASTERFORMAT_CURRENT",
+    number: "11 46 00",
+    name: "Walk-In Coolers / Freezers",
+  },
+  {
+    id: "fixture-restaurant-236400",
+    version: "MASTERFORMAT_CURRENT",
+    number: "23 64 00",
+    name: "Commercial Refrigeration Equipment",
+  },
+  {
     id: "fixture-restaurant-233813",
     version: "MASTERFORMAT_CURRENT",
     number: "23 38 13",
     name: "Commercial Kitchen Hoods",
+  },
+  {
+    id: "fixture-restaurant-233816",
+    version: "MASTERFORMAT_CURRENT",
+    number: "23 38 16",
+    name: "Kitchen Exhaust and Grease Duct",
   },
   {
     id: "fixture-restaurant-221319",
