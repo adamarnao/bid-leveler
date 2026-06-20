@@ -121,17 +121,25 @@ const workTypeTriggeredTradeIds: Partial<Record<ProjectWorkTypeTag, string[]>> =
 const contextTriggeredTradeIds: Partial<Record<ProjectContextTag, string[]>> = {
   medical_office: [
     "healthcare-systems",
+    "equipment",
     "medical-gas",
     "nurse-call",
+    "medical-equipment",
+    "imaging-equipment-support",
     "clean-agent-fire-suppression",
     "cubicle-curtains-tracks",
   ],
   hospital: [
     "healthcare-systems",
+    "equipment",
+    "conveying",
     "medical-gas",
     "nurse-call",
     "pneumatic-tube-systems",
     "radiation-shielding",
+    "lead-lined-construction",
+    "imaging-equipment-support",
+    "icra-infection-control",
     "clean-agent-fire-suppression",
     "emergency-power",
     "generator",
@@ -139,12 +147,20 @@ const contextTriggeredTradeIds: Partial<Record<ProjectContextTag, string[]>> = {
   ],
   surgery_center: [
     "healthcare-systems",
+    "equipment",
     "medical-gas",
     "nurse-call",
     "clean-agent-fire-suppression",
-    "infection-control",
+    "icra-infection-control",
   ],
-  imaging: ["radiation-shielding", "medical-equipment", "healthcare-systems"],
+  imaging: [
+    "equipment",
+    "radiation-shielding",
+    "lead-lined-construction",
+    "imaging-equipment-support",
+    "medical-equipment",
+    "healthcare-systems",
+  ],
   lab: [
     "laboratory-cleanroom-systems",
     "laboratory-equipment",
@@ -207,7 +223,7 @@ const contextTriggeredTradeIds: Partial<Record<ProjectContextTag, string[]>> = {
     "lead-paint-abatement",
   ],
   flood_zone: ["waterproofing", "dewatering"],
-  infection_control: ["healthcare-systems", "temporary-protection"],
+  infection_control: ["healthcare-systems", "icra-infection-control", "temporary-protection"],
 };
 
 const officeTenantImprovementSuppressedTradeIds = new Set([
@@ -1429,11 +1445,11 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
       specialtyTags: ["owner_vendor", "allowance_candidate", "sector_specific"],
     },
     [
-      { id: "food-service-equipment", name: "Food Service Equipment", sortOrder: 181, sectorTags: ["restaurant", "hospitality", "education", "healthcare"], relatedTradeIds: ["plumbing", "electrical", "hvac"] },
-      { id: "commercial-kitchen-equipment", name: "Commercial Kitchen Equipment", sortOrder: 182, sectorTags: ["restaurant", "hospitality", "education", "healthcare"], relatedTradeIds: ["food-service-equipment"] },
+      { id: "food-service-equipment", name: "Food Service Equipment", sortOrder: 181, sectorTags: ["restaurant", "hospitality", "education"], contextTags: ["commercial_kitchen"], relatedTradeIds: ["plumbing", "electrical", "hvac"] },
+      { id: "commercial-kitchen-equipment", name: "Commercial Kitchen Equipment", sortOrder: 182, sectorTags: ["restaurant", "hospitality", "education"], contextTags: ["commercial_kitchen"], relatedTradeIds: ["food-service-equipment"] },
       { id: "residential-appliances", name: "Residential Appliances", sortOrder: 183, sectorTags: ["residential", "multifamily", "hospitality"], specialtyTags: ["owner_vendor", "allowance_candidate"] },
       { id: "laundry-equipment", name: "Laundry Equipment", sortOrder: 184, sectorTags: ["multifamily", "hospitality", "healthcare"] },
-      { id: "medical-equipment", name: "Medical Equipment", sortOrder: 185, sectorTags: ["healthcare"], specialtyTags: ["owner_vendor", "sector_specific"] },
+      { id: "medical-equipment", name: "Medical Equipment", sortOrder: 185, sectorTags: ["healthcare"], contextTags: ["medical_office", "hospital", "surgery_center", "imaging"], specialtyTags: ["owner_vendor", "sector_specific"] },
       { id: "laboratory-equipment", name: "Laboratory Equipment", sortOrder: 186, sectorTags: ["laboratory", "healthcare", "education"], specialtyTags: ["owner_vendor", "sector_specific"] },
       { id: "athletic-equipment", name: "Athletic Equipment", sortOrder: 187, sectorTags: ["sports", "education"], specialtyTags: ["owner_vendor", "sector_specific"] },
       { id: "stage-theater-equipment", name: "Stage / Theater Equipment", sortOrder: 188, sectorTags: ["education", "hospitality", "sports"], specialtyTags: ["owner_vendor", "sector_specific"] },
@@ -1507,7 +1523,7 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
       { id: "wheelchair-lifts", name: "Wheelchair Lifts", sortOrder: 192 },
       { id: "dumbwaiters", name: "Dumbwaiters", sortOrder: 193, sectorTags: ["restaurant", "hospitality", "healthcare"] },
       { id: "material-lifts", name: "Material Lifts", sortOrder: 194, sectorTags: ["industrial", "warehouse", "healthcare"] },
-      { id: "pneumatic-tube-systems", name: "Pneumatic Tube Systems", sortOrder: 195, sectorTags: ["healthcare", "laboratory"], specialtyTags: ["specialty", "sector_specific"] },
+      { id: "pneumatic-tube-systems", name: "Pneumatic Tube Systems", sortOrder: 195, sectorTags: ["healthcare", "laboratory"], contextTags: ["hospital"], specialtyTags: ["specialty", "sector_specific"] },
     ]
   ),
   {
@@ -1534,7 +1550,7 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
       { id: "fire-pump", name: "Fire Pump", aliases: ["Fire Pumps"], sortOrder: 192, defaultHidden: true, specialtyTags: ["specialty", "sector_specific"] },
       { id: "standpipes", name: "Standpipes", sortOrder: 193, defaultHidden: true, specialtyTags: ["specialty", "sector_specific"] },
       { id: "clean-agent-fire-suppression", name: "Clean Agent Fire Suppression", aliases: ["Clean Agent", "Pre-Action", "FM-200"], sortOrder: 194, defaultHidden: true, sectorTags: ["mission_critical", "laboratory", "healthcare", "industrial"], specialtyTags: ["specialty", "sector_specific"] },
-      { id: "kitchen-hood-fire-suppression", name: "Kitchen Hood Fire Suppression", aliases: ["Hood Suppression"], sortOrder: 195, defaultHidden: true, sectorTags: ["restaurant", "hospitality", "healthcare", "education"], specialtyTags: ["specialty", "sector_specific"], relatedTradeIds: ["food-service-equipment", "hvac"] },
+      { id: "kitchen-hood-fire-suppression", name: "Kitchen Hood Fire Suppression", aliases: ["Hood Suppression"], sortOrder: 195, defaultHidden: true, sectorTags: ["restaurant", "hospitality", "education"], contextTags: ["commercial_kitchen"], specialtyTags: ["specialty", "sector_specific"], relatedTradeIds: ["food-service-equipment", "hvac"] },
       { id: "fireproofing", name: "Fireproofing", aliases: ["Spray Fireproofing", "Intumescent Fireproofing"], sortOrder: 196, defaultHidden: true, sectorTags: ["commercial", "industrial", "office"], specialtyTags: ["specialty", "cross_trade"], relatedTradeIds: ["structural-steel", "painting-coatings"] },
     ]
   ),
@@ -1576,6 +1592,7 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     isActive: true,
     defaultHidden: true,
     sectorTags: ["healthcare", "laboratory"],
+    contextTags: ["medical_office", "hospital", "surgery_center"],
     specialtyTags: ["sector_specific", "specialty"],
     relatedTradeIds: ["plumbing"],
     estimatingNotes:
@@ -1595,7 +1612,7 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
       { id: "plumbing-process-piping", name: "Process Piping", sortOrder: 209, sectorTags: ["industrial", "laboratory", "cleanroom"], relatedTradeIds: ["process-systems"] },
       { id: "water-heaters", name: "Water Heaters", sortOrder: 210, defaultHidden: false, specialtyTags: ["core"] },
       { id: "plumbing-pumps", name: "Pumps", aliases: ["Plumbing Pumps"], sortOrder: 211, defaultHidden: false, specialtyTags: ["core"] },
-      { id: "grease-interceptors", name: "Grease Interceptors", sortOrder: 212, sectorTags: ["restaurant", "hospitality", "healthcare"], relatedTradeIds: ["food-service-equipment"] },
+      { id: "grease-interceptors", name: "Grease Interceptors", sortOrder: 212, sectorTags: ["restaurant", "hospitality"], contextTags: ["commercial_kitchen"], relatedTradeIds: ["food-service-equipment"] },
       { id: "oil-sand-interceptors", name: "Oil / Sand Interceptors", sortOrder: 213, sectorTags: ["industrial", "transportation", "government"] },
       { id: "plumbing-insulation", name: "Plumbing Insulation", sortOrder: 214, defaultHidden: false, specialtyTags: ["core", "cross_trade"], relatedTradeIds: ["insulation"] },
     ]
@@ -1668,7 +1685,7 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
       { id: "steam-condensate", name: "Steam / Condensate", aliases: ["Steam Piping", "Condensate Piping"], sortOrder: 217, defaultHidden: true, sectorTags: ["healthcare", "industrial", "laboratory"], specialtyTags: ["specialty", "sector_specific"] },
       { id: "refrigerant-piping", name: "Refrigerant Piping", sortOrder: 218 },
       { id: "exhaust-systems", name: "Exhaust Systems", aliases: ["Exhaust"], sortOrder: 219 },
-      { id: "kitchen-exhaust", name: "Kitchen Exhaust", sortOrder: 220, defaultHidden: true, sectorTags: ["restaurant", "hospitality", "healthcare"], specialtyTags: ["specialty", "sector_specific"], relatedTradeIds: ["food-service-equipment"] },
+      { id: "kitchen-exhaust", name: "Kitchen Exhaust", sortOrder: 220, defaultHidden: true, sectorTags: ["restaurant", "hospitality"], contextTags: ["commercial_kitchen"], specialtyTags: ["specialty", "sector_specific"], relatedTradeIds: ["food-service-equipment"] },
       { id: "lab-exhaust", name: "Lab Exhaust", sortOrder: 221, defaultHidden: true, sectorTags: ["laboratory", "cleanroom", "healthcare"], specialtyTags: ["specialty", "sector_specific"], relatedTradeIds: ["laboratory-cleanroom-systems"] },
     ]
   ),
@@ -1869,7 +1886,7 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     },
     [
       { id: "sound-paging", name: "Sound / Paging", aliases: ["Paging", "Sound System"], sortOrder: 240, relatedTradeIds: ["av"] },
-      { id: "nurse-call", name: "Nurse Call", sortOrder: 241, defaultHidden: true, sectorTags: ["healthcare"], specialtyTags: ["specialty", "sector_specific"] },
+      { id: "nurse-call", name: "Nurse Call", sortOrder: 241, defaultHidden: true, sectorTags: ["healthcare"], contextTags: ["medical_office", "hospital", "surgery_center"], specialtyTags: ["specialty", "sector_specific"] },
       { id: "clock-systems", name: "Clock Systems", sortOrder: 242, defaultHidden: true, sectorTags: ["education", "healthcare"], specialtyTags: ["specialty", "sector_specific"] },
       { id: "intercom", name: "Intercom", sortOrder: 243, defaultHidden: true, sectorTags: ["education", "government", "commercial"], specialtyTags: ["specialty", "sector_specific"] },
     ]
@@ -1926,8 +1943,49 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     defaultHidden: true,
     sectorTags: ["healthcare"],
     specialtyTags: ["sector_specific", "specialty", "owner_vendor"],
-    relatedTradeIds: ["medical-gas", "nurse-call", "medical-equipment", "radiation-shielding"],
+    relatedTradeIds: ["medical-gas", "nurse-call", "medical-equipment", "radiation-shielding", "pneumatic-tube-systems"],
   },
+  ...createTradeSpecializations(
+    "healthcare-systems",
+    {
+      defaultPackageMode: "USER_CHOICE",
+      defaultHidden: true,
+      sectorTags: ["healthcare"],
+      specialtyTags: ["sector_specific", "specialty", "owner_vendor"],
+    },
+    [
+      {
+        id: "imaging-equipment-support",
+        name: "Imaging Equipment Support",
+        aliases: ["Imaging Support", "Radiology Equipment Support", "MRI Support", "CT Support"],
+        sortOrder: 311,
+        contextTags: ["imaging", "hospital", "medical_office"],
+        relatedTradeIds: ["medical-equipment", "radiation-shielding", "electrical", "hvac"],
+        estimatingNotes:
+          "Coordinate structural, electrical, mechanical, shielding, and vendor requirements for imaging equipment.",
+      },
+      {
+        id: "icra-infection-control",
+        name: "ICRA / Infection Control",
+        aliases: ["ICRA", "Infection Control", "Healthcare Containment"],
+        sortOrder: 312,
+        contextTags: ["infection_control", "hospital", "surgery_center", "occupied_building"],
+        relatedTradeIds: ["temporary-protection", "general-requirements"],
+        estimatingNotes:
+          "Usually carried as temporary protection, phasing, containment, cleaning, and healthcare infection-control requirements.",
+      },
+      {
+        id: "lead-lined-construction",
+        name: "Lead-Lined Construction",
+        aliases: ["Lead Lining", "Lead-Lined Drywall", "Lead-Lined Doors", "Shielded Construction"],
+        sortOrder: 313,
+        contextTags: ["imaging", "hospital", "medical_office"],
+        relatedTradeIds: ["radiation-shielding", "drywall-framing", "doors-frames-hardware"],
+        estimatingNotes:
+          "May be packaged with radiation shielding, drywall, or doors depending on project documents and company practice.",
+      },
+    ]
+  ),
   {
     id: "laboratory-cleanroom-systems",
     name: "Laboratory / Cleanroom",
@@ -1950,7 +2008,8 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     defaultPackageMode: "USER_CHOICE",
     isActive: true,
     defaultHidden: true,
-    sectorTags: ["restaurant", "hospitality", "healthcare", "education"],
+    sectorTags: ["restaurant", "hospitality", "education"],
+    contextTags: ["commercial_kitchen"],
     specialtyTags: ["sector_specific", "specialty", "owner_vendor"],
     relatedTradeIds: ["food-service-equipment", "commercial-kitchen-equipment", "kitchen-exhaust"],
   },
@@ -2127,6 +2186,7 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     isActive: true,
     defaultHidden: true,
     sectorTags: ["healthcare", "laboratory"],
+    contextTags: ["imaging", "hospital", "medical_office"],
     specialtyTags: ["sector_specific", "specialty"],
     relatedTradeIds: ["healthcare-systems", "drywall-framing"],
   },
