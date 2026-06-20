@@ -404,7 +404,7 @@ export default function ProjectSetupFlow({
     setDraftState((currentValue) => ({
       projectId: draftKey,
       values: {
-        ...(currentValue.projectId === currentProject.id
+        ...(currentValue.projectId === draftKey
           ? currentValue.values
           : {}),
         [field]: value,
