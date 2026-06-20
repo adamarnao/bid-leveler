@@ -39,6 +39,20 @@ Each trade package template should support this structure:
 
 The implementation may store hierarchy with `parentId`, but user-facing terminology should describe lower-level trade nodes as `Specializations`, not children.
 
+Professional taxonomy nodes also support lightweight metadata so a comprehensive GC trade library can exist without cluttering normal project setup:
+
+| Field | Purpose |
+| --- | --- |
+| `isCommon` | Marks trades that should usually appear in normal setup and package generation views. |
+| `defaultHidden` | Hides specialty or sector-specific trades until triggered by sector, search, or advanced review. |
+| `sectorTags` | Project-sector triggers such as healthcare, restaurant, laboratory, sitework, warehouse, or mission critical. |
+| `specialtyTags` | Trade behavior tags such as core, specialty, sector-specific, owner/vendor, allowance candidate, GC cost, alternate candidate, or cross-trade. |
+| `relatedTradeIds` | Captures cross-trade ambiguity where scope may belong to more than one bid package. |
+| `splitRecommendation` | User-facing guidance for when to split or combine a trade package. |
+| `estimatingNotes` | Estimator-facing notes for procurement, allowances, owner/vendor scope, and bid strategy. |
+
+Default project setup should favor common visible trades. Hidden specialty trades should become visible only when a sector trigger, search, or advanced taxonomy review makes them relevant.
+
 Suggested TypeScript shape:
 
 ```ts
@@ -152,8 +166,10 @@ Future taxonomy work may include:
 
 - company-specific aliases
 - market-sector-specific package variations
+- sector-triggered hidden specialty trades
 - regional trade naming
 - subcontractor preference mappings
 - split/merge suggestions
 - confidence scores for generated packages
 - review-needed flags for ambiguous CSI tags
+- project-specific overrides that do not mutate the company taxonomy

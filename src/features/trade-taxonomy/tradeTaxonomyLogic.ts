@@ -90,7 +90,7 @@ export function generateTradePackageSuggestions({
     if (assignedTrade.id !== packageTrade.id) group.childTradeIds.add(assignedTrade.id);
     if (packageTrade.defaultPackageMode === "USER_CHOICE") {
       group.warnings.add(
-        `${packageTrade.name} may be bid as one package or split by child trade.`
+        `${packageTrade.name} may be bid as one package or split by specialization.`
       );
     }
     if (assignment.confidence === "LOW") {

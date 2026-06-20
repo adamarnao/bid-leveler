@@ -3,6 +3,42 @@ export type TradePackageMode =
   | "SPLIT_BY_CHILD"
   | "USER_CHOICE";
 
+export type ProjectSectorTag =
+  | "commercial"
+  | "residential"
+  | "multifamily"
+  | "healthcare"
+  | "hospitality"
+  | "restaurant"
+  | "education"
+  | "industrial"
+  | "laboratory"
+  | "cleanroom"
+  | "civil"
+  | "sitework"
+  | "retail"
+  | "office"
+  | "warehouse"
+  | "transportation"
+  | "airport"
+  | "marine"
+  | "sports"
+  | "mission_critical"
+  | "government"
+  | "detention"
+  | "renewable_energy"
+  | "agricultural";
+
+export type TradeSpecialtyTag =
+  | "core"
+  | "specialty"
+  | "sector_specific"
+  | "owner_vendor"
+  | "allowance_candidate"
+  | "gc_cost"
+  | "alternate_candidate"
+  | "cross_trade";
+
 export type TradeTaxonomyNode = {
   id: string;
   parentId?: string;
@@ -15,6 +51,13 @@ export type TradeTaxonomyNode = {
   defaultScopeNotes?: string[];
   defaultExclusions?: string[];
   isActive: boolean;
+  isCommon?: boolean;
+  defaultHidden?: boolean;
+  sectorTags?: ProjectSectorTag[];
+  specialtyTags?: TradeSpecialtyTag[];
+  relatedTradeIds?: string[];
+  splitRecommendation?: string;
+  estimatingNotes?: string;
 };
 
 export type TradeCsiMatchStrength =

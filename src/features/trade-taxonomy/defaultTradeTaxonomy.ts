@@ -1,4 +1,4 @@
-import { TradeTaxonomyNode } from "./types";
+import { ProjectSectorTag, TradeTaxonomyNode } from "./types";
 
 export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
   {
@@ -11,6 +11,11 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     defaultPackageMode: "UMBRELLA",
     defaultScopeNotes: ["Use when project-wide requirements are bid separately."],
     isActive: true,
+    isCommon: true,
+    sectorTags: ["commercial", "education", "healthcare", "industrial", "office", "retail"],
+    specialtyTags: ["core", "gc_cost"],
+    estimatingNotes:
+      "Often carried as GC cost or general conditions unless the project requires separate subcontractor pricing.",
   },
   {
     id: "sitework",
@@ -20,8 +25,13 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     sortOrder: 20,
     canBeBidPackage: true,
     defaultPackageMode: "SPLIT_BY_CHILD",
-    defaultScopeNotes: ["Split sitework by child trade when the project has meaningful civil scope separation."],
+    defaultScopeNotes: ["Split sitework by specialization when the project has meaningful civil scope separation."],
     isActive: true,
+    isCommon: true,
+    sectorTags: ["civil", "sitework", "commercial", "industrial", "warehouse"],
+    specialtyTags: ["core"],
+    splitRecommendation:
+      "Split into sitework specializations when demolition, earthwork, utilities, paving, or landscaping are material scopes.",
   },
   {
     id: "earthwork",
@@ -32,6 +42,9 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     canBeBidPackage: true,
     defaultPackageMode: "UMBRELLA",
     isActive: true,
+    isCommon: true,
+    sectorTags: ["civil", "sitework", "commercial", "industrial", "warehouse"],
+    specialtyTags: ["core"],
   },
   {
     id: "demolition",
@@ -42,6 +55,12 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     canBeBidPackage: true,
     defaultPackageMode: "USER_CHOICE",
     isActive: true,
+    isCommon: true,
+    sectorTags: ["commercial", "industrial", "sitework", "civil", "retail", "office"],
+    specialtyTags: ["core", "alternate_candidate"],
+    relatedTradeIds: ["earthwork"],
+    splitRecommendation:
+      "Demolition may be its own package or carried with earthwork/sitework depending on project size.",
   },
   {
     id: "utilities",
@@ -52,6 +71,11 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     canBeBidPackage: true,
     defaultPackageMode: "USER_CHOICE",
     isActive: true,
+    isCommon: true,
+    sectorTags: ["civil", "sitework", "industrial", "warehouse", "government"],
+    specialtyTags: ["core", "cross_trade"],
+    splitRecommendation:
+      "Wet utilities, dry utilities, and utility company work may need separate packages or allowances.",
   },
   {
     id: "asphalt-paving",
@@ -62,6 +86,9 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     canBeBidPackage: true,
     defaultPackageMode: "UMBRELLA",
     isActive: true,
+    isCommon: true,
+    sectorTags: ["civil", "sitework", "commercial", "retail", "industrial", "warehouse"],
+    specialtyTags: ["core"],
   },
   {
     id: "landscaping",
@@ -72,6 +99,9 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     canBeBidPackage: true,
     defaultPackageMode: "UMBRELLA",
     isActive: true,
+    isCommon: true,
+    sectorTags: ["civil", "sitework", "commercial", "hospitality", "education", "retail"],
+    specialtyTags: ["core", "allowance_candidate"],
   },
   {
     id: "concrete",
@@ -81,6 +111,9 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     canBeBidPackage: true,
     defaultPackageMode: "UMBRELLA",
     isActive: true,
+    isCommon: true,
+    sectorTags: ["commercial", "industrial", "warehouse", "education", "healthcare", "multifamily"],
+    specialtyTags: ["core"],
   },
   {
     id: "cast-in-place-concrete",
@@ -91,6 +124,9 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     canBeBidPackage: true,
     defaultPackageMode: "UMBRELLA",
     isActive: true,
+    isCommon: true,
+    sectorTags: ["commercial", "industrial", "warehouse", "education", "healthcare", "multifamily"],
+    specialtyTags: ["core"],
   },
   {
     id: "tilt-up-concrete",
@@ -101,6 +137,9 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     canBeBidPackage: true,
     defaultPackageMode: "USER_CHOICE",
     isActive: true,
+    defaultHidden: true,
+    sectorTags: ["industrial", "warehouse"],
+    specialtyTags: ["specialty", "sector_specific"],
   },
   {
     id: "precast-concrete",
@@ -111,6 +150,9 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     canBeBidPackage: true,
     defaultPackageMode: "USER_CHOICE",
     isActive: true,
+    defaultHidden: true,
+    sectorTags: ["commercial", "industrial", "warehouse"],
+    specialtyTags: ["specialty"],
   },
   {
     id: "shotcrete",
@@ -121,6 +163,9 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     canBeBidPackage: true,
     defaultPackageMode: "USER_CHOICE",
     isActive: true,
+    defaultHidden: true,
+    sectorTags: ["civil", "sitework", "transportation", "marine"],
+    specialtyTags: ["specialty", "sector_specific"],
   },
   {
     id: "masonry",
@@ -130,6 +175,9 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     canBeBidPackage: true,
     defaultPackageMode: "UMBRELLA",
     isActive: true,
+    isCommon: true,
+    sectorTags: ["commercial", "education", "healthcare", "hospitality", "retail"],
+    specialtyTags: ["core"],
   },
   {
     id: "cmu-brick-masonry",
@@ -140,6 +188,9 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     canBeBidPackage: true,
     defaultPackageMode: "UMBRELLA",
     isActive: true,
+    isCommon: true,
+    sectorTags: ["commercial", "education", "healthcare", "hospitality", "retail"],
+    specialtyTags: ["core"],
   },
   {
     id: "stone-masonry",
@@ -150,6 +201,9 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     canBeBidPackage: true,
     defaultPackageMode: "USER_CHOICE",
     isActive: true,
+    defaultHidden: true,
+    sectorTags: ["hospitality", "retail", "residential", "multifamily"],
+    specialtyTags: ["specialty", "alternate_candidate"],
   },
   {
     id: "simulated-masonry",
@@ -160,6 +214,9 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     canBeBidPackage: true,
     defaultPackageMode: "USER_CHOICE",
     isActive: true,
+    defaultHidden: true,
+    sectorTags: ["hospitality", "retail", "residential", "multifamily"],
+    specialtyTags: ["specialty", "alternate_candidate"],
   },
   {
     id: "structural-steel",
@@ -169,6 +226,9 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     canBeBidPackage: true,
     defaultPackageMode: "UMBRELLA",
     isActive: true,
+    isCommon: true,
+    sectorTags: ["commercial", "industrial", "warehouse", "education", "healthcare"],
+    specialtyTags: ["core"],
   },
   {
     id: "misc-metals",
@@ -178,6 +238,11 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     canBeBidPackage: true,
     defaultPackageMode: "UMBRELLA",
     isActive: true,
+    isCommon: true,
+    sectorTags: ["commercial", "industrial", "education", "healthcare", "hospitality"],
+    specialtyTags: ["core"],
+    splitRecommendation:
+      "Review railings and decorative architectural metal scope for possible separate packages.",
   },
   {
     id: "architectural-metals",
@@ -188,6 +253,10 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     canBeBidPackage: true,
     defaultPackageMode: "USER_CHOICE",
     isActive: true,
+    defaultHidden: true,
+    sectorTags: ["commercial", "hospitality", "retail", "office"],
+    specialtyTags: ["specialty", "alternate_candidate"],
+    relatedTradeIds: ["railings", "finish-carpentry-millwork"],
   },
   {
     id: "railings",
@@ -198,6 +267,10 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     canBeBidPackage: true,
     defaultPackageMode: "USER_CHOICE",
     isActive: true,
+    isCommon: true,
+    sectorTags: ["commercial", "education", "healthcare", "sports", "government"],
+    specialtyTags: ["core", "cross_trade"],
+    relatedTradeIds: ["architectural-metals"],
   },
   {
     id: "rough-carpentry",
@@ -207,6 +280,9 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     canBeBidPackage: true,
     defaultPackageMode: "UMBRELLA",
     isActive: true,
+    isCommon: true,
+    sectorTags: ["commercial", "residential", "multifamily", "retail", "hospitality"],
+    specialtyTags: ["core"],
   },
   {
     id: "finish-carpentry-millwork",
@@ -216,6 +292,11 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     canBeBidPackage: true,
     defaultPackageMode: "UMBRELLA",
     isActive: true,
+    isCommon: true,
+    sectorTags: ["commercial", "hospitality", "restaurant", "retail", "office", "healthcare"],
+    specialtyTags: ["core"],
+    splitRecommendation:
+      "Casework and countertops may need to split based on finish material and vendor market.",
   },
   {
     id: "countertops",
@@ -238,6 +319,12 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
       "Stone, quartz, granite, or solid-surface tops may need a separate bid package.",
     ],
     isActive: true,
+    defaultHidden: true,
+    sectorTags: ["hospitality", "restaurant", "healthcare", "laboratory", "retail", "office"],
+    specialtyTags: ["specialty", "cross_trade", "alternate_candidate"],
+    relatedTradeIds: ["finish-carpentry-millwork", "tile"],
+    splitRecommendation:
+      "Use separate package when stone, quartz, granite, or solid surface scope is substantial.",
   },
   {
     id: "roofing",
@@ -247,6 +334,9 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     canBeBidPackage: true,
     defaultPackageMode: "UMBRELLA",
     isActive: true,
+    isCommon: true,
+    sectorTags: ["commercial", "residential", "multifamily", "education", "industrial"],
+    specialtyTags: ["core"],
   },
   {
     id: "membrane-roofing",
@@ -257,6 +347,9 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     canBeBidPackage: true,
     defaultPackageMode: "UMBRELLA",
     isActive: true,
+    isCommon: true,
+    sectorTags: ["commercial", "industrial", "education", "healthcare", "warehouse"],
+    specialtyTags: ["core"],
   },
   {
     id: "sheet-metal-roofing",
@@ -267,6 +360,10 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     canBeBidPackage: true,
     defaultPackageMode: "USER_CHOICE",
     isActive: true,
+    defaultHidden: true,
+    sectorTags: ["commercial", "industrial", "warehouse"],
+    specialtyTags: ["specialty", "cross_trade"],
+    relatedTradeIds: ["waterproofing"],
   },
   {
     id: "shingle-roofing",
@@ -277,6 +374,9 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     canBeBidPackage: true,
     defaultPackageMode: "USER_CHOICE",
     isActive: true,
+    defaultHidden: true,
+    sectorTags: ["residential", "multifamily", "hospitality"],
+    specialtyTags: ["specialty", "sector_specific"],
   },
   {
     id: "waterproofing",
@@ -287,6 +387,12 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     defaultPackageMode: "USER_CHOICE",
     defaultScopeNotes: ["Review sealants and air barrier scope for overlap with glazing, roofing, or exterior wall packages."],
     isActive: true,
+    isCommon: true,
+    sectorTags: ["commercial", "industrial", "healthcare", "education", "multifamily"],
+    specialtyTags: ["core", "cross_trade"],
+    relatedTradeIds: ["roofing", "glass-glazing"],
+    splitRecommendation:
+      "Review air barrier, sealants, and flashing overlap with roofing and glazing scopes.",
   },
   {
     id: "doors-frames-hardware",
@@ -298,6 +404,9 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     defaultPackageMode: "UMBRELLA",
     defaultScopeNotes: ["Usually bid as a single coordinated package."],
     isActive: true,
+    isCommon: true,
+    sectorTags: ["commercial", "education", "healthcare", "hospitality", "office", "retail"],
+    specialtyTags: ["core"],
   },
   {
     id: "hollow-metal-doors-frames",
@@ -308,6 +417,10 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     canBeBidPackage: true,
     defaultPackageMode: "UMBRELLA",
     isActive: true,
+    isCommon: true,
+    sectorTags: ["industrial", "warehouse", "commercial", "retail"],
+    specialtyTags: ["core"],
+    relatedTradeIds: ["doors-frames-hardware", "equipment"],
   },
   {
     id: "wood-doors",
@@ -338,6 +451,10 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     canBeBidPackage: true,
     defaultPackageMode: "USER_CHOICE",
     isActive: true,
+    isCommon: true,
+    sectorTags: ["commercial", "retail", "office", "hospitality", "healthcare"],
+    specialtyTags: ["core", "cross_trade"],
+    relatedTradeIds: ["waterproofing"],
   },
   {
     id: "overhead-doors",
@@ -400,6 +517,10 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     defaultScopeNotes: ["Gypsum board and metal stud framing should typically roll into one package."],
     defaultExclusions: ["ACT ceilings unless intentionally included.", "Painting unless intentionally included."],
     isActive: true,
+    isCommon: true,
+    sectorTags: ["commercial", "education", "healthcare", "hospitality", "office", "retail"],
+    specialtyTags: ["core"],
+    relatedTradeIds: ["ceilings", "painting-coatings"],
   },
   {
     id: "non-structural-metal-framing",
@@ -440,6 +561,12 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     canBeBidPackage: true,
     defaultPackageMode: "USER_CHOICE",
     isActive: true,
+    isCommon: true,
+    sectorTags: ["commercial", "education", "healthcare", "office", "retail"],
+    specialtyTags: ["core", "cross_trade"],
+    relatedTradeIds: ["drywall-framing"],
+    splitRecommendation:
+      "ACT and specialty ceilings may split when project size or vendor market supports it.",
   },
   {
     id: "ceilings",
@@ -478,8 +605,13 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     sortOrder: 150,
     canBeBidPackage: true,
     defaultPackageMode: "USER_CHOICE",
-    defaultScopeNotes: ["Choose umbrella or split child packages based on project size and subcontractor market."],
+    defaultScopeNotes: ["Choose umbrella or split specialization packages based on project size and subcontractor market."],
     isActive: true,
+    isCommon: true,
+    sectorTags: ["commercial", "education", "healthcare", "hospitality", "office", "retail"],
+    specialtyTags: ["core"],
+    splitRecommendation:
+      "Split flooring by finish type when there are specialty installers or meaningful schedule/package separation.",
   },
   {
     id: "carpet",
@@ -490,6 +622,9 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     canBeBidPackage: true,
     defaultPackageMode: "UMBRELLA",
     isActive: true,
+    isCommon: true,
+    sectorTags: ["commercial", "education", "healthcare", "hospitality", "office"],
+    specialtyTags: ["core"],
   },
   {
     id: "resilient-flooring-lvt",
@@ -500,6 +635,9 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     canBeBidPackage: true,
     defaultPackageMode: "UMBRELLA",
     isActive: true,
+    isCommon: true,
+    sectorTags: ["commercial", "education", "healthcare", "hospitality", "office", "retail"],
+    specialtyTags: ["core"],
   },
   {
     id: "tile",
@@ -510,6 +648,10 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     canBeBidPackage: true,
     defaultPackageMode: "UMBRELLA",
     isActive: true,
+    isCommon: true,
+    sectorTags: ["commercial", "education", "healthcare", "hospitality", "restaurant"],
+    specialtyTags: ["core", "cross_trade"],
+    relatedTradeIds: ["countertops"],
   },
   {
     id: "wood-flooring",
@@ -520,6 +662,9 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     canBeBidPackage: true,
     defaultPackageMode: "USER_CHOICE",
     isActive: true,
+    defaultHidden: true,
+    sectorTags: ["residential", "multifamily", "hospitality"],
+    specialtyTags: ["specialty", "sector_specific"],
   },
   {
     id: "resinous-epoxy-flooring",
@@ -530,6 +675,9 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     canBeBidPackage: true,
     defaultPackageMode: "USER_CHOICE",
     isActive: true,
+    defaultHidden: true,
+    sectorTags: ["industrial", "healthcare", "laboratory", "restaurant"],
+    specialtyTags: ["specialty", "sector_specific", "alternate_candidate"],
   },
   {
     id: "flooring-prep-moisture-mitigation",
@@ -540,6 +688,10 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     canBeBidPackage: true,
     defaultPackageMode: "USER_CHOICE",
     isActive: true,
+    defaultHidden: true,
+    sectorTags: ["healthcare", "laboratory", "cleanroom", "restaurant"],
+    specialtyTags: ["specialty", "cross_trade"],
+    relatedTradeIds: ["concrete"],
   },
   {
     id: "painting-coatings",
@@ -549,6 +701,9 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     canBeBidPackage: true,
     defaultPackageMode: "UMBRELLA",
     isActive: true,
+    isCommon: true,
+    sectorTags: ["commercial", "education", "healthcare", "hospitality", "office", "retail"],
+    specialtyTags: ["core"],
   },
   // TODO: Specialties needs a separate estimator review before adding toilet accessories,
   // fire extinguishers, lockers, signage, and similar specialty breakdowns.
@@ -560,6 +715,10 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     canBeBidPackage: true,
     defaultPackageMode: "USER_CHOICE",
     isActive: true,
+    isCommon: true,
+    defaultHidden: true,
+    sectorTags: ["healthcare", "education", "hospitality", "sports", "government"],
+    specialtyTags: ["specialty", "sector_specific"],
   },
   {
     id: "equipment",
@@ -569,6 +728,11 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     canBeBidPackage: true,
     defaultPackageMode: "USER_CHOICE",
     isActive: true,
+    defaultHidden: true,
+    sectorTags: ["restaurant", "healthcare", "laboratory", "industrial"],
+    specialtyTags: ["owner_vendor", "allowance_candidate", "sector_specific"],
+    estimatingNotes:
+      "Equipment may be owner-furnished, vendor-provided, or carried as an allowance depending on procurement.",
   },
   {
     id: "fire-protection",
@@ -578,6 +742,9 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     canBeBidPackage: true,
     defaultPackageMode: "UMBRELLA",
     isActive: true,
+    isCommon: true,
+    sectorTags: ["commercial", "healthcare", "education", "industrial", "warehouse"],
+    specialtyTags: ["core"],
   },
   {
     id: "plumbing",
@@ -587,6 +754,9 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     canBeBidPackage: true,
     defaultPackageMode: "UMBRELLA",
     isActive: true,
+    isCommon: true,
+    sectorTags: ["commercial", "healthcare", "education", "hospitality", "restaurant", "laboratory"],
+    specialtyTags: ["core"],
   },
   {
     id: "medical-gas",
@@ -597,6 +767,12 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     canBeBidPackage: true,
     defaultPackageMode: "USER_CHOICE",
     isActive: true,
+    defaultHidden: true,
+    sectorTags: ["healthcare", "laboratory"],
+    specialtyTags: ["sector_specific", "specialty"],
+    relatedTradeIds: ["plumbing"],
+    estimatingNotes:
+      "Medical Gas is healthcare/laboratory-specific and should stay hidden for typical commercial projects.",
   },
   {
     id: "hvac",
@@ -606,6 +782,11 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     canBeBidPackage: true,
     defaultPackageMode: "USER_CHOICE",
     isActive: true,
+    isCommon: true,
+    sectorTags: ["commercial", "healthcare", "education", "industrial", "office", "retail"],
+    specialtyTags: ["core"],
+    splitRecommendation:
+      "Split equipment, ductwork, and controls when specialty subs or design packages warrant it.",
   },
   {
     id: "hvac-equipment",
@@ -616,6 +797,10 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     canBeBidPackage: true,
     defaultPackageMode: "USER_CHOICE",
     isActive: true,
+    defaultHidden: true,
+    sectorTags: ["commercial", "healthcare", "industrial", "mission_critical"],
+    specialtyTags: ["specialty", "owner_vendor"],
+    relatedTradeIds: ["hvac"],
   },
   {
     id: "ductwork-air-distribution",
@@ -626,6 +811,9 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     canBeBidPackage: true,
     defaultPackageMode: "UMBRELLA",
     isActive: true,
+    isCommon: true,
+    sectorTags: ["commercial", "healthcare", "education", "industrial", "office"],
+    specialtyTags: ["core"],
   },
   {
     id: "controls",
@@ -636,6 +824,12 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     canBeBidPackage: true,
     defaultPackageMode: "USER_CHOICE",
     isActive: true,
+    defaultHidden: true,
+    sectorTags: ["commercial", "healthcare", "industrial", "laboratory", "mission_critical"],
+    specialtyTags: ["specialty", "cross_trade", "owner_vendor"],
+    relatedTradeIds: ["electrical", "low-voltage-technology"],
+    splitRecommendation:
+      "Controls can sit with HVAC, electrical, or low-voltage depending on project delivery and vendor package.",
   },
   {
     id: "electrical",
@@ -645,6 +839,11 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     canBeBidPackage: true,
     defaultPackageMode: "USER_CHOICE",
     isActive: true,
+    isCommon: true,
+    sectorTags: ["commercial", "healthcare", "education", "industrial", "office", "retail"],
+    specialtyTags: ["core"],
+    splitRecommendation:
+      "Power distribution, lighting, devices, and systems may split on large or specialty projects.",
   },
   {
     id: "power-distribution",
@@ -683,8 +882,14 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     sortOrder: 230,
     canBeBidPackage: true,
     defaultPackageMode: "USER_CHOICE",
-    defaultScopeNotes: ["Split by child system when specialist subcontractors are expected."],
+    defaultScopeNotes: ["Split by specialization when specialist subcontractors are expected."],
     isActive: true,
+    isCommon: true,
+    sectorTags: ["commercial", "healthcare", "education", "office", "retail", "mission_critical"],
+    specialtyTags: ["core", "cross_trade"],
+    relatedTradeIds: ["electrical", "controls"],
+    splitRecommendation:
+      "Split data, security, AV, and fire alarm when distinct specialist subcontractors are expected.",
   },
   {
     id: "data-communications",
@@ -725,6 +930,10 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     canBeBidPackage: true,
     defaultPackageMode: "USER_CHOICE",
     isActive: true,
+    defaultHidden: true,
+    sectorTags: ["commercial", "healthcare", "education", "industrial", "mission_critical"],
+    specialtyTags: ["specialty", "cross_trade"],
+    relatedTradeIds: ["electrical", "fire-protection"],
   },
 ];
 
@@ -741,6 +950,64 @@ export function getTradeById(id: string): TradeTaxonomyNode | undefined {
 export function getTradeChildren(parentId: string): TradeTaxonomyNode[] {
   return defaultTradeTaxonomy
     .filter((node) => node.parentId === parentId)
+    .sort(compareTradeNodes)
+    .map((node) => ({ ...node }));
+}
+
+export function getTradeSpecializations(parentId: string): TradeTaxonomyNode[] {
+  return getTradeChildren(parentId);
+}
+
+export function getVisibleTradesForSector(
+  taxonomy: TradeTaxonomyNode[],
+  sectorTags: ProjectSectorTag[]
+): TradeTaxonomyNode[] {
+  const selectedSectorTags = new Set(sectorTags);
+
+  return taxonomy
+    .filter((node) => {
+      if (!node.isActive) return false;
+      if (!node.defaultHidden) return true;
+      if (!node.sectorTags?.length) return false;
+
+      return node.sectorTags.some((sectorTag) => selectedSectorTags.has(sectorTag));
+    })
+    .sort(compareTradeNodes)
+    .map((node) => ({ ...node }));
+}
+
+export function getHiddenTrades(taxonomy: TradeTaxonomyNode[]): TradeTaxonomyNode[] {
+  return taxonomy
+    .filter((node) => node.defaultHidden)
+    .sort(compareTradeNodes)
+    .map((node) => ({ ...node }));
+}
+
+export function getCommonTrades(taxonomy: TradeTaxonomyNode[]): TradeTaxonomyNode[] {
+  return taxonomy
+    .filter((node) => node.isCommon)
+    .sort(compareTradeNodes)
+    .map((node) => ({ ...node }));
+}
+
+export function getTradesBySector(
+  taxonomy: TradeTaxonomyNode[],
+  sectorTag: ProjectSectorTag
+): TradeTaxonomyNode[] {
+  return taxonomy
+    .filter((node) => node.sectorTags?.includes(sectorTag))
+    .sort(compareTradeNodes)
+    .map((node) => ({ ...node }));
+}
+
+export function getRelatedTrades(tradeId: string): TradeTaxonomyNode[] {
+  const trade = defaultTradeTaxonomy.find((node) => node.id === tradeId);
+  if (!trade?.relatedTradeIds?.length) return [];
+
+  const relatedTradeIds = new Set(trade.relatedTradeIds);
+
+  return defaultTradeTaxonomy
+    .filter((node) => relatedTradeIds.has(node.id))
     .sort(compareTradeNodes)
     .map((node) => ({ ...node }));
 }
