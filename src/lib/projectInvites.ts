@@ -122,6 +122,86 @@ export function deleteProjectInviteRecipientsForProject(projectId: string) {
   );
 }
 
+export function markInviteRecipientSent(
+  projectId: string,
+  recipientId: string,
+  email?: string
+) {
+  const now = new Date().toISOString();
+
+  return updateProjectInviteRecipient(projectId, recipientId, (recipient) => ({
+    ...recipient,
+    email: email?.trim() || recipient.email,
+    status: "SENT",
+    sentAt: recipient.sentAt ?? now,
+    lastSentAt: now,
+    sendCount: (recipient.sendCount ?? 0) + 1,
+    lastError: undefined,
+    updatedAt: now,
+  }));
+}
+
+export function markInviteRecipientFailed(
+  projectId: string,
+  recipientId: string,
+  error: string
+) {
+  const now = new Date().toISOString();
+
+  return updateProjectInviteRecipient(projectId, recipientId, (recipient) => ({
+    ...recipient,
+    status: "FAILED",
+    lastError: error,
+    updatedAt: now,
+  }));
+}
+
+export function simulateSendInviteRecipient(
+  projectId: string,
+  recipientId: string,
+  email?: string
+) {
+  const recipient = getProjectInviteRecipients(projectId).find(
+    (item) => item.id === recipientId
+  );
+  const resolvedEmail = email?.trim() || recipient?.email?.trim();
+
+  if (!recipient) return undefined;
+
+  return resolvedEmail
+    ? markInviteRecipientSent(projectId, recipientId, resolvedEmail)
+    : markInviteRecipientFailed(
+        projectId,
+        recipientId,
+        "Missing recipient email"
+      );
+}
+
+export function simulateSendBidPackageInvites(
+  projectId: string,
+  bidPackageId: string
+) {
+  const recipients = getProjectInviteRecipients(projectId).filter(
+    (recipient) =>
+      recipient.bidPackageId === bidPackageId &&
+      recipient.status !== "REMOVED" &&
+      (recipient.status === "DRAFT" || recipient.status === "FAILED")
+  );
+
+  return recipients.reduce(
+    (summary, recipient) => {
+      const result = simulateSendInviteRecipient(projectId, recipient.id);
+
+      if (result?.status === "SENT") {
+        return { ...summary, sent: summary.sent + 1 };
+      }
+
+      return { ...summary, failed: summary.failed + 1 };
+    },
+    { sent: 0, failed: 0 }
+  );
+}
+
 export function generateInviteRecipientsFromBidPackageMatches({
   projectId,
   bidPackages,
@@ -203,6 +283,35 @@ function upsertRecipient(
   return recipients.map((item, index) =>
     index === existingRecipientIndex ? recipient : item
   );
+}
+
+function updateProjectInviteRecipient(
+  projectId: string,
+  recipientId: string,
+  updateRecipient: (
+    recipient: ProjectInviteRecipient
+  ) => ProjectInviteRecipient
+) {
+  if (typeof window === "undefined") return undefined;
+
+  let updatedRecipient: ProjectInviteRecipient | undefined;
+  const nextRecipients = getAllProjectInviteRecipients().map((recipient) => {
+    if (recipient.projectId !== projectId || recipient.id !== recipientId) {
+      return recipient;
+    }
+
+    updatedRecipient = updateRecipient(recipient);
+    return updatedRecipient;
+  });
+
+  if (!updatedRecipient) return undefined;
+
+  window.localStorage.setItem(
+    projectInviteRecipientsStorageKey,
+    JSON.stringify(nextRecipients)
+  );
+
+  return updatedRecipient;
 }
 
 function getRecipientDedupeKey(recipient: ProjectInviteRecipient) {

@@ -16,6 +16,7 @@ import {
   projectInviteRecipientsStorageKey,
   saveProjectInviteRecipient,
   saveProjectInviteRecipients,
+  simulateSendInviteRecipient,
 } from "@/lib/projectInvites";
 import { getMergedProjects, projectsStorageKey } from "@/lib/projects";
 import { resolveProjectCsiItem } from "@/lib/projectCsiSelections";
@@ -126,6 +127,10 @@ export default function ProjectInvitesPage() {
           <p className="muted-text">
             Review and manage ITB recipients by bid package.
           </p>
+          <p className="muted-text">
+            Email integration is not connected yet. Send actions currently record
+            simulated ITB status only.
+          </p>
           <div className="settings-actions">
             <Link href={`/projects/${project.id}`} className="button-secondary">
               Command Center
@@ -209,13 +214,19 @@ function BidPackageInviteSection({
   recipients: ProjectInviteRecipient[];
   onRecipientChanged: (message: string) => void;
 }) {
-  const draftRecipients = recipients.filter((recipient) =>
+  const visibleRecipients = recipients.filter(
+    (recipient) => recipient.status !== "REMOVED"
+  );
+  const draftRecipients = visibleRecipients.filter((recipient) =>
     isDraftRecipient(recipient)
   );
-  const possibleRecipients = recipients.filter(isPossibleRecipient);
-  const sentCount = recipients.filter((recipient) => recipient.status === "SENT").length;
-  const failedCount = recipients.filter(
+  const possibleRecipients = visibleRecipients.filter(isPossibleRecipient);
+  const sentCount = visibleRecipients.filter((recipient) => recipient.status === "SENT").length;
+  const failedCount = visibleRecipients.filter(
     (recipient) => recipient.status === "FAILED"
+  ).length;
+  const draftCount = visibleRecipients.filter(
+    (recipient) => recipient.status === "DRAFT"
   ).length;
   const packageScopeItems = bidPackage.scopeItemIds
     .map((scopeItemId) => resolveProjectCsiItem(project.csiVersion, scopeItemId))
@@ -244,27 +255,77 @@ function BidPackageInviteSection({
     onRecipientChanged("Manual recipient added.");
   }
 
+  function sendRecipient(recipient: ProjectInviteRecipient) {
+    const recipientForSend = {
+      ...recipient,
+      email: getResolvedRecipientEmail(recipient, subcontractors),
+      updatedAt: new Date().toISOString(),
+    };
+
+    saveProjectInviteRecipient(recipientForSend);
+    const result = simulateSendInviteRecipient(
+      project.id,
+      recipient.id,
+      recipientForSend.email
+    );
+
+    onRecipientChanged(
+      result?.status === "SENT"
+        ? "Simulated ITB send recorded."
+        : "Simulated send failed: Missing recipient email."
+    );
+  }
+
+  function sendPackageInvites() {
+    const sendableRecipients = visibleRecipients.filter(
+      (recipient) => recipient.status === "DRAFT" || recipient.status === "FAILED"
+    );
+    const summary = sendableRecipients.reduce(
+      (counts, recipient) => {
+        const result = simulateSendInviteRecipient(
+          project.id,
+          recipient.id,
+          getResolvedRecipientEmail(recipient, subcontractors)
+        );
+
+        if (result?.status === "SENT") {
+          return { ...counts, sent: counts.sent + 1 };
+        }
+
+        return { ...counts, failed: counts.failed + 1 };
+      },
+      { sent: 0, failed: 0 }
+    );
+
+    onRecipientChanged(
+      `Simulated package send recorded: ${summary.sent} sent, ${summary.failed} failed.`
+    );
+  }
+
   return (
     <Panel title={bidPackage.name}>
       <div className="project-csi-section-header">
         <div>
           <p className="muted-text">
             {bidPackage.scopeItemIds.length} mapped CSI scope(s) |{" "}
-            {recipients.length} recipient(s)
+            {visibleRecipients.length} recipient(s)
           </p>
           <div className="badge-list">
-            <span className="badge badge-muted">
-              Draft {recipients.filter((recipient) => recipient.status === "DRAFT").length}
-            </span>
+            <span className="badge badge-muted">Draft {draftCount}</span>
             <span className="badge badge-muted">Sent {sentCount}</span>
             <span className="badge badge-muted">Failed {failedCount}</span>
           </div>
         </div>
         <div className="settings-actions">
-          <button type="button" className="button-secondary" disabled>
+          <button
+            type="button"
+            className="button-secondary"
+            onClick={sendPackageInvites}
+            disabled={draftCount + failedCount === 0}
+          >
             Send Package ITB
           </button>
-          <span className="muted-text">Sending will be wired in a later phase.</span>
+          <span className="badge badge-muted">Simulated send</span>
         </div>
       </div>
 
@@ -291,6 +352,7 @@ function BidPackageInviteSection({
         subcontractors={subcontractors}
         onSaveRecipient={saveRecipient}
         onRemoveRecipient={removeRecipient}
+        onSendRecipient={sendRecipient}
       />
       <RecipientGroup
         title="Possible Matches"
@@ -298,6 +360,7 @@ function BidPackageInviteSection({
         subcontractors={subcontractors}
         onSaveRecipient={saveRecipient}
         onRemoveRecipient={removeRecipient}
+        onSendRecipient={sendRecipient}
       />
     </Panel>
   );
@@ -309,12 +372,14 @@ function RecipientGroup({
   subcontractors,
   onSaveRecipient,
   onRemoveRecipient,
+  onSendRecipient,
 }: {
   title: string;
   recipients: ProjectInviteRecipient[];
   subcontractors: Subcontractor[];
   onSaveRecipient: (recipient: ProjectInviteRecipient) => void;
   onRemoveRecipient: (recipient: ProjectInviteRecipient) => void;
+  onSendRecipient: (recipient: ProjectInviteRecipient) => void;
 }) {
   return (
     <div style={{ marginTop: 20 }}>
@@ -347,6 +412,7 @@ function RecipientGroup({
                   )}
                   onSaveRecipient={onSaveRecipient}
                   onRemoveRecipient={onRemoveRecipient}
+                  onSendRecipient={onSendRecipient}
                 />
               ))}
             </tbody>
@@ -501,19 +567,34 @@ function RecipientRow({
   subcontractor,
   onSaveRecipient,
   onRemoveRecipient,
+  onSendRecipient,
 }: {
   recipient: ProjectInviteRecipient;
   subcontractor?: Subcontractor;
   onSaveRecipient: (recipient: ProjectInviteRecipient) => void;
   onRemoveRecipient: (recipient: ProjectInviteRecipient) => void;
+  onSendRecipient: (recipient: ProjectInviteRecipient) => void;
 }) {
   const contacts = getInviteEligibleContacts(subcontractor);
+  const initialContact = contacts.find(
+    (contact) => contact.id === recipient.contactId
+  );
   const [contactId, setContactId] = useState(recipient.contactId ?? "");
-  const [email, setEmail] = useState(recipient.email ?? "");
+  const [email, setEmail] = useState(
+    recipient.email ?? initialContact?.email ?? ""
+  );
   const selectedContact = contacts.find((contact) => contact.id === contactId);
 
   function saveRecipient() {
     onSaveRecipient({
+      ...recipient,
+      contactId: contactId || undefined,
+      email: email.trim() || selectedContact?.email,
+    });
+  }
+
+  function sendRecipient() {
+    onSendRecipient({
       ...recipient,
       contactId: contactId || undefined,
       email: email.trim() || selectedContact?.email,
@@ -560,9 +641,26 @@ function RecipientRow({
       </td>
       <td>{formatCoverageRatio(recipient.coverageRatio)}</td>
       <td>
-        <span className={getStatusBadgeClassName(recipient.status)}>
-          {formatStatus(recipient.status)}
-        </span>
+        <div style={{ display: "grid", gap: 6 }}>
+          <div className="badge-list">
+            <span className={getStatusBadgeClassName(recipient.status)}>
+              {formatStatus(recipient.status)}
+            </span>
+            {recipient.sendCount && recipient.sendCount > 0 ? (
+              <span className="badge badge-muted">
+                Simulated send x{recipient.sendCount}
+              </span>
+            ) : null}
+          </div>
+          {recipient.lastSentAt ? (
+            <span className="muted-text">
+              Last sent {formatDateTime(recipient.lastSentAt)}
+            </span>
+          ) : null}
+          {recipient.lastError ? (
+            <span className="form-error">{recipient.lastError}</span>
+          ) : null}
+        </div>
       </td>
       <td>{recipient.source}</td>
       <td>{recipient.selectedScopeItemIds.length}</td>
@@ -571,8 +669,8 @@ function RecipientRow({
           <button type="button" className="button-secondary" onClick={saveRecipient}>
             Save
           </button>
-          <button type="button" className="button-secondary" disabled>
-            Send / Resend Recipient
+          <button type="button" className="button-secondary" onClick={sendRecipient}>
+            {recipient.status === "SENT" ? "Resend" : "Send / Resend Recipient"}
           </button>
           <button
             type="button"
@@ -620,6 +718,22 @@ function getInviteEligibleContacts(
   return subcontractor.contacts.filter(
     (contact) => contact.active !== false && Boolean(contact.email?.trim())
   );
+}
+
+function getResolvedRecipientEmail(
+  recipient: ProjectInviteRecipient,
+  subcontractors: Subcontractor[]
+) {
+  if (recipient.email?.trim()) return recipient.email.trim();
+
+  const subcontractor = subcontractors.find(
+    (item) => item.id === recipient.subcontractorId
+  );
+  const contact = subcontractor?.contacts.find(
+    (item) => item.id === recipient.contactId
+  );
+
+  return contact?.email?.trim();
 }
 
 function createInviteRecipientId(projectId: string, bidPackageId: string) {
@@ -797,6 +911,14 @@ function formatStatus(value: string) {
     .split("_")
     .map((word) => word.charAt(0) + word.slice(1).toLowerCase())
     .join(" ");
+}
+
+function formatDateTime(value: string) {
+  const date = new Date(value);
+
+  if (Number.isNaN(date.getTime())) return value;
+
+  return date.toLocaleString();
 }
 
 function isDefined<T>(value: T | undefined): value is T {
