@@ -76,12 +76,28 @@ export type TradeCsiMappingRule = {
   notes?: string;
 };
 
+export type CrossTradeMapping = {
+  id: string;
+  label: string;
+  primaryTradeId: string;
+  possibleTradeIds: string[];
+  sectorPreferredTradeIds?: Partial<Record<ProjectSectorTag, string>>;
+  titleKeywords?: string[];
+  csiCodePatterns?: string[];
+  exactCsiIds?: string[];
+  notes?: string;
+};
+
 export type TradeCsiAssignment = {
   csiItemId: string;
   tradeId: string;
   matchStrength: TradeCsiMatchStrength;
   confidence: "HIGH" | "MEDIUM" | "LOW";
   reason: string;
+  crossTradeMappingId?: string;
+  possibleTradeIds?: string[];
+  sectorPreferredTradeId?: string;
+  isAmbiguous?: boolean;
 };
 
 export type TradePackageSuggestion = {

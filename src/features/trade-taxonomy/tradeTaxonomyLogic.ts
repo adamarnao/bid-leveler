@@ -1,4 +1,6 @@
 import {
+  CrossTradeMapping,
+  ProjectSectorTag,
   TradeCsiAssignment,
   TradeCsiMappingRule,
   TradePackageGenerationResult,
@@ -12,6 +14,8 @@ type GenerateTradePackageSuggestionsOptions = {
   taxonomy: TradeTaxonomyNode[];
   rules: TradeCsiMappingRule[];
   csiVersion: string;
+  crossTradeMappings?: CrossTradeMapping[];
+  sectorTags?: ProjectSectorTag[];
 };
 
 const matchStrengthRank: Record<TradeCsiAssignment["matchStrength"], number> = {
@@ -38,10 +42,14 @@ export function matchCsiItemToTrades(
 export function assignCsiItemsToTrades(
   csiItems: TradeTaxonomyCsiItem[],
   rules: TradeCsiMappingRule[],
-  taxonomy: TradeTaxonomyNode[]
+  taxonomy: TradeTaxonomyNode[],
+  crossTradeMappings: CrossTradeMapping[] = [],
+  sectorTags: ProjectSectorTag[] = []
 ): TradeCsiAssignment[] {
   return csiItems
-    .map((item) => matchCsiItemToTrades(item, rules, taxonomy)[0])
+    .map((item) =>
+      getPreferredAssignmentForCsiItem(item, rules, taxonomy, crossTradeMappings, sectorTags)
+    )
     .filter(isDefined);
 }
 
@@ -50,11 +58,19 @@ export function generateTradePackageSuggestions({
   taxonomy,
   rules,
   csiVersion,
+  crossTradeMappings = [],
+  sectorTags = [],
 }: GenerateTradePackageSuggestionsOptions): TradePackageGenerationResult {
   const supportedItems = csiItems.filter((item) =>
     isRuleVersionCompatible(csiVersion, item.version)
   );
-  const assignments = assignCsiItemsToTrades(supportedItems, rules, taxonomy);
+  const assignments = assignCsiItemsToTrades(
+    supportedItems,
+    rules,
+    taxonomy,
+    crossTradeMappings,
+    sectorTags
+  );
   const assignedItemIds = new Set(assignments.map((assignment) => assignment.csiItemId));
   const unassignedCsiItemIds = supportedItems
     .filter((item) => !assignedItemIds.has(item.id))
@@ -96,6 +112,11 @@ export function generateTradePackageSuggestions({
     if (assignment.confidence === "LOW") {
       group.warnings.add(`Low confidence match for CSI item ${assignment.csiItemId}.`);
     }
+    if (assignment.isAmbiguous && assignment.possibleTradeIds?.length) {
+      group.warnings.add(
+        getAmbiguityWarning(assignment, taxonomy)
+      );
+    }
 
     packageGroups.set(packageTrade.id, group);
   });
@@ -133,6 +154,109 @@ export function generateTradePackageSuggestions({
     unassignedCsiItemIds,
     warnings: Array.from(new Set(warnings)),
   };
+}
+
+function getPreferredAssignmentForCsiItem(
+  csiItem: TradeTaxonomyCsiItem,
+  rules: TradeCsiMappingRule[],
+  taxonomy: TradeTaxonomyNode[],
+  crossTradeMappings: CrossTradeMapping[],
+  sectorTags: ProjectSectorTag[]
+): TradeCsiAssignment | undefined {
+  const crossTradeMapping = matchCrossTradeMapping(csiItem, crossTradeMappings);
+  const ruleAssignment = matchCsiItemToTrades(csiItem, rules, taxonomy)[0];
+
+  if (!crossTradeMapping) return ruleAssignment;
+
+  const primaryTrade = taxonomy.find((node) => node.id === crossTradeMapping.primaryTradeId);
+  if (!primaryTrade) return ruleAssignment;
+
+  const sectorPreferredTradeId = getSectorPreferredTradeId(crossTradeMapping, sectorTags);
+  const crossTradeAssignment: TradeCsiAssignment = {
+    csiItemId: csiItem.id,
+    tradeId: crossTradeMapping.primaryTradeId,
+    matchStrength: "PRIMARY",
+    confidence: "LOW",
+    reason: `${crossTradeMapping.label} is cross-trade scope. Conservative primary trade is ${primaryTrade.name}.`,
+    crossTradeMappingId: crossTradeMapping.id,
+    possibleTradeIds: crossTradeMapping.possibleTradeIds,
+    sectorPreferredTradeId,
+    isAmbiguous: true,
+  };
+
+  if (!ruleAssignment) return crossTradeAssignment;
+  if (ruleAssignment.tradeId === crossTradeMapping.primaryTradeId) {
+    return {
+      ...ruleAssignment,
+      confidence: downgradeConfidence(ruleAssignment.confidence),
+      reason: `${ruleAssignment.reason} ${crossTradeMapping.label} is cross-trade scope.`,
+      crossTradeMappingId: crossTradeMapping.id,
+      possibleTradeIds: crossTradeMapping.possibleTradeIds,
+      sectorPreferredTradeId,
+      isAmbiguous: true,
+    };
+  }
+
+  return {
+    ...crossTradeAssignment,
+    reason: `${crossTradeAssignment.reason} Rule ${ruleAssignment.tradeId} also matched and should be reviewed.`,
+  };
+}
+
+function matchCrossTradeMapping(
+  csiItem: TradeTaxonomyCsiItem,
+  crossTradeMappings: CrossTradeMapping[]
+): CrossTradeMapping | undefined {
+  return crossTradeMappings.find((mapping) => {
+    if (mapping.exactCsiIds?.includes(csiItem.id)) return true;
+
+    const normalizedCode = normalizeCsiCode(csiItem.number);
+    const hasCodeMatch = (mapping.csiCodePatterns ?? []).some((pattern) =>
+      normalizedCode.startsWith(normalizeCsiCode(pattern.replace(/\*$/, "")))
+    );
+    if (hasCodeMatch) return true;
+
+    const normalizedTitle = normalizeSearchText(csiItem.name);
+
+    return (mapping.titleKeywords ?? []).some((keyword) =>
+      normalizedTitle.includes(normalizeSearchText(keyword))
+    );
+  });
+}
+
+function getSectorPreferredTradeId(
+  crossTradeMapping: CrossTradeMapping,
+  sectorTags: ProjectSectorTag[]
+): string | undefined {
+  return sectorTags
+    .map((sectorTag) => crossTradeMapping.sectorPreferredTradeIds?.[sectorTag])
+    .find(isDefined);
+}
+
+function getAmbiguityWarning(
+  assignment: TradeCsiAssignment,
+  taxonomy: TradeTaxonomyNode[]
+) {
+  const primaryTradeName = taxonomy.find((node) => node.id === assignment.tradeId)?.name ?? assignment.tradeId;
+  const possibleTradeNames = (assignment.possibleTradeIds ?? [])
+    .map((tradeId) => taxonomy.find((node) => node.id === tradeId)?.name ?? tradeId)
+    .join(", ");
+  const sectorPreferredTradeName = assignment.sectorPreferredTradeId
+    ? taxonomy.find((node) => node.id === assignment.sectorPreferredTradeId)?.name ??
+      assignment.sectorPreferredTradeId
+    : undefined;
+
+  return `${assignment.csiItemId} is ambiguous cross-trade scope. Primary suggestion: ${primaryTradeName}. Possible trades: ${possibleTradeNames}.${
+    sectorPreferredTradeName ? ` Sector preference: ${sectorPreferredTradeName}.` : ""
+  }`;
+}
+
+function downgradeConfidence(
+  confidence: TradeCsiAssignment["confidence"]
+): TradeCsiAssignment["confidence"] {
+  if (confidence === "HIGH") return "MEDIUM";
+
+  return "LOW";
 }
 
 function getPackageTrade(

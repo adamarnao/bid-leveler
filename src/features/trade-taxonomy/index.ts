@@ -5,14 +5,20 @@ export {
   getDefaultTradeTaxonomy,
   getHiddenTrades,
   getRelatedTrades,
+  getSectorTriggeredTrades,
   getTradeAncestors,
   getTradeById,
   getTradeChildren,
   getTradesBySector,
   getTradeSpecializations,
+  getVisibleTradeTaxonomyForProject,
   getVisibleTradesForSector,
+  shouldShowTradeForSector,
 } from "./defaultTradeTaxonomy";
-export { defaultTradeCsiMappings } from "./defaultTradeCsiMappings";
+export {
+  defaultCrossTradeMappings,
+  defaultTradeCsiMappings,
+} from "./defaultTradeCsiMappings";
 export {
   assignCsiItemsToTrades,
   generateTradePackageSuggestions,
@@ -21,5 +27,9 @@ export {
 export {
   drywallFramingCsiFixture,
   flooringCsiFixture,
+  healthcareCsiFixture,
+  industrialLabCsiFixture,
   mepCsiFixture,
+  officeTenantImprovementCsiFixture,
+  restaurantCsiFixture,
 } from "./fixtures";

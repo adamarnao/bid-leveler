@@ -906,7 +906,7 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     isCommon: true,
     sectorTags: ["commercial", "education", "healthcare", "hospitality", "office", "retail"],
     specialtyTags: ["core"],
-    relatedTradeIds: ["ceilings", "wall-finishes"],
+    relatedTradeIds: ["ceilings", "painting-coatings"],
   },
   {
     id: "non-structural-metal-framing",
@@ -963,7 +963,7 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     },
     [
       { id: "drywall-acoustic-insulation", name: "Acoustic Insulation", aliases: ["Sound Batt Insulation"], sortOrder: 135, relatedTradeIds: ["insulation"] },
-      { id: "drywall-finishing", name: "Drywall Finishing", aliases: ["Tape and Finish", "Drywall Finish"], sortOrder: 136, relatedTradeIds: ["wall-finishes"] },
+      { id: "drywall-finishing", name: "Drywall Finishing", aliases: ["Tape and Finish", "Drywall Finish"], sortOrder: 136, relatedTradeIds: ["painting-coatings"] },
     ]
   ),
   {
@@ -1011,7 +1011,7 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     [
       { id: "wood-ceilings", name: "Wood Ceilings", sortOrder: 143, defaultHidden: true, sectorTags: ["commercial", "hospitality", "education"], specialtyTags: ["specialty", "alternate_candidate"] },
       { id: "metal-ceilings", name: "Metal Ceilings", sortOrder: 144, defaultHidden: true, sectorTags: ["commercial", "transportation", "airport"], specialtyTags: ["specialty", "sector_specific"] },
-      { id: "acoustic-panels-clouds", name: "Acoustic Panels / Clouds", aliases: ["Acoustic Clouds", "Acoustical Panels"], sortOrder: 145, defaultHidden: true, sectorTags: ["commercial", "education", "office", "hospitality"], specialtyTags: ["specialty", "cross_trade"], relatedTradeIds: ["wall-finishes"] },
+      { id: "acoustic-panels-clouds", name: "Acoustic Panels / Clouds", aliases: ["Acoustic Clouds", "Acoustical Panels"], sortOrder: 145, defaultHidden: true, sectorTags: ["commercial", "education", "office", "hospitality"], specialtyTags: ["specialty", "cross_trade"], relatedTradeIds: ["painting-coatings"] },
     ]
   ),
   {
@@ -1970,16 +1970,49 @@ export function getVisibleTradesForSector(
   taxonomy: TradeTaxonomyNode[],
   sectorTags: ProjectSectorTag[]
 ): TradeTaxonomyNode[] {
+  return taxonomy
+    .filter((node) => shouldShowTradeForSector(node, sectorTags, false))
+    .sort(compareTradeNodes)
+    .map((node) => ({ ...node }));
+}
+
+export function getVisibleTradeTaxonomyForProject({
+  taxonomy,
+  sectorTags,
+  includeHidden,
+}: {
+  taxonomy: TradeTaxonomyNode[];
+  sectorTags: ProjectSectorTag[];
+  includeHidden?: boolean;
+}): TradeTaxonomyNode[] {
+  return taxonomy
+    .filter((node) => shouldShowTradeForSector(node, sectorTags, Boolean(includeHidden)))
+    .sort(compareTradeNodes)
+    .map((node) => ({ ...node }));
+}
+
+export function shouldShowTradeForSector(
+  trade: TradeTaxonomyNode,
+  sectorTags: ProjectSectorTag[],
+  includeHidden: boolean
+): boolean {
+  if (!trade.isActive) return false;
+  if (includeHidden) return true;
+  if (!trade.defaultHidden) return true;
+  if (!trade.sectorTags?.length) return false;
+
   const selectedSectorTags = new Set(sectorTags);
 
-  return taxonomy
-    .filter((node) => {
-      if (!node.isActive) return false;
-      if (!node.defaultHidden) return true;
-      if (!node.sectorTags?.length) return false;
+  return trade.sectorTags.some((sectorTag) => selectedSectorTags.has(sectorTag));
+}
 
-      return node.sectorTags.some((sectorTag) => selectedSectorTags.has(sectorTag));
-    })
+export function getSectorTriggeredTrades(
+  taxonomy: TradeTaxonomyNode[],
+  sectorTags: ProjectSectorTag[]
+): TradeTaxonomyNode[] {
+  return taxonomy
+    .filter((node) => node.defaultHidden)
+    .filter((node) => shouldShowTradeForSector(node, sectorTags, false))
     .sort(compareTradeNodes)
     .map((node) => ({ ...node }));
 }

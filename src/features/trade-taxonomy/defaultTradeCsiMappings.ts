@@ -1,4 +1,4 @@
-import { TradeCsiMappingRule } from "./types";
+import { CrossTradeMapping, TradeCsiMappingRule } from "./types";
 
 export const defaultTradeCsiMappings: TradeCsiMappingRule[] = [
   {
@@ -433,5 +433,166 @@ export const defaultTradeCsiMappings: TradeCsiMappingRule[] = [
     codePatterns: ["27*", "28*"],
     titleKeywords: ["low voltage", "technology", "communications", "security", "access control", "av"],
     matchStrength: "SECONDARY",
+  },
+];
+
+export const defaultCrossTradeMappings: CrossTradeMapping[] = [
+  {
+    id: "fire-alarm-cross-trade",
+    label: "Fire Alarm",
+    primaryTradeId: "fire-alarm",
+    possibleTradeIds: ["electrical", "low-voltage-technology", "fire-protection"],
+    sectorPreferredTradeIds: {
+      healthcare: "low-voltage-technology",
+      mission_critical: "low-voltage-technology",
+      industrial: "electrical",
+    },
+    csiCodePatterns: ["28 3*", "283*"],
+    titleKeywords: ["fire alarm", "detection and alarm"],
+    notes: "Fire alarm may be carried by electrical, low-voltage, or fire protection depending on project delivery.",
+  },
+  {
+    id: "controls-bas-cross-trade",
+    label: "Controls / BAS",
+    primaryTradeId: "controls",
+    possibleTradeIds: ["hvac", "electrical", "low-voltage-technology"],
+    sectorPreferredTradeIds: {
+      laboratory: "hvac",
+      cleanroom: "hvac",
+      mission_critical: "low-voltage-technology",
+    },
+    csiCodePatterns: ["23 09*", "2309*", "25*", "159*"],
+    titleKeywords: ["controls", "building automation", "bas", "temperature controls"],
+    notes: "Controls may be packaged with HVAC, electrical, or low-voltage systems.",
+  },
+  {
+    id: "countertops-cross-trade",
+    label: "Countertops",
+    primaryTradeId: "countertops",
+    possibleTradeIds: ["finish-carpentry-millwork", "tile", "specialties"],
+    sectorPreferredTradeIds: {
+      restaurant: "countertops",
+      hospitality: "countertops",
+      healthcare: "countertops",
+    },
+    csiCodePatterns: ["06 4*", "064*", "12 36*", "1236*"],
+    titleKeywords: ["countertop", "countertops", "solid surface", "quartz", "granite", "stone countertop"],
+    notes: "Laminate tops may travel with millwork; stone, quartz, or granite may be separate.",
+  },
+  {
+    id: "acoustic-insulation-cross-trade",
+    label: "Acoustic Insulation",
+    primaryTradeId: "drywall-framing",
+    possibleTradeIds: ["insulation", "ceilings"],
+    sectorPreferredTradeIds: {
+      education: "ceilings",
+      office: "drywall-framing",
+    },
+    csiCodePatterns: ["09 2*", "092*", "07 21*", "0721*"],
+    titleKeywords: ["acoustic insulation", "acoustical insulation", "sound batt", "sound insulation"],
+    notes: "Acoustic insulation can be carried with drywall, insulation, or ceiling scopes.",
+  },
+  {
+    id: "kitchen-hood-cross-trade",
+    label: "Kitchen Hood",
+    primaryTradeId: "kitchen-exhaust",
+    possibleTradeIds: ["hvac", "food-service-systems", "fire-protection"],
+    sectorPreferredTradeIds: {
+      restaurant: "food-service-systems",
+      hospitality: "food-service-systems",
+    },
+    csiCodePatterns: ["11 40*", "1140*", "23 38*", "2338*", "21 22*", "2122*"],
+    titleKeywords: ["kitchen hood", "hood suppression", "commercial kitchen hood", "kitchen exhaust"],
+    notes: "Kitchen hood scope may involve HVAC, food service equipment, and fire suppression.",
+  },
+  {
+    id: "medical-gas-cross-trade",
+    label: "Medical Gas",
+    primaryTradeId: "medical-gas",
+    possibleTradeIds: ["plumbing", "healthcare-systems"],
+    sectorPreferredTradeIds: {
+      healthcare: "healthcare-systems",
+      laboratory: "medical-gas",
+    },
+    csiCodePatterns: ["22 60*", "2260*"],
+    titleKeywords: ["medical gas", "med gas", "medical gas piping"],
+    notes: "Medical gas may be managed as plumbing scope or a healthcare specialty package.",
+  },
+  {
+    id: "polished-concrete-cross-trade",
+    label: "Polished Concrete",
+    primaryTradeId: "polished-concrete",
+    possibleTradeIds: ["concrete", "flooring"],
+    sectorPreferredTradeIds: {
+      retail: "flooring",
+      office: "flooring",
+    },
+    csiCodePatterns: ["03 35*", "0335*", "09 62*", "0962*"],
+    titleKeywords: ["polished concrete", "concrete polishing"],
+    notes: "Polished concrete can sit with concrete finishing or flooring.",
+  },
+  {
+    id: "loading-dock-equipment-cross-trade",
+    label: "Loading Dock Equipment",
+    primaryTradeId: "loading-dock-equipment",
+    possibleTradeIds: ["overhead-doors", "equipment"],
+    sectorPreferredTradeIds: {
+      warehouse: "overhead-doors",
+      industrial: "overhead-doors",
+    },
+    csiCodePatterns: ["11 13*", "1113*", "08 33*", "0833*"],
+    titleKeywords: ["loading dock", "dock leveler", "dock seal", "dock shelter"],
+    notes: "Loading dock equipment may be packaged with overhead doors or equipment.",
+  },
+  {
+    id: "nurse-call-cross-trade",
+    label: "Nurse Call",
+    primaryTradeId: "nurse-call",
+    possibleTradeIds: ["low-voltage-technology", "healthcare-systems"],
+    sectorPreferredTradeIds: {
+      healthcare: "healthcare-systems",
+    },
+    csiCodePatterns: ["27 52*", "2752*"],
+    titleKeywords: ["nurse call"],
+    notes: "Nurse call is low-voltage but usually healthcare-sector specific.",
+  },
+  {
+    id: "pneumatic-tubes-cross-trade",
+    label: "Pneumatic Tubes",
+    primaryTradeId: "pneumatic-tube-systems",
+    possibleTradeIds: ["conveying", "healthcare-systems"],
+    sectorPreferredTradeIds: {
+      healthcare: "healthcare-systems",
+      laboratory: "healthcare-systems",
+    },
+    csiCodePatterns: ["14 92*", "1492*"],
+    titleKeywords: ["pneumatic tube", "pneumatic tubes"],
+    notes: "Pneumatic tube systems can be managed as conveying or healthcare specialty scope.",
+  },
+  {
+    id: "lab-gases-cross-trade",
+    label: "Lab Gases",
+    primaryTradeId: "plumbing-process-piping",
+    possibleTradeIds: ["plumbing", "laboratory-cleanroom-systems"],
+    sectorPreferredTradeIds: {
+      laboratory: "laboratory-cleanroom-systems",
+      cleanroom: "laboratory-cleanroom-systems",
+    },
+    csiCodePatterns: ["22 60*", "2260*", "22 67*", "2267*"],
+    titleKeywords: ["lab gas", "laboratory gas", "specialty gas", "process gas"],
+    notes: "Lab gases can be plumbing/process piping or laboratory specialty scope.",
+  },
+  {
+    id: "cleanroom-systems-cross-trade",
+    label: "Cleanroom Systems",
+    primaryTradeId: "laboratory-cleanroom-systems",
+    possibleTradeIds: ["hvac", "painting-coatings", "frp-panels"],
+    sectorPreferredTradeIds: {
+      cleanroom: "laboratory-cleanroom-systems",
+      laboratory: "laboratory-cleanroom-systems",
+    },
+    csiCodePatterns: ["13 21*", "1321*"],
+    titleKeywords: ["cleanroom", "clean room", "cleanroom panel", "cleanroom system"],
+    notes: "Cleanroom systems may involve lab specialty scope, HVAC, and interior panel systems.",
   },
 ];

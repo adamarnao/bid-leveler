@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import AppShell from "@/components/layout/AppShell";
 import {
+  defaultCrossTradeMappings,
   defaultTradeCsiMappings,
   drywallFramingCsiFixture,
   flooringCsiFixture,
@@ -10,8 +11,15 @@ import {
   getDefaultTradeTaxonomy,
   getHiddenTrades,
   getRelatedTrades,
+  getSectorTriggeredTrades,
+  getVisibleTradeTaxonomyForProject,
   getVisibleTradesForSector,
+  healthcareCsiFixture,
+  industrialLabCsiFixture,
   mepCsiFixture,
+  officeTenantImprovementCsiFixture,
+  restaurantCsiFixture,
+  type CrossTradeMapping,
   type ProjectSectorTag,
   type TradePackageGenerationResult,
   type TradePackageSuggestion,
@@ -24,6 +32,7 @@ type FixtureScenario = {
   title: string;
   description: string;
   csiItems: TradeTaxonomyCsiItem[];
+  sectorTags?: ProjectSectorTag[];
 };
 
 type FixtureScenarioResult = FixtureScenario & {
@@ -46,12 +55,20 @@ const sectorOptions: ProjectSectorTag[] = [
   "education",
   "industrial",
   "laboratory",
+  "cleanroom",
   "sitework",
   "retail",
   "office",
   "warehouse",
+  "transportation",
+  "airport",
+  "marine",
   "mission_critical",
   "government",
+  "detention",
+  "renewable_energy",
+  "sports",
+  "agricultural",
 ];
 
 const fixtureScenarios: FixtureScenario[] = [
@@ -76,6 +93,38 @@ const fixtureScenarios: FixtureScenario[] = [
       "Verifies plumbing, HVAC, electrical, and low-voltage package suggestions from mixed MEP CSI tags.",
     csiItems: mepCsiFixture,
   },
+  {
+    id: "healthcare",
+    title: "Healthcare fixture",
+    description:
+      "Verifies sector-triggered healthcare systems and ambiguous medical gas, nurse call, and fire alarm scope.",
+    csiItems: healthcareCsiFixture,
+    sectorTags: ["healthcare"],
+  },
+  {
+    id: "restaurant",
+    title: "Restaurant fixture",
+    description:
+      "Verifies kitchen hood, food service equipment, grease interceptor, and hood suppression ambiguity.",
+    csiItems: restaurantCsiFixture,
+    sectorTags: ["restaurant"],
+  },
+  {
+    id: "office-ti",
+    title: "Office TI fixture",
+    description:
+      "Verifies a typical office tenant improvement set without hidden specialty clutter.",
+    csiItems: officeTenantImprovementCsiFixture,
+    sectorTags: ["office"],
+  },
+  {
+    id: "industrial-lab",
+    title: "Industrial / Lab fixture",
+    description:
+      "Verifies process piping, lab gases, lab exhaust, and cleanroom sector-specific ambiguity.",
+    csiItems: industrialLabCsiFixture,
+    sectorTags: ["industrial", "laboratory", "cleanroom"],
+  },
 ];
 
 function sortTrades(a: TradeTaxonomyNode, b: TradeTaxonomyNode): number {
@@ -88,6 +137,10 @@ function getSpecializations(parentId: string, tradeList: TradeTaxonomyNode[]): T
 
 function getTradeName(tradeId: string): string {
   return taxonomy.find((trade) => trade.id === tradeId)?.name ?? tradeId;
+}
+
+function getTradeNames(tradeIds: string[]): string {
+  return tradeIds.map(getTradeName).join(", ");
 }
 
 function formatMode(mode: TradeTaxonomyNode["defaultPackageMode"]): string {
@@ -284,17 +337,27 @@ function SuggestedPackageCard({
         {assignedItems.length ? (
           assignedItems.map((item) => {
             const assignment = result.assignments.find(
-              (candidate) =>
-                candidate.csiItemId === item.id && candidate.tradeId === suggestion.tradeId,
+              (candidate) => candidate.csiItemId === item.id,
             );
 
             return (
-              <div key={item.id} className="cluster-between gap-3">
-                <CsiItemLabel item={item} />
-                {assignment ? (
-                  <span className="badge badge-muted" title={assignment.reason}>
-                    {assignment.matchStrength} / {assignment.confidence}
-                  </span>
+              <div key={item.id} className="stack gap-2">
+                <div className="cluster-between gap-3">
+                  <CsiItemLabel item={item} />
+                  {assignment ? (
+                    <span className="badge badge-muted" title={assignment.reason}>
+                      {assignment.matchStrength} / {assignment.confidence}
+                    </span>
+                  ) : null}
+                </div>
+                {assignment?.isAmbiguous && assignment.possibleTradeIds?.length ? (
+                  <p className="muted-text">
+                    <span className="label-text">Ambiguous</span> Possible trades:{" "}
+                    {getTradeNames(assignment.possibleTradeIds)}
+                    {assignment.sectorPreferredTradeId
+                      ? ` / Sector preference: ${getTradeName(assignment.sectorPreferredTradeId)}`
+                      : ""}
+                  </p>
                 ) : null}
               </div>
             );
@@ -330,6 +393,12 @@ function FixtureInspection({ scenario }: { scenario: FixtureScenarioResult }) {
           <p className="label-text">Fixture Inspection</p>
           <h2>{scenario.title}</h2>
           <p className="muted-text">{scenario.description}</p>
+          {scenario.sectorTags?.length ? (
+            <p className="muted-text">
+              <span className="label-text">Sector context</span>{" "}
+              {scenario.sectorTags.map(formatSectorTag).join(", ")}
+            </p>
+          ) : null}
         </div>
         <span className="badge badge-primary">
           {scenario.result.suggestions.length} suggestions
@@ -400,6 +469,58 @@ function FixtureInspection({ scenario }: { scenario: FixtureScenarioResult }) {
   );
 }
 
+function CrossTradeMappingSection({ mappings }: { mappings: CrossTradeMapping[] }) {
+  return (
+    <section className="app-panel">
+      <div className="panel-header">
+        <div>
+          <p className="label-text">Cross-Trade Mapping</p>
+          <h2>Ambiguous Scope Rules</h2>
+          <p className="muted-text">
+            These rules keep one conservative primary suggestion while showing possible
+            alternate trades and sector preference.
+          </p>
+        </div>
+        <span className="badge badge-warning">{mappings.length} mappings</span>
+      </div>
+
+      <div className="stack gap-3" style={{ marginTop: 16 }}>
+        {mappings.map((mapping) => (
+          <div key={mapping.id} className="project-csi-selected-group">
+            <div className="cluster-between align-start gap-3">
+              <div>
+                <div className="cluster gap-2">
+                  <strong>{mapping.label}</strong>
+                  <span className="badge badge-primary">
+                    Primary: {getTradeName(mapping.primaryTradeId)}
+                  </span>
+                </div>
+                <p className="muted-text">
+                  <span className="label-text">Possible trades</span>{" "}
+                  {getTradeNames(mapping.possibleTradeIds)}
+                </p>
+                {mapping.notes ? <p className="muted-text">{mapping.notes}</p> : null}
+              </div>
+              <span className="badge badge-muted">{mapping.id}</span>
+            </div>
+
+            {mapping.sectorPreferredTradeIds ? (
+              <div className="cluster gap-2" style={{ marginTop: 10 }}>
+                <span className="label-text">Sector preferences</span>
+                {Object.entries(mapping.sectorPreferredTradeIds).map(([sectorTag, tradeId]) => (
+                  <span key={`${mapping.id}-${sectorTag}`} className="badge badge-muted">
+                    {formatSectorTag(sectorTag as ProjectSectorTag)}: {getTradeName(tradeId)}
+                  </span>
+                ))}
+              </div>
+            ) : null}
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 export default async function TradeTaxonomyWorkbenchPage({
   searchParams,
 }: TradeTaxonomyWorkbenchPageProps) {
@@ -407,7 +528,15 @@ export default async function TradeTaxonomyWorkbenchPage({
   const selectedSector = isProjectSectorTag(resolvedSearchParams?.sector)
     ? resolvedSearchParams.sector
     : undefined;
-  const visibleTaxonomy = getVisibleTradesForSector(
+  const visibleTaxonomy = getVisibleTradeTaxonomyForProject({
+    taxonomy,
+    sectorTags: selectedSector ? [selectedSector] : [],
+  });
+  const legacyVisibleTaxonomy = getVisibleTradesForSector(
+    taxonomy,
+    selectedSector ? [selectedSector] : []
+  );
+  const sectorTriggeredTrades = getSectorTriggeredTrades(
     taxonomy,
     selectedSector ? [selectedSector] : []
   );
@@ -420,6 +549,8 @@ export default async function TradeTaxonomyWorkbenchPage({
       csiItems: scenario.csiItems,
       taxonomy,
       rules: defaultTradeCsiMappings,
+      crossTradeMappings: defaultCrossTradeMappings,
+      sectorTags: scenario.sectorTags ?? [],
       csiVersion: "MASTERFORMAT_CURRENT",
     }),
   }));
@@ -454,6 +585,9 @@ export default async function TradeTaxonomyWorkbenchPage({
               <span className="badge badge-primary">{visibleTaxonomy.length} visible</span>
               <span className="badge badge-success">{commonTrades.length} common</span>
               <span className="badge badge-warning">{hiddenTrades.length} hidden</span>
+              <span className="badge badge-muted">
+                {sectorTriggeredTrades.length} sector-triggered
+              </span>
             </div>
           </div>
 
@@ -478,9 +612,23 @@ export default async function TradeTaxonomyWorkbenchPage({
             </div>
             <p className="muted-text">
               Hidden specialty trades appear when their sector trigger matches the selected
-              filter.
+              filter. Legacy and new visibility helpers agree on{" "}
+              {legacyVisibleTaxonomy.length} visible records for this filter.
             </p>
           </div>
+
+          {sectorTriggeredTrades.length ? (
+            <div className="stack gap-2" style={{ marginTop: 16 }}>
+              <span className="label-text">Sector-triggered hidden trades</span>
+              <div className="cluster gap-2">
+                {sectorTriggeredTrades.map((trade) => (
+                  <span key={trade.id} className="badge badge-warning">
+                    {trade.name}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ) : null}
 
           <div className="stack gap-3" style={{ marginTop: 16 }}>
             {rootTrades.map((trade) => (
@@ -488,6 +636,8 @@ export default async function TradeTaxonomyWorkbenchPage({
             ))}
           </div>
         </section>
+
+        <CrossTradeMappingSection mappings={defaultCrossTradeMappings} />
 
         <div className="stack gap-4">
           {scenarioResults.map((scenario) => (

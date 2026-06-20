@@ -80,3 +80,117 @@ export const mepCsiFixture: TradeTaxonomyCsiItem[] = [
     name: "Structured Cabling",
   },
 ];
+
+export const healthcareCsiFixture: TradeTaxonomyCsiItem[] = [
+  {
+    id: "fixture-healthcare-226000",
+    version: "MASTERFORMAT_CURRENT",
+    number: "22 60 00",
+    name: "Medical Gas Systems",
+  },
+  {
+    id: "fixture-healthcare-275200",
+    version: "MASTERFORMAT_CURRENT",
+    number: "27 52 00",
+    name: "Nurse Call Systems",
+  },
+  {
+    id: "fixture-healthcare-283100",
+    version: "MASTERFORMAT_CURRENT",
+    number: "28 31 00",
+    name: "Fire Detection and Alarm",
+  },
+];
+
+export const restaurantCsiFixture: TradeTaxonomyCsiItem[] = [
+  {
+    id: "fixture-restaurant-114000",
+    version: "MASTERFORMAT_CURRENT",
+    number: "11 40 00",
+    name: "Food Service Equipment",
+  },
+  {
+    id: "fixture-restaurant-233813",
+    version: "MASTERFORMAT_CURRENT",
+    number: "23 38 13",
+    name: "Commercial Kitchen Hoods",
+  },
+  {
+    id: "fixture-restaurant-221319",
+    version: "MASTERFORMAT_CURRENT",
+    number: "22 13 19",
+    name: "Grease Interceptors",
+  },
+  {
+    id: "fixture-restaurant-212200",
+    version: "MASTERFORMAT_CURRENT",
+    number: "21 22 00",
+    name: "Kitchen Hood Fire Suppression",
+  },
+];
+
+export const officeTenantImprovementCsiFixture: TradeTaxonomyCsiItem[] = [
+  {
+    id: "fixture-office-092216",
+    version: "MASTERFORMAT_CURRENT",
+    number: "09 22 16",
+    name: "Non-Structural Metal Framing",
+  },
+  {
+    id: "fixture-office-095123",
+    version: "MASTERFORMAT_CURRENT",
+    number: "09 51 23",
+    name: "Acoustical Tile Ceilings",
+  },
+  {
+    id: "fixture-office-096813",
+    version: "MASTERFORMAT_CURRENT",
+    number: "09 68 13",
+    name: "Tile Carpeting",
+  },
+  {
+    id: "fixture-office-081113",
+    version: "MASTERFORMAT_CURRENT",
+    number: "08 11 13",
+    name: "Hollow Metal Doors and Frames",
+  },
+  {
+    id: "fixture-office-084113",
+    version: "MASTERFORMAT_CURRENT",
+    number: "08 41 13",
+    name: "Aluminum-Framed Entrances and Storefronts",
+  },
+  {
+    id: "fixture-office-262726",
+    version: "MASTERFORMAT_CURRENT",
+    number: "26 27 26",
+    name: "Wiring Devices",
+  },
+];
+
+export const industrialLabCsiFixture: TradeTaxonomyCsiItem[] = [
+  {
+    id: "fixture-lab-226700",
+    version: "MASTERFORMAT_CURRENT",
+    number: "22 67 00",
+    name: "Laboratory Gas Systems",
+  },
+  {
+    id: "fixture-lab-226300",
+    version: "MASTERFORMAT_CURRENT",
+    number: "22 63 00",
+    name: "Process Piping",
+  },
+  {
+    id: "fixture-lab-233500",
+    version: "MASTERFORMAT_CURRENT",
+    number: "23 35 00",
+    name: "Lab Exhaust Systems",
+  },
+  {
+    id: "fixture-lab-132100",
+    version: "MASTERFORMAT_CURRENT",
+    number: "13 21 00",
+    name: "Cleanroom Systems",
+  },
+];

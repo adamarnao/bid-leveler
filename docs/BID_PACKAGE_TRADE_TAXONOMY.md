@@ -53,6 +53,15 @@ Professional taxonomy nodes also support lightweight metadata so a comprehensive
 
 Default project setup should favor common visible trades. Hidden specialty trades should become visible only when a sector trigger, search, or advanced taxonomy review makes them relevant.
 
+Cross-trade mappings capture ambiguous scope that can plausibly belong to multiple trade packages. The generator should pick a conservative primary trade, preserve possible alternate trades, apply sector preference when available, and show warnings for estimator review. Examples include Fire Alarm, Controls / BAS, Countertops, Acoustic Insulation, Kitchen Hood scope, Medical Gas, Polished Concrete, Loading Dock Equipment, Nurse Call, Pneumatic Tubes, Lab Gases, and Cleanroom Systems.
+
+Sector visibility rules:
+
+- common/core trades are visible by default
+- hidden trades stay hidden unless `includeHidden` is true or project sector tags match
+- sector-specific groups should appear for matching healthcare, restaurant, laboratory, cleanroom, transportation, airport, marine, renewable energy, sports, detention, government, agricultural, or industrial projects
+- future project-specific overrides may manually activate a hidden trade without changing company taxonomy defaults
+
 Suggested TypeScript shape:
 
 ```ts
