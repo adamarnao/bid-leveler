@@ -1,15 +1,49 @@
 import { ProjectSectorTag, TradeTaxonomyNode } from "./types";
 
+type TradeSpecializationInput = {
+  id: string;
+  name: string;
+  aliases?: string[];
+  description?: string;
+  sortOrder: number;
+  canBeBidPackage?: boolean;
+  defaultPackageMode?: TradeTaxonomyNode["defaultPackageMode"];
+  defaultScopeNotes?: string[];
+  defaultExclusions?: string[];
+  isCommon?: boolean;
+  defaultHidden?: boolean;
+  sectorTags?: TradeTaxonomyNode["sectorTags"];
+  specialtyTags?: TradeTaxonomyNode["specialtyTags"];
+  relatedTradeIds?: string[];
+  splitRecommendation?: string;
+  estimatingNotes?: string;
+};
+
+function createTradeSpecializations(
+  parentId: string,
+  defaults: Partial<TradeTaxonomyNode>,
+  entries: TradeSpecializationInput[]
+): TradeTaxonomyNode[] {
+  return entries.map((entry) => ({
+    parentId,
+    canBeBidPackage: true,
+    defaultPackageMode: "USER_CHOICE",
+    isActive: true,
+    ...defaults,
+    ...entry,
+  }));
+}
+
 export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
   {
     id: "general-requirements",
-    name: "General Requirements",
-    aliases: ["General Conditions", "Division 01"],
+    name: "General Conditions / Project Requirements",
+    aliases: ["General Requirements", "General Conditions", "Division 01"],
     description: "Project-wide requirements, temporary facilities, supervision, and administrative scope.",
     sortOrder: 10,
-    canBeBidPackage: true,
+    canBeBidPackage: false,
     defaultPackageMode: "UMBRELLA",
-    defaultScopeNotes: ["Use when project-wide requirements are bid separately."],
+    defaultScopeNotes: ["Track as GC cost or project requirement scope, not ordinary subcontractor bid scope."],
     isActive: true,
     isCommon: true,
     sectorTags: ["commercial", "education", "healthcare", "industrial", "office", "retail"],
@@ -17,9 +51,74 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     estimatingNotes:
       "Often carried as GC cost or general conditions unless the project requires separate subcontractor pricing.",
   },
+  ...createTradeSpecializations(
+    "general-requirements",
+    {
+      canBeBidPackage: false,
+      defaultPackageMode: "UMBRELLA",
+      isCommon: true,
+      sectorTags: ["commercial", "education", "healthcare", "industrial", "office", "retail"],
+      specialtyTags: ["gc_cost"],
+    },
+    [
+      { id: "supervision", name: "Supervision", aliases: ["Field Supervision"], sortOrder: 11 },
+      { id: "temporary-facilities", name: "Temporary Facilities", aliases: ["Temp Facilities"], sortOrder: 12 },
+      { id: "temporary-utilities", name: "Temporary Utilities", aliases: ["Temp Utilities"], sortOrder: 13 },
+      { id: "site-safety", name: "Site Safety", aliases: ["Safety"], sortOrder: 14 },
+      { id: "dumpsters-waste-management", name: "Dumpsters / Waste Management", aliases: ["Waste Management", "Dumpsters"], sortOrder: 15 },
+      { id: "final-cleaning", name: "Final Cleaning", aliases: ["Cleaning"], sortOrder: 16 },
+      { id: "temporary-protection", name: "Temporary Protection", aliases: ["Temp Protection"], sortOrder: 17 },
+      { id: "hoisting-cranes-lifts", name: "Hoisting / Cranes / Lifts", aliases: ["Hoisting", "Cranes", "Lifts"], sortOrder: 18 },
+      { id: "scaffolding", name: "Scaffolding", sortOrder: 19, specialtyTags: ["gc_cost", "cross_trade"], relatedTradeIds: ["masonry", "painting-coatings"] },
+      { id: "layout-survey", name: "Layout / Survey", aliases: ["Survey", "Construction Layout"], sortOrder: 20 },
+      { id: "testing-inspections", name: "Testing & Inspections", aliases: ["Testing", "Inspections"], sortOrder: 21 },
+      { id: "commissioning", name: "Commissioning", aliases: ["Cx"], sortOrder: 22, specialtyTags: ["gc_cost", "specialty"], sectorTags: ["healthcare", "laboratory", "mission_critical", "commercial"] },
+      { id: "permits-fees", name: "Permits / Fees", aliases: ["Permits", "Fees"], sortOrder: 23 },
+      { id: "bonds-insurance", name: "Bonds / Insurance", aliases: ["Bonding", "Insurance"], sortOrder: 24 },
+      { id: "winter-conditions-weather-protection", name: "Winter Conditions / Weather Protection", aliases: ["Winter Conditions", "Weather Protection"], sortOrder: 25 },
+      { id: "security-temporary-fencing", name: "Security / Temporary Fencing", aliases: ["Temporary Fencing", "Site Security"], sortOrder: 26 },
+      { id: "mobilization-demobilization", name: "Mobilization / Demobilization", aliases: ["Mobilization", "Demobilization"], sortOrder: 27 },
+    ]
+  ),
+  {
+    id: "demolition",
+    name: "Existing Conditions / Demolition",
+    aliases: ["Demo", "Existing Conditions", "Selective Demolition", "Site Demolition"],
+    sortOrder: 15,
+    canBeBidPackage: true,
+    defaultPackageMode: "USER_CHOICE",
+    isActive: true,
+    isCommon: true,
+    sectorTags: ["commercial", "industrial", "sitework", "civil", "retail", "office"],
+    specialtyTags: ["core", "alternate_candidate"],
+    relatedTradeIds: ["earthwork", "concrete"],
+    splitRecommendation:
+      "Demolition may be its own package or split by abatement, concrete cutting, salvage, or earthwork scope.",
+  },
+  ...createTradeSpecializations(
+    "demolition",
+    {
+      defaultPackageMode: "USER_CHOICE",
+      sectorTags: ["commercial", "industrial", "sitework", "civil", "retail", "office"],
+      specialtyTags: ["core"],
+    },
+    [
+      { id: "selective-demolition", name: "Selective Demolition", aliases: ["Selective Demo"], sortOrder: 151, isCommon: true },
+      { id: "full-building-demolition", name: "Full Building Demolition", aliases: ["Building Demolition"], sortOrder: 152 },
+      { id: "interior-demolition", name: "Interior Demolition", aliases: ["Interior Demo"], sortOrder: 153, isCommon: true },
+      { id: "concrete-sawcutting-coring", name: "Concrete Sawcutting / Coring", aliases: ["Sawcutting", "Core Drilling", "Coring"], sortOrder: 154, relatedTradeIds: ["concrete"] },
+      { id: "hazardous-materials-abatement", name: "Hazardous Materials Abatement", aliases: ["Hazmat Abatement"], sortOrder: 155, defaultHidden: true, specialtyTags: ["specialty", "sector_specific"] },
+      { id: "asbestos-abatement", name: "Asbestos Abatement", sortOrder: 156, defaultHidden: true, specialtyTags: ["specialty", "sector_specific"] },
+      { id: "lead-paint-abatement", name: "Lead Paint Abatement", sortOrder: 157, defaultHidden: true, specialtyTags: ["specialty", "sector_specific"] },
+      { id: "mold-remediation", name: "Mold Remediation", sortOrder: 158, defaultHidden: true, specialtyTags: ["specialty", "sector_specific"] },
+      { id: "pcb-mercury-universal-waste-removal", name: "PCB / Mercury / Universal Waste Removal", aliases: ["Universal Waste Removal"], sortOrder: 159, defaultHidden: true, specialtyTags: ["specialty", "sector_specific"] },
+      { id: "underground-storage-tank-removal", name: "Underground Storage Tank Removal", aliases: ["UST Removal"], sortOrder: 160, defaultHidden: true, sectorTags: ["industrial", "sitework", "civil"], specialtyTags: ["specialty", "sector_specific"] },
+      { id: "building-relocation-salvage", name: "Building Relocation / Salvage", aliases: ["Salvage", "Relocation"], sortOrder: 161, defaultHidden: true, specialtyTags: ["specialty", "owner_vendor"] },
+    ]
+  ),
   {
     id: "sitework",
-    name: "Sitework",
+    name: "Sitework / Civil",
     aliases: ["Civil", "Site"],
     description: "Exterior site, civil, earthwork, utilities, paving, and landscape scope.",
     sortOrder: 20,
@@ -45,22 +144,6 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     isCommon: true,
     sectorTags: ["civil", "sitework", "commercial", "industrial", "warehouse"],
     specialtyTags: ["core"],
-  },
-  {
-    id: "demolition",
-    parentId: "sitework",
-    name: "Demolition",
-    aliases: ["Demo", "Selective Demolition", "Site Demolition"],
-    sortOrder: 21,
-    canBeBidPackage: true,
-    defaultPackageMode: "USER_CHOICE",
-    isActive: true,
-    isCommon: true,
-    sectorTags: ["commercial", "industrial", "sitework", "civil", "retail", "office"],
-    specialtyTags: ["core", "alternate_candidate"],
-    relatedTradeIds: ["earthwork"],
-    splitRecommendation:
-      "Demolition may be its own package or carried with earthwork/sitework depending on project size.",
   },
   {
     id: "utilities",
@@ -103,6 +186,44 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     sectorTags: ["civil", "sitework", "commercial", "hospitality", "education", "retail"],
     specialtyTags: ["core", "allowance_candidate"],
   },
+  ...createTradeSpecializations(
+    "sitework",
+    {
+      defaultPackageMode: "USER_CHOICE",
+      sectorTags: ["civil", "sitework", "commercial", "industrial", "warehouse"],
+      specialtyTags: ["core"],
+    },
+    [
+      { id: "clearing-grubbing", name: "Clearing / Grubbing", aliases: ["Clearing", "Grubbing"], sortOrder: 21 },
+      { id: "excavation", name: "Excavation", sortOrder: 23 },
+      { id: "grading", name: "Grading", aliases: ["Fine Grading", "Rough Grading"], sortOrder: 24 },
+      { id: "soil-stabilization", name: "Soil Stabilization", aliases: ["Ground Improvement"], sortOrder: 25, defaultHidden: true, specialtyTags: ["specialty", "sector_specific"] },
+      { id: "erosion-control", name: "Erosion Control", aliases: ["SWPPP", "Sediment Control"], sortOrder: 26 },
+      { id: "dewatering", name: "Dewatering", sortOrder: 27, defaultHidden: true, specialtyTags: ["specialty", "sector_specific"] },
+      { id: "shoring-sheeting", name: "Shoring / Sheeting", aliases: ["Sheeting", "Excavation Support"], sortOrder: 28, defaultHidden: true, specialtyTags: ["specialty", "sector_specific"] },
+      { id: "site-utilities", name: "Site Utilities", aliases: ["Civil Utilities"], sortOrder: 29, relatedTradeIds: ["utilities"] },
+      { id: "storm-drainage", name: "Storm Drainage", aliases: ["Storm Sewer"], sortOrder: 30, relatedTradeIds: ["utilities"] },
+      { id: "sanitary-sewer", name: "Sanitary Sewer", sortOrder: 31, relatedTradeIds: ["utilities"] },
+      { id: "water-service", name: "Water Service", sortOrder: 32, relatedTradeIds: ["utilities"] },
+      { id: "gas-service", name: "Gas Service", sortOrder: 33, relatedTradeIds: ["utilities", "plumbing"] },
+      { id: "electrical-site-utilities", name: "Electrical Site Utilities", aliases: ["Site Electrical"], sortOrder: 34, relatedTradeIds: ["electrical", "utilities"], specialtyTags: ["core", "cross_trade"] },
+      { id: "site-concrete", name: "Site Concrete", sortOrder: 35, relatedTradeIds: ["concrete"] },
+      { id: "curbs-sidewalks", name: "Curbs / Sidewalks", aliases: ["Curb", "Sidewalks"], sortOrder: 36, relatedTradeIds: ["site-concrete", "concrete"] },
+      { id: "concrete-paving", name: "Concrete Paving", sortOrder: 37, relatedTradeIds: ["concrete"] },
+      { id: "striping-pavement-markings", name: "Striping / Pavement Markings", aliases: ["Striping", "Pavement Markings"], sortOrder: 38, relatedTradeIds: ["asphalt-paving"] },
+      { id: "traffic-control", name: "Traffic Control", sortOrder: 39, defaultHidden: true, sectorTags: ["civil", "sitework", "transportation"], specialtyTags: ["specialty", "sector_specific"] },
+      { id: "traffic-signals", name: "Traffic Signals", sortOrder: 40, defaultHidden: true, sectorTags: ["civil", "transportation", "government"], specialtyTags: ["specialty", "sector_specific"] },
+      { id: "site-signage", name: "Site Signage", sortOrder: 41, relatedTradeIds: ["specialties"] },
+      { id: "fencing-gates", name: "Fencing / Gates", aliases: ["Site Fencing", "Gates"], sortOrder: 42 },
+      { id: "retaining-walls", name: "Retaining Walls", sortOrder: 43, relatedTradeIds: ["concrete", "masonry"] },
+      { id: "irrigation", name: "Irrigation", sortOrder: 44, relatedTradeIds: ["landscaping"] },
+      { id: "hardscape-pavers", name: "Hardscape / Pavers", aliases: ["Pavers", "Hardscape"], sortOrder: 45, relatedTradeIds: ["landscaping", "masonry"] },
+      { id: "synthetic-turf", name: "Synthetic Turf", sortOrder: 46, defaultHidden: true, sectorTags: ["sports", "education", "commercial"], specialtyTags: ["specialty", "sector_specific"] },
+      { id: "athletic-fields", name: "Athletic Fields", sortOrder: 47, defaultHidden: true, sectorTags: ["sports", "education"], specialtyTags: ["specialty", "sector_specific"] },
+      { id: "playgrounds", name: "Playgrounds", sortOrder: 48, defaultHidden: true, sectorTags: ["education", "government", "residential", "multifamily"], specialtyTags: ["specialty", "sector_specific"] },
+      { id: "site-furnishings", name: "Site Furnishings", aliases: ["Benches", "Bike Racks", "Trash Receptacles"], sortOrder: 49, specialtyTags: ["allowance_candidate", "specialty"] },
+    ]
+  ),
   {
     id: "concrete",
     name: "Concrete",
@@ -167,6 +288,29 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     sectorTags: ["civil", "sitework", "transportation", "marine"],
     specialtyTags: ["specialty", "sector_specific"],
   },
+  ...createTradeSpecializations(
+    "concrete",
+    {
+      defaultPackageMode: "USER_CHOICE",
+      sectorTags: ["commercial", "industrial", "warehouse", "education", "healthcare", "multifamily"],
+      specialtyTags: ["core"],
+    },
+    [
+      { id: "structural-concrete", name: "Structural Concrete", sortOrder: 35 },
+      { id: "slabs-on-grade", name: "Slabs on Grade", aliases: ["SOG"], sortOrder: 36 },
+      { id: "elevated-slabs", name: "Elevated Slabs", sortOrder: 37 },
+      { id: "concrete-formwork", name: "Concrete Formwork", aliases: ["Formwork"], sortOrder: 38 },
+      { id: "reinforcing-steel", name: "Reinforcing Steel", aliases: ["Rebar", "Reinforcement"], sortOrder: 39, relatedTradeIds: ["structural-steel"] },
+      { id: "post-tensioning", name: "Post-Tensioning", aliases: ["PT"], sortOrder: 40, defaultHidden: true, specialtyTags: ["specialty", "sector_specific"] },
+      { id: "concrete-finishing", name: "Concrete Finishing", sortOrder: 41 },
+      { id: "polished-concrete", name: "Polished Concrete", sortOrder: 42, specialtyTags: ["specialty", "alternate_candidate"], relatedTradeIds: ["flooring"] },
+      { id: "concrete-sealer-densifier", name: "Concrete Sealer / Densifier", aliases: ["Concrete Sealer", "Densifier"], sortOrder: 43, specialtyTags: ["specialty", "alternate_candidate"], relatedTradeIds: ["flooring", "painting-coatings"] },
+      { id: "concrete-repair-restoration", name: "Concrete Repair / Restoration", aliases: ["Concrete Restoration"], sortOrder: 44, defaultHidden: true, specialtyTags: ["specialty", "sector_specific"] },
+      { id: "grouting", name: "Grouting", sortOrder: 45, specialtyTags: ["specialty", "cross_trade"], relatedTradeIds: ["masonry", "structural-steel"] },
+      { id: "lightweight-concrete", name: "Lightweight Concrete", sortOrder: 46, defaultHidden: true, specialtyTags: ["specialty", "sector_specific"] },
+      { id: "gypsum-cement-underlayment", name: "Gypsum Cement Underlayment", aliases: ["Gypcrete", "Gypsum Underlayment"], sortOrder: 47, specialtyTags: ["specialty", "cross_trade"], relatedTradeIds: ["flooring"] },
+    ]
+  ),
   {
     id: "masonry",
     name: "Masonry",
@@ -218,6 +362,22 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     sectorTags: ["hospitality", "retail", "residential", "multifamily"],
     specialtyTags: ["specialty", "alternate_candidate"],
   },
+  ...createTradeSpecializations(
+    "masonry",
+    {
+      defaultPackageMode: "USER_CHOICE",
+      sectorTags: ["commercial", "education", "healthcare", "hospitality", "retail"],
+      specialtyTags: ["core"],
+    },
+    [
+      { id: "structural-masonry", name: "Structural Masonry", sortOrder: 44 },
+      { id: "veneer-masonry", name: "Veneer Masonry", aliases: ["Masonry Veneer"], sortOrder: 45 },
+      { id: "cast-stone", name: "Cast Stone", sortOrder: 46, defaultHidden: true, specialtyTags: ["specialty", "alternate_candidate"] },
+      { id: "glass-unit-masonry", name: "Glass Unit Masonry", aliases: ["Glass Block"], sortOrder: 47, defaultHidden: true, specialtyTags: ["specialty", "sector_specific"] },
+      { id: "masonry-restoration", name: "Masonry Restoration", sortOrder: 48, defaultHidden: true, specialtyTags: ["specialty", "sector_specific"] },
+      { id: "tuckpointing-repointing", name: "Tuckpointing / Repointing", aliases: ["Repointing", "Tuckpointing"], sortOrder: 49, defaultHidden: true, specialtyTags: ["specialty", "sector_specific"] },
+    ]
+  ),
   {
     id: "structural-steel",
     name: "Structural Steel",
@@ -230,6 +390,21 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     sectorTags: ["commercial", "industrial", "warehouse", "education", "healthcare"],
     specialtyTags: ["core"],
   },
+  ...createTradeSpecializations(
+    "structural-steel",
+    {
+      defaultPackageMode: "UMBRELLA",
+      sectorTags: ["commercial", "industrial", "warehouse", "education", "healthcare"],
+      specialtyTags: ["core"],
+    },
+    [
+      { id: "structural-steel-framing", name: "Structural Steel", aliases: ["Steel Framing"], sortOrder: 51 },
+      { id: "steel-joists", name: "Steel Joists", aliases: ["Joists"], sortOrder: 52 },
+      { id: "metal-decking", name: "Metal Decking", aliases: ["Metal Deck", "Steel Deck"], sortOrder: 53 },
+      { id: "steel-erection", name: "Steel Erection", aliases: ["Erection"], sortOrder: 54 },
+      { id: "misc-structural-steel", name: "Misc Structural Steel", aliases: ["Structural Misc Steel"], sortOrder: 55, relatedTradeIds: ["misc-metals"] },
+    ]
+  ),
   {
     id: "misc-metals",
     name: "Misc Metals",
@@ -272,6 +447,24 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     specialtyTags: ["core", "cross_trade"],
     relatedTradeIds: ["architectural-metals"],
   },
+  ...createTradeSpecializations(
+    "misc-metals",
+    {
+      defaultPackageMode: "USER_CHOICE",
+      sectorTags: ["commercial", "industrial", "education", "healthcare", "hospitality"],
+      specialtyTags: ["core"],
+    },
+    [
+      { id: "metal-stairs", name: "Stairs", aliases: ["Metal Stairs", "Steel Stairs"], sortOrder: 63 },
+      { id: "ladders", name: "Ladders", aliases: ["Metal Ladders"], sortOrder: 64 },
+      { id: "bollards", name: "Bollards", sortOrder: 65, relatedTradeIds: ["sitework"] },
+      { id: "lintels", name: "Lintels", sortOrder: 66, relatedTradeIds: ["masonry"] },
+      { id: "shelf-angles", name: "Shelf Angles", sortOrder: 67, relatedTradeIds: ["masonry", "structural-steel"] },
+      { id: "gratings", name: "Gratings", aliases: ["Metal Grating"], sortOrder: 68 },
+      { id: "decorative-metals", name: "Decorative Metals", aliases: ["Decorative Metalwork"], sortOrder: 69, defaultHidden: true, specialtyTags: ["specialty", "alternate_candidate"] },
+      { id: "metal-fabrications", name: "Metal Fabrications", aliases: ["Misc Metal Fabrications"], sortOrder: 70 },
+    ]
+  ),
   {
     id: "rough-carpentry",
     name: "Rough Carpentry",
@@ -284,6 +477,23 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     sectorTags: ["commercial", "residential", "multifamily", "retail", "hospitality"],
     specialtyTags: ["core"],
   },
+  ...createTradeSpecializations(
+    "rough-carpentry",
+    {
+      defaultPackageMode: "USER_CHOICE",
+      sectorTags: ["commercial", "residential", "multifamily", "retail", "hospitality"],
+      specialtyTags: ["core"],
+    },
+    [
+      { id: "wood-framing", name: "Wood Framing", sortOrder: 71 },
+      { id: "blocking-backing", name: "Blocking / Backing", aliases: ["Blocking", "Backing"], sortOrder: 72 },
+      { id: "sheathing", name: "Sheathing", sortOrder: 73 },
+      { id: "trusses", name: "Trusses", aliases: ["Wood Trusses"], sortOrder: 74 },
+      { id: "timber-construction", name: "Timber Construction", aliases: ["Timber"], sortOrder: 75, defaultHidden: true, sectorTags: ["commercial", "residential", "multifamily"], specialtyTags: ["specialty", "sector_specific"] },
+      { id: "heavy-timber", name: "Heavy Timber", sortOrder: 76, defaultHidden: true, sectorTags: ["commercial", "hospitality", "education"], specialtyTags: ["specialty", "sector_specific"] },
+      { id: "clt-mass-timber", name: "CLT / Mass Timber", aliases: ["Cross-Laminated Timber", "Mass Timber"], sortOrder: 77, defaultHidden: true, sectorTags: ["commercial", "education", "residential", "multifamily"], specialtyTags: ["specialty", "sector_specific"] },
+    ]
+  ),
   {
     id: "finish-carpentry-millwork",
     name: "Finish Carpentry / Millwork",
@@ -298,6 +508,21 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     splitRecommendation:
       "Casework and countertops may need to split based on finish material and vendor market.",
   },
+  ...createTradeSpecializations(
+    "finish-carpentry-millwork",
+    {
+      defaultPackageMode: "USER_CHOICE",
+      sectorTags: ["commercial", "hospitality", "restaurant", "retail", "office", "healthcare"],
+      specialtyTags: ["core"],
+    },
+    [
+      { id: "architectural-millwork", name: "Architectural Millwork", aliases: ["Millwork"], sortOrder: 81 },
+      { id: "cabinets", name: "Cabinets", aliases: ["Cabinetry"], sortOrder: 82 },
+      { id: "casework", name: "Casework", sortOrder: 83 },
+      { id: "interior-trim", name: "Interior Trim", aliases: ["Trim"], sortOrder: 90 },
+      { id: "wood-paneling", name: "Wood Paneling", aliases: ["Wood Panels"], sortOrder: 91, specialtyTags: ["specialty", "alternate_candidate"] },
+    ]
+  ),
   {
     id: "countertops",
     parentId: "finish-carpentry-millwork",
@@ -311,7 +536,7 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     ],
     description:
       "Countertop scope that may travel with millwork or split into a separate stone, quartz, granite, or solid-surface package.",
-    sortOrder: 81,
+    sortOrder: 84,
     canBeBidPackage: true,
     defaultPackageMode: "USER_CHOICE",
     defaultScopeNotes: [
@@ -326,6 +551,21 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     splitRecommendation:
       "Use separate package when stone, quartz, granite, or solid surface scope is substantial.",
   },
+  ...createTradeSpecializations(
+    "countertops",
+    {
+      defaultPackageMode: "USER_CHOICE",
+      defaultHidden: true,
+      sectorTags: ["hospitality", "restaurant", "healthcare", "laboratory", "retail", "office"],
+      specialtyTags: ["specialty", "cross_trade", "alternate_candidate"],
+      relatedTradeIds: ["finish-carpentry-millwork", "tile"],
+    },
+    [
+      { id: "plastic-laminate-countertops", name: "Plastic Laminate Countertops", aliases: ["PLAM Countertops"], sortOrder: 85, estimatingNotes: "Often included with architectural millwork or casework." },
+      { id: "solid-surface-countertops", name: "Solid Surface Countertops", sortOrder: 86 },
+      { id: "stone-quartz-granite-countertops", name: "Stone / Quartz / Granite Countertops", aliases: ["Stone Countertops", "Quartz Countertops", "Granite Countertops"], sortOrder: 87, estimatingNotes: "Often bid separately from millwork when stone or quartz scope is substantial." },
+    ]
+  ),
   {
     id: "roofing",
     name: "Roofing",
@@ -354,8 +594,8 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
   {
     id: "sheet-metal-roofing",
     parentId: "roofing",
-    name: "Sheet Metal Roofing",
-    aliases: ["Metal Roofing", "Roof Sheet Metal", "Flashing"],
+    name: "Metal Roofing",
+    aliases: ["Sheet Metal Roofing", "Roof Sheet Metal"],
     sortOrder: 92,
     canBeBidPackage: true,
     defaultPackageMode: "USER_CHOICE",
@@ -378,6 +618,26 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     sectorTags: ["residential", "multifamily", "hospitality"],
     specialtyTags: ["specialty", "sector_specific"],
   },
+  ...createTradeSpecializations(
+    "roofing",
+    {
+      defaultPackageMode: "USER_CHOICE",
+      sectorTags: ["commercial", "residential", "multifamily", "education", "industrial"],
+      specialtyTags: ["core"],
+    },
+    [
+      { id: "tpo-roofing", name: "TPO Roofing", sortOrder: 94, relatedTradeIds: ["membrane-roofing"] },
+      { id: "epdm-roofing", name: "EPDM Roofing", sortOrder: 95, relatedTradeIds: ["membrane-roofing"] },
+      { id: "pvc-roofing", name: "PVC Roofing", sortOrder: 96, relatedTradeIds: ["membrane-roofing"] },
+      { id: "modified-bitumen-roofing", name: "Modified Bitumen Roofing", aliases: ["Mod Bit Roofing"], sortOrder: 97, relatedTradeIds: ["membrane-roofing"] },
+      { id: "built-up-roofing", name: "Built-Up Roofing", aliases: ["BUR"], sortOrder: 98, relatedTradeIds: ["membrane-roofing"] },
+      { id: "roof-accessories", name: "Roof Accessories", sortOrder: 99, specialtyTags: ["specialty", "allowance_candidate"] },
+      { id: "roof-hatches", name: "Roof Hatches", sortOrder: 100, relatedTradeIds: ["misc-metals"] },
+      { id: "roof-curbs", name: "Roof Curbs", sortOrder: 101, relatedTradeIds: ["hvac"] },
+      { id: "gutters-downspouts", name: "Gutters / Downspouts", aliases: ["Gutters", "Downspouts"], sortOrder: 102 },
+      { id: "sheet-metal-flashing", name: "Sheet Metal Flashing", aliases: ["Flashing"], sortOrder: 103, relatedTradeIds: ["waterproofing"] },
+    ]
+  ),
   {
     id: "waterproofing",
     name: "Waterproofing",
@@ -394,6 +654,56 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     splitRecommendation:
       "Review air barrier, sealants, and flashing overlap with roofing and glazing scopes.",
   },
+  ...createTradeSpecializations(
+    "waterproofing",
+    {
+      defaultPackageMode: "USER_CHOICE",
+      sectorTags: ["commercial", "industrial", "healthcare", "education", "multifamily"],
+      specialtyTags: ["core", "cross_trade"],
+    },
+    [
+      { id: "below-grade-waterproofing", name: "Below-Grade Waterproofing", aliases: ["Below Grade Waterproofing"], sortOrder: 101 },
+      { id: "fluid-applied-waterproofing", name: "Fluid-Applied Waterproofing", sortOrder: 102 },
+      { id: "sheet-waterproofing", name: "Sheet Waterproofing", sortOrder: 103 },
+      { id: "dampproofing", name: "Dampproofing", sortOrder: 104 },
+      { id: "air-barriers", name: "Air Barriers", aliases: ["Air Barrier"], sortOrder: 105, relatedTradeIds: ["roofing", "glass-glazing"] },
+      { id: "vapor-barriers", name: "Vapor Barriers", aliases: ["Vapor Barrier"], sortOrder: 106, relatedTradeIds: ["insulation"] },
+      { id: "joint-sealants-caulking", name: "Joint Sealants / Caulking", aliases: ["Sealants", "Caulking"], sortOrder: 107, relatedTradeIds: ["glass-glazing", "painting-coatings"] },
+      { id: "firestopping", name: "Firestopping", aliases: ["Firestop"], sortOrder: 108, specialtyTags: ["core", "cross_trade"], relatedTradeIds: ["drywall-framing", "hvac", "plumbing", "electrical"] },
+      { id: "expansion-joint-covers", name: "Expansion Joint Covers", aliases: ["Expansion Joints"], sortOrder: 109, defaultHidden: true, specialtyTags: ["specialty", "sector_specific"] },
+    ]
+  ),
+  {
+    id: "insulation",
+    name: "Insulation",
+    aliases: ["Thermal Insulation", "Acoustic Insulation"],
+    description: "Thermal and acoustic insulation scope that may travel with drywall, roofing, or envelope packages.",
+    sortOrder: 105,
+    canBeBidPackage: true,
+    defaultPackageMode: "USER_CHOICE",
+    isActive: true,
+    isCommon: true,
+    sectorTags: ["commercial", "residential", "multifamily", "education", "healthcare", "industrial"],
+    specialtyTags: ["core", "cross_trade"],
+    relatedTradeIds: ["drywall-framing", "roofing", "waterproofing"],
+    splitRecommendation:
+      "Review insulation scope for overlap with drywall, roofing, waterproofing, and exterior wall packages.",
+  },
+  ...createTradeSpecializations(
+    "insulation",
+    {
+      defaultPackageMode: "USER_CHOICE",
+      sectorTags: ["commercial", "residential", "multifamily", "education", "healthcare", "industrial"],
+      specialtyTags: ["core", "cross_trade"],
+    },
+    [
+      { id: "batt-insulation", name: "Batt Insulation", aliases: ["Batt"], sortOrder: 106 },
+      { id: "rigid-insulation", name: "Rigid Insulation", sortOrder: 107, relatedTradeIds: ["roofing", "waterproofing"] },
+      { id: "spray-foam-insulation", name: "Spray Foam Insulation", aliases: ["Spray Foam"], sortOrder: 108, defaultHidden: true, specialtyTags: ["specialty", "sector_specific"] },
+      { id: "mineral-wool", name: "Mineral Wool", aliases: ["Rock Wool"], sortOrder: 109 },
+      { id: "acoustic-insulation", name: "Acoustic Insulation", aliases: ["Sound Insulation"], sortOrder: 110, relatedTradeIds: ["drywall-framing"] },
+    ]
+  ),
   {
     id: "doors-frames-hardware",
     name: "Doors / Frames / Hardware",

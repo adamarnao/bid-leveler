@@ -77,15 +77,19 @@ The initial company-standard taxonomy should include at least:
 
 | Trade package | Notes |
 | --- | --- |
-| Concrete | Specializations include Cast-In-Place Concrete, Tilt-Up Concrete, Precast Concrete, and Shotcrete. |
-| Masonry | Specializations include CMU / Brick Masonry, Stone Masonry, and Simulated Masonry. |
-| Structural Steel | Structural steel framing, joists, deck where company standards place them here. |
-| Misc Metals | Specializations include Architectural Metals and Railings. |
-| Rough Carpentry | Blocking, sheathing, wood framing, rough carpentry scopes. |
-| Finish Carpentry / Millwork | Architectural woodwork, casework, finish carpentry, and Countertops where project/vendor strategy supports it. |
-| Countertops | Specialization under Finish Carpentry / Millwork. Laminate tops may stay with millwork; stone, quartz, granite, or solid-surface tops may need separate bid packages. |
-| Roofing | Specializations include Membrane Roofing, Sheet Metal Roofing, and Shingle Roofing. |
-| Waterproofing | Below-grade waterproofing, sealants, air barriers where company standards place them here. |
+| General Conditions / Project Requirements | GC cost / project requirement scope, not ordinary subcontractor scope. Includes supervision, temporary facilities/utilities, safety, waste management, final cleaning, temporary protection, hoisting, scaffolding, layout/survey, testing, commissioning, permits, bonds/insurance, winter conditions, temporary fencing, and mobilization. |
+| Existing Conditions / Demolition | Selective demolition, full building demolition, interior demolition, sawcutting/coring, hazardous materials, asbestos, lead paint, mold remediation, universal waste, UST removal, and salvage/relocation. |
+| Sitework / Civil | Clearing/grubbing, earthwork, excavation, grading, soil stabilization, erosion control, dewatering, shoring/sheeting, utilities, storm, sanitary, water, gas, site electrical, site concrete, curbs/sidewalks, paving, striping, traffic control/signals, site signage, fencing/gates, retaining walls, landscaping, irrigation, hardscape, synthetic turf, athletic fields, playgrounds, and site furnishings. |
+| Concrete | Cast-in-place, tilt-up, precast, shotcrete, structural concrete, slabs, formwork, reinforcing steel, post-tensioning, finishing, polished concrete, sealers/densifiers, repair/restoration, grouting, lightweight concrete, and gypsum cement underlayment. |
+| Masonry | CMU/brick, structural masonry, veneer masonry, stone, cast stone, simulated/manufactured masonry, glass unit masonry, restoration, and tuckpointing/repointing. |
+| Structural Steel | Structural steel, steel joists, metal decking, steel erection, and miscellaneous structural steel. |
+| Misc Metals | Stairs, railings, ladders, bollards, lintels, shelf angles, gratings, architectural metals, decorative metals, and metal fabrications. |
+| Rough Carpentry | Wood framing, blocking/backing, sheathing, trusses, timber construction, heavy timber, and CLT/mass timber. |
+| Finish Carpentry / Millwork | Architectural millwork, cabinets, casework, Countertops, interior trim, and wood paneling. |
+| Countertops | Specialization under Finish Carpentry / Millwork. Laminate tops may stay with millwork; solid surface, stone, quartz, or granite tops may need separate bid packages. |
+| Roofing | Membrane roofing, TPO, EPDM, PVC, modified bitumen, built-up roofing, metal roofing, shingle roofing, roof accessories, roof hatches, roof curbs, gutters/downspouts, and sheet metal flashing. |
+| Waterproofing | Below-grade, fluid-applied, sheet waterproofing, dampproofing, air/vapor barriers, sealants/caulking, firestopping, and expansion joint covers. |
+| Insulation | Batt, rigid, spray foam, mineral wool, and acoustic insulation; review overlap with drywall, roofing, and waterproofing. |
 | Doors / Frames / Hardware | Doors, frames, hardware, access doors when appropriate. |
 | Overhead Doors | Standalone trade for sectional doors, coiling doors, rolling doors, and loading dock doors. |
 | Glass / Glazing | Storefront, curtain wall, windows, glazing systems. |
@@ -101,7 +105,7 @@ The initial company-standard taxonomy should include at least:
 | HVAC | Mechanical HVAC systems, ductwork, piping, controls where company standards place controls here. |
 | Electrical | Power, lighting, panels, distribution, devices. |
 | Low Voltage / Technology | Data, communications, security, AV, low-voltage systems. |
-| Earthwork / Sitework | Sitework specializations include Demolition, Earthwork, Utilities, Asphalt / Paving, and Landscaping. |
+| Earthwork / Sitework | See Sitework / Civil. Demolition now lives under Existing Conditions / Demolition rather than Sitework. |
 | Utilities | Site utilities, water, sewer, storm, gas, utility tie-ins. |
 | Asphalt / Paving | Asphalt paving, striping, pavement markings where applicable. |
 | Landscaping | Planting, irrigation, landscape accessories. |
