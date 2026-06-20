@@ -37,6 +37,8 @@ Each trade package template should support this structure:
 | `notes` | Human-readable guidance for edge cases. |
 | `fallbackBehavior` | What to do when selected CSI tags match partially or ambiguously. |
 
+The implementation may store hierarchy with `parentId`, but user-facing terminology should describe lower-level trade nodes as `Specializations`, not children.
+
 Suggested TypeScript shape:
 
 ```ts
@@ -61,29 +63,31 @@ The initial company-standard taxonomy should include at least:
 
 | Trade package | Notes |
 | --- | --- |
-| Concrete | Cast-in-place, formwork, reinforcing, slabs, foundations where applicable. |
-| Masonry | CMU, brick, stone masonry, masonry restoration where applicable. |
+| Concrete | Specializations include Cast-In-Place Concrete, Tilt-Up Concrete, Precast Concrete, and Shotcrete. |
+| Masonry | Specializations include CMU / Brick Masonry, Stone Masonry, and Simulated Masonry. |
 | Structural Steel | Structural steel framing, joists, deck where company standards place them here. |
-| Misc Metals | Railings, ladders, embeds, bollards, miscellaneous metal fabrications. |
+| Misc Metals | Specializations include Architectural Metals and Railings. |
 | Rough Carpentry | Blocking, sheathing, wood framing, rough carpentry scopes. |
-| Finish Carpentry / Millwork | Architectural woodwork, casework, finish carpentry. |
-| Roofing | Membrane roofing, shingles, sheet metal roof accessories where applicable. |
+| Finish Carpentry / Millwork | Architectural woodwork, casework, finish carpentry, and Countertops where project/vendor strategy supports it. |
+| Countertops | Specialization under Finish Carpentry / Millwork. Laminate tops may stay with millwork; stone, quartz, granite, or solid-surface tops may need separate bid packages. |
+| Roofing | Specializations include Membrane Roofing, Sheet Metal Roofing, and Shingle Roofing. |
 | Waterproofing | Below-grade waterproofing, sealants, air barriers where company standards place them here. |
 | Doors / Frames / Hardware | Doors, frames, hardware, access doors when appropriate. |
+| Overhead Doors | Standalone trade for sectional doors, coiling doors, rolling doors, and loading dock doors. |
 | Glass / Glazing | Storefront, curtain wall, windows, glazing systems. |
 | Drywall / Framing | Gypsum board, drywall, metal studs, non-structural metal framing, shaft wall. |
 | Ceilings | ACT, specialty ceilings, ceiling suspension systems. |
 | Flooring | Resilient, carpet, wood, fluid-applied flooring where applicable. |
 | Tile | Ceramic, porcelain, stone tile, tile setting materials. |
 | Painting / Coatings | Painting, high-performance coatings, wall coverings where applicable. |
-| Specialties | Toilet accessories, visual display boards, lockers, signage, and similar specialties. |
+| Specialties | Needs separate estimator review before adding toilet accessories, fire extinguishers, lockers, signage, and similar specialty breakdowns. |
 | Equipment | Owner or contractor equipment scopes where not carried by another trade. |
 | Fire Protection | Fire sprinkler and suppression systems. |
-| Plumbing | Domestic water, sanitary, storm, fixtures, plumbing equipment. |
+| Plumbing | Domestic water, sanitary, storm, fixtures, plumbing equipment, and Medical Gas where applicable. |
 | HVAC | Mechanical HVAC systems, ductwork, piping, controls where company standards place controls here. |
 | Electrical | Power, lighting, panels, distribution, devices. |
 | Low Voltage / Technology | Data, communications, security, AV, low-voltage systems. |
-| Earthwork / Sitework | Excavation, grading, erosion control, site preparation. |
+| Earthwork / Sitework | Sitework specializations include Demolition, Earthwork, Utilities, Asphalt / Paving, and Landscaping. |
 | Utilities | Site utilities, water, sewer, storm, gas, utility tie-ins. |
 | Asphalt / Paving | Asphalt paving, striping, pavement markings where applicable. |
 | Landscaping | Planting, irrigation, landscape accessories. |
@@ -153,4 +157,3 @@ Future taxonomy work may include:
 - split/merge suggestions
 - confidence scores for generated packages
 - review-needed flags for ambiguous CSI tags
-

@@ -160,7 +160,9 @@ function SuggestedPackageCard({
           </div>
           <p className="muted-text">
             Trade: {getTradeName(suggestion.tradeId)}
-            {suggestion.parentTradeId ? ` / Parent: ${getTradeName(suggestion.parentTradeId)}` : ""}
+            {suggestion.parentTradeId
+              ? ` / Trade category: ${getTradeName(suggestion.parentTradeId)}`
+              : ""}
           </p>
         </div>
         <span className="badge badge-primary">{suggestion.csiItemIds.length} CSI tags</span>
@@ -168,7 +170,7 @@ function SuggestedPackageCard({
 
       {suggestion.childTradeIds?.length ? (
         <div className="cluster gap-2" style={{ marginTop: 10 }}>
-          <span className="label-text">Child trades</span>
+          <span className="label-text">Specializations</span>
           {suggestion.childTradeIds.map((childTradeId) => (
             <span key={childTradeId} className="badge badge-muted">
               {getTradeName(childTradeId)}
@@ -332,8 +334,8 @@ export default function TradeTaxonomyWorkbenchPage() {
               <p className="label-text">Default Taxonomy</p>
               <h2>Trade Hierarchy</h2>
               <p className="muted-text">
-                Parent and child trades are shown with package mode, active status, and bid
-                package eligibility.
+                Trade categories and specializations are shown with package mode, active
+                status, and bid package eligibility.
               </p>
             </div>
             <span className="badge badge-primary">{taxonomy.length} trades</span>
