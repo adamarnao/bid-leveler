@@ -21,6 +21,7 @@ const projectCsiSelectionsStorageKey = "projectCsiSelections";
 const projectDraftInviteSelectionsStorageKey = "projectDraftInviteSelections";
 const EMPTY_PROJECT_CSI_SELECTIONS: StoredProjectCsiSelections = {};
 const EMPTY_DRAFT_INVITE_SELECTIONS: StoredProjectDraftInviteSelections = {};
+const EMPTY_BID_SUBMISSIONS_SNAPSHOT: ProjectBidSubmission[] = [];
 const sortOptions: { label: string; value: ProjectSortKey }[] = [
   { label: "Due Soon", value: "dueSoon" },
   { label: "Health Risk", value: "healthRisk" },
@@ -581,7 +582,7 @@ function getDraftInviteSelectionsSnapshot(): StoredProjectDraftInviteSelections 
 }
 
 function getServerBidSubmissionsSnapshot(): ProjectBidSubmission[] {
-  return [];
+  return EMPTY_BID_SUBMISSIONS_SNAPSHOT;
 }
 
 function getBidSubmissionsSnapshot(): ProjectBidSubmission[] {
