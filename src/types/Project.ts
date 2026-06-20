@@ -234,6 +234,13 @@ export type ProjectItbInstructions = {
   replyToPhone?: string;
 };
 
+export type ProjectBasicsDetails = {
+  sector?: string;
+  projectType?: string;
+  floors?: string;
+  buildingDetails?: string;
+};
+
 export type Project = {
   id: string;
 
@@ -284,4 +291,5 @@ export type Project = {
   bidRequirements?: ProjectBidRequirements;
   budgetReadiness?: ProjectBudgetReadiness;
   itbInstructions?: ProjectItbInstructions;
+  projectBasicsDetails?: ProjectBasicsDetails;
 };

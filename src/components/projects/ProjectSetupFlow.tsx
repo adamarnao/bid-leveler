@@ -17,6 +17,7 @@ import {
 import { getCompanySettings } from "@/lib/settings";
 import {
   Project,
+  ProjectBasicsDetails,
   MarketSector,
   ProjectBidRequirements,
   ProjectBidSubmissionMethod,
@@ -74,16 +75,9 @@ const setupSteps = [
   {
     id: "project-scope-csi",
     group: "ITB Launch Readiness",
-    title: "Project Scope / CSI",
+    title: "Project Scope / Bid Packages",
     summary:
-      "Review selected CSI scopes that drive matching, Bid Packages, and bid coverage.",
-  },
-  {
-    id: "bid-packages",
-    group: "ITB Launch Readiness",
-    title: "Bid Packages",
-    summary:
-      "Group selected CSI scopes into estimator-facing packages that can be invited and leveled.",
+      "Review the Bid Packages subcontractors will be invited to bid, with CSI codes as supporting tags for matching and scope clarity.",
   },
   {
     id: "itb-launch",
@@ -136,6 +130,7 @@ const legacyStepIdAliases: Record<string, string> = {
   "external-team-rfi-routing": "communication-contacts",
   "schedule-milestones": "bid-dates-events",
   "plans-characteristics-scope": "documents-bid-instructions",
+  "bid-packages": "project-scope-csi",
   "review-launch": "itb-launch",
 };
 
@@ -278,6 +273,7 @@ type ProjectSetupDraft = Partial<
     | "state"
     | "zip"
     | "estimator"
+    | "marketSector"
     | "status"
     | "planLink"
     | "documentNotes"
@@ -292,6 +288,7 @@ type ProjectSetupDraft = Partial<
     | "projectScope"
     | "budgetReadiness"
     | "itbInstructions"
+    | "projectBasicsDetails"
   >
 >;
 
@@ -313,6 +310,11 @@ type ProjectSetupValidationErrors = {
 };
 
 type SetupReviewStatus = "complete" | "incomplete" | "optional";
+type SetupStepNavigationStatus =
+  | "complete"
+  | "required-incomplete"
+  | "needs-review"
+  | "not-started";
 
 type SetupReadinessRow = {
   stepId: string;
@@ -568,6 +570,11 @@ export default function ProjectSetupFlow({
             {setupSteps.map((step, index) => {
               const isActive = step.id === activeStep.id;
               const isComplete = completedStepIds.has(step.id);
+              const stepStatus = getSetupStepNavigationStatus(
+                step.id,
+                completedStepIds,
+                readinessSummary.rows
+              );
               const previousStep = setupSteps[index - 1];
               const showGroupLabel =
                 index === 0 || previousStep?.group !== step.group;
@@ -592,15 +599,26 @@ export default function ProjectSetupFlow({
                     onClick={() => setSelectedStepId(step.id)}
                   >
                     <span className="project-setup-step-index">
-                      {isComplete ? "Done" : index + 1}
+                      {index + 1}
                     </span>
-                    <span>
+                    <span className="project-setup-step-main">
                       <span className="project-setup-step-title">
                         {step.title}
                       </span>
                       <span className="project-setup-step-state">
-                        {isComplete ? "Complete" : isActive ? "Active" : "Pending"}
+                        {isActive
+                          ? `Active - ${getSetupStepNavigationStatusLabel(
+                              stepStatus
+                            )}`
+                          : getSetupStepNavigationStatusLabel(stepStatus)}
                       </span>
+                    </span>
+                    <span
+                      className={getSetupStepNavigationBadgeClassName(stepStatus)}
+                      aria-label={getSetupStepNavigationStatusLabel(stepStatus)}
+                      title={getSetupStepNavigationStatusLabel(stepStatus)}
+                    >
+                      {getSetupStepNavigationGlyph(stepStatus)}
                     </span>
                   </button>
                 </div>
@@ -637,13 +655,9 @@ export default function ProjectSetupFlow({
                   onChange={updateDraft}
                 />
               ) : activeStep.id === "project-scope-csi" ? (
-                <ProjectScopeCsiStep
+                <ProjectScopeBidPackagesStep
                   project={currentProject}
                   selectedCsiScopeCount={selectedCsiScopeCount}
-                />
-              ) : activeStep.id === "bid-packages" ? (
-                <ProjectBidPackagesStep
-                  project={currentProject}
                   bidPackages={bidPackages}
                   activeBidPackages={activeBidPackages}
                 />
@@ -686,7 +700,6 @@ export default function ProjectSetupFlow({
                   selectedCsiScopeCount={selectedCsiScopeCount}
                   setupStatus={setupStatus}
                   projectSaved={Boolean(currentProject.id)}
-                  onJumpToStep={setSelectedStepId}
                   onMarkReadyForInvites={handleMarkReadyForInvites}
                 />
               ) : activeStep.id === "final-setup-review" ? (
@@ -874,6 +887,60 @@ function normalizeSetupStepId(stepId: string) {
   return legacyStepIdAliases[stepId] ?? stepId;
 }
 
+function getSetupStepNavigationStatus(
+  stepId: string,
+  completedStepIds: Set<string>,
+  readinessRows: SetupReadinessRow[]
+): SetupStepNavigationStatus {
+  if (completedStepIds.has(stepId)) return "complete";
+
+  const readinessRow = readinessRows.find((row) => row.stepId === stepId);
+
+  if (!readinessRow) return "not-started";
+  if (readinessRow.status === "complete") return "complete";
+  if (readinessRow.blocking) return "required-incomplete";
+  if (readinessRow.status === "incomplete") return "needs-review";
+
+  return "not-started";
+}
+
+function getSetupStepNavigationStatusLabel(
+  status: SetupStepNavigationStatus
+) {
+  switch (status) {
+    case "complete":
+      return "Complete";
+    case "required-incomplete":
+      return "Incomplete required";
+    case "needs-review":
+      return "Needs review";
+    case "not-started":
+      return "Not started";
+  }
+}
+
+function getSetupStepNavigationGlyph(status: SetupStepNavigationStatus) {
+  switch (status) {
+    case "complete":
+      return "✓";
+    case "required-incomplete":
+      return "!";
+    case "needs-review":
+      return "?";
+    case "not-started":
+      return "○";
+  }
+}
+
+function getSetupStepNavigationBadgeClassName(
+  status: SetupStepNavigationStatus
+) {
+  return [
+    "project-setup-step-status-badge",
+    `project-setup-step-status-${status}`,
+  ].join(" ");
+}
+
 function ProjectBasicsFields({
   draft,
   errors,
@@ -888,6 +955,13 @@ function ProjectBasicsFields({
     value: ProjectSetupDraft[K]
   ) => void;
 }) {
+  const basicsDetails =
+    draft.projectBasicsDetails ?? project.projectBasicsDetails ?? {};
+
+  function updateBasicsDetails(updates: Partial<ProjectBasicsDetails>) {
+    onChange("projectBasicsDetails", { ...basicsDetails, ...updates });
+  }
+
   return (
     <div className="project-setup-field-sections">
       <div className="project-setup-form-card">
@@ -936,6 +1010,50 @@ function ProjectBasicsFields({
                 </option>
               ))}
             </select>
+          </label>
+          <label className="form-field">
+            Market Sector
+            <select
+              value={draft.marketSector ?? project.marketSector}
+              onChange={(event) =>
+                onChange("marketSector", normalizeMarketSector(event.target.value))
+              }
+            >
+              {marketSectorOptions.map((sector) => (
+                <option key={sector} value={sector}>
+                  {sector}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label className="form-field">
+            Project Type
+            <input
+              value={basicsDetails.projectType ?? ""}
+              onChange={(event) =>
+                updateBasicsDetails({ projectType: event.target.value })
+              }
+            />
+          </label>
+          <label className="form-field">
+            Number of Floors
+            <input
+              inputMode="numeric"
+              value={basicsDetails.floors ?? ""}
+              onChange={(event) =>
+                updateBasicsDetails({ floors: event.target.value })
+              }
+            />
+          </label>
+          <label className="form-field project-setup-field-wide">
+            Building Details
+            <textarea
+              rows={3}
+              value={basicsDetails.buildingDetails ?? ""}
+              onChange={(event) =>
+                updateBasicsDetails({ buildingDetails: event.target.value })
+              }
+            />
           </label>
         </div>
       </div>
@@ -1439,46 +1557,14 @@ function ProjectDocumentsBidInstructionsFields({
   );
 }
 
-function ProjectScopeCsiStep({
+function ProjectScopeBidPackagesStep({
   project,
   selectedCsiScopeCount,
-}: {
-  project: Project;
-  selectedCsiScopeCount: number;
-}) {
-  return (
-    <div className="project-setup-field-sections">
-      <div className="project-setup-form-card">
-        <div className="project-setup-card-header">
-          <div>
-            <p className="label-text">Project Scope / CSI</p>
-            <h3>{selectedCsiScopeCount} selected CSI scope(s)</h3>
-            <p className="muted-text">
-              CSI scope selection remains on the dedicated Project Scope page.
-              These scopes drive Bid Packages, invite matching, and bid leveling.
-            </p>
-          </div>
-          {project.id ? (
-            <Link href={`/projects/${project.id}/scope`} className="button-primary">
-              Open Project Scope
-            </Link>
-          ) : (
-            <span className="button-secondary project-setup-disabled-action">
-              Save the project before opening Project Scope.
-            </span>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function ProjectBidPackagesStep({
-  project,
   bidPackages,
   activeBidPackages,
 }: {
   project: Project;
+  selectedCsiScopeCount: number;
   bidPackages: ProjectBidPackage[];
   activeBidPackages: ProjectBidPackage[];
 }) {
@@ -1492,39 +1578,61 @@ function ProjectBidPackagesStep({
       <div className="project-setup-form-card">
         <div className="project-setup-card-header">
           <div>
-            <p className="label-text">Bid Packages</p>
-            <h3>{activeBidPackages.length} active bid package(s)</h3>
+            <p className="label-text">Project Scope / Bid Packages</p>
+            <h3>
+              {activeBidPackages.length} active bid package(s),{" "}
+              {selectedCsiScopeCount} selected CSI scope(s)
+            </h3>
             <p className="muted-text">
-              Bid Packages are the estimator-facing groups that will be invited
-              and leveled. At least one active package with mapped CSI scopes is
-              required for ITB launch readiness.
+              Bid Packages are what subcontractors are invited to bid. CSI codes
+              are supporting tags used for matching, bid leveling, and scope
+              clarity.
             </p>
           </div>
           {project.id ? (
             <Link href={`/projects/${project.id}/scope`} className="button-primary">
-              Manage Bid Packages
+              Manage Scope & Packages
             </Link>
           ) : (
             <span className="button-secondary project-setup-disabled-action">
-              Save the project before managing Bid Packages.
+              Save the project before managing scope and Bid Packages.
             </span>
           )}
         </div>
+
         <div className="badge-list">
+          <span className="badge badge-muted">
+            {selectedCsiScopeCount} selected CSI tag(s)
+          </span>
           <span className="badge badge-muted">{bidPackages.length} total</span>
           <span className="badge badge-muted">
             {mappedScopeCount} mapped CSI scope(s)
           </span>
         </div>
-        {activeBidPackages.length === 0 ? (
+        {activeBidPackages.length > 0 ? (
+          <div className="project-setup-package-summary-list">
+            {activeBidPackages.map((packageRecord) => (
+              <div
+                className="project-setup-package-summary-card"
+                key={packageRecord.id}
+              >
+                <strong>{packageRecord.name}</strong>
+                <span className="badge badge-muted">
+                  {packageRecord.scopeItemIds.length} CSI tag(s)
+                </span>
+              </div>
+            ))}
+          </div>
+        ) : (
           <div className="project-setup-review-callout">
             <strong>No active Bid Packages are ready.</strong>
             <p className="muted-text">
-              Open Project Scope, generate packages from selected CSI scopes, or
-              add packages manually.
+              Open Project Scope to generate packages from selected CSI scopes,
+              or add packages manually. ITB launch readiness requires at least
+              one active package with mapped CSI tags.
             </p>
           </div>
-        ) : null}
+        )}
       </div>
     </div>
   );
@@ -2440,7 +2548,6 @@ function ProjectReviewLaunchFields({
   selectedCsiScopeCount,
   setupStatus,
   projectSaved,
-  onJumpToStep,
   onMarkReadyForInvites,
 }: {
   project: Project;
@@ -2448,7 +2555,6 @@ function ProjectReviewLaunchFields({
   selectedCsiScopeCount: number;
   setupStatus: string;
   projectSaved: boolean;
-  onJumpToStep: (stepId: string) => void;
   onMarkReadyForInvites: () => void;
 }) {
   const inviteReady =
@@ -2507,17 +2613,14 @@ function ProjectReviewLaunchFields({
         <ReadinessGroup
           title="Required for ITB Launch"
           rows={requiredRows}
-          onJumpToStep={onJumpToStep}
         />
         <ReadinessGroup
           title="Recommended Before ITB"
           rows={recommendedRows}
-          onJumpToStep={onJumpToStep}
         />
         <ReadinessGroup
           title="Post-Invite Setup"
           rows={postInviteRows}
-          onJumpToStep={onJumpToStep}
         />
       </div>
 
@@ -2575,11 +2678,9 @@ function ProjectReviewLaunchFields({
 function ReadinessGroup({
   title,
   rows,
-  onJumpToStep,
 }: {
   title: string;
   rows: SetupReadinessRow[];
-  onJumpToStep: (stepId: string) => void;
 }) {
   if (rows.length === 0) return null;
 
@@ -2599,13 +2700,6 @@ function ReadinessGroup({
             <span className="badge badge-muted">
               {formatSetupStatus(row.requirement)}
             </span>
-            <button
-              type="button"
-              className="button-secondary"
-              onClick={() => onJumpToStep(row.stepId)}
-            >
-              Jump
-            </button>
           </div>
         </div>
       ))}
@@ -2645,8 +2739,10 @@ function getSetupReadinessSummary(
     getCommunicationContactReadiness(project),
     getScheduleReadiness(project),
     getDocumentsBidInstructionsReadiness(project),
-    getProjectScopeCsiReadiness(selectedCsiScopeCount),
-    getBidPackageReadiness(activeBidPackages),
+    getProjectScopeBidPackagesReadiness(
+      selectedCsiScopeCount,
+      activeBidPackages
+    ),
     getExternalTeamReadiness(project),
     getBidRequirementsReadiness(project),
     getInternalTeamReadiness(project),
@@ -2860,36 +2956,29 @@ function getDocumentsBidInstructionsReadiness(project: Project): SetupReadinessR
   });
 }
 
-function getProjectScopeCsiReadiness(
-  selectedCsiScopeCount: number
-): SetupReadinessRow {
-  return buildReadinessRow({
-    stepId: "project-scope-csi",
-    stepName: "Project Scope / CSI",
-    requirement: "required",
-    missingItems:
-      selectedCsiScopeCount > 0 ? [] : ["at least one selected CSI scope"],
-    completeSummary: `${selectedCsiScopeCount} CSI scope(s) selected.`,
-  });
-}
-
-function getBidPackageReadiness(
+function getProjectScopeBidPackagesReadiness(
+  selectedCsiScopeCount: number,
   activeBidPackages: ProjectBidPackage[]
 ): SetupReadinessRow {
   const mappedScopeCount = activeBidPackages.reduce(
     (total, packageRecord) => total + packageRecord.scopeItemIds.length,
     0
   );
+  const hasActiveMappedPackage =
+    activeBidPackages.length > 0 && mappedScopeCount > 0;
+  const missingItems = [
+    selectedCsiScopeCount > 0 ? undefined : "at least one selected CSI scope",
+    hasActiveMappedPackage
+      ? undefined
+      : "at least one active Bid Package with mapped CSI scopes",
+  ].filter(isDefined);
 
   return buildReadinessRow({
-    stepId: "bid-packages",
-    stepName: "Bid Packages",
+    stepId: "project-scope-csi",
+    stepName: "Project Scope / Bid Packages",
     requirement: "required",
-    missingItems:
-      activeBidPackages.length > 0
-        ? []
-        : ["at least one active Bid Package with mapped CSI scopes"],
-    completeSummary: `${activeBidPackages.length} active Bid Package(s) with ${mappedScopeCount} mapped CSI scope(s).`,
+    missingItems,
+    completeSummary: `${selectedCsiScopeCount} CSI scope(s) selected and ${activeBidPackages.length} active Bid Package(s) with ${mappedScopeCount} mapped CSI scope(s).`,
   });
 }
 

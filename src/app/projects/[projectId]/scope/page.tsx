@@ -258,12 +258,18 @@ export default function ProjectScopePage() {
 
   return (
     <AppShell title={`${project.name} - Project Scope`}>
-      <Link href={`/projects/${project.id}`}>{"<-"} Back to Command Center</Link>
+      <div className="settings-actions">
+        <Link href={`/projects/${project.id}/setup`} className="button-secondary">
+          {"<-"} Back to Project Setup
+        </Link>
+        <Link href={`/projects/${project.id}`} className="button-secondary">
+          Command Center
+        </Link>
+      </div>
 
       <p>
-        Select the MasterFormat CSI scopes that apply to this project. Later,
-        these selections will control budgeting, bid invites, bid leveling, and
-        proposal generation.
+        Build the Bid Packages subcontractors will be invited to bid. CSI codes
+        are supporting tags used for matching, leveling, and scope clarity.
       </p>
 
       <section style={panel}>
@@ -281,8 +287,9 @@ export default function ProjectScopePage() {
           <div>
             <h2>CSI Scope Selection</h2>
             <p className="muted-text">
-              {selectedItemCount} selected CSI scopes across{" "}
-              {selectedSummary.length} divisions.
+              {selectedItemCount} selected CSI tags across{" "}
+              {selectedSummary.length} divisions. Use CSI to describe and match
+              scope, then group that scope into Bid Packages.
             </p>
           </div>
           <button
@@ -322,8 +329,8 @@ export default function ProjectScopePage() {
           <div>
             <h2>Bid Packages</h2>
             <p className="muted-text">
-              Group selected CSI scopes into the bid packages estimators actually
-              level and invite.
+              Bid Packages are the invitation and leveling units estimators work
+              from. Mapped CSI tags stay attached for matching and scope clarity.
             </p>
           </div>
           <div className="settings-actions">

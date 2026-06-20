@@ -1368,7 +1368,7 @@ textarea:focus {
 
 .project-setup-step {
   display: grid;
-  grid-template-columns: 30px minmax(0, 1fr);
+  grid-template-columns: 30px minmax(0, 1fr) 24px;
   gap: 10px;
   width: 100%;
   padding: 12px;
@@ -1432,6 +1432,10 @@ textarea:focus {
   display: block;
 }
 
+.project-setup-step-main {
+  min-width: 0;
+}
+
 .project-setup-step-title {
   color: inherit;
   font-weight: 800;
@@ -1444,6 +1448,46 @@ textarea:focus {
   font-weight: 800;
   letter-spacing: var(--letter-spacing-label);
   text-transform: uppercase;
+}
+
+.project-setup-step-status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  justify-self: end;
+  width: 22px;
+  height: 22px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-control);
+  color: var(--color-text-muted);
+  background: var(--color-surface-2);
+  font-size: 12px;
+  font-weight: 900;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.project-setup-step-status-complete {
+  border-color: var(--color-success);
+  color: var(--color-success);
+  background: color-mix(in srgb, var(--color-success) 12%, var(--color-surface-2));
+}
+
+.project-setup-step-status-required-incomplete {
+  border-color: var(--color-danger);
+  color: var(--color-danger);
+  background: color-mix(in srgb, var(--color-danger) 10%, var(--color-surface-2));
+}
+
+.project-setup-step-status-needs-review {
+  border-color: var(--color-warning);
+  color: var(--color-warning);
+  background: color-mix(in srgb, var(--color-warning) 12%, var(--color-surface-2));
+}
+
+.project-setup-step-status-not-started {
+  border-color: var(--color-border);
+  color: var(--color-text-muted);
 }
 
 .project-setup-step-content {
@@ -1461,6 +1505,23 @@ textarea:focus {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-card);
   background: var(--color-surface-2);
+}
+
+.project-setup-package-summary-list {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.project-setup-package-summary-card {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  padding: 10px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-control);
+  background: var(--color-surface-1);
 }
 
 .project-setup-card-header,
