@@ -95,7 +95,7 @@ export default function ProjectCommandCenterPage() {
               href={`/projects/${project.id}/overview`}
               className="command-nav-link"
             >
-              Overview
+              Estimate Review
             </Link>
             <Link
               href={`/projects/${project.id}/setup`}

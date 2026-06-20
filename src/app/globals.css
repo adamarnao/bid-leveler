@@ -2385,6 +2385,46 @@ textarea:focus {
   opacity: 0.92;
 }
 
+.estimate-review-stack {
+  display: grid;
+  gap: 14px;
+}
+
+.estimate-review-input-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.estimate-review-input-card {
+  display: grid;
+  gap: 4px;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-control);
+  padding: 10px;
+  background: var(--color-surface-2);
+}
+
+.estimate-review-input-card strong {
+  overflow-wrap: anywhere;
+}
+
+.estimate-review-note-group {
+  display: grid;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.estimate-review-note-group h3 {
+  margin: 0;
+}
+
+.estimate-review-note-group ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
 .project-csi-section-header,
 .project-csi-division-card-header {
   display: flex;

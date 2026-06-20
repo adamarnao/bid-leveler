@@ -421,7 +421,7 @@ function ProjectHealthCard({
           Invites
         </Link>
         <Link href={`/projects/${project.id}/overview`} className="button-secondary">
-          Overview
+          Estimate Review
         </Link>
         <button
           type="button"

@@ -5,11 +5,16 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { CsiCodeLabel, CsiHierarchyPath, CsiLevelBadge } from "@/components/csi";
 import AppShell from "@/components/layout/AppShell";
+import ProjectCostSummaryTable from "@/components/projects/ProjectCostSummaryTable";
 import { getNearestLevel2Ancestor } from "@/lib/csiCatalog";
 import {
+  getLeveledBidAmount,
   getMissingBidCoverage,
+  getProjectBidLevelingDecisions,
+  getProjectBidSubmissions,
   getProjectBidSummary,
   getProjectScopeBidCoverage,
+  getSubmittedBidAmount,
 } from "@/lib/projectBids";
 import { getMergedProjects, projectsStorageKey } from "@/lib/projects";
 import {
@@ -26,6 +31,11 @@ import {
   CsiSection,
   StoredProjectCsiSelections,
 } from "@/types/Csi";
+import {
+  BidPricingItem,
+  ProjectBidLevelingDecision,
+  ProjectBidSubmission,
+} from "@/types/Bid";
 
 const selectionStorageKey = "projectCsiSelections";
 const EMPTY_PROJECT_CSI_SELECTIONS: StoredProjectCsiSelections = {};
@@ -61,9 +71,16 @@ export default function ProjectOverviewPage() {
       )
     : allDivisions;
   const bidSummary = getProjectBidSummary(project.id, csiSelection);
+  const bidSubmissions = getProjectBidSubmissions(project.id);
+  const levelingDecisions = getProjectBidLevelingDecisions(project.id);
+  const estimateReview = buildEstimateReview(
+    project,
+    bidSubmissions,
+    levelingDecisions
+  );
 
   return (
-    <AppShell title="Overview">
+    <AppShell title="Estimate Review">
       <div className="page-header">
         <div>
           <Link href={`/projects/${project.id}`}>
@@ -71,7 +88,8 @@ export default function ProjectOverviewPage() {
           </Link>
           <h1>{project.name}</h1>
           <p className="muted-text">
-            Project summary, selected CSI tags, and bid coverage signals.
+            Compile selected bids, financial markups, clarifications,
+            exclusions, and proposal-ready notes before client proposal output.
           </p>
         </div>
         <div className="page-header-actions">
@@ -80,6 +98,15 @@ export default function ProjectOverviewPage() {
             className="button-primary"
           >
             Bid Leveling
+          </Link>
+          <Link href={`/projects/${project.id}/bids`} className="button-secondary">
+            Bids
+          </Link>
+          <Link
+            href={`/projects/${project.id}/proposal`}
+            className="button-secondary"
+          >
+            Proposal
           </Link>
           <Link
             href={`/projects/${project.id}/scope`}
@@ -97,7 +124,7 @@ export default function ProjectOverviewPage() {
       </div>
 
       <section style={panel}>
-        <h2>Project Details</h2>
+        <h2>Project Context</h2>
         <p>
           <strong>Client:</strong> {project.client}
         </p>
@@ -121,41 +148,158 @@ export default function ProjectOverviewPage() {
       </section>
 
       <section style={panel}>
-        <h2>Project Cost Summary</h2>
-        {bidSummary.submissionCount === 0 ? (
+        <h2>Financial Review Sheet</h2>
+        {estimateReview.selectedBids.length === 0 ? (
           <div style={pendingState}>
-            <strong>No bid totals available yet.</strong>
+            <strong>No selected bids loaded into the review sheet yet.</strong>
             <p className="muted-text">
-              Bid and cost summaries will appear after bids are entered and
-              leveled.
+              Select winning bids in Bid Leveling or mark bid submissions as
+              selected before compiling the project financial review.
             </p>
+            <div className="settings-actions">
+              <Link
+                href={`/projects/${project.id}/leveling`}
+                className="button-primary"
+              >
+                Open Bid Leveling
+              </Link>
+              <Link
+                href={`/projects/${project.id}/bids`}
+                className="button-secondary"
+              >
+                View Bids
+              </Link>
+            </div>
           </div>
         ) : (
-          <div className="badge-list">
-            <span className="badge badge-muted">
-              Bids Received {bidSummary.submissionCount}
-            </span>
-            <span className="badge badge-muted">
-              Selected Bids {bidSummary.selectedBidCount}
-            </span>
-            <span className="badge badge-muted">
-              Selected Total ${bidSummary.selectedBidTotal.toLocaleString()}
-            </span>
-            <span className="badge badge-muted">
-              Unreviewed {bidSummary.unreviewedBidCount}
-            </span>
-            <span className="badge badge-muted">
-              Missing Coverage {bidSummary.missingCoverageCount}
-            </span>
+          <div className="estimate-review-stack">
+            <div className="badge-list">
+              <span className="badge badge-muted">
+                Bids Received {bidSummary.submissionCount}
+              </span>
+              <span className="badge badge-muted">
+                Selected Bids {estimateReview.selectedBids.length}
+              </span>
+              <span className="badge badge-muted">
+                Subcontractor Subtotal{" "}
+                {formatCurrency(estimateReview.selectedBidTotal)}
+              </span>
+              <span className="badge badge-muted">
+                Missing Coverage {bidSummary.missingCoverageCount}
+              </span>
+            </div>
+
+            <div className="table-shell">
+              <ProjectCostSummaryTable rows={estimateReview.costRows} />
+            </div>
           </div>
         )}
       </section>
 
       <section style={panel}>
-        <h2>CSI Tag Summary</h2>
+        <h2>Selected Bid Breakdown</h2>
+        {estimateReview.selectedBids.length === 0 ? (
+          <p className="muted-text">
+            Selected subcontractor bids will appear here after leveling.
+          </p>
+        ) : (
+          <div className="table-shell">
+            <table className="data-table">
+              <thead>
+                <tr>
+                  <th>Subcontractor</th>
+                  <th>Status</th>
+                  <th>Base Bid</th>
+                  <th>Accepted Pricing</th>
+                  <th>Leveling Adjustments</th>
+                  <th>Selected Amount</th>
+                  <th>Proposal Context</th>
+                </tr>
+              </thead>
+              <tbody>
+                {estimateReview.selectedBids.map((selectedBid) => (
+                  <tr key={selectedBid.submission.id}>
+                    <td>{selectedBid.submission.subcontractorName ?? "Unassigned"}</td>
+                    <td>
+                      <span className="badge badge-primary">
+                        {formatStatus(selectedBid.submission.status)}
+                      </span>
+                    </td>
+                    <td>{formatCurrency(selectedBid.baseAmount)}</td>
+                    <td>{formatCurrency(selectedBid.acceptedPricingTotal)}</td>
+                    <td>{formatCurrency(selectedBid.levelingAdjustmentTotal)}</td>
+                    <td>{formatCurrency(selectedBid.selectedAmount)}</td>
+                    <td>
+                      <span className="muted-text">
+                        {selectedBid.proposalNoteCount} notes / clarifications
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </section>
+
+      <section style={panel}>
+        <h2>Financial Inputs Pending</h2>
+        <div className="estimate-review-input-grid">
+          <ReviewInputStatus
+            label="General Conditions"
+            value="Not modeled yet"
+          />
+          <ReviewInputStatus label="GC Fee" value="Not modeled yet" />
+          <ReviewInputStatus label="Insurance" value="Not modeled yet" />
+          <ReviewInputStatus label="Taxes / Bonds" value="Not modeled yet" />
+          <ReviewInputStatus
+            label="Allowances"
+            value={
+              estimateReview.allowanceTotal
+                ? formatCurrency(estimateReview.allowanceTotal)
+                : "No selected allowances"
+            }
+          />
+          <ReviewInputStatus
+            label="Alternates"
+            value={
+              estimateReview.alternateTotal
+                ? formatCurrency(estimateReview.alternateTotal)
+                : "No accepted alternates"
+            }
+          />
+        </div>
         <p className="muted-text">
-          CSI tags support package matching and scope clarity. Use Bid Leveling
-          for bid comparison by Bid Package.
+          These financial review rows are preserved as estimate review concepts,
+          but only selected bid data is totaled until real markup, tax, bond,
+          and general condition inputs are implemented.
+        </p>
+      </section>
+
+      <section style={panel}>
+        <h2>Proposal / Clarifications Output</h2>
+        <p className="muted-text">
+          The estimate review compiles selected bids, financial markups,
+          clarifications, exclusions, alternates, allowances, and proposal-ready
+          notes before generating the client proposal.
+        </p>
+        <ProposalNoteList title="Inclusions" values={estimateReview.inclusions} />
+        <ProposalNoteList title="Clarifications" values={estimateReview.clarifications} />
+        <ProposalNoteList title="Exclusions" values={estimateReview.exclusions} />
+        <ProposalNoteList
+          title="Qualifications / Notes"
+          values={estimateReview.proposalNotes}
+        />
+        <Link href={`/projects/${project.id}/proposal`} className="button-secondary">
+          Open Proposal Draft
+        </Link>
+      </section>
+
+      <section style={panel}>
+        <h2>CSI Coverage Reference</h2>
+        <p className="muted-text">
+          Secondary CSI drilldown for scope coverage. Financial review and bid
+          comparison should flow through Bid Leveling and selected bids.
         </p>
 
         <table style={{ borderCollapse: "collapse", minWidth: 1000 }}>
@@ -298,19 +442,382 @@ export default function ProjectOverviewPage() {
           </tbody>
         </table>
       </section>
-
-      <section style={panel}>
-        <h2>Future Proposal</h2>
-        <p>
-          Proposal generation will compile project details, selected costs,
-          alternates, clarifications, exclusions, and notes.
-        </p>
-        <Link href={`/projects/${project.id}/proposal`} className="button-secondary">
-          Open Proposal Draft
-        </Link>
-      </section>
     </AppShell>
   );
+}
+
+type EstimateReview = {
+  selectedBids: SelectedBidReview[];
+  selectedBidTotal: number;
+  baseBidSubtotal: number;
+  alternateTotal: number;
+  allowanceTotal: number;
+  levelingAddTotal: number;
+  levelingDeductTotal: number;
+  costRows: Array<{
+    label: string;
+    amount: number;
+    squareFootage: number;
+    totalProjectCost: number;
+    constructionCost: number;
+    durationMonths: number;
+    bold?: boolean;
+  }>;
+  inclusions: string[];
+  clarifications: string[];
+  exclusions: string[];
+  proposalNotes: string[];
+};
+
+type SelectedBidReview = {
+  submission: ProjectBidSubmission;
+  decision?: ProjectBidLevelingDecision;
+  baseAmount: number;
+  acceptedPricingTotal: number;
+  levelingAdjustmentTotal: number;
+  selectedAmount: number;
+  proposalNoteCount: number;
+};
+
+function ReviewInputStatus({
+  label,
+  value,
+}: {
+  label: string;
+  value: string;
+}) {
+  return (
+    <div className="estimate-review-input-card">
+      <span className="label-text">{label}</span>
+      <strong>{value}</strong>
+    </div>
+  );
+}
+
+function ProposalNoteList({
+  title,
+  values,
+}: {
+  title: string;
+  values: string[];
+}) {
+  return (
+    <div className="estimate-review-note-group">
+      <h3>{title}</h3>
+      {values.length === 0 ? (
+        <p className="muted-text">No {title.toLowerCase()} captured yet.</p>
+      ) : (
+        <ul>
+          {values.map((value, index) => (
+            <li key={`${title}-${index}`}>{value}</li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+function buildEstimateReview(
+  project: Project,
+  submissions: ProjectBidSubmission[],
+  decisions: ProjectBidLevelingDecision[]
+): EstimateReview {
+  const selectedBids = getSelectedBidReviews(submissions, decisions);
+  const selectedBidTotal = selectedBids.reduce(
+    (sum, bid) => sum + bid.selectedAmount,
+    0
+  );
+  const baseBidSubtotal = selectedBids.reduce(
+    (sum, bid) => sum + bid.baseAmount,
+    0
+  );
+  const alternateTotal = selectedBids.reduce(
+    (sum, bid) =>
+      sum +
+      getAcceptedSubmittedPricingItems(bid.submission, bid.decision)
+        .filter((item) => item.category === "ALTERNATE")
+        .reduce((itemSum, item) => itemSum + getPricingItemSignedAmount(item), 0),
+    0
+  );
+  const allowanceTotal = selectedBids.reduce(
+    (sum, bid) =>
+      sum +
+      getAcceptedSubmittedPricingItems(bid.submission, bid.decision)
+        .filter((item) => item.category === "ALLOWANCE")
+        .reduce((itemSum, item) => itemSum + getPricingItemSignedAmount(item), 0),
+    0
+  );
+  const levelingAddTotal = selectedBids.reduce(
+    (sum, bid) =>
+      sum +
+      (bid.decision?.adjustments ?? [])
+        .filter((item) => item.direction === "ADD")
+        .reduce((itemSum, item) => itemSum + getPricingItemAmount(item), 0),
+    0
+  );
+  const levelingDeductTotal = selectedBids.reduce(
+    (sum, bid) =>
+      sum +
+      (bid.decision?.adjustments ?? [])
+        .filter((item) => item.direction === "DEDUCT")
+        .reduce((itemSum, item) => itemSum + getPricingItemAmount(item), 0),
+    0
+  );
+  const squareFootage =
+    project.projectCharacteristics?.squareFootage ?? project.squareFootage ?? 0;
+  const durationMonths = project.projectDurationMonths ?? 0;
+  const costRows = [
+    {
+      label: "Selected Base Bids",
+      amount: baseBidSubtotal,
+      squareFootage,
+      totalProjectCost: selectedBidTotal,
+      constructionCost: selectedBidTotal,
+      durationMonths,
+    },
+    {
+      label: "Accepted Alternates",
+      amount: alternateTotal,
+      squareFootage,
+      totalProjectCost: selectedBidTotal,
+      constructionCost: selectedBidTotal,
+      durationMonths,
+    },
+    {
+      label: "Allowances",
+      amount: allowanceTotal,
+      squareFootage,
+      totalProjectCost: selectedBidTotal,
+      constructionCost: selectedBidTotal,
+      durationMonths,
+    },
+    {
+      label: "Leveling Adds",
+      amount: levelingAddTotal,
+      squareFootage,
+      totalProjectCost: selectedBidTotal,
+      constructionCost: selectedBidTotal,
+      durationMonths,
+    },
+    {
+      label: "Leveling Deducts",
+      amount: -levelingDeductTotal,
+      squareFootage,
+      totalProjectCost: selectedBidTotal,
+      constructionCost: selectedBidTotal,
+      durationMonths,
+    },
+    {
+      label: "Subcontractor Subtotal",
+      amount: selectedBidTotal,
+      squareFootage,
+      totalProjectCost: selectedBidTotal,
+      constructionCost: selectedBidTotal,
+      durationMonths,
+      bold: true,
+    },
+    {
+      label: "General Conditions",
+      amount: 0,
+      squareFootage,
+      totalProjectCost: selectedBidTotal,
+      constructionCost: selectedBidTotal,
+      durationMonths,
+    },
+    {
+      label: "GC Fee",
+      amount: 0,
+      squareFootage,
+      totalProjectCost: selectedBidTotal,
+      constructionCost: selectedBidTotal,
+      durationMonths,
+    },
+    {
+      label: "Insurance",
+      amount: 0,
+      squareFootage,
+      totalProjectCost: selectedBidTotal,
+      constructionCost: selectedBidTotal,
+      durationMonths,
+    },
+    {
+      label: "Taxes / Bonds",
+      amount: 0,
+      squareFootage,
+      totalProjectCost: selectedBidTotal,
+      constructionCost: selectedBidTotal,
+      durationMonths,
+    },
+    {
+      label: "Project Total",
+      amount: selectedBidTotal,
+      squareFootage,
+      totalProjectCost: selectedBidTotal,
+      constructionCost: selectedBidTotal,
+      durationMonths,
+      bold: true,
+    },
+  ];
+
+  return {
+    selectedBids,
+    selectedBidTotal,
+    baseBidSubtotal,
+    alternateTotal,
+    allowanceTotal,
+    levelingAddTotal,
+    levelingDeductTotal,
+    costRows,
+    inclusions: uniqueStrings(
+      selectedBids.flatMap((bid) => [
+        ...(bid.submission.inclusions ?? []),
+        ...(bid.decision?.normalizedInclusions ?? []),
+      ])
+    ),
+    clarifications: uniqueStrings(
+      selectedBids.flatMap((bid) => bid.submission.clarifications ?? [])
+    ),
+    exclusions: uniqueStrings(
+      selectedBids.flatMap((bid) => [
+        ...(bid.submission.exclusions ?? []),
+        ...(bid.decision?.normalizedExclusions ?? []),
+      ])
+    ),
+    proposalNotes: uniqueStrings(
+      selectedBids.flatMap((bid) => [
+        ...(bid.submission.qualifications ?? []),
+        ...(bid.submission.notes ? [bid.submission.notes] : []),
+        ...(bid.decision?.scopeGapNotes ? [bid.decision.scopeGapNotes] : []),
+      ])
+    ),
+  };
+}
+
+function getSelectedBidReviews(
+  submissions: ProjectBidSubmission[],
+  decisions: ProjectBidLevelingDecision[]
+): SelectedBidReview[] {
+  const submissionsById = new Map(
+    submissions.map((submission) => [submission.id, submission])
+  );
+  const selectedDecisionReviews = decisions
+    .filter((decision) => decision.isSelected)
+    .map((decision) => {
+      const submission = submissionsById.get(decision.bidSubmissionId);
+      if (!submission) return undefined;
+
+      return buildSelectedBidReview(submission, decision);
+    })
+    .filter(isDefined);
+  const selectedDecisionSubmissionIds = new Set(
+    selectedDecisionReviews.map((review) => review.submission.id)
+  );
+  const selectedSubmissionReviews = submissions
+    .filter(
+      (submission) =>
+        submission.status === "SELECTED" &&
+        !selectedDecisionSubmissionIds.has(submission.id)
+    )
+    .map((submission) => buildSelectedBidReview(submission));
+
+  return [...selectedDecisionReviews, ...selectedSubmissionReviews].sort(
+    (left, right) =>
+      (left.submission.subcontractorName ?? "").localeCompare(
+        right.submission.subcontractorName ?? ""
+      )
+  );
+}
+
+function buildSelectedBidReview(
+  submission: ProjectBidSubmission,
+  decision?: ProjectBidLevelingDecision
+): SelectedBidReview {
+  const baseAmount = submission.baseBidAmount ?? submission.amount ?? 0;
+  const acceptedPricingTotal = getAcceptedSubmittedPricingItems(
+    submission,
+    decision
+  ).reduce((sum, item) => sum + getPricingItemSignedAmount(item), 0);
+  const levelingAdjustmentTotal = (decision?.adjustments ?? []).reduce(
+    (sum, item) => sum + getPricingItemSignedAmount(item),
+    0
+  );
+  const selectedAmount = decision
+    ? getLeveledBidAmount(submission, decision)
+    : getSubmittedBidAmount(submission);
+  const proposalNoteCount =
+    (submission.inclusions?.length ?? 0) +
+    (submission.exclusions?.length ?? 0) +
+    (submission.clarifications?.length ?? 0) +
+    (submission.qualifications?.length ?? 0) +
+    (submission.notes ? 1 : 0) +
+    (decision?.scopeGapNotes ? 1 : 0);
+
+  return {
+    submission,
+    decision,
+    baseAmount,
+    acceptedPricingTotal,
+    levelingAdjustmentTotal,
+    selectedAmount,
+    proposalNoteCount,
+  };
+}
+
+function getAcceptedSubmittedPricingItems(
+  submission: ProjectBidSubmission,
+  decision?: ProjectBidLevelingDecision
+): BidPricingItem[] {
+  const acceptedPricingItemIds = new Set(decision?.acceptedPricingItemIds ?? []);
+
+  return (submission.pricingItems ?? []).filter((item) => {
+    if (item.source && item.source !== "SUBMITTED") return false;
+    if (acceptedPricingItemIds.size > 0) return acceptedPricingItemIds.has(item.id);
+
+    return item.isAccepted === true;
+  });
+}
+
+function getPricingItemSignedAmount(item: BidPricingItem) {
+  const amount = getPricingItemAmount(item);
+
+  if (item.direction === "DEDUCT") return -amount;
+  if (item.direction === "ADD" || item.direction === "INCLUDED") return amount;
+
+  return 0;
+}
+
+function getPricingItemAmount(item: BidPricingItem) {
+  if (item.amount !== undefined) return item.amount;
+  if (item.quantity !== undefined && item.unitRate !== undefined) {
+    return item.quantity * item.unitRate;
+  }
+
+  return 0;
+}
+
+function uniqueStrings(values: string[]) {
+  return Array.from(
+    new Set(values.map((value) => value.trim()).filter(Boolean))
+  );
+}
+
+function formatCurrency(value: number) {
+  if (!value) return "$ -";
+
+  return `$${value.toLocaleString(undefined, {
+    maximumFractionDigits: 2,
+  })}`;
+}
+
+function formatStatus(value: string) {
+  return value
+    .split("_")
+    .map((word) => word.charAt(0) + word.slice(1).toLowerCase())
+    .join(" ");
+}
+
+function isDefined<T>(value: T | undefined): value is T {
+  return value !== undefined;
 }
 
 const panel: React.CSSProperties = {
