@@ -210,6 +210,15 @@ const contextTriggeredTradeIds: Partial<Record<ProjectContextTag, string[]>> = {
   infection_control: ["healthcare-systems", "temporary-protection"],
 };
 
+const officeTenantImprovementSuppressedTradeIds = new Set([
+  "sitework",
+  "concrete",
+  "masonry",
+  "structural-steel",
+  "roofing",
+  "overhead-doors",
+]);
+
 function createTradeSpecializations(
   parentId: string,
   defaults: Partial<TradeTaxonomyNode>,
@@ -1366,34 +1375,33 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     defaultPackageMode: "USER_CHOICE",
     isActive: true,
     isCommon: true,
-    defaultHidden: true,
-    sectorTags: ["healthcare", "education", "hospitality", "sports", "government"],
-    specialtyTags: ["specialty", "sector_specific"],
+    sectorTags: ["commercial", "office", "healthcare", "education", "hospitality", "sports", "government"],
+    specialtyTags: ["core", "specialty"],
   },
   ...createTradeSpecializations(
     "specialties",
     {
       defaultPackageMode: "USER_CHOICE",
-      sectorTags: ["commercial", "healthcare", "education", "hospitality", "sports", "government"],
+      sectorTags: ["commercial", "office", "healthcare", "education", "hospitality", "sports", "government"],
       specialtyTags: ["specialty"],
     },
     [
       { id: "toilet-accessories", name: "Toilet Accessories", aliases: ["Toilet Room Accessories"], sortOrder: 171, isCommon: true },
       { id: "fire-extinguishers-cabinets", name: "Fire Extinguishers / Cabinets", aliases: ["Fire Extinguishers", "Fire Extinguisher Cabinets"], sortOrder: 172, isCommon: true, relatedTradeIds: ["fire-protection"] },
-      { id: "lockers", name: "Lockers", sortOrder: 173, sectorTags: ["education", "sports", "healthcare", "commercial"] },
+      { id: "lockers", name: "Lockers", sortOrder: 173, defaultHidden: true, sectorTags: ["education", "sports", "healthcare", "commercial"] },
       { id: "signage", name: "Signage", aliases: ["Signs"], sortOrder: 174, isCommon: true },
-      { id: "visual-display-boards", name: "Visual Display Boards", aliases: ["Markerboards", "Tackboards"], sortOrder: 175, sectorTags: ["education", "office", "healthcare"] },
+      { id: "visual-display-boards", name: "Visual Display Boards", aliases: ["Markerboards", "Tackboards"], sortOrder: 175, defaultHidden: true, sectorTags: ["education", "healthcare"] },
       { id: "projection-screens", name: "Projection Screens", sortOrder: 176, defaultHidden: true, sectorTags: ["education", "office", "hospitality"], specialtyTags: ["specialty", "owner_vendor"] },
       { id: "postal-specialties", name: "Postal Specialties", aliases: ["Mailboxes"], sortOrder: 177, defaultHidden: true, sectorTags: ["multifamily", "office", "government"], specialtyTags: ["specialty", "sector_specific"] },
       { id: "cubicle-curtains-tracks", name: "Cubicle Curtains / Tracks", aliases: ["Cubicle Curtains", "Curtain Tracks"], sortOrder: 178, defaultHidden: true, sectorTags: ["healthcare"], specialtyTags: ["specialty", "sector_specific"] },
-      { id: "corner-guards-wall-protection", name: "Corner Guards / Wall Protection", aliases: ["Wall Protection", "Corner Guards"], sortOrder: 179, sectorTags: ["healthcare", "education", "commercial"] },
-      { id: "entrance-mats-grilles", name: "Entrance Mats / Grilles", aliases: ["Entrance Mats", "Entrance Grilles"], sortOrder: 180 },
+      { id: "corner-guards-wall-protection", name: "Corner Guards / Wall Protection", aliases: ["Wall Protection", "Corner Guards"], sortOrder: 179, isCommon: true, sectorTags: ["commercial", "office", "healthcare", "education"] },
+      { id: "entrance-mats-grilles", name: "Entrance Mats / Grilles", aliases: ["Entrance Mats", "Entrance Grilles"], sortOrder: 180, defaultHidden: true, sectorTags: ["commercial", "office", "hospitality"] },
       { id: "flagpoles", name: "Flagpoles", sortOrder: 181, defaultHidden: true, sectorTags: ["government", "education", "commercial"], specialtyTags: ["specialty", "sector_specific"] },
-      { id: "louvers-vents", name: "Louvers / Vents", aliases: ["Louvers", "Vents"], sortOrder: 182, specialtyTags: ["specialty", "cross_trade"], relatedTradeIds: ["hvac", "glass-glazing"] },
+      { id: "louvers-vents", name: "Louvers / Vents", aliases: ["Louvers", "Vents"], sortOrder: 182, defaultHidden: true, specialtyTags: ["specialty", "cross_trade"], relatedTradeIds: ["hvac", "glass-glazing"] },
       { id: "bird-control", name: "Bird Control", sortOrder: 183, defaultHidden: true, sectorTags: ["commercial", "industrial", "transportation"], specialtyTags: ["specialty", "sector_specific"] },
       { id: "operable-partitions", name: "Operable Partitions", sortOrder: 184, defaultHidden: true, sectorTags: ["education", "hospitality", "office"], specialtyTags: ["specialty", "sector_specific"] },
       { id: "accordion-folding-partitions", name: "Accordion / Folding Partitions", aliases: ["Folding Partitions"], sortOrder: 185, defaultHidden: true, sectorTags: ["education", "hospitality", "office"], specialtyTags: ["specialty", "sector_specific"] },
-      { id: "storage-shelving", name: "Storage Shelving", aliases: ["Shelving"], sortOrder: 186, sectorTags: ["warehouse", "healthcare", "education", "commercial"] },
+      { id: "storage-shelving", name: "Storage Shelving", aliases: ["Shelving"], sortOrder: 186, defaultHidden: true, sectorTags: ["warehouse", "healthcare", "education", "commercial"] },
       { id: "wire-mesh-partitions", name: "Wire Mesh Partitions", sortOrder: 187, defaultHidden: true, sectorTags: ["warehouse", "industrial", "detention"], specialtyTags: ["specialty", "sector_specific"] },
       { id: "bath-partitions", name: "Bath Partitions", aliases: ["Toilet Partitions", "Restroom Partitions"], sortOrder: 188, isCommon: true },
     ]
@@ -2194,6 +2202,7 @@ export function shouldShowTradeForProject(
 ): boolean {
   if (!trade.isActive) return false;
   if (context.includeHidden) return true;
+  if (isSuppressedForOfficeTenantImprovement(trade, context)) return false;
   if (!trade.defaultHidden) return true;
 
   return isTradeTriggeredForProject(trade, context);
@@ -2290,6 +2299,30 @@ function isTradeTriggeredForProject(
   if (trade.contextTags?.some((tag) => contextTags.has(tag))) return true;
 
   return getTriggeredTradeIdsForContext(context).has(trade.id);
+}
+
+function isSuppressedForOfficeTenantImprovement(
+  trade: TradeTaxonomyNode,
+  context: TradeVisibilityContext
+): boolean {
+  const sectorTags = new Set(context.sectorTags ?? []);
+  const workTypeTags = new Set(context.workTypeTags ?? []);
+
+  if (!sectorTags.has("office") || !workTypeTags.has("tenant_improvement")) {
+    return false;
+  }
+
+  if (officeTenantImprovementSuppressedTradeIds.has(trade.id)) return true;
+
+  let currentParentId = trade.parentId;
+
+  while (currentParentId) {
+    if (officeTenantImprovementSuppressedTradeIds.has(currentParentId)) return true;
+
+    currentParentId = defaultTradeTaxonomy.find((node) => node.id === currentParentId)?.parentId;
+  }
+
+  return false;
 }
 
 function getTriggeredTradeIdsForContext(context: TradeVisibilityContext): Set<string> {
