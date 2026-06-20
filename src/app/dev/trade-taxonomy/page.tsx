@@ -177,14 +177,14 @@ function formatEnumLabel(value: string): string {
 
 function getModeHelp(mode: TradeTaxonomyNode["defaultPackageMode"]): string {
   if (mode === "UMBRELLA") {
-    return "Matching specializations roll into one bid package by default.";
+    return "When selected CSI tags match one or more specializations under this trade, the generator creates one parent bid package instead of separate specialization packages. Example: Hollow Metal Doors, Wood Doors, and Door Hardware can roll into one Doors / Frames / Hardware package.";
   }
 
   if (mode === "SPLIT_BY_CHILD") {
-    return "Matching specializations become separate bid package suggestions by default.";
+    return "When selected CSI tags match specializations under this trade, the generator creates separate bid packages for those matching specializations by default. Example: Sitework may split into Earthwork, Utilities, Asphalt Paving, and Landscaping.";
   }
 
-  return "Suggests a parent package, but the estimator may split or combine it.";
+  return "When selected CSI tags match several specializations under this trade, the generator suggests one parent package first and marks it for estimator review. The estimator can keep one package or split it into separate packages. Example: Flooring may stay one package or split into Carpet, LVT, and Tile.";
 }
 
 function getStatusLabel(trade: TradeTaxonomyNode, depth: number): "Active" | "Hidden" | "Inactive" | undefined {
@@ -383,29 +383,49 @@ function WorkbenchLegend() {
           <h3>Package Mode</h3>
           <LegendItem
             label="Umbrella"
-            content="Rolls matching specializations into one bid package."
-            help="Use when related scopes are normally invited and leveled together."
+            content="Selected CSI tags matching specializations under this trade create one parent bid package."
+            help="When selected CSI tags match one or more specializations under this trade, the generator creates one parent bid package instead of separate specialization packages. Example: Hollow Metal Doors, Wood Doors, and Door Hardware can roll into one Doors / Frames / Hardware package."
           />
           <LegendItem
             label="Split"
-            content="Creates separate packages for specializations."
-            help="Use when each specialization is normally bid by a different trade or vendor."
+            content="Selected CSI tags matching specializations create separate bid packages by default."
+            help="When selected CSI tags match specializations under this trade, the generator creates separate bid packages for those matching specializations by default. Example: Sitework may split into Earthwork, Utilities, Asphalt Paving, and Landscaping."
           />
           <LegendItem
             label="User Choice"
-            content="Suggests a parent package, but estimator may split it."
-            help="Use where company or project strategy decides how granular the package should be."
+            content="Generator suggests a parent package first and flags the split decision for estimator review."
+            help="When selected CSI tags match several specializations under this trade, the generator suggests one parent package first and marks it for estimator review. The estimator can keep one package or split it into separate packages. Example: Flooring may stay one package or split into Carpet, LVT, and Tile."
           />
         </div>
 
         <div className="taxonomy-legend-group">
           <h3>Metadata</h3>
           <LegendItem label="Common" content="Shown for most projects." />
-          <LegendItem label="GC Cost" content="Estimate review/general conditions, not usually an ITB package." />
-          <LegendItem label="Owner/Vendor" content="May be OFCI, OFOI, CFCI, or vendor-driven." />
-          <LegendItem label="Sector-Specific" content="Appears for matching project sectors." />
-          <LegendItem label="Cross-Trade" content="May belong to more than one trade." />
-          <LegendItem label="Bid Package" content="Can become a project bid package." />
+          <LegendItem
+            label="GC Cost"
+            content="Usually tracked in estimate review, not sent as a normal subcontractor ITB package."
+            help="Usually tracked in the estimate review as a general condition or project cost, not sent as a normal subcontractor ITB package unless the estimator chooses to package it."
+          />
+          <LegendItem
+            label="Owner/Vendor"
+            content="May be furnished, installed, bid, allowed, or excluded based on project requirements."
+            help="May be owner-furnished, owner-installed, contractor-installed, vendor-direct, allowance-based, or excluded from the GC bid depending on project requirements."
+          />
+          <LegendItem
+            label="Sector-Specific"
+            content="Hidden until project sector makes it relevant."
+            help="Hidden by default unless the project sector makes it relevant. Example: Medical Gas appears for healthcare projects; Food Service Equipment appears for restaurant or hospitality projects."
+          />
+          <LegendItem
+            label="Cross-Trade"
+            content="One CSI tag may reasonably map to more than one trade package."
+            help="The same CSI tag may reasonably belong to more than one trade package. The generator chooses a default, but the estimator should review the assignment. Example: Fire Alarm may belong under Electrical, Low Voltage, or Fire Protection depending on company practice."
+          />
+          <LegendItem
+            label="Bid Package"
+            content="Can become a project-specific package used through the ITB and review workflow."
+            help="This trade can become a project-specific bid package used for ITBs, bid collection, leveling, and proposal review."
+          />
         </div>
 
         <div className="taxonomy-legend-group">
@@ -413,17 +433,17 @@ function WorkbenchLegend() {
           <LegendItem
             label="Primary · High"
             className="taxonomy-match-summary taxonomy-confidence-strong"
-            content="Strong default assignment."
+            content="The CSI tag strongly matches this trade and can usually be assigned automatically."
           />
           <LegendItem
             label="Secondary · Medium"
             className="taxonomy-match-summary taxonomy-confidence-medium"
-            content="Plausible, but may need review."
+            content="The CSI tag plausibly belongs here, but another trade may also be reasonable. Review before sending ITBs."
           />
           <LegendItem
             label="Possible · Low"
             className="taxonomy-match-summary taxonomy-confidence-low"
-            content="Weak or ambiguous; estimator should review."
+            content="The CSI tag is ambiguous or weakly matched. The estimator should manually confirm or remap it."
           />
         </div>
       </div>
@@ -826,24 +846,22 @@ export default async function TradeTaxonomyWorkbenchPage({
               <p className="label-text">Fixture Inspection Guide</p>
               <h2>How to Read Generated Results</h2>
               <p className="muted-text">
-                Fixture data shows how sample CSI tags move through the taxonomy generator.
+                Fixture data shows how sample selected project scope tags move through the
+                taxonomy generator.
               </p>
             </div>
           </div>
 
           <ul className="taxonomy-instruction-list">
-            <li>Input CSI items are sample scope tags.</li>
-            <li>Suggested packages are the trade packages the system would create.</li>
-            <li>Assignments show which trade each CSI item mapped to.</li>
-            <li>Confidence indicates how strong the mapping is.</li>
-            <li>
-              Warnings identify ambiguous or cross-trade items that may need estimator review.
-            </li>
-            <li>Unassigned items need manual mapping or taxonomy rule improvement.</li>
+            <li>Input CSI items are sample selected project scope tags.</li>
+            <li>The generator compares those CSI tags to trade mapping rules.</li>
+            <li>Suggested packages show what bid packages would be created.</li>
+            <li>Assignments show why each CSI tag landed in a trade.</li>
+            <li>Confidence shows how safe the automatic assignment is.</li>
+            <li>Warnings identify items that should be reviewed before project use.</li>
           </ul>
           <p className="muted-text">
-            No edits are saved from this page. Use this screen to validate taxonomy behavior
-            before integrating it into Project Scope.
+            No edits are saved from this workbench.
           </p>
         </section>
 
