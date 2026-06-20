@@ -31,6 +31,7 @@ import {
   BidPricingItemDirection,
   BidPricingItemSource,
   ProjectBidPackage,
+  ProjectBidSourceDocumentType,
   ProjectBidSubmissionStatus,
 } from "@/types/Bid";
 import {
@@ -69,9 +70,13 @@ const pricingItemDirections: BidPricingItemDirection[] = [
   "INFORMATIONAL",
 ];
 const submittedPricingItemSource: BidPricingItemSource = "SUBMITTED";
-const sourceDocumentTypes = ["PDF", "WORD", "EXCEL", "EMAIL", "OTHER"] as const;
-
-type SourceDocumentType = (typeof sourceDocumentTypes)[number];
+const sourceDocumentTypes: ProjectBidSourceDocumentType[] = [
+  "PDF",
+  "WORD",
+  "EXCEL",
+  "EMAIL",
+  "OTHER",
+];
 
 type PricingItemDraft = {
   id: string;
@@ -123,7 +128,7 @@ export default function ManualBidEntryPage() {
   const [notes, setNotes] = useState("");
   const [sourceDocumentName, setSourceDocumentName] = useState("");
   const [sourceDocumentType, setSourceDocumentType] =
-    useState<SourceDocumentType>("PDF");
+    useState<ProjectBidSourceDocumentType>("PDF");
   const [sourceDocumentNotes, setSourceDocumentNotes] = useState("");
   const [pricingItemDrafts, setPricingItemDrafts] = useState<
     PricingItemDraft[]
@@ -249,9 +254,8 @@ export default function ManualBidEntryPage() {
     }
 
     const now = new Date().toISOString();
-    const sourceDocumentNote = getSourceDocumentNote(
+    const hasSourceDocumentMetadata = hasSourceDocumentFields(
       sourceDocumentName,
-      sourceDocumentType,
       sourceDocumentNotes
     );
     const validSelection = validateProjectCsiSelection(
@@ -282,7 +286,12 @@ export default function ManualBidEntryPage() {
       exclusions: parseListTextarea(exclusions),
       clarifications: parseListTextarea(clarifications),
       qualifications: parseListTextarea(qualifications),
-      notes: combineNotes(notes, sourceDocumentNote),
+      notes: emptyToUndefined(notes),
+      sourceDocumentName: emptyToUndefined(sourceDocumentName),
+      sourceDocumentType: hasSourceDocumentMetadata
+        ? sourceDocumentType
+        : undefined,
+      sourceDocumentNotes: emptyToUndefined(sourceDocumentNotes),
       attachments: buildSourceDocumentAttachments(sourceDocumentName, now),
       createdAt: now,
       updatedAt: now,
@@ -516,7 +525,9 @@ export default function ManualBidEntryPage() {
                   className="form-input"
                   value={sourceDocumentType}
                   onChange={(event) =>
-                    setSourceDocumentType(event.target.value as SourceDocumentType)
+                    setSourceDocumentType(
+                      event.target.value as ProjectBidSourceDocumentType
+                    )
                   }
                 >
                   {sourceDocumentTypes.map((documentType) => (
@@ -979,36 +990,6 @@ function buildSourceDocumentAttachments(
     : undefined;
 }
 
-function getSourceDocumentNote(
-  sourceDocumentName: string,
-  sourceDocumentType: SourceDocumentType,
-  sourceDocumentNotes: string
-) {
-  const filename = sourceDocumentName.trim();
-  const notes = sourceDocumentNotes.trim();
-
-  if (!filename && !notes) return undefined;
-
-  return [
-    "Source Document",
-    filename ? `Name: ${filename}` : undefined,
-    `Type: ${sourceDocumentType}`,
-    notes ? `Notes: ${notes}` : undefined,
-  ]
-    .filter(Boolean)
-    .join("\n");
-}
-
-function combineNotes(notes: string, sourceDocumentNote: string | undefined) {
-  const bidNotes = notes.trim();
-
-  if (bidNotes && sourceDocumentNote) {
-    return `${bidNotes}\n\n${sourceDocumentNote}`;
-  }
-
-  return bidNotes || sourceDocumentNote || undefined;
-}
-
 function isMeaningfulPricingItemDraft(itemDraft: PricingItemDraft) {
   return Boolean(
     itemDraft.label.trim() ||
@@ -1050,6 +1031,13 @@ function parseOptionalNumber(value: string): number | undefined {
 function emptyToUndefined(value: string) {
   const trimmedValue = value.trim();
   return trimmedValue ? trimmedValue : undefined;
+}
+
+function hasSourceDocumentFields(
+  sourceDocumentName: string,
+  sourceDocumentNotes: string
+) {
+  return Boolean(sourceDocumentName.trim() || sourceDocumentNotes.trim());
 }
 
 function addUnique(values: string[], nextValue: string) {

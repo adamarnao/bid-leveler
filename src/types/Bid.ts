@@ -8,6 +8,13 @@ export type ProjectBidSubmissionStatus =
   | "SELECTED"
   | "REJECTED";
 
+export type ProjectBidSourceDocumentType =
+  | "PDF"
+  | "WORD"
+  | "EXCEL"
+  | "EMAIL"
+  | "OTHER";
+
 export type ProjectBidPackageStatus = "DRAFT" | "ACTIVE" | "CLOSED";
 
 export type ProjectBidPackageSource =
@@ -107,6 +114,9 @@ export type ProjectBidSubmission = {
   clarifications?: string[];
   qualifications?: string[];
   notes?: string;
+  sourceDocumentName?: string;
+  sourceDocumentType?: ProjectBidSourceDocumentType;
+  sourceDocumentNotes?: string;
   pricingItems?: BidPricingItem[];
   alternates?: ProjectBidLineItem[];
   allowances?: ProjectBidLineItem[];

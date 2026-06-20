@@ -27,6 +27,7 @@ import {
   BidPricingItemDirection,
   BidPricingItemSource,
   ProjectBidSubmission,
+  ProjectBidSourceDocumentType,
   ProjectBidSubmissionStatus,
 } from "@/types/Bid";
 import {
@@ -64,10 +65,14 @@ const pricingItemDirections: BidPricingItemDirection[] = [
   "EXCLUDED",
   "INFORMATIONAL",
 ];
-const sourceDocumentTypes = ["PDF", "WORD", "EXCEL", "EMAIL", "OTHER"] as const;
+const sourceDocumentTypes: ProjectBidSourceDocumentType[] = [
+  "PDF",
+  "WORD",
+  "EXCEL",
+  "EMAIL",
+  "OTHER",
+];
 const submittedPricingItemSource: BidPricingItemSource = "SUBMITTED";
-
-type SourceDocumentType = (typeof sourceDocumentTypes)[number];
 
 type PricingItemDraft = {
   id: string;
@@ -165,11 +170,13 @@ function EditBidForm({
   );
   const [notes, setNotes] = useState(bid.notes ?? "");
   const [sourceDocumentName, setSourceDocumentName] = useState(
-    bid.attachments?.[0]?.filename ?? ""
+    bid.sourceDocumentName ?? bid.attachments?.[0]?.filename ?? ""
   );
   const [sourceDocumentType, setSourceDocumentType] =
-    useState<SourceDocumentType>("OTHER");
-  const [sourceDocumentNotes, setSourceDocumentNotes] = useState("");
+    useState<ProjectBidSourceDocumentType>(bid.sourceDocumentType ?? "OTHER");
+  const [sourceDocumentNotes, setSourceDocumentNotes] = useState(
+    bid.sourceDocumentNotes ?? ""
+  );
   const [pricingItemDrafts, setPricingItemDrafts] = useState<PricingItemDraft[]>(
     () => (bid.pricingItems ?? []).map(pricingItemToDraft)
   );
@@ -278,9 +285,8 @@ function EditBidForm({
     }
 
     const now = new Date().toISOString();
-    const sourceDocumentNote = getSourceDocumentNote(
+    const hasSourceDocumentMetadata = hasSourceDocumentFields(
       sourceDocumentName,
-      sourceDocumentType,
       sourceDocumentNotes
     );
     const validSelection = validateProjectCsiSelection(
@@ -310,7 +316,12 @@ function EditBidForm({
       exclusions: parseListTextarea(exclusions),
       clarifications: parseListTextarea(clarifications),
       qualifications: parseListTextarea(qualifications),
-      notes: combineNotes(notes, sourceDocumentNote),
+      notes: emptyToUndefined(notes),
+      sourceDocumentName: emptyToUndefined(sourceDocumentName),
+      sourceDocumentType: hasSourceDocumentMetadata
+        ? sourceDocumentType
+        : undefined,
+      sourceDocumentNotes: emptyToUndefined(sourceDocumentNotes),
       attachments: buildSourceDocumentAttachments(sourceDocumentName, now),
       updatedAt: now,
     });
@@ -486,8 +497,8 @@ function EditBidForm({
 
           <Panel title="Source Document">
             <p className="muted-text">
-              Source type and notes are stored in the bid notes field until file
-              upload metadata is expanded.
+              Source metadata is stored separately from bid notes. File upload
+              can connect here later.
             </p>
             <div style={formGrid}>
               <TextField
@@ -501,7 +512,9 @@ function EditBidForm({
                   className="form-input"
                   value={sourceDocumentType}
                   onChange={(event) =>
-                    setSourceDocumentType(event.target.value as SourceDocumentType)
+                    setSourceDocumentType(
+                      event.target.value as ProjectBidSourceDocumentType
+                    )
                   }
                 >
                   {sourceDocumentTypes.map((documentType) => (
@@ -922,36 +935,6 @@ function buildSourceDocumentAttachments(
     : undefined;
 }
 
-function getSourceDocumentNote(
-  sourceDocumentName: string,
-  sourceDocumentType: SourceDocumentType,
-  sourceDocumentNotes: string
-) {
-  const filename = sourceDocumentName.trim();
-  const notes = sourceDocumentNotes.trim();
-
-  if (!filename && !notes) return undefined;
-
-  return [
-    "Source Document",
-    filename ? `Name: ${filename}` : undefined,
-    `Type: ${sourceDocumentType}`,
-    notes ? `Notes: ${notes}` : undefined,
-  ]
-    .filter(Boolean)
-    .join("\n");
-}
-
-function combineNotes(notes: string, sourceDocumentNote: string | undefined) {
-  const bidNotes = notes.trim();
-
-  if (bidNotes && sourceDocumentNote) {
-    return `${bidNotes}\n\n${sourceDocumentNote}`;
-  }
-
-  return bidNotes || sourceDocumentNote || undefined;
-}
-
 function isMeaningfulPricingItemDraft(itemDraft: PricingItemDraft) {
   return Boolean(
     itemDraft.label.trim() ||
@@ -1008,6 +991,13 @@ function parseOptionalNumber(value: string): number | undefined {
 function emptyToUndefined(value: string) {
   const trimmedValue = value.trim();
   return trimmedValue ? trimmedValue : undefined;
+}
+
+function hasSourceDocumentFields(
+  sourceDocumentName: string,
+  sourceDocumentNotes: string
+) {
+  return Boolean(sourceDocumentName.trim() || sourceDocumentNotes.trim());
 }
 
 function addUnique(values: string[], nextValue: string) {
