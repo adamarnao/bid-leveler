@@ -2,7 +2,10 @@
 
 import { useMemo, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
-import { mockBidSubmissions } from "@/data/mockBidSubmissions";
+import {
+  getAllProjectBidSubmissions,
+  projectBidSubmissionsStorageKey,
+} from "@/lib/projectBids";
 import {
   archiveProject,
   getActiveProjects,
@@ -11,6 +14,7 @@ import {
 } from "@/lib/projects";
 import AppShell from "@/components/layout/AppShell";
 import { StoredProjectCsiSelection, StoredProjectCsiSelections } from "@/types/Csi";
+import { ProjectBidSubmission } from "@/types/Bid";
 import { Project } from "@/types/Project";
 
 const projectCsiSelectionsStorageKey = "projectCsiSelections";
@@ -94,6 +98,7 @@ export default function Home() {
   const projects = useProjectsSnapshot();
   const projectCsiSelections = useProjectCsiSelectionsSnapshot();
   const draftInviteSelections = useDraftInviteSelectionsSnapshot();
+  const bidSubmissions = useBidSubmissionsSnapshot();
   const [sortKey, setSortKey] = useState<ProjectSortKey>("dueSoon");
   const today = useMemo(() => startOfLocalDay(new Date()), []);
   const [selectedCalendarDate, setSelectedCalendarDate] = useState<Date>(today);
@@ -115,10 +120,17 @@ export default function Home() {
           project,
           projectCsiSelections[project.id],
           draftInviteSelections[project.id],
+          bidSubmissions,
           today
         )
       ),
-    [activeProjects, draftInviteSelections, projectCsiSelections, today]
+    [
+      activeProjects,
+      bidSubmissions,
+      draftInviteSelections,
+      projectCsiSelections,
+      today,
+    ]
   );
   const sortedProjects = useMemo(
     () => sortDashboardProjects(dashboardProjects, sortKey),
@@ -476,6 +488,8 @@ let cachedProjectCsiSelections: StoredProjectCsiSelections =
 let cachedDraftInviteSelectionsStorageValue: string | undefined;
 let cachedDraftInviteSelections: StoredProjectDraftInviteSelections =
   EMPTY_DRAFT_INVITE_SELECTIONS;
+let cachedBidSubmissionsStorageValue: string | undefined;
+let cachedBidSubmissions: ProjectBidSubmission[] = [];
 
 function useProjectsSnapshot(): Project[] {
   return useSyncExternalStore(
@@ -498,6 +512,14 @@ function useDraftInviteSelectionsSnapshot(): StoredProjectDraftInviteSelections 
     subscribeToDashboardStorage,
     getDraftInviteSelectionsSnapshot,
     getServerDraftInviteSelectionsSnapshot
+  );
+}
+
+function useBidSubmissionsSnapshot(): ProjectBidSubmission[] {
+  return useSyncExternalStore(
+    subscribeToDashboardStorage,
+    getBidSubmissionsSnapshot,
+    getServerBidSubmissionsSnapshot
   );
 }
 
@@ -558,20 +580,37 @@ function getDraftInviteSelectionsSnapshot(): StoredProjectDraftInviteSelections 
   return cachedDraftInviteSelections;
 }
 
+function getServerBidSubmissionsSnapshot(): ProjectBidSubmission[] {
+  return [];
+}
+
+function getBidSubmissionsSnapshot(): ProjectBidSubmission[] {
+  const storageValue =
+    localStorage.getItem(projectBidSubmissionsStorageKey) || "[]";
+
+  if (storageValue !== cachedBidSubmissionsStorageValue) {
+    cachedBidSubmissionsStorageValue = storageValue;
+    cachedBidSubmissions = getAllProjectBidSubmissions();
+  }
+
+  return cachedBidSubmissions;
+}
+
 function buildDashboardProject(
   project: Project,
   selection: StoredProjectCsiSelection | undefined,
   draftInviteSelection: StoredProjectDraftInviteSelection | undefined,
+  bidSubmissions: ProjectBidSubmission[],
   today: Date
 ): DashboardProject {
-  const bids = mockBidSubmissions.filter((bid) => bid.projectId === project.id);
-  const selectedBidCount = bids.filter((bid) => bid.isSelected).length;
+  const bids = bidSubmissions.filter((bid) => bid.projectId === project.id);
+  const selectedBidCount = bids.filter((bid) => bid.status === "SELECTED").length;
   const selectedSectionIds = selection?.sectionIds ?? [];
   const csiScopeCount =
     (selection?.divisionIds.length ?? 0) + selectedSectionIds.length;
-  const bidSectionIds = new Set(bids.map((bid) => bid.sectionId));
+  const bidScopeItemIds = new Set(bids.flatMap((bid) => bid.scopeItemIds));
   const missingCoverageCount = selectedSectionIds.filter(
-    (sectionId) => !bidSectionIds.has(sectionId)
+    (sectionId) => !bidScopeItemIds.has(sectionId)
   ).length;
   const draftInviteCount = draftInviteSelection?.candidates.length ?? 0;
   const nextDueDate = getNextProjectDate(project, today);
@@ -579,7 +618,7 @@ function buildDashboardProject(
     missingCoverageCount * 3 +
     draftInviteCount +
     getOverdueProjectDateCount(project, today) * 4 +
-    Math.max(0, selectedSectionIds.length - bidSectionIds.size);
+    Math.max(0, selectedSectionIds.length - bidScopeItemIds.size);
 
   return {
     project,

@@ -11,7 +11,11 @@ import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { CsiCodeLabel } from "@/components/csi";
 import AppShell from "@/components/layout/AppShell";
 import Panel from "@/components/ui/Panel";
-import { saveProjectBidSubmission } from "@/lib/projectBids";
+import {
+  getProjectBidPackages,
+  projectBidPackagesStorageKey,
+  saveProjectBidSubmission,
+} from "@/lib/projectBids";
 import { getMergedProjects, projectsStorageKey } from "@/lib/projects";
 import {
   getProjectSelectedCsiItems,
@@ -26,6 +30,7 @@ import {
   BidPricingItemCategory,
   BidPricingItemDirection,
   BidPricingItemSource,
+  ProjectBidPackage,
   ProjectBidSubmissionStatus,
 } from "@/types/Bid";
 import {
@@ -87,20 +92,28 @@ export default function ManualBidEntryPage() {
   const searchParams = useSearchParams();
   const rawProjectId = params.projectId;
   const requestedScopeItemId = searchParams.get("scopeItemId") ?? "";
+  const requestedBidPackageId = searchParams.get("bidPackageId") ?? "";
   const projectId = Array.isArray(rawProjectId) ? rawProjectId[0] : rawProjectId;
   const projects = useProjectsSnapshot();
   const subcontractors = useSubcontractorsSnapshot();
   const projectCsiSelections = useProjectCsiSelectionsSnapshot();
+  const bidPackages = useBidPackagesSnapshot(projectId ?? "");
   const project = projects.find((item) => item.id === projectId);
+  const requestedBidPackage = bidPackages.find(
+    (bidPackage) => bidPackage.id === requestedBidPackageId
+  );
+  const initialScopeItemIds =
+    requestedBidPackage?.scopeItemIds ??
+    (requestedScopeItemId ? [requestedScopeItemId] : []);
   const [subcontractorId, setSubcontractorId] = useState("");
   const [subcontractorName, setSubcontractorName] = useState("");
   const [receivedBy, setReceivedBy] = useState("");
   const [submittedAt, setSubmittedAt] = useState(getTodayDateValue());
   const [selectedScopeItemIds, setSelectedScopeItemIds] = useState<string[]>(
-    () => (requestedScopeItemId ? [requestedScopeItemId] : [])
+    () => initialScopeItemIds
   );
   const [primaryScopeItemId, setPrimaryScopeItemId] =
-    useState(requestedScopeItemId);
+    useState(initialScopeItemIds[0] ?? "");
   const [baseBidAmount, setBaseBidAmount] = useState("");
   const [status, setStatus] = useState<ProjectBidSubmissionStatus>("RECEIVED");
   const [inclusions, setInclusions] = useState("");
@@ -365,6 +378,12 @@ export default function ManualBidEntryPage() {
           </Panel>
 
           <Panel title="Scope">
+            {requestedBidPackage ? (
+              <p className="muted-text">
+                Preselected from Bid Package:{" "}
+                <strong>{requestedBidPackage.name}</strong>
+              </p>
+            ) : null}
             {selectedCsiItems.length === 0 ? (
               <p className="muted-text">
                 No project CSI scopes selected yet.{" "}
@@ -773,6 +792,9 @@ let cachedSubcontractors: Subcontractor[] = getMergedSubcontractors();
 let cachedProjectCsiSelectionsStorageValue: string | undefined;
 let cachedProjectCsiSelections: StoredProjectCsiSelections =
   EMPTY_PROJECT_CSI_SELECTIONS;
+let cachedBidPackagesStorageValue: string | undefined;
+let cachedBidPackagesProjectId: string | undefined;
+let cachedBidPackages: ProjectBidPackage[] = [];
 
 function useProjectsSnapshot(): Project[] {
   return useSyncExternalStore(
@@ -795,6 +817,14 @@ function useProjectCsiSelectionsSnapshot(): StoredProjectCsiSelections {
     subscribeToStorage,
     getProjectCsiSelectionsSnapshot,
     getServerProjectCsiSelectionsSnapshot
+  );
+}
+
+function useBidPackagesSnapshot(projectId: string): ProjectBidPackage[] {
+  return useSyncExternalStore(
+    subscribeToStorage,
+    () => getBidPackagesSnapshot(projectId),
+    getServerBidPackagesSnapshot
   );
 }
 
@@ -850,6 +880,25 @@ function getProjectCsiSelectionsSnapshot(): StoredProjectCsiSelections {
   }
 
   return cachedProjectCsiSelections;
+}
+
+function getServerBidPackagesSnapshot(): ProjectBidPackage[] {
+  return [];
+}
+
+function getBidPackagesSnapshot(projectId: string): ProjectBidPackage[] {
+  const storageValue = localStorage.getItem(projectBidPackagesStorageKey) || "[]";
+
+  if (
+    storageValue !== cachedBidPackagesStorageValue ||
+    projectId !== cachedBidPackagesProjectId
+  ) {
+    cachedBidPackagesStorageValue = storageValue;
+    cachedBidPackagesProjectId = projectId;
+    cachedBidPackages = getProjectBidPackages(projectId);
+  }
+
+  return cachedBidPackages;
 }
 
 function parseProjectCsiSelections(
