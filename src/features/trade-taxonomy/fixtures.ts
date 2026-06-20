@@ -83,6 +83,12 @@ export const mepCsiFixture: TradeTaxonomyCsiItem[] = [
 
 export const healthcareCsiFixture: TradeTaxonomyCsiItem[] = [
   {
+    id: "fixture-healthcare-224000",
+    version: "MASTERFORMAT_CURRENT",
+    number: "22 40 00",
+    name: "Plumbing Fixtures",
+  },
+  {
     id: "fixture-healthcare-226000",
     version: "MASTERFORMAT_CURRENT",
     number: "22 60 00",
@@ -95,10 +101,40 @@ export const healthcareCsiFixture: TradeTaxonomyCsiItem[] = [
     name: "Nurse Call Systems",
   },
   {
+    id: "fixture-healthcare-271000",
+    version: "MASTERFORMAT_CURRENT",
+    number: "27 10 00",
+    name: "Structured Cabling",
+  },
+  {
     id: "fixture-healthcare-283100",
     version: "MASTERFORMAT_CURRENT",
     number: "28 31 00",
     name: "Fire Detection and Alarm",
+  },
+  {
+    id: "fixture-healthcare-117300",
+    version: "MASTERFORMAT_CURRENT",
+    number: "11 73 00",
+    name: "Medical Imaging Equipment Support",
+  },
+  {
+    id: "fixture-healthcare-134900",
+    version: "MASTERFORMAT_CURRENT",
+    number: "13 49 00",
+    name: "Radiation Shielding",
+  },
+  {
+    id: "fixture-healthcare-092900-lead",
+    version: "MASTERFORMAT_CURRENT",
+    number: "09 29 00",
+    name: "Lead-Lined Gypsum Board Assemblies",
+  },
+  {
+    id: "fixture-healthcare-015000-icra",
+    version: "MASTERFORMAT_CURRENT",
+    number: "01 50 00",
+    name: "ICRA / Infection Control Containment",
   },
 ];
 
@@ -169,6 +205,12 @@ export const officeTenantImprovementCsiFixture: TradeTaxonomyCsiItem[] = [
 ];
 
 export const industrialLabCsiFixture: TradeTaxonomyCsiItem[] = [
+  {
+    id: "fixture-lab-224000",
+    version: "MASTERFORMAT_CURRENT",
+    number: "22 40 00",
+    name: "Plumbing Fixtures",
+  },
   {
     id: "fixture-lab-226700",
     version: "MASTERFORMAT_CURRENT",

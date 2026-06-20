@@ -25,6 +25,18 @@ const matchStrengthRank: Record<TradeCsiAssignment["matchStrength"], number> = {
   POSSIBLE: 2,
 };
 
+const healthcareLabSpecificPackageIds = new Set([
+  "healthcare-systems",
+  "medical-gas",
+  "nurse-call",
+  "pneumatic-tube-systems",
+  "imaging-equipment-support",
+  "icra-infection-control",
+  "lead-lined-construction",
+  "radiation-shielding",
+  "laboratory-cleanroom-systems",
+]);
+
 export function matchCsiItemToTrades(
   csiItem: TradeTaxonomyCsiItem,
   rules: TradeCsiMappingRule[],
@@ -93,7 +105,7 @@ export function generateTradePackageSuggestions({
     const assignedTrade = taxonomy.find((node) => node.id === assignment.tradeId);
     if (!assignedTrade) return;
 
-    const packageTrade = getPackageTrade(assignedTrade, taxonomy);
+    const packageTrade = getPackageTradeForAssignment(assignment, assignedTrade, taxonomy);
     const group =
       packageGroups.get(packageTrade.id) ??
       {
@@ -387,10 +399,15 @@ function formatClassificationTag(tag: string) {
     .join(" ");
 }
 
-function getPackageTrade(
+function getPackageTradeForAssignment(
+  assignment: TradeCsiAssignment,
   assignedTrade: TradeTaxonomyNode,
   taxonomy: TradeTaxonomyNode[]
 ): TradeTaxonomyNode {
+  if (shouldKeepSpecificPackageTrade(assignment, assignedTrade, taxonomy)) {
+    return assignedTrade;
+  }
+
   const parentTrade = assignedTrade.parentId
     ? taxonomy.find((node) => node.id === assignedTrade.parentId)
     : undefined;
@@ -400,6 +417,21 @@ function getPackageTrade(
   if (parentTrade.defaultPackageMode === "SPLIT_BY_CHILD") return assignedTrade;
 
   return parentTrade;
+}
+
+function shouldKeepSpecificPackageTrade(
+  assignment: TradeCsiAssignment,
+  assignedTrade: TradeTaxonomyNode,
+  taxonomy: TradeTaxonomyNode[]
+): boolean {
+  if (assignment.classificationPreferredTradeId === assignedTrade.id) return true;
+  if (healthcareLabSpecificPackageIds.has(assignedTrade.id)) return true;
+
+  const parentTrade = assignedTrade.parentId
+    ? taxonomy.find((node) => node.id === assignedTrade.parentId)
+    : undefined;
+
+  return parentTrade ? healthcareLabSpecificPackageIds.has(parentTrade.id) : false;
 }
 
 function getRuleAssignment(
