@@ -53,23 +53,6 @@ const navSections = [
     ],
   },
   {
-    label: "Reporting",
-    items: [
-      {
-        href: "/budgets",
-        label: "Budgets",
-        compactLabel: "BG",
-        isActive: (pathname: string) => pathname.startsWith("/budgets"),
-      },
-      {
-        href: "/reports",
-        label: "Reports",
-        compactLabel: "RP",
-        isActive: (pathname: string) => pathname.startsWith("/reports"),
-      },
-    ],
-  },
-  {
     label: "Admin",
     items: [
       {

@@ -358,17 +358,19 @@ export default function SubcontractorsPage() {
 
   return (
     <AppShell title="Subcontractors">
-      <Panel title="Subcontractor Library">
-        <div style={{ marginBottom: 16 }}>
-          <Link href="/subcontractors/new">Add / Prequalify Subcontractor</Link>
-        </div>
+      <div className="page-header">
+        <div>
         <p className="muted-text">
           Vendors are grouped by CSI division and subdivision. Section and
-          subsection coverage appears as detail tags. Project-specific
-          invite ranking will use location, service area, VPI, and compliance
-          later.
+          subsection coverage appears as detail tags.
         </p>
-      </Panel>
+        </div>
+        <div className="page-header-actions">
+          <Link href="/subcontractors/new" className="button-primary">
+            Add Subcontractor
+          </Link>
+        </div>
+      </div>
 
       <Panel title="Search and Filters">
         <div className="form-grid">
@@ -681,12 +683,14 @@ function VendorRow({
         <div className="badge-list">
           <Link
             href={`/subcontractors/${subcontractor.id}`}
+            className="button-secondary"
             onClick={() => onNavigate(subcontractor.id, sectionId)}
           >
-            View Profile
+            Profile
           </Link>
           <Link
             href={`/subcontractors/${subcontractor.id}/edit`}
+            className="button-secondary"
             onClick={() => onNavigate(subcontractor.id, sectionId)}
           >
             Edit

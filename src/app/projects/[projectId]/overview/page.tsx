@@ -64,10 +64,37 @@ export default function ProjectOverviewPage() {
 
   return (
     <AppShell title="Overview">
-      <Link href={`/projects/${project.id}`}>{"<-"} Back to Command Center</Link>
-
-      <h1>{project.name} Overview</h1>
-      <Link href={`/projects/${project.id}/setup`}>Project Setup</Link>
+      <div className="page-header">
+        <div>
+          <Link href={`/projects/${project.id}`}>
+            {"<-"} Back to Command Center
+          </Link>
+          <h1>{project.name}</h1>
+          <p className="muted-text">
+            Project summary, selected CSI tags, and bid coverage signals.
+          </p>
+        </div>
+        <div className="page-header-actions">
+          <Link
+            href={`/projects/${project.id}/leveling`}
+            className="button-primary"
+          >
+            Bid Leveling
+          </Link>
+          <Link
+            href={`/projects/${project.id}/scope`}
+            className="button-secondary"
+          >
+            Project Scope
+          </Link>
+          <Link
+            href={`/projects/${project.id}/setup`}
+            className="button-secondary"
+          >
+            Project Setup
+          </Link>
+        </div>
+      </div>
 
       <section style={panel}>
         <h2>Project Details</h2>
@@ -125,7 +152,11 @@ export default function ProjectOverviewPage() {
       </section>
 
       <section style={panel}>
-        <h2>CSI Scope Summary</h2>
+        <h2>CSI Tag Summary</h2>
+        <p className="muted-text">
+          CSI tags support package matching and scope clarity. Use Bid Leveling
+          for bid comparison by Bid Package.
+        </p>
 
         <table style={{ borderCollapse: "collapse", minWidth: 1000 }}>
           <thead>
@@ -232,8 +263,9 @@ export default function ProjectOverviewPage() {
                     <td style={cell}>
                       <Link
                         href={`/projects/${project.id}/csi-divisions/${division.number}`}
+                        className="button-secondary"
                       >
-                        Level Bids
+                        CSI Detail
                       </Link>
                     </td>
                   </tr>
@@ -268,12 +300,12 @@ export default function ProjectOverviewPage() {
       </section>
 
       <section style={panel}>
-        <h2>Proposal</h2>
+        <h2>Future Proposal</h2>
         <p>
           Proposal generation will compile project details, selected costs,
           alternates, clarifications, exclusions, and notes.
         </p>
-        <Link href={`/projects/${project.id}/proposal`}>
+        <Link href={`/projects/${project.id}/proposal`} className="button-secondary">
           Open Proposal Draft
         </Link>
       </section>

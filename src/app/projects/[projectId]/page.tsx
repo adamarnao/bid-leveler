@@ -47,7 +47,7 @@ export default function ProjectCommandCenterPage() {
   return (
     <AppShell title="Project Command Center">
       <div className="command-center">
-        <Link href="/">{"<-"} Back to Main Dashboard</Link>
+        <Link href="/">{"<-"} Back to Dashboard</Link>
 
         <Panel>
           <div className="command-header">
@@ -60,6 +60,24 @@ export default function ProjectCommandCenterPage() {
             </div>
             <div className="command-header-actions">
               <span className="command-status">{project.status}</span>
+              <Link
+                href={`/projects/${project.id}/setup`}
+                className="button-secondary"
+              >
+                Project Setup
+              </Link>
+              <Link
+                href={`/projects/${project.id}/scope`}
+                className="button-secondary"
+              >
+                Project Scope
+              </Link>
+              <Link
+                href={`/projects/${project.id}/invite`}
+                className="button-secondary"
+              >
+                Invites
+              </Link>
               <button
                 type="button"
                 className="button-secondary"

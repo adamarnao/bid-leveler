@@ -62,13 +62,17 @@ export default function ProjectBidsPage() {
   return (
     <AppShell title="Bids">
       <div className="command-center">
-        <Link href={`/projects/${project.id}`}>{"<-"} Back to Command Center</Link>
-
-        <Panel title="Bids">
-          <p className="muted-text">
-            {project.name} | {project.client} | {formatStatus(project.status)}
-          </p>
-          <div className="settings-actions">
+        <div className="page-header">
+          <div>
+            <Link href={`/projects/${project.id}`}>
+              {"<-"} Back to Command Center
+            </Link>
+            <h1>{project.name}</h1>
+            <p className="muted-text">
+              {project.client} | {formatStatus(project.status)}
+            </p>
+          </div>
+          <div className="page-header-actions">
             <Link href={`/projects/${project.id}/bids/new`} className="button-primary">
               Add Manual Bid
             </Link>
@@ -82,7 +86,7 @@ export default function ProjectBidsPage() {
               Project Scope
             </Link>
           </div>
-        </Panel>
+        </div>
 
         {sortedBids.length === 0 ? (
           <Panel title="No Bids">
@@ -143,7 +147,7 @@ export default function ProjectBidsPage() {
                               href={`/projects/${project.id}/bids/${bid.id}`}
                               className="button-secondary"
                             >
-                              View/Edit
+                              Review
                             </Link>
                             <button
                               type="button"

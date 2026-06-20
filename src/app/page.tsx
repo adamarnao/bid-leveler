@@ -166,8 +166,6 @@ export default function Home() {
       <div className="dashboard-shell">
         <section className="dashboard-hero">
           <div>
-            <p className="label-text">Estimator Dashboard</p>
-            <h1>Dashboard</h1>
             <p className="dashboard-subtitle">
               Today&apos;s bid activity, deadlines, and project health.
             </p>

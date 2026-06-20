@@ -455,6 +455,27 @@ textarea {
   gap: 18px;
 }
 
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+  border-bottom: 1px solid var(--color-border-subtle);
+  padding-bottom: 16px;
+}
+
+.page-header h1 {
+  margin: 6px 0 4px;
+}
+
+.page-header-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+  align-items: center;
+}
+
 .dashboard-hero,
 .dashboard-section-header,
 .dashboard-project-card-top {
@@ -3064,12 +3085,14 @@ textarea:focus {
   }
 
   .dashboard-hero,
+  .page-header,
   .dashboard-section-header,
   .dashboard-project-card-top {
     display: grid;
   }
 
   .dashboard-primary-actions,
+  .page-header-actions,
   .dashboard-project-card-actions {
     justify-content: flex-start;
   }

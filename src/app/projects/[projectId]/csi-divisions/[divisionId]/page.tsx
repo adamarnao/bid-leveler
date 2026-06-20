@@ -89,12 +89,33 @@ export default function DivisionPage() {
 
   return (
     <AppShell title="Project CSI Scope Detail">
-      <Link href={`/projects/${project.id}`}>{"<-"} Back to Command Center</Link>
+      <div className="page-header">
+        <div>
+          <Link href={`/projects/${project.id}`}>
+            {"<-"} Back to Command Center
+          </Link>
+          <p className="muted-text">
+            CSI reference detail for selected project tags. Use Bid Leveling for
+            package-based bid comparison.
+          </p>
+        </div>
+        <div className="page-header-actions">
+          <Link
+            href={`/projects/${project.id}/leveling`}
+            className="button-primary"
+          >
+            Bid Leveling
+          </Link>
+          <Link href={`/projects/${project.id}/bids`} className="button-secondary">
+            Bids
+          </Link>
+        </div>
+      </div>
 
       <section style={panel}>
         <div style={pageHeader}>
           <div>
-            <p className="muted-text">Division</p>
+            <p className="label-text">CSI Division</p>
             <h1 style={{ marginTop: 4 }}>
               {divisionItem ? (
                 <CsiCodeLabel item={divisionItem} showLevelBadge />
@@ -122,7 +143,12 @@ export default function DivisionPage() {
             <Link href={`/projects/${project.id}/bids`} className="button-secondary">
               Bids
             </Link>
-            <Link href={`/projects/${project.id}/bids/new`}>Add Manual Bid</Link>
+            <Link
+              href={`/projects/${project.id}/bids/new`}
+              className="button-secondary"
+            >
+              Add Manual Bid
+            </Link>
           </div>
         </section>
       ) : (
