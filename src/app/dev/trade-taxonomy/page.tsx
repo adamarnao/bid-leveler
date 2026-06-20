@@ -739,7 +739,13 @@ function SuggestedPackageCard({
                     {assignment.sectorPreferredTradeId
                       ? ` / Sector preference: ${getTradeName(assignment.sectorPreferredTradeId)}`
                       : ""}
+                    {assignment.classificationPreferredTradeId
+                      ? ` / Classification preference: ${getTradeName(assignment.classificationPreferredTradeId)}`
+                      : ""}
                   </p>
+                ) : null}
+                {assignment?.classificationNote ? (
+                  <p className="muted-text">{assignment.classificationNote}</p>
                 ) : null}
               </div>
             );
@@ -947,6 +953,8 @@ export default async function TradeTaxonomyWorkbenchPage({
       rules: defaultTradeCsiMappings,
       crossTradeMappings: defaultCrossTradeMappings,
       sectorTags: scenario.sectorTags ?? [],
+      workTypeTags: scenario.workTypeTags ?? [],
+      contextTags: scenario.contextTags ?? [],
       csiVersion: "MASTERFORMAT_CURRENT",
     }),
   }));

@@ -3,6 +3,7 @@ import {
   ProjectSectorTag,
   TradeCsiAssignment,
   TradeCsiMappingRule,
+  TradePackageGenerationContext,
   TradePackageGenerationResult,
   TradePackageSuggestion,
   TradeTaxonomyCsiItem,
@@ -16,7 +17,7 @@ type GenerateTradePackageSuggestionsOptions = {
   csiVersion: string;
   crossTradeMappings?: CrossTradeMapping[];
   sectorTags?: ProjectSectorTag[];
-};
+} & TradePackageGenerationContext;
 
 const matchStrengthRank: Record<TradeCsiAssignment["matchStrength"], number> = {
   PRIMARY: 0,
@@ -44,11 +45,11 @@ export function assignCsiItemsToTrades(
   rules: TradeCsiMappingRule[],
   taxonomy: TradeTaxonomyNode[],
   crossTradeMappings: CrossTradeMapping[] = [],
-  sectorTags: ProjectSectorTag[] = []
+  context: TradePackageGenerationContext = {}
 ): TradeCsiAssignment[] {
   return csiItems
     .map((item) =>
-      getPreferredAssignmentForCsiItem(item, rules, taxonomy, crossTradeMappings, sectorTags)
+      getPreferredAssignmentForCsiItem(item, rules, taxonomy, crossTradeMappings, context)
     )
     .filter(isDefined);
 }
@@ -60,6 +61,8 @@ export function generateTradePackageSuggestions({
   csiVersion,
   crossTradeMappings = [],
   sectorTags = [],
+  workTypeTags = [],
+  contextTags = [],
 }: GenerateTradePackageSuggestionsOptions): TradePackageGenerationResult {
   const supportedItems = csiItems.filter((item) =>
     isRuleVersionCompatible(csiVersion, item.version)
@@ -69,7 +72,7 @@ export function generateTradePackageSuggestions({
     rules,
     taxonomy,
     crossTradeMappings,
-    sectorTags
+    { sectorTags, workTypeTags, contextTags }
   );
   const assignedItemIds = new Set(assignments.map((assignment) => assignment.csiItemId));
   const unassignedCsiItemIds = supportedItems
@@ -117,6 +120,9 @@ export function generateTradePackageSuggestions({
         getAmbiguityWarning(assignment, taxonomy)
       );
     }
+    if (assignment.classificationNote) {
+      group.warnings.add(assignment.classificationNote);
+    }
 
     packageGroups.set(packageTrade.id, group);
   });
@@ -161,7 +167,7 @@ function getPreferredAssignmentForCsiItem(
   rules: TradeCsiMappingRule[],
   taxonomy: TradeTaxonomyNode[],
   crossTradeMappings: CrossTradeMapping[],
-  sectorTags: ProjectSectorTag[]
+  context: TradePackageGenerationContext
 ): TradeCsiAssignment | undefined {
   const crossTradeMapping = matchCrossTradeMapping(csiItem, crossTradeMappings);
   const ruleAssignment = matchCsiItemToTrades(csiItem, rules, taxonomy)[0];
@@ -171,28 +177,53 @@ function getPreferredAssignmentForCsiItem(
   const primaryTrade = taxonomy.find((node) => node.id === crossTradeMapping.primaryTradeId);
   if (!primaryTrade) return ruleAssignment;
 
-  const sectorPreferredTradeId = getSectorPreferredTradeId(crossTradeMapping, sectorTags);
+  const classificationPreference = getClassificationPreferredTrade(
+    crossTradeMapping,
+    context,
+    taxonomy
+  );
+  const selectedTradeId = classificationPreference?.tradeId ?? crossTradeMapping.primaryTradeId;
+  const selectedTrade = taxonomy.find((node) => node.id === selectedTradeId) ?? primaryTrade;
+  const sectorPreferredTradeId = getSectorPreferredTradeId(crossTradeMapping, context.sectorTags ?? []);
+  const classificationNote =
+    classificationPreference && classificationPreference.tradeId !== crossTradeMapping.primaryTradeId
+      ? `Assigned to ${selectedTrade.name} because ${classificationPreference.label} context makes that package more specific than ${primaryTrade.name}.`
+      : classificationPreference
+        ? `${classificationPreference.label} context supports assigning ${crossTradeMapping.label} to ${selectedTrade.name}.`
+        : undefined;
   const crossTradeAssignment: TradeCsiAssignment = {
     csiItemId: csiItem.id,
-    tradeId: crossTradeMapping.primaryTradeId,
+    tradeId: selectedTrade.id,
     matchStrength: "PRIMARY",
-    confidence: "LOW",
-    reason: `${crossTradeMapping.label} is cross-trade scope. Conservative primary trade is ${primaryTrade.name}.`,
+    confidence: classificationPreference ? "MEDIUM" : "LOW",
+    reason: classificationNote
+      ? `${classificationNote} ${crossTradeMapping.label} remains cross-trade scope and should be reviewed.`
+      : `${crossTradeMapping.label} is cross-trade scope. Conservative primary trade is ${primaryTrade.name}.`,
     crossTradeMappingId: crossTradeMapping.id,
     possibleTradeIds: crossTradeMapping.possibleTradeIds,
     sectorPreferredTradeId,
+    classificationPreferredTradeId: classificationPreference?.tradeId,
+    classificationContextLabel: classificationPreference?.label,
+    classificationNote,
     isAmbiguous: true,
   };
 
   if (!ruleAssignment) return crossTradeAssignment;
-  if (ruleAssignment.tradeId === crossTradeMapping.primaryTradeId) {
+  if (ruleAssignment.tradeId === selectedTrade.id) {
     return {
       ...ruleAssignment,
-      confidence: downgradeConfidence(ruleAssignment.confidence),
-      reason: `${ruleAssignment.reason} ${crossTradeMapping.label} is cross-trade scope.`,
+      confidence: classificationPreference
+        ? getContextAdjustedConfidence(ruleAssignment.confidence)
+        : downgradeConfidence(ruleAssignment.confidence),
+      reason: classificationNote
+        ? `${ruleAssignment.reason} ${classificationNote}`
+        : `${ruleAssignment.reason} ${crossTradeMapping.label} is cross-trade scope.`,
       crossTradeMappingId: crossTradeMapping.id,
       possibleTradeIds: crossTradeMapping.possibleTradeIds,
       sectorPreferredTradeId,
+      classificationPreferredTradeId: classificationPreference?.tradeId,
+      classificationContextLabel: classificationPreference?.label,
+      classificationNote,
       isAmbiguous: true,
     };
   }
@@ -233,6 +264,68 @@ function getSectorPreferredTradeId(
     .find(isDefined);
 }
 
+function getClassificationPreferredTrade(
+  crossTradeMapping: CrossTradeMapping,
+  context: TradePackageGenerationContext,
+  taxonomy: TradeTaxonomyNode[]
+): { tradeId: string; label: string } | undefined {
+  const eligibleTradeIds = new Set([
+    crossTradeMapping.primaryTradeId,
+    ...crossTradeMapping.possibleTradeIds,
+  ]);
+
+  const contextPreference = getPreferredTradeFromTagMap(
+    context.contextTags ?? [],
+    crossTradeMapping.contextPreferredTradeIds,
+    formatContextTag
+  );
+  if (contextPreference && isEligibleActiveTrade(contextPreference.tradeId, eligibleTradeIds, taxonomy)) {
+    return contextPreference;
+  }
+
+  const workTypePreference = getPreferredTradeFromTagMap(
+    context.workTypeTags ?? [],
+    crossTradeMapping.workTypePreferredTradeIds,
+    formatWorkTypeTag
+  );
+  if (workTypePreference && isEligibleActiveTrade(workTypePreference.tradeId, eligibleTradeIds, taxonomy)) {
+    return workTypePreference;
+  }
+
+  const sectorPreference = getPreferredTradeFromTagMap(
+    context.sectorTags ?? [],
+    crossTradeMapping.sectorPreferredTradeIds,
+    formatSectorTag
+  );
+  if (sectorPreference && isEligibleActiveTrade(sectorPreference.tradeId, eligibleTradeIds, taxonomy)) {
+    return sectorPreference;
+  }
+
+  return undefined;
+}
+
+function getPreferredTradeFromTagMap<TTag extends string>(
+  tags: TTag[],
+  tradeIdsByTag: Partial<Record<TTag, string>> | undefined,
+  formatTag: (tag: TTag) => string
+): { tradeId: string; label: string } | undefined {
+  return tags
+    .map((tag) => {
+      const tradeId = tradeIdsByTag?.[tag];
+
+      return tradeId ? { tradeId, label: formatTag(tag) } : undefined;
+    })
+    .find(isDefined);
+}
+
+function isEligibleActiveTrade(
+  tradeId: string,
+  eligibleTradeIds: Set<string>,
+  taxonomy: TradeTaxonomyNode[]
+) {
+  return eligibleTradeIds.has(tradeId) && taxonomy.some((node) => node.id === tradeId && node.isActive);
+}
+
 function getAmbiguityWarning(
   assignment: TradeCsiAssignment,
   taxonomy: TradeTaxonomyNode[]
@@ -245,9 +338,17 @@ function getAmbiguityWarning(
     ? taxonomy.find((node) => node.id === assignment.sectorPreferredTradeId)?.name ??
       assignment.sectorPreferredTradeId
     : undefined;
+  const classificationPreferredTradeName = assignment.classificationPreferredTradeId
+    ? taxonomy.find((node) => node.id === assignment.classificationPreferredTradeId)?.name ??
+      assignment.classificationPreferredTradeId
+    : undefined;
 
   return `${assignment.csiItemId} is ambiguous cross-trade scope. Primary suggestion: ${primaryTradeName}. Possible trades: ${possibleTradeNames}.${
     sectorPreferredTradeName ? ` Sector preference: ${sectorPreferredTradeName}.` : ""
+  }${
+    classificationPreferredTradeName && classificationPreferredTradeName !== sectorPreferredTradeName
+      ? ` Classification preference: ${classificationPreferredTradeName}.`
+      : ""
   }`;
 }
 
@@ -257,6 +358,33 @@ function downgradeConfidence(
   if (confidence === "HIGH") return "MEDIUM";
 
   return "LOW";
+}
+
+function getContextAdjustedConfidence(
+  confidence: TradeCsiAssignment["confidence"]
+): TradeCsiAssignment["confidence"] {
+  if (confidence === "LOW") return "MEDIUM";
+
+  return confidence;
+}
+
+function formatSectorTag(tag: string) {
+  return formatClassificationTag(tag);
+}
+
+function formatWorkTypeTag(tag: string) {
+  return formatClassificationTag(tag);
+}
+
+function formatContextTag(tag: string) {
+  return formatClassificationTag(tag);
+}
+
+function formatClassificationTag(tag: string) {
+  return tag
+    .split("_")
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
 }
 
 function getPackageTrade(

@@ -75,6 +75,8 @@ export type CrossTradeMapping = {
   primaryTradeId: string;
   possibleTradeIds: string[];
   sectorPreferredTradeIds?: Partial<Record<ProjectSectorTag, string>>;
+  workTypePreferredTradeIds?: Partial<Record<ProjectWorkTypeTag, string>>;
+  contextPreferredTradeIds?: Partial<Record<ProjectContextTag, string>>;
   titleKeywords?: string[];
   csiCodePatterns?: string[];
   exactCsiIds?: string[];
@@ -90,6 +92,9 @@ export type TradeCsiAssignment = {
   crossTradeMappingId?: string;
   possibleTradeIds?: string[];
   sectorPreferredTradeId?: string;
+  classificationPreferredTradeId?: string;
+  classificationContextLabel?: string;
+  classificationNote?: string;
   isAmbiguous?: boolean;
 };
 
@@ -116,4 +121,10 @@ export type TradeTaxonomyCsiItem = {
   version: string;
   number: string;
   name: string;
+};
+
+export type TradePackageGenerationContext = {
+  sectorTags?: ProjectSectorTag[];
+  workTypeTags?: ProjectWorkTypeTag[];
+  contextTags?: ProjectContextTag[];
 };

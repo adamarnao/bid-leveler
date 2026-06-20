@@ -447,6 +447,12 @@ export const defaultCrossTradeMappings: CrossTradeMapping[] = [
       mission_critical: "low-voltage-technology",
       industrial: "electrical",
     },
+    contextPreferredTradeIds: {
+      medical_office: "low-voltage-technology",
+      hospital: "low-voltage-technology",
+      surgery_center: "low-voltage-technology",
+      secure_facility: "low-voltage-technology",
+    },
     csiCodePatterns: ["28 3*", "283*"],
     titleKeywords: ["fire alarm", "detection and alarm"],
     notes: "Fire alarm may be carried by electrical, low-voltage, or fire protection depending on project delivery.",
@@ -460,6 +466,11 @@ export const defaultCrossTradeMappings: CrossTradeMapping[] = [
       laboratory: "hvac",
       cleanroom: "hvac",
       mission_critical: "low-voltage-technology",
+    },
+    contextPreferredTradeIds: {
+      lab: "hvac",
+      cleanroom: "hvac",
+      data_center: "low-voltage-technology",
     },
     csiCodePatterns: ["23 09*", "2309*", "25*", "159*"],
     titleKeywords: ["controls", "building automation", "bas", "temperature controls"],
@@ -501,6 +512,10 @@ export const defaultCrossTradeMappings: CrossTradeMapping[] = [
       restaurant: "food-service-systems",
       hospitality: "food-service-systems",
     },
+    contextPreferredTradeIds: {
+      commercial_kitchen: "food-service-systems",
+      food_processing: "food-service-systems",
+    },
     csiCodePatterns: ["11 40*", "1140*", "23 38*", "2338*", "21 22*", "2122*"],
     titleKeywords: ["kitchen hood", "hood suppression", "commercial kitchen hood", "kitchen exhaust"],
     notes: "Kitchen hood scope may involve HVAC, food service equipment, and fire suppression.",
@@ -513,6 +528,12 @@ export const defaultCrossTradeMappings: CrossTradeMapping[] = [
     sectorPreferredTradeIds: {
       healthcare: "healthcare-systems",
       laboratory: "medical-gas",
+    },
+    contextPreferredTradeIds: {
+      medical_office: "medical-gas",
+      hospital: "medical-gas",
+      surgery_center: "medical-gas",
+      lab: "medical-gas",
     },
     csiCodePatterns: ["22 60*", "2260*"],
     titleKeywords: ["medical gas", "med gas", "medical gas piping"],
@@ -552,6 +573,11 @@ export const defaultCrossTradeMappings: CrossTradeMapping[] = [
     sectorPreferredTradeIds: {
       healthcare: "healthcare-systems",
     },
+    contextPreferredTradeIds: {
+      medical_office: "nurse-call",
+      hospital: "nurse-call",
+      surgery_center: "nurse-call",
+    },
     csiCodePatterns: ["27 52*", "2752*"],
     titleKeywords: ["nurse call"],
     notes: "Nurse call is low-voltage but usually healthcare-sector specific.",
@@ -564,6 +590,10 @@ export const defaultCrossTradeMappings: CrossTradeMapping[] = [
     sectorPreferredTradeIds: {
       healthcare: "healthcare-systems",
       laboratory: "healthcare-systems",
+    },
+    contextPreferredTradeIds: {
+      hospital: "pneumatic-tube-systems",
+      lab: "pneumatic-tube-systems",
     },
     csiCodePatterns: ["14 92*", "1492*"],
     titleKeywords: ["pneumatic tube", "pneumatic tubes"],
@@ -578,6 +608,10 @@ export const defaultCrossTradeMappings: CrossTradeMapping[] = [
       laboratory: "laboratory-cleanroom-systems",
       cleanroom: "laboratory-cleanroom-systems",
     },
+    contextPreferredTradeIds: {
+      lab: "laboratory-cleanroom-systems",
+      cleanroom: "laboratory-cleanroom-systems",
+    },
     csiCodePatterns: ["22 60*", "2260*", "22 67*", "2267*"],
     titleKeywords: ["lab gas", "laboratory gas", "specialty gas", "process gas"],
     notes: "Lab gases can be plumbing/process piping or laboratory specialty scope.",
@@ -590,6 +624,10 @@ export const defaultCrossTradeMappings: CrossTradeMapping[] = [
     sectorPreferredTradeIds: {
       cleanroom: "laboratory-cleanroom-systems",
       laboratory: "laboratory-cleanroom-systems",
+    },
+    contextPreferredTradeIds: {
+      cleanroom: "laboratory-cleanroom-systems",
+      lab: "laboratory-cleanroom-systems",
     },
     csiCodePatterns: ["13 21*", "1321*"],
     titleKeywords: ["cleanroom", "clean room", "cleanroom panel", "cleanroom system"],
