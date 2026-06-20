@@ -90,16 +90,17 @@ The initial company-standard taxonomy should include at least:
 | Roofing | Membrane roofing, TPO, EPDM, PVC, modified bitumen, built-up roofing, metal roofing, shingle roofing, roof accessories, roof hatches, roof curbs, gutters/downspouts, and sheet metal flashing. |
 | Waterproofing | Below-grade, fluid-applied, sheet waterproofing, dampproofing, air/vapor barriers, sealants/caulking, firestopping, and expansion joint covers. |
 | Insulation | Batt, rigid, spray foam, mineral wool, and acoustic insulation; review overlap with drywall, roofing, and waterproofing. |
-| Doors / Frames / Hardware | Doors, frames, hardware, access doors when appropriate. |
-| Overhead Doors | Standalone trade for sectional doors, coiling doors, rolling doors, and loading dock doors. |
-| Glass / Glazing | Storefront, curtain wall, windows, glazing systems. |
-| Drywall / Framing | Gypsum board, drywall, metal studs, non-structural metal framing, shaft wall. |
-| Ceilings | ACT, specialty ceilings, ceiling suspension systems. |
-| Flooring | Resilient, carpet, wood, fluid-applied flooring where applicable. |
-| Tile | Ceramic, porcelain, stone tile, tile setting materials. |
-| Painting / Coatings | Painting, high-performance coatings, wall coverings where applicable. |
-| Specialties | Needs separate estimator review before adding toilet accessories, fire extinguishers, lockers, signage, and similar specialty breakdowns. |
-| Equipment | Owner or contractor equipment scopes where not carried by another trade. |
+| Doors / Frames / Hardware | Hollow metal doors/frames, wood doors, fiberglass doors, aluminum doors, door hardware, access doors/panels, and automatic door operators. |
+| Overhead Doors | Standalone trade for sectional overhead doors, coiling doors, rolling fire doors, high-speed doors, loading dock equipment, dock levelers, and dock seals/shelters. |
+| Glass / Glazing | Storefront, curtain wall, interior glass/glazing, glass entrances, mirrors, skylights, and translucent wall/roof assemblies. |
+| Drywall / Framing | Non-structural metal framing, gypsum board, shaft wall assemblies, plaster, acoustic insulation, and drywall finishing. |
+| Ceilings | ACT ceilings, specialty ceilings, wood ceilings, metal ceilings, and acoustic panels/clouds. |
+| Flooring | Carpet, carpet tile, resilient/LVT, sheet vinyl, rubber flooring, tile, wood flooring, resinous/epoxy, athletic flooring, prep/moisture mitigation, and floor leveling. |
+| Wall Finishes | Painting/coatings, wallcovering, decorative finishes, high-performance coatings, FRP panels, and acoustical wall panels. |
+| Specialties | Toilet accessories, fire extinguishers/cabinets, lockers, signage, visual display boards, projection screens, postal specialties, cubicle curtains/tracks, wall protection, entrance mats/grilles, flagpoles, louvers/vents, bird control, operable/folding partitions, storage shelving, wire mesh partitions, and bath partitions. Obscure items remain hidden/specialty by default. |
+| Equipment | Food service, commercial kitchen, residential appliances, laundry, medical, laboratory, athletic, stage/theater, AV, loading dock equipment, trash chutes, projection/presentation, and vehicle service equipment. Often owner/vendor furnished or allowance-driven. |
+| Furnishings / FF&E | Window treatments, blinds/shades, curtains/drapery, fixed seating, auditorium seating, furniture, systems furniture, artwork/accessories, and rugs/mats. Hidden by default unless GC procurement or coordination is in scope. |
+| Conveying | Elevators, escalators, platform lifts, wheelchair lifts, dumbwaiters, material lifts, and pneumatic tube systems. Hidden by default unless vertical transportation or material movement systems are in scope. |
 | Fire Protection | Fire sprinkler and suppression systems. |
 | Plumbing | Domestic water, sanitary, storm, fixtures, plumbing equipment, and Medical Gas where applicable. |
 | HVAC | Mechanical HVAC systems, ductwork, piping, controls where company standards place controls here. |
