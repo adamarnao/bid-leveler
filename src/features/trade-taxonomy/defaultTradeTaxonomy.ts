@@ -249,6 +249,34 @@ const officeTenantImprovementSuppressedTradeIds = new Set([
   "overhead-doors",
 ]);
 
+const siteworkOnlySuppressedTradeIds = new Set([
+  "concrete",
+  "masonry",
+  "structural-steel",
+  "misc-metals",
+  "rough-carpentry",
+  "finish-carpentry-millwork",
+  "waterproofing",
+  "insulation",
+  "roofing",
+  "doors-frames-hardware",
+  "overhead-doors",
+  "glass-glazing",
+  "drywall-framing",
+  "ceilings",
+  "flooring",
+  "wall-finishes",
+  "specialties",
+  "equipment",
+  "furnishings-ffe",
+  "conveying",
+  "fire-protection",
+  "plumbing",
+  "hvac",
+  "electrical",
+  "low-voltage-technology",
+]);
+
 function createTradeSpecializations(
   parentId: string,
   defaults: Partial<TradeTaxonomyNode>,
@@ -2091,7 +2119,7 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     defaultPackageMode: "USER_CHOICE",
     isActive: true,
     defaultHidden: true,
-    sectorTags: ["transportation", "government"],
+    sectorTags: ["transportation"],
     specialtyTags: ["sector_specific", "specialty"],
   },
   {
@@ -2103,7 +2131,8 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     defaultPackageMode: "USER_CHOICE",
     isActive: true,
     defaultHidden: true,
-    sectorTags: ["marine", "government", "industrial"],
+    sectorTags: ["marine"],
+    contextTags: ["marine_waterfront"],
     specialtyTags: ["sector_specific", "specialty"],
   },
   {
@@ -2115,7 +2144,8 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     defaultPackageMode: "USER_CHOICE",
     isActive: true,
     defaultHidden: true,
-    sectorTags: ["airport", "transportation", "government"],
+    sectorTags: ["airport"],
+    contextTags: ["airport_secure_area"],
     specialtyTags: ["sector_specific", "specialty"],
   },
   {
@@ -2127,7 +2157,7 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     defaultPackageMode: "USER_CHOICE",
     isActive: true,
     defaultHidden: true,
-    sectorTags: ["renewable_energy", "commercial", "industrial"],
+    sectorTags: ["renewable_energy"],
     specialtyTags: ["sector_specific", "specialty", "owner_vendor"],
     relatedTradeIds: ["electrical", "roofing"],
   },
@@ -2140,7 +2170,7 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     defaultPackageMode: "USER_CHOICE",
     isActive: true,
     defaultHidden: true,
-    sectorTags: ["renewable_energy", "commercial", "retail", "government", "transportation"],
+    sectorTags: ["renewable_energy", "retail", "transportation"],
     specialtyTags: ["sector_specific", "specialty", "owner_vendor"],
     relatedTradeIds: ["electrical", "sitework"],
   },
@@ -2153,7 +2183,7 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     defaultPackageMode: "USER_CHOICE",
     isActive: true,
     defaultHidden: true,
-    sectorTags: ["renewable_energy", "industrial", "government"],
+    sectorTags: ["renewable_energy"],
     specialtyTags: ["sector_specific", "specialty", "owner_vendor"],
   },
   {
@@ -2165,7 +2195,8 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     defaultPackageMode: "USER_CHOICE",
     isActive: true,
     defaultHidden: true,
-    sectorTags: ["industrial", "transportation", "marine", "airport"],
+    sectorTags: ["marine", "airport"],
+    contextTags: ["marine_waterfront"],
     specialtyTags: ["sector_specific", "specialty"],
     relatedTradeIds: ["plumbing-gas-piping", "electrical"],
   },
@@ -2216,7 +2247,7 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     defaultPackageMode: "USER_CHOICE",
     isActive: true,
     defaultHidden: true,
-    sectorTags: ["detention", "government"],
+    sectorTags: ["detention"],
     specialtyTags: ["sector_specific", "specialty"],
   },
   {
@@ -2228,7 +2259,8 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     defaultPackageMode: "USER_CHOICE",
     isActive: true,
     defaultHidden: true,
-    sectorTags: ["government", "detention", "mission_critical"],
+    sectorTags: ["detention", "mission_critical"],
+    contextTags: ["secure_facility"],
     specialtyTags: ["sector_specific", "specialty"],
     relatedTradeIds: ["security-access-control", "glass-glazing", "doors-frames-hardware"],
   },
@@ -2255,7 +2287,7 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     defaultPackageMode: "USER_CHOICE",
     isActive: true,
     defaultHidden: true,
-    sectorTags: ["agricultural", "industrial"],
+    sectorTags: ["agricultural"],
     specialtyTags: ["sector_specific", "specialty", "owner_vendor"],
   },
 ];
@@ -2319,6 +2351,7 @@ export function shouldShowTradeForProject(
   if (!trade.isActive) return false;
   if (context.includeHidden) return true;
   if (isSuppressedForOfficeTenantImprovement(trade, context)) return false;
+  if (isSuppressedForSiteworkOnly(trade, context)) return false;
   if (!trade.defaultHidden) return true;
 
   return isTradeTriggeredForProject(trade, context);
@@ -2434,6 +2467,27 @@ function isSuppressedForOfficeTenantImprovement(
 
   while (currentParentId) {
     if (officeTenantImprovementSuppressedTradeIds.has(currentParentId)) return true;
+
+    currentParentId = defaultTradeTaxonomy.find((node) => node.id === currentParentId)?.parentId;
+  }
+
+  return false;
+}
+
+function isSuppressedForSiteworkOnly(
+  trade: TradeTaxonomyNode,
+  context: TradeVisibilityContext
+): boolean {
+  const workTypeTags = new Set(context.workTypeTags ?? []);
+
+  if (!workTypeTags.has("sitework_only")) return false;
+  if (isTradeTriggeredForProject(trade, context)) return false;
+  if (siteworkOnlySuppressedTradeIds.has(trade.id)) return true;
+
+  let currentParentId = trade.parentId;
+
+  while (currentParentId) {
+    if (siteworkOnlySuppressedTradeIds.has(currentParentId)) return true;
 
     currentParentId = defaultTradeTaxonomy.find((node) => node.id === currentParentId)?.parentId;
   }
