@@ -49,6 +49,17 @@ const foodServiceSpecificPackageIds = new Set([
   "refrigeration",
 ]);
 
+const packageCorrectnessSensitiveTradeIds = new Set([
+  ...healthcareLabSpecificPackageIds,
+  ...foodServiceSpecificPackageIds,
+  "fire-alarm",
+  "controls",
+  "plumbing-process-piping",
+  "process-systems",
+  "countertops",
+  "loading-dock-equipment",
+]);
+
 export function matchCsiItemToTrades(
   csiItem: TradeTaxonomyCsiItem,
   rules: TradeCsiMappingRule[],
@@ -110,6 +121,7 @@ export function generateTradePackageSuggestions({
       csiItemIds: Set<string>;
       assignmentConfidences: TradeCsiAssignment["confidence"][];
       warnings: Set<string>;
+      informationalNotes: Set<string>;
     }
   >();
 
@@ -126,26 +138,34 @@ export function generateTradePackageSuggestions({
         csiItemIds: new Set<string>(),
         assignmentConfidences: [],
         warnings: new Set<string>(),
+        informationalNotes: new Set<string>(),
       };
 
     group.csiItemIds.add(assignment.csiItemId);
     group.assignmentConfidences.push(assignment.confidence);
     if (assignedTrade.id !== packageTrade.id) group.childTradeIds.add(assignedTrade.id);
     if (packageTrade.defaultPackageMode === "USER_CHOICE") {
-      group.warnings.add(
+      group.informationalNotes.add(
         `${packageTrade.name} may be bid as one package or split by specialization.`
       );
     }
-    if (assignment.confidence === "LOW") {
-      group.warnings.add(`Low confidence match for CSI item ${assignment.csiItemId}.`);
-    }
-    if (assignment.isAmbiguous && assignment.possibleTradeIds?.length) {
+    if (shouldWarnForAmbiguity(assignment)) {
       group.warnings.add(
         getAmbiguityWarning(assignment, taxonomy)
       );
     }
+    if (assignment.isAmbiguous && assignment.possibleTradeIds?.length && !shouldWarnForAmbiguity(assignment)) {
+      group.informationalNotes.add(getAmbiguityNote(assignment, taxonomy));
+    }
     if (assignment.classificationNote) {
-      group.warnings.add(assignment.classificationNote);
+      if (assignment.classificationChangedDefault) {
+        group.warnings.add(assignment.classificationNote);
+      } else {
+        group.informationalNotes.add(assignment.classificationNote);
+      }
+    }
+    if (assignment.informationalNote) {
+      group.informationalNotes.add(assignment.informationalNote);
     }
 
     packageGroups.set(packageTrade.id, group);
@@ -164,6 +184,7 @@ export function generateTradePackageSuggestions({
           : undefined,
       confidence: getSuggestionConfidence(group.assignmentConfidences),
       warnings: Array.from(group.warnings),
+      informationalNotes: Array.from(group.informationalNotes),
     }))
     .sort((left, right) => {
       const leftTrade = taxonomy.find((node) => node.id === left.tradeId);
@@ -177,12 +198,16 @@ export function generateTradePackageSuggestions({
     ),
     ...suggestions.flatMap((suggestion) => suggestion.warnings),
   ];
+  const informationalNotes = suggestions.flatMap(
+    (suggestion) => suggestion.informationalNotes
+  );
 
   return {
     suggestions,
     assignments,
     unassignedCsiItemIds,
     warnings: Array.from(new Set(warnings)),
+    informationalNotes: Array.from(new Set(informationalNotes)),
   };
 }
 
@@ -209,8 +234,11 @@ function getPreferredAssignmentForCsiItem(
   const selectedTradeId = classificationPreference?.tradeId ?? crossTradeMapping.primaryTradeId;
   const selectedTrade = taxonomy.find((node) => node.id === selectedTradeId) ?? primaryTrade;
   const sectorPreferredTradeId = getSectorPreferredTradeId(crossTradeMapping, context.sectorTags ?? []);
+  const classificationChangedDefault =
+    Boolean(classificationPreference) &&
+    classificationPreference?.tradeId !== crossTradeMapping.primaryTradeId;
   const classificationNote =
-    classificationPreference && classificationPreference.tradeId !== crossTradeMapping.primaryTradeId
+    classificationPreference && classificationChangedDefault
       ? `Assigned to ${selectedTrade.name} because ${classificationPreference.label} context makes that package more specific than ${primaryTrade.name}.`
       : classificationPreference
         ? `${classificationPreference.label} context supports assigning ${crossTradeMapping.label} to ${selectedTrade.name}.`
@@ -229,6 +257,8 @@ function getPreferredAssignmentForCsiItem(
     classificationPreferredTradeId: classificationPreference?.tradeId,
     classificationContextLabel: classificationPreference?.label,
     classificationNote,
+    classificationChangedDefault,
+    informationalNote: crossTradeMapping.notes,
     isAmbiguous: true,
   };
 
@@ -238,7 +268,7 @@ function getPreferredAssignmentForCsiItem(
       ...ruleAssignment,
       confidence: classificationPreference
         ? getContextAdjustedConfidence(ruleAssignment.confidence)
-        : downgradeConfidence(ruleAssignment.confidence),
+        : ruleAssignment.confidence,
       reason: classificationNote
         ? `${ruleAssignment.reason} ${classificationNote}`
         : `${ruleAssignment.reason} ${crossTradeMapping.label} is cross-trade scope.`,
@@ -248,6 +278,8 @@ function getPreferredAssignmentForCsiItem(
       classificationPreferredTradeId: classificationPreference?.tradeId,
       classificationContextLabel: classificationPreference?.label,
       classificationNote,
+      classificationChangedDefault,
+      informationalNote: crossTradeMapping.notes,
       isAmbiguous: true,
     };
   }
@@ -376,12 +408,39 @@ function getAmbiguityWarning(
   }`;
 }
 
-function downgradeConfidence(
-  confidence: TradeCsiAssignment["confidence"]
-): TradeCsiAssignment["confidence"] {
-  if (confidence === "HIGH") return "MEDIUM";
+function getAmbiguityNote(
+  assignment: TradeCsiAssignment,
+  taxonomy: TradeTaxonomyNode[]
+) {
+  const assignedTradeName =
+    taxonomy.find((node) => node.id === assignment.tradeId)?.name ?? assignment.tradeId;
+  const possibleTradeNames = (assignment.possibleTradeIds ?? [])
+    .filter((tradeId) => tradeId !== assignment.tradeId)
+    .map((tradeId) => taxonomy.find((node) => node.id === tradeId)?.name ?? tradeId)
+    .join(", ");
 
-  return "LOW";
+  return possibleTradeNames
+    ? `${assignment.csiItemId} has related possible trades (${possibleTradeNames}) but is assigned to ${assignedTradeName}.`
+    : `${assignment.csiItemId} is assigned to ${assignedTradeName}.`;
+}
+
+function shouldWarnForAmbiguity(assignment: TradeCsiAssignment): boolean {
+  if (!assignment.isAmbiguous || !assignment.possibleTradeIds?.length) return false;
+  if (assignment.classificationChangedDefault) return true;
+  if (assignment.confidence === "LOW") return true;
+  if (assignment.confidence === "MEDIUM" && isPackageCorrectnessSensitive(assignment)) {
+    return true;
+  }
+
+  return false;
+}
+
+function isPackageCorrectnessSensitive(assignment: TradeCsiAssignment): boolean {
+  return [
+    assignment.tradeId,
+    assignment.classificationPreferredTradeId,
+    ...(assignment.possibleTradeIds ?? []),
+  ].some((tradeId) => tradeId !== undefined && packageCorrectnessSensitiveTradeIds.has(tradeId));
 }
 
 function getContextAdjustedConfidence(

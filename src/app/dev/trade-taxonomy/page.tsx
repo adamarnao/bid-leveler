@@ -670,6 +670,13 @@ function SuggestedPackageCard({
         .map((assignment) => getMatchSummaryLabel(assignment.matchStrength, assignment.confidence))
     )
   );
+  const lowConfidenceItems = assignedItems.filter((item) => {
+    const assignment = result.assignments.find(
+      (candidate) => candidate.csiItemId === item.id,
+    );
+
+    return assignment?.confidence === "LOW";
+  });
 
   return (
     <div className="taxonomy-suggestion-card">
@@ -755,12 +762,36 @@ function SuggestedPackageCard({
         )}
       </div>
 
+      {lowConfidenceItems.length ? (
+        <div className="taxonomy-warning-block">
+          <span className="label-text">Low-Confidence Items</span>
+          <ul className="taxonomy-warning-list">
+            {lowConfidenceItems.map((item) => (
+              <li key={item.id}>
+                {item.number} {item.name}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
+
       {suggestion.warnings.length ? (
         <div className="taxonomy-warning-block">
-          <span className="label-text">Warnings</span>
+          <span className="label-text">Important Warnings</span>
           <ul className="taxonomy-warning-list">
             {suggestion.warnings.map((warning) => (
               <li key={warning}>{warning}</li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
+
+      {suggestion.informationalNotes.length ? (
+        <div className="taxonomy-specialization-list">
+          <span className="label-text">Informational Notes</span>
+          <ul>
+            {suggestion.informationalNotes.map((note) => (
+              <li key={note}>{note}</li>
             ))}
           </ul>
         </div>
@@ -857,10 +888,21 @@ function FixtureInspection({ scenario }: { scenario: FixtureScenarioResult }) {
 
       {scenario.result.warnings.length ? (
         <div className="taxonomy-warning-block">
-          <h3>Generation Warnings</h3>
+          <h3>Important Generation Warnings</h3>
           <ul className="taxonomy-warning-list">
             {scenario.result.warnings.map((warning) => (
               <li key={warning}>{warning}</li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
+
+      {scenario.result.informationalNotes.length ? (
+        <div className="taxonomy-specialization-list">
+          <h3>Generation Notes</h3>
+          <ul>
+            {scenario.result.informationalNotes.map((note) => (
+              <li key={note}>{note}</li>
             ))}
           </ul>
         </div>

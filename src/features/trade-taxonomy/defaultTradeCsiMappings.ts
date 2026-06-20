@@ -499,7 +499,7 @@ export const defaultCrossTradeMappings: CrossTradeMapping[] = [
       education: "ceilings",
       office: "drywall-framing",
     },
-    csiCodePatterns: ["09 2*", "092*", "07 21*", "0721*"],
+    csiCodePatterns: ["07 21*", "0721*"],
     titleKeywords: ["acoustic insulation", "acoustical insulation", "sound batt", "sound insulation"],
     notes: "Acoustic insulation can be carried with drywall, insulation, or ceiling scopes.",
   },

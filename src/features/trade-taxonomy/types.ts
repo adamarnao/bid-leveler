@@ -95,6 +95,8 @@ export type TradeCsiAssignment = {
   classificationPreferredTradeId?: string;
   classificationContextLabel?: string;
   classificationNote?: string;
+  classificationChangedDefault?: boolean;
+  informationalNote?: string;
   isAmbiguous?: boolean;
 };
 
@@ -107,6 +109,7 @@ export type TradePackageSuggestion = {
   childTradeIds?: string[];
   confidence: "HIGH" | "MEDIUM" | "LOW";
   warnings: string[];
+  informationalNotes: string[];
 };
 
 export type TradePackageGenerationResult = {
@@ -114,6 +117,7 @@ export type TradePackageGenerationResult = {
   assignments: TradeCsiAssignment[];
   unassignedCsiItemIds: string[];
   warnings: string[];
+  informationalNotes: string[];
 };
 
 export type TradeTaxonomyCsiItem = {
