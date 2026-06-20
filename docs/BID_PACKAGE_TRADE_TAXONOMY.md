@@ -101,11 +101,12 @@ The initial company-standard taxonomy should include at least:
 | Equipment | Food service, commercial kitchen, residential appliances, laundry, medical, laboratory, athletic, stage/theater, AV, loading dock equipment, trash chutes, projection/presentation, and vehicle service equipment. Often owner/vendor furnished or allowance-driven. |
 | Furnishings / FF&E | Window treatments, blinds/shades, curtains/drapery, fixed seating, auditorium seating, furniture, systems furniture, artwork/accessories, and rugs/mats. Hidden by default unless GC procurement or coordination is in scope. |
 | Conveying | Elevators, escalators, platform lifts, wheelchair lifts, dumbwaiters, material lifts, and pneumatic tube systems. Hidden by default unless vertical transportation or material movement systems are in scope. |
-| Fire Protection | Fire sprinkler and suppression systems. |
-| Plumbing | Domestic water, sanitary, storm, fixtures, plumbing equipment, and Medical Gas where applicable. |
-| HVAC | Mechanical HVAC systems, ductwork, piping, controls where company standards place controls here. |
-| Electrical | Power, lighting, panels, distribution, devices. |
-| Low Voltage / Technology | Data, communications, security, AV, low-voltage systems. |
+| Fire Protection | Fire sprinklers, fire pump, standpipes, clean agent suppression, kitchen hood suppression, and fireproofing. |
+| Plumbing | Fixtures, domestic water, sanitary waste/vent, storm drainage, gas piping, medical gas, compressed air, vacuum systems, process piping, water heaters, pumps, grease interceptors, oil/sand interceptors, and plumbing insulation. |
+| HVAC | HVAC equipment, AHUs, RTUs, split systems/VRF, ductwork, hydronic piping, chilled/hot water, steam/condensate, refrigerant piping, exhaust, kitchen/lab exhaust, controls/BAS, TAB, mechanical insulation, and vibration isolation. |
+| Electrical | Electrical service, power distribution, switchgear, panels, transformers, feeders, branch wiring, lighting, lighting controls, devices, emergency power, generators, UPS, lightning protection, grounding, and temporary power. |
+| Low Voltage / Technology | Data/communications, structured cabling, fiber, security, access control, CCTV/video surveillance, intrusion detection, AV, sound/paging, nurse call, clock systems, intercom, fire alarm, building automation/controls, DAS/cellular enhancement, and Wi-Fi. |
+| Hidden sector-specific groups | Process Systems, Healthcare, Laboratory / Cleanroom, Food Service, Residential / Multifamily, Railroad / Transit, Marine / Waterfront, Airport / Airfield, Solar / Photovoltaic, EV Charging, Wind / Renewable Energy, Oil / Gas / Fuel Systems, Pools / Aquatics, Sports / Athletic Surfacing, Theater / Stage Rigging, Detention Equipment, Security Hardening / Ballistic Protection, Radiation Shielding, and Agricultural / Greenhouse Systems. These are hidden until sector triggers or advanced review make them relevant. |
 | Earthwork / Sitework | See Sitework / Civil. Demolition now lives under Existing Conditions / Demolition rather than Sitework. |
 | Utilities | Site utilities, water, sewer, storm, gas, utility tie-ins. |
 | Asphalt / Paving | Asphalt paving, striping, pavement markings where applicable. |
