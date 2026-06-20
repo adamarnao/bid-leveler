@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import AppShell from "@/components/layout/AppShell";
+import ContextHelp from "@/components/ui/ContextHelp";
 import {
   defaultCrossTradeMappings,
   defaultTradeCsiMappings,
@@ -21,6 +22,7 @@ import {
   restaurantCsiFixture,
   type CrossTradeMapping,
   type ProjectSectorTag,
+  type TradeCsiAssignment,
   type TradePackageGenerationResult,
   type TradePackageSuggestion,
   type TradeTaxonomyCsiItem,
@@ -156,14 +158,45 @@ function formatMode(mode: TradeTaxonomyNode["defaultPackageMode"]): string {
 
 function getConfidenceBadgeClass(confidence: TradePackageSuggestion["confidence"]): string {
   if (confidence === "HIGH") {
-    return "badge-success";
+    return "taxonomy-confidence-strong";
   }
 
   if (confidence === "MEDIUM") {
-    return "badge-warning";
+    return "taxonomy-confidence-medium";
   }
 
-  return "badge-muted";
+  return "taxonomy-confidence-low";
+}
+
+function formatEnumLabel(value: string): string {
+  return value
+    .split("_")
+    .map((part) => part.charAt(0) + part.slice(1).toLowerCase())
+    .join(" ");
+}
+
+function getModeHelp(mode: TradeTaxonomyNode["defaultPackageMode"]): string {
+  if (mode === "UMBRELLA") {
+    return "Matching specializations roll into one bid package by default.";
+  }
+
+  if (mode === "SPLIT_BY_CHILD") {
+    return "Matching specializations become separate bid package suggestions by default.";
+  }
+
+  return "Suggests a parent package, but the estimator may split or combine it.";
+}
+
+function getStatusLabel(trade: TradeTaxonomyNode, depth: number): "Active" | "Hidden" | "Inactive" | undefined {
+  if (!trade.isActive) return "Inactive";
+  if (trade.defaultHidden) return "Hidden";
+  if (depth === 0) return "Active";
+
+  return undefined;
+}
+
+function getMatchSummaryLabel(matchStrength: string, confidence: string): string {
+  return `${formatEnumLabel(matchStrength)} · ${formatEnumLabel(confidence)}`;
 }
 
 function formatSectorTag(sectorTag: ProjectSectorTag): string {
@@ -178,22 +211,23 @@ function isProjectSectorTag(value: string | undefined): value is ProjectSectorTa
 }
 
 function TradeMetadataBadges({ trade }: { trade: TradeTaxonomyNode }) {
+  const metadataLabels: string[] = [];
+  if (trade.isCommon) metadataLabels.push("Common");
+  if (trade.specialtyTags?.includes("sector_specific")) metadataLabels.push("Sector-Specific");
+  if (trade.specialtyTags?.includes("gc_cost")) metadataLabels.push("GC Cost");
+  if (trade.specialtyTags?.includes("owner_vendor")) metadataLabels.push("Owner/Vendor");
+  if (trade.specialtyTags?.includes("cross_trade")) metadataLabels.push("Cross-Trade");
+  if (trade.canBeBidPackage) metadataLabels.push("Bid Package");
+
+  if (!metadataLabels.length) return null;
+
   return (
-    <div className="cluster gap-2">
-      {trade.isCommon ? <span className="badge badge-success">Common</span> : null}
-      {trade.defaultHidden ? <span className="badge badge-warning">Hidden</span> : null}
-      {trade.specialtyTags?.includes("sector_specific") ? (
-        <span className="badge badge-muted">Sector-Specific</span>
-      ) : null}
-      {trade.specialtyTags?.includes("gc_cost") ? (
-        <span className="badge badge-muted">GC Cost</span>
-      ) : null}
-      {trade.specialtyTags?.includes("owner_vendor") ? (
-        <span className="badge badge-muted">Owner/Vendor</span>
-      ) : null}
-      {trade.specialtyTags?.includes("cross_trade") ? (
-        <span className="badge badge-muted">Cross-Trade</span>
-      ) : null}
+    <div className="taxonomy-meta-list">
+      {metadataLabels.map((label) => (
+        <span key={label} className="taxonomy-meta-chip">
+          {label}
+        </span>
+      ))}
     </div>
   );
 }
@@ -209,25 +243,28 @@ function TradeNodeCard({
 }) {
   const specializations = getSpecializations(trade.id, tradeList);
   const relatedTrades = getRelatedTrades(trade.id);
+  const statusLabel = getStatusLabel(trade, depth);
 
   return (
     <div
-      className="project-csi-selected-group"
-      style={{ marginLeft: depth > 0 ? 16 : 0 }}
+      className={`taxonomy-trade-row ${
+        depth === 0 ? "taxonomy-trade-category-row" : "taxonomy-specialization-row"
+      }`}
+      style={{ marginLeft: depth > 0 ? Math.min(depth, 3) * 14 : 0 }}
     >
       <div className="cluster-between align-start gap-3">
         <div>
-          <div className="cluster gap-2">
-            <strong>{trade.name}</strong>
-            <span className="badge badge-muted">{formatMode(trade.defaultPackageMode)}</span>
-            <span className={trade.isActive ? "badge badge-success" : "badge badge-muted"}>
-              {trade.isActive ? "Active" : "Inactive"}
+          <div className="taxonomy-trade-title-row">
+            <strong className="taxonomy-trade-name">{trade.name}</strong>
+            {statusLabel ? (
+              <span className={`taxonomy-status-chip taxonomy-status-${statusLabel.toLowerCase()}`}>
+                {statusLabel}
+              </span>
+            ) : null}
+            <span className="taxonomy-mode-label">
+              {formatMode(trade.defaultPackageMode)}
+              <ContextHelp label={formatMode(trade.defaultPackageMode)} content={getModeHelp(trade.defaultPackageMode)} />
             </span>
-            {trade.canBeBidPackage ? (
-              <span className="badge badge-primary">Bid Package</span>
-            ) : (
-              <span className="badge badge-muted">Grouping</span>
-            )}
           </div>
           <TradeMetadataBadges trade={trade} />
           {trade.description ? <p className="muted-text">{trade.description}</p> : null}
@@ -259,7 +296,6 @@ function TradeNodeCard({
             </p>
           ) : null}
         </div>
-        <span className="badge badge-muted">#{trade.sortOrder}</span>
       </div>
 
       {specializations.length > 0 ? (
@@ -287,6 +323,118 @@ function CsiItemLabel({ item }: { item: TradeTaxonomyCsiItem }) {
   );
 }
 
+function LegendItem({
+  label,
+  content,
+  help,
+  className,
+}: {
+  label: string;
+  content: string;
+  help?: string;
+  className?: string;
+}) {
+  return (
+    <div className="taxonomy-legend-item">
+      <span className={className ?? "taxonomy-meta-chip"}>
+        {label}
+        {help ? <ContextHelp label={label} content={help} /> : null}
+      </span>
+      <p>{content}</p>
+    </div>
+  );
+}
+
+function WorkbenchLegend() {
+  return (
+    <section className="app-panel taxonomy-legend">
+      <div className="panel-header">
+        <div>
+          <p className="label-text">Legend</p>
+          <h2>How to Read Taxonomy Signals</h2>
+          <p className="muted-text">
+            Badges are limited to state and metadata. Detailed explanations are available from
+            the help icons.
+          </p>
+        </div>
+      </div>
+
+      <div className="taxonomy-legend-grid">
+        <div className="taxonomy-legend-group">
+          <h3>Status</h3>
+          <LegendItem
+            label="Active"
+            className="taxonomy-status-chip taxonomy-status-active"
+            content="Available for package generation."
+          />
+          <LegendItem
+            label="Hidden"
+            className="taxonomy-status-chip taxonomy-status-hidden"
+            content="Hidden unless sector-triggered or manually enabled later."
+          />
+          <LegendItem
+            label="Inactive"
+            className="taxonomy-status-chip taxonomy-status-inactive"
+            content="Unavailable or retired."
+          />
+        </div>
+
+        <div className="taxonomy-legend-group">
+          <h3>Package Mode</h3>
+          <LegendItem
+            label="Umbrella"
+            content="Rolls matching specializations into one bid package."
+            help="Use when related scopes are normally invited and leveled together."
+          />
+          <LegendItem
+            label="Split"
+            content="Creates separate packages for specializations."
+            help="Use when each specialization is normally bid by a different trade or vendor."
+          />
+          <LegendItem
+            label="User Choice"
+            content="Suggests a parent package, but estimator may split it."
+            help="Use where company or project strategy decides how granular the package should be."
+          />
+        </div>
+
+        <div className="taxonomy-legend-group">
+          <h3>Metadata</h3>
+          <LegendItem label="Common" content="Shown for most projects." />
+          <LegendItem label="GC Cost" content="Estimate review/general conditions, not usually an ITB package." />
+          <LegendItem label="Owner/Vendor" content="May be OFCI, OFOI, CFCI, or vendor-driven." />
+          <LegendItem label="Sector-Specific" content="Appears for matching project sectors." />
+          <LegendItem label="Cross-Trade" content="May belong to more than one trade." />
+          <LegendItem label="Bid Package" content="Can become a project bid package." />
+        </div>
+
+        <div className="taxonomy-legend-group">
+          <h3>Match Confidence</h3>
+          <LegendItem
+            label="Primary · High"
+            className="taxonomy-match-summary taxonomy-confidence-strong"
+            content="Strong default assignment."
+          />
+          <LegendItem
+            label="Secondary · Medium"
+            className="taxonomy-match-summary taxonomy-confidence-medium"
+            content="Plausible, but may need review."
+          />
+          <LegendItem
+            label="Possible · Low"
+            className="taxonomy-match-summary taxonomy-confidence-low"
+            content="Weak or ambiguous; estimator should review."
+          />
+        </div>
+      </div>
+
+      <p className="muted-text taxonomy-guidance-note">
+        TODO: app-wide guidance settings can later control how much context help appears.
+      </p>
+    </section>
+  );
+}
+
 function SuggestedPackageCard({
   suggestion,
   fixtureItems,
@@ -299,17 +447,33 @@ function SuggestedPackageCard({
   const assignedItems = suggestion.csiItemIds
     .map((itemId) => fixtureItems.find((item) => item.id === itemId))
     .filter((item): item is TradeTaxonomyCsiItem => Boolean(item));
+  const matchSummaryLabels = Array.from(
+    new Set(
+      suggestion.csiItemIds
+        .map((itemId) => result.assignments.find((assignment) => assignment.csiItemId === itemId))
+        .filter((assignment): assignment is TradeCsiAssignment => Boolean(assignment))
+        .map((assignment) => getMatchSummaryLabel(assignment.matchStrength, assignment.confidence))
+    )
+  );
 
   return (
-    <div className="project-csi-selected-group">
+    <div className="taxonomy-suggestion-card">
       <div className="cluster-between align-start gap-3">
         <div>
-          <div className="cluster gap-2">
+          <div className="taxonomy-trade-title-row">
             <strong>{suggestion.name}</strong>
-            <span className="badge badge-muted">{formatMode(suggestion.packageMode)}</span>
-            <span className={`badge ${getConfidenceBadgeClass(suggestion.confidence)}`}>
-              {suggestion.confidence}
+            <span className="taxonomy-mode-label">
+              {formatMode(suggestion.packageMode)}
+              <ContextHelp
+                label={formatMode(suggestion.packageMode)}
+                content={getModeHelp(suggestion.packageMode)}
+              />
             </span>
+            {matchSummaryLabels.length ? (
+              <span className={`taxonomy-match-summary ${getConfidenceBadgeClass(suggestion.confidence)}`}>
+                {matchSummaryLabels.join(", ")}
+              </span>
+            ) : null}
           </div>
           <p className="muted-text">
             Trade: {getTradeName(suggestion.tradeId)}
@@ -318,21 +482,21 @@ function SuggestedPackageCard({
               : ""}
           </p>
         </div>
-        <span className="badge badge-primary">{suggestion.csiItemIds.length} CSI tags</span>
+        <span className="taxonomy-meta-chip">{suggestion.csiItemIds.length} CSI tags</span>
       </div>
 
       {suggestion.childTradeIds?.length ? (
-        <div className="cluster gap-2" style={{ marginTop: 10 }}>
+        <div className="taxonomy-specialization-list">
           <span className="label-text">Specializations</span>
-          {suggestion.childTradeIds.map((childTradeId) => (
-            <span key={childTradeId} className="badge badge-muted">
-              {getTradeName(childTradeId)}
-            </span>
-          ))}
+          <ul>
+            {suggestion.childTradeIds.map((childTradeId) => (
+              <li key={childTradeId}>{getTradeName(childTradeId)}</li>
+            ))}
+          </ul>
         </div>
       ) : null}
 
-      <div className="stack gap-2" style={{ marginTop: 12 }}>
+      <div className="taxonomy-mapped-items">
         <span className="label-text">Assigned CSI items</span>
         {assignedItems.length ? (
           assignedItems.map((item) => {
@@ -341,12 +505,15 @@ function SuggestedPackageCard({
             );
 
             return (
-              <div key={item.id} className="stack gap-2">
+              <div key={item.id} className="taxonomy-mapped-item">
                 <div className="cluster-between gap-3">
                   <CsiItemLabel item={item} />
                   {assignment ? (
-                    <span className="badge badge-muted" title={assignment.reason}>
-                      {assignment.matchStrength} / {assignment.confidence}
+                    <span
+                      className={`taxonomy-match-summary ${getConfidenceBadgeClass(assignment.confidence)}`}
+                      title={assignment.reason}
+                    >
+                      {getMatchSummaryLabel(assignment.matchStrength, assignment.confidence)}
                     </span>
                   ) : null}
                 </div>
@@ -368,13 +535,13 @@ function SuggestedPackageCard({
       </div>
 
       {suggestion.warnings.length ? (
-        <div className="stack gap-2" style={{ marginTop: 12 }}>
+        <div className="taxonomy-warning-block">
           <span className="label-text">Warnings</span>
-          {suggestion.warnings.map((warning) => (
-            <span key={warning} className="badge badge-warning">
-              {warning}
-            </span>
-          ))}
+          <ul className="taxonomy-warning-list">
+            {suggestion.warnings.map((warning) => (
+              <li key={warning}>{warning}</li>
+            ))}
+          </ul>
         </div>
       ) : null}
     </div>
@@ -400,7 +567,7 @@ function FixtureInspection({ scenario }: { scenario: FixtureScenarioResult }) {
             </p>
           ) : null}
         </div>
-        <span className="badge badge-primary">
+        <span className="taxonomy-meta-chip">
           {scenario.result.suggestions.length} suggestions
         </span>
       </div>
@@ -456,13 +623,13 @@ function FixtureInspection({ scenario }: { scenario: FixtureScenarioResult }) {
       </div>
 
       {scenario.result.warnings.length ? (
-        <div className="stack gap-2" style={{ marginTop: 18 }}>
+        <div className="taxonomy-warning-block">
           <h3>Generation Warnings</h3>
-          {scenario.result.warnings.map((warning) => (
-            <span key={warning} className="badge badge-warning">
-              {warning}
-            </span>
-          ))}
+          <ul className="taxonomy-warning-list">
+            {scenario.result.warnings.map((warning) => (
+              <li key={warning}>{warning}</li>
+            ))}
+          </ul>
         </div>
       ) : null}
     </section>
@@ -481,7 +648,7 @@ function CrossTradeMappingSection({ mappings }: { mappings: CrossTradeMapping[] 
             alternate trades and sector preference.
           </p>
         </div>
-        <span className="badge badge-warning">{mappings.length} mappings</span>
+        <span className="taxonomy-meta-chip">{mappings.length} mappings</span>
       </div>
 
       <div className="stack gap-3" style={{ marginTop: 16 }}>
@@ -489,9 +656,9 @@ function CrossTradeMappingSection({ mappings }: { mappings: CrossTradeMapping[] 
           <div key={mapping.id} className="project-csi-selected-group">
             <div className="cluster-between align-start gap-3">
               <div>
-                <div className="cluster gap-2">
+                <div className="taxonomy-trade-title-row">
                   <strong>{mapping.label}</strong>
-                  <span className="badge badge-primary">
+                  <span className="taxonomy-meta-chip">
                     Primary: {getTradeName(mapping.primaryTradeId)}
                   </span>
                 </div>
@@ -501,14 +668,14 @@ function CrossTradeMappingSection({ mappings }: { mappings: CrossTradeMapping[] 
                 </p>
                 {mapping.notes ? <p className="muted-text">{mapping.notes}</p> : null}
               </div>
-              <span className="badge badge-muted">{mapping.id}</span>
+              <span className="taxonomy-meta-chip">{mapping.id}</span>
             </div>
 
             {mapping.sectorPreferredTradeIds ? (
-              <div className="cluster gap-2" style={{ marginTop: 10 }}>
+              <div className="taxonomy-meta-list" style={{ marginTop: 10 }}>
                 <span className="label-text">Sector preferences</span>
                 {Object.entries(mapping.sectorPreferredTradeIds).map(([sectorTag, tradeId]) => (
-                  <span key={`${mapping.id}-${sectorTag}`} className="badge badge-muted">
+                  <span key={`${mapping.id}-${sectorTag}`} className="taxonomy-meta-chip">
                     {formatSectorTag(sectorTag as ProjectSectorTag)}: {getTradeName(tradeId)}
                   </span>
                 ))}
@@ -579,6 +746,8 @@ export default async function TradeTaxonomyWorkbenchPage({
           </p>
         </section>
 
+        <WorkbenchLegend />
+
         <section className="app-panel">
           <div className="panel-header">
             <div>
@@ -589,11 +758,11 @@ export default async function TradeTaxonomyWorkbenchPage({
                 status, and bid package eligibility.
               </p>
             </div>
-            <div className="cluster gap-2">
-              <span className="badge badge-primary">{visibleTaxonomy.length} visible</span>
-              <span className="badge badge-success">{commonTrades.length} common</span>
-              <span className="badge badge-warning">{hiddenTrades.length} hidden</span>
-              <span className="badge badge-muted">
+            <div className="taxonomy-meta-list">
+              <span className="taxonomy-meta-chip">{visibleTaxonomy.length} visible</span>
+              <span className="taxonomy-meta-chip">{commonTrades.length} common</span>
+              <span className="taxonomy-status-chip taxonomy-status-hidden">{hiddenTrades.length} hidden</span>
+              <span className="taxonomy-meta-chip">
                 {sectorTriggeredTrades.length} sector-triggered
               </span>
             </div>
@@ -632,9 +801,9 @@ export default async function TradeTaxonomyWorkbenchPage({
           {sectorTriggeredTrades.length ? (
             <div className="stack gap-2" style={{ marginTop: 16 }}>
               <span className="label-text">Sector-triggered hidden trades</span>
-              <div className="cluster gap-2">
+              <div className="taxonomy-meta-list">
                 {sectorTriggeredTrades.map((trade) => (
-                  <span key={trade.id} className="badge badge-warning">
+                  <span key={trade.id} className="taxonomy-meta-chip">
                     {trade.name}
                   </span>
                 ))}
