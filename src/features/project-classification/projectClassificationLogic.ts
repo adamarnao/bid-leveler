@@ -32,6 +32,28 @@ export function getProjectContextTagOptions(): ProjectClassificationOption<Proje
   return [...projectContextTagOptions].sort(compareOptions);
 }
 
+export function getContextTagOptionsForClassification({
+  sector,
+  workType,
+}: {
+  sector?: string | null;
+  workType?: string | null;
+}): ProjectClassificationOption<ProjectContextTagId>[] {
+  const normalizedSector = sector ? normalizeProjectSectorId(sector) : undefined;
+  const normalizedWorkType = workType ? normalizeProjectWorkTypeId(workType) : undefined;
+  const optionById = new Map(projectContextTagOptions.map((option) => [option.id, option]));
+
+  return contextTagAvailability
+    .filter((availability) =>
+      isContextTagAvailableForClassification(availability, normalizedSector, normalizedWorkType)
+    )
+    .map((availability) => optionById.get(availability.contextTag))
+    .filter((option): option is ProjectClassificationOption<ProjectContextTagId> =>
+      Boolean(option)
+    )
+    .sort(compareOptions);
+}
+
 export function normalizeProjectSectorId(value: string): ProjectSectorId | undefined {
   return normalizeClassificationId(value, sectorIds);
 }
@@ -107,6 +129,20 @@ export function buildProjectClassificationLabel(classification: ProjectClassific
 
 export function getContextTagAvailability() {
   return [...contextTagAvailability];
+}
+
+function isContextTagAvailableForClassification(
+  availability: (typeof contextTagAvailability)[number],
+  sector: ProjectSectorId | undefined,
+  workType: ProjectWorkTypeId | undefined
+): boolean {
+  const matchesSector =
+    !availability.sectors || (sector !== undefined && availability.sectors.includes(sector));
+  const matchesWorkType =
+    !availability.workTypes ||
+    (workType !== undefined && availability.workTypes.includes(workType));
+
+  return matchesSector && matchesWorkType;
 }
 
 function normalizeClassificationId<TId extends string>(

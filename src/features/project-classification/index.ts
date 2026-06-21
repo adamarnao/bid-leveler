@@ -8,6 +8,7 @@ export {
 } from "./defaultProjectClassifications";
 export {
   buildProjectClassificationLabel,
+  getContextTagOptionsForClassification,
   getContextTagAvailability,
   getProjectContextTagOptions,
   getProjectSectorOptions,

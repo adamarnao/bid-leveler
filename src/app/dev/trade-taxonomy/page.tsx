@@ -3,9 +3,12 @@ import Link from "next/link";
 import AppShell from "@/components/layout/AppShell";
 import ContextHelp from "@/components/ui/ContextHelp";
 import {
+  getContextTagOptionsForClassification,
   getProjectContextTagOptions,
   getProjectSectorOptions,
   getProjectWorkTypeOptions,
+  getWorkTypeLabelForSector,
+  getWorkTypeOptionsForSector,
 } from "@/features/project-classification";
 import {
   defaultCrossTradeMappings,
@@ -53,7 +56,7 @@ type TradeTaxonomyWorkbenchPageProps = {
   searchParams?: Promise<{
     sector?: string;
     workType?: string;
-    context?: string;
+    context?: string | string[];
     includeHidden?: string;
   }>;
 };
@@ -69,52 +72,6 @@ type WorkbenchFilterState = {
   contextTags: ProjectContextTag[];
   includeHidden: boolean;
 };
-
-type WorkbenchPreset = {
-  label: string;
-  sectorTags: ProjectSectorTag[];
-  workTypeTags: ProjectWorkTypeTag[];
-  contextTags: ProjectContextTag[];
-};
-
-const workbenchPresets: WorkbenchPreset[] = [
-  {
-    label: "Office + Tenant Improvement",
-    sectorTags: ["office"],
-    workTypeTags: ["interior_fit_out_renovation"],
-    contextTags: [],
-  },
-  {
-    label: "Healthcare + Tenant Improvement + Medical Office",
-    sectorTags: ["healthcare"],
-    workTypeTags: ["interior_fit_out_renovation"],
-    contextTags: ["medical_office"],
-  },
-  {
-    label: "Restaurant + Tenant Improvement + Commercial Kitchen",
-    sectorTags: ["restaurant"],
-    workTypeTags: ["interior_fit_out_renovation"],
-    contextTags: ["commercial_kitchen"],
-  },
-  {
-    label: "Civil + Sitework Only",
-    sectorTags: ["civil_sitework"],
-    workTypeTags: ["sitework_civil_only"],
-    contextTags: [],
-  },
-  {
-    label: "Industrial + Ground-Up",
-    sectorTags: ["industrial"],
-    workTypeTags: ["ground_up_new_construction"],
-    contextTags: [],
-  },
-  {
-    label: "Laboratory + Renovation + Lab/Cleanroom Context",
-    sectorTags: ["laboratory"],
-    workTypeTags: ["interior_fit_out_renovation"],
-    contextTags: ["lab", "cleanroom_context"],
-  },
-];
 
 const fixtureScenarios: FixtureScenario[] = [
   {
@@ -268,8 +225,20 @@ function formatClassificationTag(
   return options.find((option) => option.id === value)?.label ?? formatEnumLabel(value);
 }
 
+function parseSingleTag<TTag extends string>(
+  value: string | string[] | undefined,
+  options: readonly { id: TTag }[]
+): TTag | undefined {
+  const firstValue = Array.isArray(value) ? value[0] : value;
+  if (!firstValue) return undefined;
+
+  const validIds = new Set(options.map((option) => option.id));
+
+  return validIds.has(firstValue as TTag) ? (firstValue as TTag) : undefined;
+}
+
 function parseTagList<TTag extends string>(
-  value: string | undefined,
+  value: string | string[] | undefined,
   options: readonly { id: TTag }[]
 ): TTag[] {
   if (!value) return [];
@@ -277,9 +246,9 @@ function parseTagList<TTag extends string>(
   const validIds = new Set(options.map((option) => option.id));
   const selectedIds: TTag[] = [];
   const seenIds = new Set<TTag>();
+  const rawValues = Array.isArray(value) ? value : value.split(",");
 
-  value
-    .split(",")
+  rawValues
     .map((part) => part.trim())
     .filter(Boolean)
     .forEach((part) => {
@@ -293,25 +262,6 @@ function parseTagList<TTag extends string>(
     });
 
   return selectedIds;
-}
-
-function buildWorkbenchHref(filters: WorkbenchFilterState): string {
-  const params = new URLSearchParams();
-
-  if (filters.sectorTags.length) params.set("sector", filters.sectorTags.join(","));
-  if (filters.workTypeTags.length) params.set("workType", filters.workTypeTags.join(","));
-  if (filters.contextTags.length) params.set("context", filters.contextTags.join(","));
-  if (filters.includeHidden) params.set("includeHidden", "true");
-
-  const queryString = params.toString();
-
-  return queryString ? `/dev/trade-taxonomy?${queryString}` : "/dev/trade-taxonomy";
-}
-
-function toggleFilterTag<TTag extends string>(selectedTags: TTag[], tag: TTag): TTag[] {
-  return selectedTags.includes(tag)
-    ? selectedTags.filter((selectedTag) => selectedTag !== tag)
-    : [...selectedTags, tag];
 }
 
 function TradeMetadataBadges({ trade }: { trade: TradeTaxonomyNode }) {
@@ -571,81 +521,342 @@ function WorkbenchLegend() {
   );
 }
 
-function WorkbenchFilterGroup<TTag extends string>({
-  label,
-  selectedTags,
-  options,
-  buildHref,
+function WorkbenchClassificationControls({
+  selectedSector,
+  selectedWorkType,
+  selectedContextTags,
+  includeHidden,
+  availableContextOptions,
 }: {
-  label: string;
-  selectedTags: TTag[];
-  options: readonly { id: TTag; label: string }[];
-  buildHref: (nextTags: TTag[]) => string;
+  selectedSector: ProjectSectorTag | undefined;
+  selectedWorkType: ProjectWorkTypeTag | undefined;
+  selectedContextTags: ProjectContextTag[];
+  includeHidden: boolean;
+  availableContextOptions: readonly { id: ProjectContextTag; label: string; description: string }[];
 }) {
-  return (
-    <div className="taxonomy-filter-section">
-      <span className="label-text">{label}</span>
-      <div className="taxonomy-filter-list" aria-label={`${label} filters`}>
-        {options.map((option) => {
-          const isSelected = selectedTags.includes(option.id);
+  const sectorWorkTypeOptions = getWorkTypeOptionsForSector(selectedSector);
 
-          return (
-            <Link
-              key={option.id}
-              href={buildHref(toggleFilterTag(selectedTags, option.id))}
-              className={`taxonomy-filter-button ${
-                isSelected ? "button-primary" : "button-secondary"
-              }`}
-            >
-              {option.label}
-            </Link>
-          );
-        })}
+  return (
+    <form action="/dev/trade-taxonomy" className="taxonomy-classification-form">
+      <div className="taxonomy-control-grid">
+        <label className="field-stack">
+          <span>Sector</span>
+          <select name="sector" defaultValue={selectedSector ?? ""}>
+            <option value="">General / Unselected</option>
+            {sectorOptions.map((option) => (
+              <option key={option.id} value={option.id}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        <label className="field-stack">
+          <span>Work Type</span>
+          <select name="workType" defaultValue={selectedWorkType ?? ""}>
+            <option value="">Unselected</option>
+            {sectorWorkTypeOptions.map((option) => (
+              <option key={option.id} value={option.id}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        <div className="field-stack">
+          <span>Context Tags</span>
+          <details className="taxonomy-context-dropdown">
+            <summary>
+              {selectedContextTags.length
+                ? `${selectedContextTags.length} selected`
+                : "Select context tags"}
+            </summary>
+            <div className="taxonomy-context-options">
+              {availableContextOptions.length ? (
+                availableContextOptions.map((option) => (
+                  <label key={option.id} className="taxonomy-context-option">
+                    <input
+                      type="checkbox"
+                      name="context"
+                      value={option.id}
+                      defaultChecked={selectedContextTags.includes(option.id)}
+                    />
+                    <span>
+                      <strong>{option.label}</strong>
+                      <small>{option.description}</small>
+                    </span>
+                  </label>
+                ))
+              ) : (
+                <p className="muted-text">No context tags are available for this classification.</p>
+              )}
+            </div>
+          </details>
+        </div>
+
+        <label className="taxonomy-toggle-row">
+          <input
+            type="checkbox"
+            name="includeHidden"
+            value="true"
+            defaultChecked={includeHidden}
+          />
+          <span>Include hidden in master library preview</span>
+        </label>
       </div>
-    </div>
+
+      <div className="taxonomy-control-actions">
+        <button type="submit" className="button-primary">
+          Apply Classification
+        </button>
+        <Link href="/dev/trade-taxonomy" className="button-secondary">
+          Reset
+        </Link>
+      </div>
+    </form>
   );
 }
 
-function WorkbenchPresetFilters({
+type ProjectVisibilityLevel =
+  | "core"
+  | "suggested"
+  | "contextual"
+  | "hidden"
+  | "excluded";
+
+type ProjectVisibilityGroups = Record<ProjectVisibilityLevel, TradeTaxonomyNode[]>;
+
+const officeInteriorCoreTradeIds = new Set([
+  "demolition",
+  "drywall-framing",
+  "ceilings",
+  "flooring",
+  "wall-finishes",
+  "doors-frames-hardware",
+  "glass-glazing",
+  "specialties",
+  "fire-protection",
+  "plumbing",
+  "hvac",
+  "electrical",
+  "low-voltage-technology",
+]);
+
+const officeInteriorSuggestedTradeIds = new Set([
+  "finish-carpentry-millwork",
+  "furnishings-ffe",
+]);
+
+const officeInteriorExcludedTradeIds = new Set([
+  "sitework",
+  "concrete",
+  "masonry",
+  "structural-steel",
+  "roofing",
+  "overhead-doors",
+  "food-service-systems",
+  "healthcare-systems",
+  "process-systems",
+  "laboratory-cleanroom-systems",
+]);
+
+const residentialRenovationCoreTradeIds = new Set([
+  "demolition",
+  "rough-carpentry",
+  "finish-carpentry-millwork",
+  "doors-frames-hardware",
+  "drywall-framing",
+  "wall-finishes",
+  "flooring",
+  "plumbing",
+  "hvac",
+  "electrical",
+  "equipment",
+]);
+
+const residentialRenovationSuggestedTradeIds = new Set([
+  "insulation",
+  "waterproofing",
+  "specialties",
+  "low-voltage-technology",
+  "furnishings-ffe",
+]);
+
+const residentialRenovationExcludedTradeIds = new Set([
+  "sitework",
+  "concrete",
+  "masonry",
+  "structural-steel",
+  "misc-metals",
+  "roofing",
+  "overhead-doors",
+  "glass-glazing",
+  "ceilings",
+  "food-service-systems",
+  "healthcare-systems",
+  "process-systems",
+  "laboratory-cleanroom-systems",
+]);
+
+const civilSiteworkCoreTradeIds = new Set(["sitework", "demolition"]);
+const groundUpCoreTradeIds = new Set([
+  "sitework",
+  "concrete",
+  "masonry",
+  "structural-steel",
+  "misc-metals",
+  "roofing",
+  "waterproofing",
+  "insulation",
+  "doors-frames-hardware",
+  "glass-glazing",
+  "drywall-framing",
+  "ceilings",
+  "flooring",
+  "wall-finishes",
+  "specialties",
+  "fire-protection",
+  "plumbing",
+  "hvac",
+  "electrical",
+  "low-voltage-technology",
+]);
+
+function getProjectVisibilityGroups({
+  taxonomy,
   selectedFilters,
 }: {
+  taxonomy: TradeTaxonomyNode[];
   selectedFilters: WorkbenchFilterState;
+}): ProjectVisibilityGroups {
+  const rootTrades = taxonomy.filter((trade) => !trade.parentId && trade.isActive).sort(sortTrades);
+  const triggeredTradeIds = new Set(
+    getTriggeredTradesForProject(taxonomy, selectedFilters).map((trade) => trade.id)
+  );
+  const groups: ProjectVisibilityGroups = {
+    core: [],
+    suggested: [],
+    contextual: [],
+    hidden: [],
+    excluded: [],
+  };
+
+  rootTrades.forEach((trade) => {
+    const level = getProjectVisibilityLevel(trade, selectedFilters, triggeredTradeIds);
+    groups[level].push(trade);
+  });
+
+  return groups;
+}
+
+function getProjectVisibilityLevel(
+  trade: TradeTaxonomyNode,
+  selectedFilters: WorkbenchFilterState,
+  triggeredTradeIds: ReadonlySet<string>
+): ProjectVisibilityLevel {
+  if (isContextualTrade(trade, selectedFilters, triggeredTradeIds)) return "contextual";
+
+  if (isOfficeInteriorFitOut(selectedFilters)) {
+    if (officeInteriorCoreTradeIds.has(trade.id)) return "core";
+    if (officeInteriorSuggestedTradeIds.has(trade.id)) return "suggested";
+    if (officeInteriorExcludedTradeIds.has(trade.id)) return "excluded";
+  }
+
+  if (isResidentialRenovation(selectedFilters)) {
+    if (residentialRenovationCoreTradeIds.has(trade.id)) return "core";
+    if (residentialRenovationSuggestedTradeIds.has(trade.id)) return "suggested";
+    if (residentialRenovationExcludedTradeIds.has(trade.id)) return "excluded";
+  }
+
+  if (selectedFilters.workTypeTags.includes("sitework_civil_only")) {
+    if (civilSiteworkCoreTradeIds.has(trade.id)) return "core";
+    if (trade.id !== "sitework" && trade.id !== "demolition") return "excluded";
+  }
+
+  if (selectedFilters.workTypeTags.includes("ground_up_new_construction")) {
+    if (groundUpCoreTradeIds.has(trade.id)) return "core";
+  }
+
+  if (trade.defaultHidden) return "hidden";
+  if (trade.isCommon) return "core";
+
+  return "suggested";
+}
+
+function isOfficeInteriorFitOut(selectedFilters: WorkbenchFilterState): boolean {
+  return (
+    selectedFilters.sectorTags.includes("office") &&
+    selectedFilters.workTypeTags.includes("interior_fit_out_renovation")
+  );
+}
+
+function isResidentialRenovation(selectedFilters: WorkbenchFilterState): boolean {
+  return (
+    (selectedFilters.sectorTags.includes("residential") ||
+      selectedFilters.sectorTags.includes("multifamily")) &&
+    selectedFilters.workTypeTags.includes("interior_fit_out_renovation")
+  );
+}
+
+function isContextualTrade(
+  trade: TradeTaxonomyNode,
+  selectedFilters: WorkbenchFilterState,
+  triggeredTradeIds: ReadonlySet<string>
+): boolean {
+  if (triggeredTradeIds.has(trade.id)) return true;
+  if (selectedFilters.contextTags.includes("sitework_scope") && trade.id === "sitework") return true;
+  if (selectedFilters.contextTags.includes("roof_work") && trade.id === "roofing") return true;
+  if (
+    selectedFilters.contextTags.includes("exterior_envelope_scope") &&
+    ["roofing", "waterproofing", "glass-glazing"].includes(trade.id)
+  ) {
+    return true;
+  }
+  if (selectedFilters.contextTags.includes("commercial_kitchen") && trade.id === "equipment") {
+    return true;
+  }
+  if (
+    (selectedFilters.contextTags.includes("medical_gas_required") ||
+      selectedFilters.contextTags.includes("nurse_call_required") ||
+      selectedFilters.contextTags.includes("infection_control")) &&
+    trade.id === "healthcare-systems"
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
+function TradeVisibilityGroup({
+  title,
+  description,
+  trades,
+}: {
+  title: string;
+  description: string;
+  trades: TradeTaxonomyNode[];
 }) {
   return (
-    <div className="taxonomy-filter-section">
-      <span className="label-text">Preset examples</span>
-      <div className="taxonomy-filter-list" aria-label="Preset classification filters">
-        <Link
-          href={buildWorkbenchHref({
-            sectorTags: [],
-            workTypeTags: [],
-            contextTags: [],
-            includeHidden: false,
-          })}
-          className={`taxonomy-filter-button ${
-            selectedFilters.sectorTags.length ||
-            selectedFilters.workTypeTags.length ||
-            selectedFilters.contextTags.length ||
-            selectedFilters.includeHidden
-              ? "button-secondary"
-              : "button-primary"
-          }`}
-        >
-          Default
-        </Link>
-        {workbenchPresets.map((preset) => (
-          <Link
-            key={preset.label}
-            href={buildWorkbenchHref({
-              ...preset,
-              includeHidden: selectedFilters.includeHidden,
-            })}
-            className="taxonomy-filter-button button-secondary"
-          >
-            {preset.label}
-          </Link>
-        ))}
+    <div className="taxonomy-visibility-group">
+      <div className="cluster-between align-start gap-3">
+        <div>
+          <h3>{title}</h3>
+          <p className="muted-text">{description}</p>
+        </div>
+        <span className="taxonomy-meta-chip">{trades.length}</span>
       </div>
+      {trades.length ? (
+        <div className="taxonomy-visibility-list">
+          {trades.map((trade) => (
+            <div key={trade.id} className="taxonomy-visibility-card">
+              <strong>{trade.name}</strong>
+              <span className="muted-text">{trade.id}</span>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p className="muted-text">No trades in this group.</p>
+      )}
     </div>
   );
 }
@@ -967,24 +1178,36 @@ export default async function TradeTaxonomyWorkbenchPage({
   searchParams,
 }: TradeTaxonomyWorkbenchPageProps) {
   const resolvedSearchParams = await searchParams;
+  const selectedSector = parseSingleTag<ProjectSectorTag>(
+    resolvedSearchParams?.sector,
+    sectorOptions
+  );
+  const workTypeOptionsForSector = getWorkTypeOptionsForSector(selectedSector);
+  const selectedWorkType = parseSingleTag<ProjectWorkTypeTag>(
+    resolvedSearchParams?.workType,
+    workTypeOptionsForSector
+  );
+  const availableContextOptions = getContextTagOptionsForClassification({
+    sector: selectedSector,
+    workType: selectedWorkType,
+  });
+  const selectedContextTags = parseTagList<ProjectContextTag>(
+    resolvedSearchParams?.context,
+    availableContextOptions
+  );
   const selectedFilters: WorkbenchFilterState = {
-    sectorTags: parseTagList<ProjectSectorTag>(resolvedSearchParams?.sector, sectorOptions),
-    workTypeTags: parseTagList<ProjectWorkTypeTag>(
-      resolvedSearchParams?.workType,
-      workTypeOptions
-    ),
-    contextTags: parseTagList<ProjectContextTag>(
-      resolvedSearchParams?.context,
-      contextTagOptions
-    ),
+    sectorTags: selectedSector ? [selectedSector] : [],
+    workTypeTags: selectedWorkType ? [selectedWorkType] : [],
+    contextTags: selectedContextTags,
     includeHidden: resolvedSearchParams?.includeHidden === "true",
   };
-  const visibleTaxonomy = getVisibleTradeTaxonomyForProject({
+  const masterPreviewTaxonomy = getVisibleTradeTaxonomyForProject({
     taxonomy,
     ...selectedFilters,
   });
+  const projectVisibilityGroups = getProjectVisibilityGroups({ taxonomy, selectedFilters });
   const triggeredTrades = getTriggeredTradesForProject(taxonomy, selectedFilters);
-  const rootTrades = visibleTaxonomy.filter((trade) => !trade.parentId).sort(sortTrades);
+  const masterRootTrades = masterPreviewTaxonomy.filter((trade) => !trade.parentId).sort(sortTrades);
   const commonTrades = getCommonTrades(taxonomy);
   const hiddenTrades = getHiddenTrades(taxonomy);
   const scenarioResults = fixtureScenarios.map<FixtureScenarioResult>((scenario) => ({
@@ -1002,7 +1225,9 @@ export default async function TradeTaxonomyWorkbenchPage({
   }));
   const activeFilterLabel = [
     ...selectedFilters.sectorTags.map(formatSectorTag),
-    ...selectedFilters.workTypeTags.map(formatWorkTypeTag),
+    ...selectedFilters.workTypeTags.map((workType) =>
+      getWorkTypeLabelForSector(workType, selectedSector)
+    ),
     ...selectedFilters.contextTags.map(formatContextTag),
     selectedFilters.includeHidden ? "Include Hidden" : undefined,
   ].filter((label): label is string => Boolean(label));
@@ -1036,72 +1261,29 @@ export default async function TradeTaxonomyWorkbenchPage({
         <section className="app-panel">
           <div className="panel-header">
             <div>
-              <p className="label-text">Default Taxonomy</p>
-              <h2>Trade Hierarchy</h2>
+              <p className="label-text">Classification Controls</p>
+              <h2>Selected Project Classification</h2>
               <p className="muted-text">
-                Trade categories and specializations are shown with package mode, active
-                status, and bid package eligibility.
+                Choose one sector and one work type. Context tags are filtered from the
+                source-rule availability table for the selected classification.
               </p>
             </div>
             <div className="taxonomy-meta-list">
-              <span className="taxonomy-meta-chip">{visibleTaxonomy.length} visible</span>
-              <span className="taxonomy-meta-chip">{commonTrades.length} common</span>
-              <span className="taxonomy-status-chip taxonomy-status-hidden">{hiddenTrades.length} hidden</span>
+              <span className="taxonomy-meta-chip">{sectorOptions.length} sectors</span>
+              <span className="taxonomy-meta-chip">{workTypeOptions.length} work types</span>
               <span className="taxonomy-meta-chip">
-                {triggeredTrades.length} triggered
+                {availableContextOptions.length} available context tags
               </span>
             </div>
           </div>
 
-          <WorkbenchPresetFilters selectedFilters={selectedFilters} />
-
-          <WorkbenchFilterGroup
-            label="Sector"
-            selectedTags={selectedFilters.sectorTags}
-            options={sectorOptions}
-            buildHref={(nextTags) =>
-              buildWorkbenchHref({ ...selectedFilters, sectorTags: nextTags })
-            }
+          <WorkbenchClassificationControls
+            selectedSector={selectedSector}
+            selectedWorkType={selectedWorkType}
+            selectedContextTags={selectedContextTags}
+            includeHidden={selectedFilters.includeHidden}
+            availableContextOptions={availableContextOptions}
           />
-
-          <WorkbenchFilterGroup
-            label="Work Type"
-            selectedTags={selectedFilters.workTypeTags}
-            options={workTypeOptions}
-            buildHref={(nextTags) =>
-              buildWorkbenchHref({ ...selectedFilters, workTypeTags: nextTags })
-            }
-          />
-
-          <WorkbenchFilterGroup
-            label="Context Tags"
-            selectedTags={selectedFilters.contextTags}
-            options={contextTagOptions}
-            buildHref={(nextTags) =>
-              buildWorkbenchHref({ ...selectedFilters, contextTags: nextTags })
-            }
-          />
-
-          <div className="taxonomy-filter-section">
-            <span className="label-text">Hidden Trades</span>
-            <div className="taxonomy-filter-list" aria-label="Hidden trade visibility filter">
-              <Link
-                href={buildWorkbenchHref({
-                  ...selectedFilters,
-                  includeHidden: !selectedFilters.includeHidden,
-                })}
-                className={`taxonomy-filter-button ${
-                  selectedFilters.includeHidden ? "button-primary" : "button-secondary"
-                }`}
-              >
-                Include Hidden
-              </Link>
-            </div>
-            <p className="muted-text">
-              Hidden specialty trades appear when selected sector, work type, or context tag
-              triggers match. Core/common trades remain visible by default in this phase.
-            </p>
-          </div>
 
           {activeFilterLabel.length ? (
             <div className="stack gap-2" style={{ marginTop: 16 }}>
@@ -1115,26 +1297,75 @@ export default async function TradeTaxonomyWorkbenchPage({
               </div>
             </div>
           ) : null}
+        </section>
 
-          {triggeredTrades.length ? (
-            <div className="stack gap-2" style={{ marginTop: 16 }}>
-              <span className="label-text">Triggered hidden trades</span>
-              <div className="taxonomy-meta-list">
-                {triggeredTrades.map((trade) => (
-                  <span key={trade.id} className="taxonomy-meta-chip">
-                    {trade.name}
-                  </span>
-                ))}
-              </div>
+        <section className="app-panel">
+          <div className="panel-header">
+            <div>
+              <p className="label-text">Current Project Visibility</p>
+              <h2>Classification-Based Trade Relevance</h2>
+              <p className="muted-text">
+                Active means a trade exists in the master library. Core, Suggested,
+                Contextual, Hidden, and Excluded describe relevance to the selected project
+                classification.
+              </p>
             </div>
-          ) : null}
+          </div>
 
-          <div className="stack gap-3" style={{ marginTop: 16 }}>
-            {rootTrades.map((trade) => (
-              <TradeNodeCard key={trade.id} trade={trade} tradeList={visibleTaxonomy} />
-            ))}
+          <div className="taxonomy-visibility-grid">
+            <TradeVisibilityGroup
+              title="Core Trades"
+              description="Expected trade categories for the selected classification."
+              trades={projectVisibilityGroups.core}
+            />
+            <TradeVisibilityGroup
+              title="Suggested Trades"
+              description="Often relevant but should be reviewed before project use."
+              trades={projectVisibilityGroups.suggested}
+            />
+            <TradeVisibilityGroup
+              title="Contextual Trades"
+              description="Shown because sector, work type, or selected context tags make them relevant."
+              trades={projectVisibilityGroups.contextual}
+            />
+            <TradeVisibilityGroup
+              title="Hidden but Available"
+              description="Available in the master library, but not normally shown for this classification."
+              trades={projectVisibilityGroups.hidden}
+            />
+            <TradeVisibilityGroup
+              title="Excluded / Not Normally Relevant"
+              description="Not normally relevant to this classification unless the estimator manually enables it later."
+              trades={projectVisibilityGroups.excluded}
+            />
           </div>
         </section>
+
+        <details className="app-panel taxonomy-master-library">
+          <summary>
+            <span>
+              <span className="label-text">Master Trade Library</span>
+              <strong>Full Trade Hierarchy</strong>
+              <span className="muted-text">
+                Full active library preview. This is not the selected project trade list.
+              </span>
+            </span>
+            <span className="taxonomy-meta-list">
+              <span className="taxonomy-meta-chip">{masterPreviewTaxonomy.length} shown</span>
+              <span className="taxonomy-meta-chip">{commonTrades.length} common</span>
+              <span className="taxonomy-status-chip taxonomy-status-hidden">
+                {hiddenTrades.length} hidden
+              </span>
+              <span className="taxonomy-meta-chip">{triggeredTrades.length} triggered</span>
+            </span>
+          </summary>
+
+          <div className="stack gap-3" style={{ marginTop: 16 }}>
+            {masterRootTrades.map((trade) => (
+              <TradeNodeCard key={trade.id} trade={trade} tradeList={masterPreviewTaxonomy} />
+            ))}
+          </div>
+        </details>
 
         <CrossTradeMappingSection mappings={defaultCrossTradeMappings} />
 
