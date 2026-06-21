@@ -13,8 +13,6 @@ export type ProjectSectorId =
   | "multifamily"
   | "residential"
   | "civil_sitework"
-  | "civil"
-  | "sitework"
   | "government"
   | "detention"
   | "transportation"
@@ -25,9 +23,7 @@ export type ProjectSectorId =
   | "renewable_energy"
   | "agricultural";
 
-export type CanonicalProjectSectorId = Exclude<ProjectSectorId, "civil" | "sitework">;
-
-export type CanonicalProjectWorkTypeId =
+export type ProjectWorkTypeId =
   | "interior_fit_out_renovation"
   | "ground_up_new_construction"
   | "core_and_shell"
@@ -38,26 +34,7 @@ export type CanonicalProjectWorkTypeId =
   | "maintenance_repair"
   | "specialty_systems_installation";
 
-export type LegacyProjectWorkTypeId =
-  | "tenant_improvement"
-  | "fit_out"
-  | "build_out"
-  | "interior_renovation"
-  | "occupied_renovation"
-  | "ground_up"
-  | "shell_completion"
-  | "white_box"
-  | "addition"
-  | "remodel"
-  | "adaptive_reuse"
-  | "restoration"
-  | "sitework_only"
-  | "demolition_only"
-  | "phased_renovation";
-
-export type ProjectWorkTypeId = CanonicalProjectWorkTypeId | LegacyProjectWorkTypeId;
-
-export type CanonicalProjectContextTagId =
+export type ProjectContextTagId =
   | "occupied_site"
   | "phased_work"
   | "night_work"
@@ -107,12 +84,6 @@ export type CanonicalProjectContextTagId =
   | "siding_exterior_cladding"
   | "windows_exterior_doors";
 
-export type LegacyProjectContextTagId =
-  | "cleanroom"
-  | "occupied_building";
-
-export type ProjectContextTagId = CanonicalProjectContextTagId | LegacyProjectContextTagId;
-
 export type ProjectClassificationOption<TId extends string> = {
   id: TId;
   label: string;
@@ -122,24 +93,24 @@ export type ProjectClassificationOption<TId extends string> = {
 };
 
 export type SectorWorkTypeLabel = {
-  sector: CanonicalProjectSectorId;
-  workType: CanonicalProjectWorkTypeId;
+  sector: ProjectSectorId;
+  workType: ProjectWorkTypeId;
   label: string;
   aliases?: string[];
 };
 
 export type ContextTagAvailability = {
-  contextTag: CanonicalProjectContextTagId;
-  sectors?: CanonicalProjectSectorId[];
-  workTypes?: CanonicalProjectWorkTypeId[];
-  requiresAnyContext?: CanonicalProjectContextTagId[];
+  contextTag: ProjectContextTagId;
+  sectors?: ProjectSectorId[];
+  workTypes?: ProjectWorkTypeId[];
+  requiresAnyContext?: ProjectContextTagId[];
   hiddenByDefault?: boolean;
 };
 
 export type ProjectClassification = {
-  sectorIds: CanonicalProjectSectorId[];
-  workTypeIds: CanonicalProjectWorkTypeId[];
-  contextTagIds: CanonicalProjectContextTagId[];
+  sectorIds: ProjectSectorId[];
+  workTypeIds: ProjectWorkTypeId[];
+  contextTagIds: ProjectContextTagId[];
 };
 
 export type ProjectClassificationInput = {
@@ -150,8 +121,3 @@ export type ProjectClassificationInput = {
   contextTagIds?: readonly string[];
   contextTags?: readonly string[];
 };
-
-/* Legacy unions remain in ProjectSectorId/ProjectWorkTypeId/ProjectContextTagId
-   for compile-time compatibility with older project records and existing feature
-   modules. Canonical option lists and normalization helpers return the canonical
-   source-rule IDs. */

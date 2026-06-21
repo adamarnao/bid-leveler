@@ -81,38 +81,38 @@ const workbenchPresets: WorkbenchPreset[] = [
   {
     label: "Office + Tenant Improvement",
     sectorTags: ["office"],
-    workTypeTags: ["tenant_improvement"],
+    workTypeTags: ["interior_fit_out_renovation"],
     contextTags: [],
   },
   {
     label: "Healthcare + Tenant Improvement + Medical Office",
     sectorTags: ["healthcare"],
-    workTypeTags: ["tenant_improvement"],
+    workTypeTags: ["interior_fit_out_renovation"],
     contextTags: ["medical_office"],
   },
   {
     label: "Restaurant + Tenant Improvement + Commercial Kitchen",
     sectorTags: ["restaurant"],
-    workTypeTags: ["tenant_improvement"],
+    workTypeTags: ["interior_fit_out_renovation"],
     contextTags: ["commercial_kitchen"],
   },
   {
     label: "Civil + Sitework Only",
-    sectorTags: ["civil"],
-    workTypeTags: ["sitework_only"],
+    sectorTags: ["civil_sitework"],
+    workTypeTags: ["sitework_civil_only"],
     contextTags: [],
   },
   {
     label: "Industrial + Ground-Up",
     sectorTags: ["industrial"],
-    workTypeTags: ["ground_up"],
+    workTypeTags: ["ground_up_new_construction"],
     contextTags: [],
   },
   {
     label: "Laboratory + Renovation + Lab/Cleanroom Context",
     sectorTags: ["laboratory"],
-    workTypeTags: ["interior_renovation"],
-    contextTags: ["lab", "cleanroom"],
+    workTypeTags: ["interior_fit_out_renovation"],
+    contextTags: ["lab", "cleanroom_context"],
   },
 ];
 
@@ -145,7 +145,7 @@ const fixtureScenarios: FixtureScenario[] = [
       "Verifies classification-triggered healthcare systems and ambiguous medical gas, nurse call, and fire alarm scope.",
     csiItems: healthcareCsiFixture,
     sectorTags: ["healthcare"],
-    workTypeTags: ["tenant_improvement"],
+    workTypeTags: ["interior_fit_out_renovation"],
     contextTags: ["medical_office"],
   },
   {
@@ -155,7 +155,7 @@ const fixtureScenarios: FixtureScenario[] = [
       "Verifies food service equipment, commercial kitchen equipment, walk-ins, refrigeration, kitchen exhaust, grease interceptors, and hood suppression ambiguity.",
     csiItems: restaurantCsiFixture,
     sectorTags: ["restaurant"],
-    workTypeTags: ["tenant_improvement"],
+    workTypeTags: ["interior_fit_out_renovation"],
     contextTags: ["commercial_kitchen"],
   },
   {
@@ -165,7 +165,7 @@ const fixtureScenarios: FixtureScenario[] = [
       "Verifies a typical office tenant improvement set without hidden specialty clutter.",
     csiItems: officeTenantImprovementCsiFixture,
     sectorTags: ["office"],
-    workTypeTags: ["tenant_improvement"],
+    workTypeTags: ["interior_fit_out_renovation"],
   },
   {
     id: "industrial-lab",
@@ -174,8 +174,8 @@ const fixtureScenarios: FixtureScenario[] = [
       "Verifies process piping, lab gases, lab exhaust, and cleanroom sector-specific ambiguity.",
     csiItems: industrialLabCsiFixture,
     sectorTags: ["industrial", "laboratory", "cleanroom"],
-    workTypeTags: ["interior_renovation"],
-    contextTags: ["lab", "cleanroom"],
+    workTypeTags: ["interior_fit_out_renovation"],
+    contextTags: ["lab", "cleanroom_context"],
   },
 ];
 

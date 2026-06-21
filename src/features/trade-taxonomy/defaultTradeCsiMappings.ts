@@ -469,7 +469,7 @@ export const defaultCrossTradeMappings: CrossTradeMapping[] = [
     },
     contextPreferredTradeIds: {
       lab: "hvac",
-      cleanroom: "hvac",
+      cleanroom_context: "hvac",
       data_center: "low-voltage-technology",
     },
     csiCodePatterns: ["23 09*", "2309*", "25*", "159*"],
@@ -773,7 +773,7 @@ export const defaultCrossTradeMappings: CrossTradeMapping[] = [
     },
     contextPreferredTradeIds: {
       lab: "laboratory-cleanroom-systems",
-      cleanroom: "laboratory-cleanroom-systems",
+      cleanroom_context: "laboratory-cleanroom-systems",
     },
     csiCodePatterns: ["22 60*", "2260*", "22 67*", "2267*"],
     titleKeywords: ["lab gas", "laboratory gas", "specialty gas", "process gas"],
@@ -791,7 +791,7 @@ export const defaultCrossTradeMappings: CrossTradeMapping[] = [
     },
     contextPreferredTradeIds: {
       lab: "process-systems",
-      cleanroom: "process-systems",
+      cleanroom_context: "process-systems",
       food_processing: "process-systems",
     },
     csiCodePatterns: ["22 63*", "2263*", "22 67*", "2267*"],
@@ -808,7 +808,7 @@ export const defaultCrossTradeMappings: CrossTradeMapping[] = [
       laboratory: "laboratory-cleanroom-systems",
     },
     contextPreferredTradeIds: {
-      cleanroom: "laboratory-cleanroom-systems",
+      cleanroom_context: "laboratory-cleanroom-systems",
       lab: "laboratory-cleanroom-systems",
     },
     csiCodePatterns: ["13 21*", "1321*"],

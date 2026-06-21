@@ -28,7 +28,7 @@ type TradeSpecializationInput = {
 };
 
 const workTypeTriggeredTradeIds: Partial<Record<ProjectWorkTypeTag, string[]>> = {
-  tenant_improvement: [
+  interior_fit_out_renovation: [
     "specialties",
     "countertops",
     "wallcovering",
@@ -38,69 +38,33 @@ const workTypeTriggeredTradeIds: Partial<Record<ProjectWorkTypeTag, string[]>> =
     "window-treatments",
     "blinds-shades",
     "systems-furniture",
-  ],
-  fit_out: [
-    "specialties",
-    "countertops",
-    "wallcovering",
-    "decorative-finishes",
-    "window-treatments",
-    "blinds-shades",
-  ],
-  build_out: [
-    "specialties",
-    "countertops",
-    "wallcovering",
-    "decorative-finishes",
-    "window-treatments",
-    "blinds-shades",
-  ],
-  interior_renovation: [
-    "specialties",
-    "hazardous-materials-abatement",
-    "asbestos-abatement",
-    "lead-paint-abatement",
-    "mold-remediation",
-    "wallcovering",
-    "decorative-finishes",
-  ],
-  occupied_renovation: [
-    "specialties",
     "hazardous-materials-abatement",
     "asbestos-abatement",
     "lead-paint-abatement",
     "mold-remediation",
     "temporary-protection",
   ],
-  ground_up: ["conveying", "elevators", "fire-pump", "standpipes"],
+  ground_up_new_construction: ["conveying", "elevators", "fire-pump", "standpipes"],
   core_and_shell: ["conveying", "elevators", "fire-pump", "standpipes"],
-  shell_completion: ["specialties", "conveying", "elevators"],
-  white_box: ["specialties", "window-treatments", "blinds-shades"],
-  addition: ["conveying", "elevators", "fire-pump", "standpipes"],
-  remodel: ["specialties", "hazardous-materials-abatement", "asbestos-abatement"],
-  adaptive_reuse: [
+  addition_expansion: ["conveying", "elevators", "fire-pump", "standpipes"],
+  restoration_adaptive_reuse: [
     "specialties",
+    "masonry-restoration",
+    "tuckpointing-repointing",
     "hazardous-materials-abatement",
     "asbestos-abatement",
     "lead-paint-abatement",
     "mold-remediation",
     "building-relocation-salvage",
   ],
-  restoration: [
-    "masonry-restoration",
-    "tuckpointing-repointing",
-    "hazardous-materials-abatement",
-    "asbestos-abatement",
-    "lead-paint-abatement",
-  ],
-  sitework_only: [
+  sitework_civil_only: [
     "soil-stabilization",
     "dewatering",
     "shoring-sheeting",
     "traffic-control",
     "traffic-signals",
   ],
-  demolition_only: [
+  demolition_abatement_only: [
     "hazardous-materials-abatement",
     "asbestos-abatement",
     "lead-paint-abatement",
@@ -110,12 +74,6 @@ const workTypeTriggeredTradeIds: Partial<Record<ProjectWorkTypeTag, string[]>> =
     "building-relocation-salvage",
   ],
   maintenance_repair: ["concrete-repair-restoration", "masonry-restoration"],
-  phased_renovation: [
-    "specialties",
-    "hazardous-materials-abatement",
-    "asbestos-abatement",
-    "temporary-protection",
-  ],
 };
 
 const contextTriggeredTradeIds: Partial<Record<ProjectContextTag, string[]>> = {
@@ -170,7 +128,7 @@ const contextTriggeredTradeIds: Partial<Record<ProjectContextTag, string[]>> = {
     "plumbing-process-piping",
     "lab-exhaust",
   ],
-  cleanroom: [
+  cleanroom_context: [
     "laboratory-cleanroom-systems",
     "process-systems",
     "high-speed-doors",
@@ -190,7 +148,7 @@ const contextTriggeredTradeIds: Partial<Record<ProjectContextTag, string[]>> = {
     "walk-in-coolers-freezers",
     "refrigeration",
   ],
-  occupied_building: ["temporary-protection", "final-cleaning"],
+  occupied_site: ["temporary-protection", "final-cleaning"],
   night_work: ["temporary-protection", "site-safety"],
   public_bid: ["permits-fees", "bonds-insurance"],
   prevailing_wage: ["general-requirements"],
@@ -347,7 +305,7 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     defaultPackageMode: "USER_CHOICE",
     isActive: true,
     isCommon: true,
-    sectorTags: ["commercial", "industrial", "sitework", "civil", "retail", "office"],
+    sectorTags: ["commercial", "industrial", "civil_sitework", "retail", "office"],
     specialtyTags: ["core", "alternate_candidate"],
     relatedTradeIds: ["earthwork", "concrete"],
     splitRecommendation:
@@ -357,7 +315,7 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     "demolition",
     {
       defaultPackageMode: "USER_CHOICE",
-      sectorTags: ["commercial", "industrial", "sitework", "civil", "retail", "office"],
+      sectorTags: ["commercial", "industrial", "civil_sitework", "retail", "office"],
       specialtyTags: ["core"],
     },
     [
@@ -370,7 +328,7 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
       { id: "lead-paint-abatement", name: "Lead Paint Abatement", sortOrder: 157, defaultHidden: true, specialtyTags: ["specialty", "sector_specific"] },
       { id: "mold-remediation", name: "Mold Remediation", sortOrder: 158, defaultHidden: true, specialtyTags: ["specialty", "sector_specific"] },
       { id: "pcb-mercury-universal-waste-removal", name: "PCB / Mercury / Universal Waste Removal", aliases: ["Universal Waste Removal"], sortOrder: 159, defaultHidden: true, specialtyTags: ["specialty", "sector_specific"] },
-      { id: "underground-storage-tank-removal", name: "Underground Storage Tank Removal", aliases: ["UST Removal"], sortOrder: 160, defaultHidden: true, sectorTags: ["industrial", "sitework", "civil"], specialtyTags: ["specialty", "sector_specific"] },
+      { id: "underground-storage-tank-removal", name: "Underground Storage Tank Removal", aliases: ["UST Removal"], sortOrder: 160, defaultHidden: true, sectorTags: ["industrial", "civil_sitework"], specialtyTags: ["specialty", "sector_specific"] },
       { id: "building-relocation-salvage", name: "Building Relocation / Salvage", aliases: ["Salvage", "Relocation"], sortOrder: 161, defaultHidden: true, specialtyTags: ["specialty", "owner_vendor"] },
     ]
   ),
@@ -385,7 +343,7 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     defaultScopeNotes: ["Split sitework by specialization when the project has meaningful civil scope separation."],
     isActive: true,
     isCommon: true,
-    sectorTags: ["civil", "sitework", "commercial", "industrial", "warehouse"],
+    sectorTags: ["civil_sitework", "commercial", "industrial", "warehouse"],
     specialtyTags: ["core"],
     splitRecommendation:
       "Split into sitework specializations when demolition, earthwork, utilities, paving, or landscaping are material scopes.",
@@ -400,7 +358,7 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     defaultPackageMode: "UMBRELLA",
     isActive: true,
     isCommon: true,
-    sectorTags: ["civil", "sitework", "commercial", "industrial", "warehouse"],
+    sectorTags: ["civil_sitework", "commercial", "industrial", "warehouse"],
     specialtyTags: ["core"],
   },
   {
@@ -413,7 +371,7 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     defaultPackageMode: "USER_CHOICE",
     isActive: true,
     isCommon: true,
-    sectorTags: ["civil", "sitework", "industrial", "warehouse", "government"],
+    sectorTags: ["civil_sitework", "industrial", "warehouse", "government"],
     specialtyTags: ["core", "cross_trade"],
     splitRecommendation:
       "Wet utilities, dry utilities, and utility company work may need separate packages or allowances.",
@@ -428,7 +386,7 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     defaultPackageMode: "UMBRELLA",
     isActive: true,
     isCommon: true,
-    sectorTags: ["civil", "sitework", "commercial", "retail", "industrial", "warehouse"],
+    sectorTags: ["civil_sitework", "commercial", "retail", "industrial", "warehouse"],
     specialtyTags: ["core"],
   },
   {
@@ -441,14 +399,14 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     defaultPackageMode: "UMBRELLA",
     isActive: true,
     isCommon: true,
-    sectorTags: ["civil", "sitework", "commercial", "hospitality", "education", "retail"],
+    sectorTags: ["civil_sitework", "commercial", "hospitality", "education", "retail"],
     specialtyTags: ["core", "allowance_candidate"],
   },
   ...createTradeSpecializations(
     "sitework",
     {
       defaultPackageMode: "USER_CHOICE",
-      sectorTags: ["civil", "sitework", "commercial", "industrial", "warehouse"],
+      sectorTags: ["civil_sitework", "commercial", "industrial", "warehouse"],
       specialtyTags: ["core"],
     },
     [
@@ -469,8 +427,8 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
       { id: "curbs-sidewalks", name: "Curbs / Sidewalks", aliases: ["Curb", "Sidewalks"], sortOrder: 36, relatedTradeIds: ["site-concrete", "concrete"] },
       { id: "concrete-paving", name: "Concrete Paving", sortOrder: 37, relatedTradeIds: ["concrete"] },
       { id: "striping-pavement-markings", name: "Striping / Pavement Markings", aliases: ["Striping", "Pavement Markings"], sortOrder: 38, relatedTradeIds: ["asphalt-paving"] },
-      { id: "traffic-control", name: "Traffic Control", sortOrder: 39, defaultHidden: true, sectorTags: ["civil", "sitework", "transportation"], specialtyTags: ["specialty", "sector_specific"] },
-      { id: "traffic-signals", name: "Traffic Signals", sortOrder: 40, defaultHidden: true, sectorTags: ["civil", "transportation", "government"], specialtyTags: ["specialty", "sector_specific"] },
+      { id: "traffic-control", name: "Traffic Control", sortOrder: 39, defaultHidden: true, sectorTags: ["civil_sitework", "transportation"], specialtyTags: ["specialty", "sector_specific"] },
+      { id: "traffic-signals", name: "Traffic Signals", sortOrder: 40, defaultHidden: true, sectorTags: ["civil_sitework", "transportation", "government"], specialtyTags: ["specialty", "sector_specific"] },
       { id: "site-signage", name: "Site Signage", sortOrder: 41, relatedTradeIds: ["specialties"] },
       { id: "fencing-gates", name: "Fencing / Gates", aliases: ["Site Fencing", "Gates"], sortOrder: 42 },
       { id: "retaining-walls", name: "Retaining Walls", sortOrder: 43, relatedTradeIds: ["concrete", "masonry"] },
@@ -543,7 +501,7 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
     defaultPackageMode: "USER_CHOICE",
     isActive: true,
     defaultHidden: true,
-    sectorTags: ["civil", "sitework", "transportation", "marine"],
+    sectorTags: ["civil_sitework", "transportation", "marine"],
     specialtyTags: ["specialty", "sector_specific"],
   },
   ...createTradeSpecializations(
@@ -2011,7 +1969,7 @@ export const defaultTradeTaxonomy: TradeTaxonomyNode[] = [
         name: "ICRA / Infection Control",
         aliases: ["ICRA", "Infection Control", "Healthcare Containment"],
         sortOrder: 312,
-        contextTags: ["infection_control", "hospital", "surgery_center", "occupied_building"],
+        contextTags: ["infection_control", "hospital", "surgery_center", "occupied_site"],
         relatedTradeIds: ["temporary-protection", "general-requirements"],
         estimatingNotes:
           "Usually carried as temporary protection, phasing, containment, cleaning, and healthcare infection-control requirements.",
@@ -2457,7 +2415,7 @@ function isSuppressedForOfficeTenantImprovement(
   const sectorTags = new Set(context.sectorTags ?? []);
   const workTypeTags = new Set(context.workTypeTags ?? []);
 
-  if (!sectorTags.has("office") || !workTypeTags.has("tenant_improvement")) {
+  if (!sectorTags.has("office") || !workTypeTags.has("interior_fit_out_renovation")) {
     return false;
   }
 
@@ -2480,7 +2438,7 @@ function isSuppressedForSiteworkOnly(
 ): boolean {
   const workTypeTags = new Set(context.workTypeTags ?? []);
 
-  if (!workTypeTags.has("sitework_only")) return false;
+  if (!workTypeTags.has("sitework_civil_only")) return false;
   if (isTradeTriggeredForProject(trade, context)) return false;
   if (siteworkOnlySuppressedTradeIds.has(trade.id)) return true;
 
