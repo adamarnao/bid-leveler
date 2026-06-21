@@ -10,6 +10,7 @@ import {
   getWorkTypeLabelForSector,
   getWorkTypeOptionsForSector,
 } from "@/features/project-classification";
+import TradeTaxonomyClassificationControls from "./TradeTaxonomyClassificationControls";
 import {
   defaultCrossTradeMappings,
   defaultTradeCsiMappings,
@@ -518,102 +519,6 @@ function WorkbenchLegend() {
         TODO: app-wide guidance settings can later control how much context help appears.
       </p>
     </section>
-  );
-}
-
-function WorkbenchClassificationControls({
-  selectedSector,
-  selectedWorkType,
-  selectedContextTags,
-  includeHidden,
-  availableContextOptions,
-}: {
-  selectedSector: ProjectSectorTag | undefined;
-  selectedWorkType: ProjectWorkTypeTag | undefined;
-  selectedContextTags: ProjectContextTag[];
-  includeHidden: boolean;
-  availableContextOptions: readonly { id: ProjectContextTag; label: string; description: string }[];
-}) {
-  const sectorWorkTypeOptions = getWorkTypeOptionsForSector(selectedSector);
-
-  return (
-    <form action="/dev/trade-taxonomy" className="taxonomy-classification-form">
-      <div className="taxonomy-control-grid">
-        <label className="field-stack">
-          <span>Sector</span>
-          <select name="sector" defaultValue={selectedSector ?? ""}>
-            <option value="">General / Unselected</option>
-            {sectorOptions.map((option) => (
-              <option key={option.id} value={option.id}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-        </label>
-
-        <label className="field-stack">
-          <span>Work Type</span>
-          <select name="workType" defaultValue={selectedWorkType ?? ""}>
-            <option value="">Unselected</option>
-            {sectorWorkTypeOptions.map((option) => (
-              <option key={option.id} value={option.id}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-        </label>
-
-        <div className="field-stack">
-          <span>Context Tags</span>
-          <details className="taxonomy-context-dropdown">
-            <summary>
-              {selectedContextTags.length
-                ? `${selectedContextTags.length} selected`
-                : "Select context tags"}
-            </summary>
-            <div className="taxonomy-context-options">
-              {availableContextOptions.length ? (
-                availableContextOptions.map((option) => (
-                  <label key={option.id} className="taxonomy-context-option">
-                    <input
-                      type="checkbox"
-                      name="context"
-                      value={option.id}
-                      defaultChecked={selectedContextTags.includes(option.id)}
-                    />
-                    <span>
-                      <strong>{option.label}</strong>
-                      <small>{option.description}</small>
-                    </span>
-                  </label>
-                ))
-              ) : (
-                <p className="muted-text">No context tags are available for this classification.</p>
-              )}
-            </div>
-          </details>
-        </div>
-
-        <label className="taxonomy-toggle-row">
-          <input
-            type="checkbox"
-            name="includeHidden"
-            value="true"
-            defaultChecked={includeHidden}
-          />
-          <span>Include hidden in master library preview</span>
-        </label>
-      </div>
-
-      <div className="taxonomy-control-actions">
-        <button type="submit" className="button-primary">
-          Apply Classification
-        </button>
-        <Link href="/dev/trade-taxonomy" className="button-secondary">
-          Reset
-        </Link>
-      </div>
-    </form>
   );
 }
 
@@ -1277,12 +1182,11 @@ export default async function TradeTaxonomyWorkbenchPage({
             </div>
           </div>
 
-          <WorkbenchClassificationControls
+          <TradeTaxonomyClassificationControls
             selectedSector={selectedSector}
             selectedWorkType={selectedWorkType}
             selectedContextTags={selectedContextTags}
             includeHidden={selectedFilters.includeHidden}
-            availableContextOptions={availableContextOptions}
           />
 
           {activeFilterLabel.length ? (

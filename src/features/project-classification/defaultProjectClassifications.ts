@@ -162,6 +162,6 @@ export const contextTagAvailability: ContextTagAvailability[] = [
   { contextTag: "masonry_block_building", sectors: ["residential", "multifamily", "commercial"] },
   { contextTag: "kitchen_bath_renovation", sectors: ["residential", "multifamily"] },
   { contextTag: "appliances", sectors: ["residential", "multifamily", "hospitality"] },
-  { contextTag: "siding_exterior_cladding", sectors: ["residential", "multifamily"], workTypes: ["ground_up_new_construction", "maintenance_repair", "restoration_adaptive_reuse"] },
-  { contextTag: "windows_exterior_doors", sectors: ["residential", "multifamily"], workTypes: ["ground_up_new_construction", "maintenance_repair", "restoration_adaptive_reuse"] },
+  { contextTag: "siding_exterior_cladding", sectors: ["residential", "multifamily"], workTypes: ["interior_fit_out_renovation", "ground_up_new_construction", "maintenance_repair", "restoration_adaptive_reuse"] },
+  { contextTag: "windows_exterior_doors", sectors: ["residential", "multifamily"], workTypes: ["interior_fit_out_renovation", "ground_up_new_construction", "maintenance_repair", "restoration_adaptive_reuse"] },
 ];
