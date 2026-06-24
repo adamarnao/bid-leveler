@@ -1919,15 +1919,12 @@ textarea:focus {
 }
 
 .context-help-popover {
-  position: absolute;
-  z-index: 60;
-  left: 50%;
-  bottom: calc(100% + 10px);
+  position: fixed;
+  z-index: 10000;
   box-sizing: border-box;
   width: max-content;
   min-width: min(220px, calc(100vw - 32px));
   max-width: min(360px, calc(100vw - 32px));
-  transform: translateX(-50%) translateY(4px);
   visibility: hidden;
   opacity: 0;
   pointer-events: none;
@@ -1949,11 +1946,25 @@ textarea:focus {
   transition: opacity 120ms ease, transform 120ms ease, visibility 120ms ease;
 }
 
-.context-help:hover .context-help-popover,
-.context-help:focus-within .context-help-popover,
-.context-help[data-open="true"] .context-help-popover {
+.context-help-popover-above {
+  transform: translateX(-50%) translateY(-100%) translateY(4px);
+}
+
+.context-help-popover-below {
+  transform: translateX(-50%) translateY(4px);
+}
+
+.context-help-popover-visible {
   visibility: visible;
   opacity: 1;
+  pointer-events: auto;
+}
+
+.context-help-popover-visible.context-help-popover-above {
+  transform: translateX(-50%) translateY(-100%);
+}
+
+.context-help-popover-visible.context-help-popover-below {
   transform: translateX(-50%) translateY(0);
 }
 
@@ -2308,17 +2319,8 @@ textarea:focus {
   }
 
   .context-help-popover {
-    left: auto;
-    right: 0;
     min-width: min(220px, calc(100vw - 24px));
     max-width: min(320px, calc(100vw - 24px));
-    transform: translateY(4px);
-  }
-
-  .context-help:hover .context-help-popover,
-  .context-help:focus-within .context-help-popover,
-  .context-help[data-open="true"] .context-help-popover {
-    transform: translateY(0);
   }
 }
 
