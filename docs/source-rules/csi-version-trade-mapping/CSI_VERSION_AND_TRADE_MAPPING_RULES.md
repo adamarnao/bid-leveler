@@ -33,6 +33,8 @@ Company settings should define the default CSI version:
 
 Each project inherits the company default but can override it.
 
+The project-level CSI version is a Project Profile / Project Setup field. CSI mapping rules consume that selected version; they should not own broader Project Profile fields such as sector, facility type, work type, logistics, procurement, or pricing metrics.
+
 The selected project CSI version controls:
 - CSI tags shown inside bid packages
 - CSI selector/search version

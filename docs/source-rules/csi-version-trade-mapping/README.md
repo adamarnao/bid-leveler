@@ -10,6 +10,8 @@ This package defines the source-of-truth rules for how Bid-Leveler should handle
 - bid package CSI tags
 - bid leveling / estimate review division grouping
 
+Project CSI version is part of Project Profile / Project Setup. These rules define how that selected version affects CSI display, package tags, matching, leveling, and reporting. Do not move unrelated Project Profile fields into CSI mapping logic.
+
 These files are planning/source files. Codex should implement from these rules rather than inventing behavior.
 
 Review order:

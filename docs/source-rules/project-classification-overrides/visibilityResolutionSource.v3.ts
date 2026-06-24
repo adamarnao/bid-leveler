@@ -15,7 +15,10 @@ export type VisibilityReasonSource =
   | "SYSTEM_DEFAULT"
   | "COMPANY_DEFAULT"
   | "PROJECT_CLASSIFICATION"
+  | "FACILITY_TYPE"
   | "CONTEXT_TAG"
+  | "BUILDING_ATTRIBUTE"
+  | "PACKAGE_DECISION"
   | "CSI_EVIDENCE"
   | "PROJECT_OVERRIDE"
   | "MANUAL";
@@ -29,8 +32,11 @@ export type VisibilityExplanation = {
 export type TradeVisibilityResolutionInput = {
   projectId?: string;
   sectorTags?: string[];
+  facilityTypeTags?: string[];
   workTypeTags?: string[];
   contextTags?: string[];
+  buildingAttributeTags?: string[];
+  packageDecisionTags?: string[];
   selectedCsiItemIds?: string[];
   companyOverrides?: unknown[];
   projectOverrides?: unknown[];
@@ -44,7 +50,10 @@ export type TradeVisibilityResolutionResult = {
   isVisible: boolean;
   isManuallyOverridden: boolean;
   isCompanyDefault: boolean;
+  isTriggeredByFacilityType: boolean;
   isTriggeredByContext: boolean;
+  isTriggeredByBuildingAttribute: boolean;
+  isTriggeredByPackageDecision: boolean;
   isTriggeredByCsi: boolean;
   explanations: VisibilityExplanation[];
   warnings?: string[];

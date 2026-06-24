@@ -6,6 +6,13 @@ export type ProjectProfileContextTagId = string;
 
 export type ProjectCsiVersionId = string;
 
+export type ProjectProfilePricingMetricValue = {
+  metricId: string;
+  value?: string | number;
+  unit?: string;
+  notes?: string;
+};
+
 export type ProjectProfileBuildingCondition =
   | "new_construction"
   | "existing_to_remain"
@@ -141,6 +148,7 @@ export type ProjectProfile = {
   globalAttributes: ProjectProfileGlobalAttributes;
   logistics: ProjectProfileLogistics;
   procurement: ProjectProfileProcurement;
+  pricingMetrics?: ProjectProfilePricingMetricValue[];
 
   /**
    * These values are defaults used to suggest and prefill package-level review.

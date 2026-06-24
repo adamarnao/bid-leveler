@@ -14,8 +14,13 @@ export type TradeVisibilityLevel =
 export type VisibilityOverrideSource =
   | "SYSTEM_DEFAULT"
   | "COMPANY_DEFAULT"
+  | "SECTOR"
+  | "FACILITY_TYPE"
+  | "WORK_TYPE"
   | "PROJECT_OVERRIDE"
   | "CONTEXT_TAG"
+  | "BUILDING_ATTRIBUTE"
+  | "PACKAGE_DECISION"
   | "CSI_EVIDENCE"
   | "MANUAL";
 
@@ -24,8 +29,12 @@ export type CompanyTradeVisibilityOverride = {
   tradeId: string;
   visibility: TradeVisibilityLevel;
   sectorTags?: string[];
+  facilityTypeTags?: string[];
   workTypeTags?: string[];
   contextTags?: string[];
+  buildingAttributeTags?: string[];
+  packageDecisionTags?: string[];
+  selectedCsiItemIds?: string[];
   reason?: string;
   isActive: boolean;
   createdAt: string;
@@ -37,6 +46,7 @@ export type ProjectTradeVisibilityOverride = {
   projectId: string;
   tradeId: string;
   visibility: TradeVisibilityLevel;
+  source?: VisibilityOverrideSource;
   reason?: string;
   createdAt: string;
   updatedAt: string;
@@ -45,8 +55,14 @@ export type ProjectTradeVisibilityOverride = {
 export type ProjectClassificationOverride = {
   id: string;
   projectId: string;
+  sectorTags?: string[];
+  facilityTypeTags?: string[];
+  workTypeTags?: string[];
   addedContextTags?: string[];
   hiddenContextTags?: string[];
+  buildingAttributeTags?: string[];
+  packageDecisionTags?: string[];
+  selectedCsiItemIds?: string[];
   forcedVisibleTradeIds?: string[];
   forcedCoreTradeIds?: string[];
   forcedSuggestedTradeIds?: string[];
@@ -94,7 +110,8 @@ export type CsiTradeAssignmentOverride = {
 export const VISIBILITY_RESOLUTION_ORDER = [
   "System default visibility",
   "Company default overrides",
-  "Sector / work type / context rules",
+  "Project Profile classification rules: sector / facility type / work type / context",
+  "Building attribute and package-level decision rules",
   "Selected CSI tag evidence",
   "Project-specific overrides",
   "Final visibility with explanation trail",

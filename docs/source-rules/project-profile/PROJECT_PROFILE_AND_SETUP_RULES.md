@@ -16,6 +16,19 @@ Project Setup is used to:
 
 Project Setup is not just an administrative project record. It is the project profile that drives package creation, invite readiness, bid collection, leveling, financial review, and proposal preparation.
 
+## Project Profile Model
+
+Project Profile is the parent source-of-truth for setup. It includes:
+
+- classification
+- global attributes
+- logistics
+- procurement
+- package default assumptions
+- pricing metrics
+
+Classification is one section inside Project Profile. The canonical classification source rules live in `../project-classification/` and define sector, subsector / facility type, work type, and context tags.
+
 ## Setup Flow Stages
 
 The Project Setup / Project Profile workflow should follow these stages:
@@ -37,7 +50,7 @@ Typical intake data includes project name, client or bid solicitor, market locat
 
 ### 2. Initial Plan Review / Project Profile
 
-Initial Plan Review turns the project record into a classification profile. This stage identifies the sector, subsector or facility type, work type, context tags, CSI version, approximate size, major building facts, and scope flags that influence package generation.
+Initial Plan Review turns the project record into a Project Profile. Its classification section identifies sector, subsector / facility type, work type, and context tags. Its global attributes identify CSI version, approximate size, major building facts, and scope flags that influence package generation.
 
 ### 3. Global Conditions / Constraints
 
@@ -45,7 +58,7 @@ Global Conditions / Constraints captures project-level constraints that affect m
 
 ### 4. Suggested Trade Packages
 
-Suggested Trade Packages are generated from the project profile, CSI tags, classification, context tags, and trade taxonomy rules. Bid Packages are the user-facing scope units. CSI tags are supporting classification and scope clarity tags inside those packages.
+Suggested Trade Packages are generated from the Project Profile, selected CSI tags, classification, package default assumptions, and trade taxonomy rules. Bid Packages are the user-facing scope units. CSI tags are supporting classification and scope clarity tags inside those packages.
 
 ### 5. Package Review
 
@@ -126,7 +139,7 @@ Package review is the estimator's opportunity to convert generated package sugge
 
 ## Global Vs Package-Specific Rules
 
-Project Setup collects global project facts, classification, site constraints, logistics constraints, procurement constraints, and package-generation triggers.
+Project Setup collects global project facts, classification, site constraints, logistics constraints, procurement constraints, pricing metrics, and package-generation triggers.
 
 Package Review collects trade-specific scope decisions, finish level, work intensity, exclusions, clarifications, alternates, allowances, and unit prices.
 
@@ -150,6 +163,7 @@ Project-level setup should own:
 - global site and logistics constraints
 - broad scope flags such as sitework or exterior envelope presence
 - default assumptions used to suggest packages
+- pricing metrics used for historical comparisons, estimate review, and reporting
 
 ### Package-Level Responsibilities
 

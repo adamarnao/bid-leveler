@@ -3,6 +3,7 @@
 
 import type {
   ProjectContextTag,
+  ProjectFacilityTypeTag,
   ProjectSectorTag,
   ProjectWorkTypeTag,
 } from "./projectClassificationSource.v2";
@@ -18,6 +19,7 @@ export type TradeVisibilityProfile = {
   id: string;
   label: string;
   sector?: ProjectSectorTag;
+  facilityType?: ProjectFacilityTypeTag;
   workType?: ProjectWorkTypeTag;
   contextTags?: ProjectContextTag[];
   coreTradeIds: string[];
@@ -154,8 +156,8 @@ export const HEALTHCARE_MEDICAL_OFFICE_TI_PROFILE: TradeVisibilityProfile = {
   id: "healthcare-medical-office-interior-fit-out-renovation",
   label: "Healthcare + Medical Office TI / Renovation",
   sector: "healthcare",
+  facilityType: "medical_office_facility",
   workType: "interior_fit_out_renovation",
-  contextTags: ["medical_office"],
   coreTradeIds: [
     ...OFFICE_TI_PROFILE.coreTradeIds,
     "medical-gas",
@@ -193,6 +195,7 @@ export const RESTAURANT_COMMERCIAL_KITCHEN_TI_PROFILE: TradeVisibilityProfile = 
   id: "restaurant-commercial-kitchen-interior-fit-out-renovation",
   label: "Restaurant + Build-Out / Renovation + Commercial Kitchen",
   sector: "restaurant",
+  facilityType: "commercial_kitchen_only",
   workType: "interior_fit_out_renovation",
   contextTags: ["commercial_kitchen"],
   coreTradeIds: [

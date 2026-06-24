@@ -1,5 +1,6 @@
 // Bid-Leveler Project Classification Source v2.
 // Planning/source file. Codex should implement from this, not invent parallel classification rules.
+// Project Classification is one section inside the larger Project Profile source-of-truth model.
 
 export type ProjectSectorTag =
   | "commercial"
@@ -25,6 +26,38 @@ export type ProjectSectorTag =
   | "mission_critical"
   | "renewable_energy"
   | "agricultural";
+
+export type ProjectFacilityTypeTag =
+  | "general_office"
+  | "corporate_office"
+  | "professional_office"
+  | "bank_branch"
+  | "call_center"
+  | "coworking"
+  | "medical_office_facility"
+  | "clinic"
+  | "surgery_center_facility"
+  | "imaging_center"
+  | "hospital_facility"
+  | "dental"
+  | "veterinary"
+  | "quick_service_restaurant"
+  | "full_service_restaurant"
+  | "bar_lounge"
+  | "cafe"
+  | "ghost_kitchen"
+  | "commercial_kitchen_only"
+  | "dry_warehouse"
+  | "cold_storage_facility"
+  | "distribution_center"
+  | "flex_warehouse"
+  | "manufacturing_warehouse"
+  | "single_family"
+  | "townhouse"
+  | "apartment_unit"
+  | "common_area"
+  | "clubhouse_amenity"
+  | "mixed_use_residential";
 
 export type ProjectWorkTypeTag =
   | "interior_fit_out_renovation"
@@ -102,9 +135,15 @@ export type SectorWorkTypeLabel = {
   aliases?: string[];
 };
 
+export type FacilityTypeAvailability = {
+  sector: ProjectSectorTag;
+  facilityTypes: ProjectFacilityTypeTag[];
+};
+
 export type ContextTagAvailability = {
   contextTag: ProjectContextTag;
   sectors?: ProjectSectorTag[];
+  facilityTypes?: ProjectFacilityTypeTag[];
   workTypes?: ProjectWorkTypeTag[];
   requiresAnyContext?: ProjectContextTag[];
   hiddenByDefault?: boolean;
@@ -112,6 +151,7 @@ export type ContextTagAvailability = {
 
 export type ProjectClassification = {
   sector?: ProjectSectorTag;
+  facilityType?: ProjectFacilityTypeTag;
   workType?: ProjectWorkTypeTag;
   contextTags?: ProjectContextTag[];
 };
@@ -141,6 +181,84 @@ export const PROJECT_SECTORS: ClassificationOption<ProjectSectorTag>[] = [
   { id: "renewable_energy", label: "Renewable Energy", description: "Solar, wind, EV charging, battery, and renewable infrastructure projects.", sortOrder: 220 },
   { id: "agricultural", label: "Agricultural", description: "Agricultural, greenhouse, grow, livestock, food production, and related facilities.", sortOrder: 230 },
 ];
+
+export const PROJECT_FACILITY_TYPES: ClassificationOption<ProjectFacilityTypeTag>[] = [
+  { id: "general_office", label: "General Office", description: "General office space without a more specific facility subtype.", sortOrder: 10 },
+  { id: "corporate_office", label: "Corporate Office", description: "Corporate headquarters, administrative offices, and corporate workplace environments.", sortOrder: 20 },
+  { id: "professional_office", label: "Professional Office", description: "Professional service offices such as legal, accounting, consulting, or similar tenant spaces.", sortOrder: 30 },
+  { id: "bank_branch", label: "Bank Branch", description: "Retail banking, credit union, teller, vault, or financial service branch spaces.", sortOrder: 40 },
+  { id: "call_center", label: "Call Center", description: "Call center, contact center, support center, or high-density workstation environment.", sortOrder: 50 },
+  { id: "coworking", label: "Coworking", description: "Coworking, shared office, flexible suite, or serviced workplace environment.", sortOrder: 60 },
+
+  { id: "medical_office_facility", label: "Medical Office", description: "Medical office building, outpatient medical suite, or similar healthcare office facility.", sortOrder: 110 },
+  { id: "clinic", label: "Clinic", description: "Clinic, outpatient clinic, urgent care, or ambulatory care facility.", sortOrder: 120 },
+  { id: "surgery_center_facility", label: "Surgery Center", description: "Surgery center or ambulatory surgical facility.", sortOrder: 130 },
+  { id: "imaging_center", label: "Imaging Center", description: "Imaging, radiology, MRI, CT, X-ray, or diagnostic imaging facility.", sortOrder: 140 },
+  { id: "hospital_facility", label: "Hospital", description: "Hospital, inpatient care, acute care, or hospital department project.", sortOrder: 150 },
+  { id: "dental", label: "Dental", description: "Dental, orthodontic, oral surgery, or dental specialty facility.", sortOrder: 160 },
+  { id: "veterinary", label: "Veterinary", description: "Veterinary clinic, animal hospital, or animal care facility.", sortOrder: 170 },
+
+  { id: "quick_service_restaurant", label: "Quick Service", description: "Quick service restaurant, fast casual, counter service, or takeout-focused restaurant.", sortOrder: 210 },
+  { id: "full_service_restaurant", label: "Full Service", description: "Full service dining, table service restaurant, or similar food service space.", sortOrder: 220 },
+  { id: "bar_lounge", label: "Bar / Lounge", description: "Bar, lounge, tavern, tasting room, or beverage-focused hospitality space.", sortOrder: 230 },
+  { id: "cafe", label: "Cafe", description: "Cafe, coffee shop, bakery cafe, or light food service tenant space.", sortOrder: 240 },
+  { id: "ghost_kitchen", label: "Ghost Kitchen", description: "Delivery-only kitchen, commissary kitchen, or multi-brand kitchen facility.", sortOrder: 250 },
+  { id: "commercial_kitchen_only", label: "Commercial Kitchen Only", description: "Commercial kitchen scope without a public dining or sales area.", sortOrder: 260 },
+
+  { id: "dry_warehouse", label: "Dry Warehouse", description: "Dry storage, general warehouse, or non-refrigerated storage facility.", sortOrder: 310 },
+  { id: "cold_storage_facility", label: "Cold Storage", description: "Cold storage, refrigerated warehouse, freezer, or controlled temperature facility.", sortOrder: 320 },
+  { id: "distribution_center", label: "Distribution Center", description: "Distribution, logistics, fulfillment, shipping, or receiving center.", sortOrder: 330 },
+  { id: "flex_warehouse", label: "Flex Warehouse", description: "Flex warehouse with office, light industrial, showroom, or mixed warehouse uses.", sortOrder: 340 },
+  { id: "manufacturing_warehouse", label: "Manufacturing Warehouse", description: "Manufacturing, production, assembly, or warehouse-production facility.", sortOrder: 350 },
+
+  { id: "single_family", label: "Single Family", description: "Single-family residential project or custom home.", sortOrder: 410 },
+  { id: "townhouse", label: "Townhouse", description: "Townhome, rowhouse, or attached residential unit project.", sortOrder: 420 },
+  { id: "apartment_unit", label: "Apartment Unit", description: "Apartment unit, residential unit, or unit-level renovation.", sortOrder: 430 },
+  { id: "common_area", label: "Common Area", description: "Residential or multifamily common area such as corridors, lobby, leasing, or shared support space.", sortOrder: 440 },
+  { id: "clubhouse_amenity", label: "Clubhouse / Amenity", description: "Clubhouse, amenity, fitness, pool house, or residential amenity space.", sortOrder: 450 },
+  { id: "mixed_use_residential", label: "Mixed-Use Residential", description: "Residential project mixed with retail, office, parking, amenity, or other uses.", sortOrder: 460 },
+];
+
+export const FACILITY_TYPE_AVAILABILITY_BY_SECTOR: FacilityTypeAvailability[] = [
+  {
+    sector: "office",
+    facilityTypes: ["general_office", "corporate_office", "professional_office", "bank_branch", "call_center", "coworking"],
+  },
+  {
+    sector: "healthcare",
+    facilityTypes: ["medical_office_facility", "clinic", "surgery_center_facility", "imaging_center", "hospital_facility", "dental", "veterinary"],
+  },
+  {
+    sector: "restaurant",
+    facilityTypes: ["quick_service_restaurant", "full_service_restaurant", "bar_lounge", "cafe", "ghost_kitchen", "commercial_kitchen_only"],
+  },
+  {
+    sector: "warehouse",
+    facilityTypes: ["dry_warehouse", "cold_storage_facility", "distribution_center", "flex_warehouse", "manufacturing_warehouse"],
+  },
+  {
+    sector: "residential",
+    facilityTypes: ["single_family", "townhouse", "mixed_use_residential"],
+  },
+  {
+    sector: "multifamily",
+    facilityTypes: ["apartment_unit", "common_area", "clubhouse_amenity", "mixed_use_residential"],
+  },
+];
+
+export function getFacilityTypeOptionsForSector(
+  sector: ProjectSectorTag,
+): ClassificationOption<ProjectFacilityTypeTag>[] {
+  const availability = FACILITY_TYPE_AVAILABILITY_BY_SECTOR.find((entry) => entry.sector === sector);
+
+  if (!availability) {
+    return [];
+  }
+
+  return PROJECT_FACILITY_TYPES.filter((option) => availability.facilityTypes.includes(option.id)).sort(
+    (leftOption, rightOption) => leftOption.sortOrder - rightOption.sortOrder,
+  );
+}
 
 export const PROJECT_WORK_TYPES: ClassificationOption<ProjectWorkTypeTag>[] = [
   {

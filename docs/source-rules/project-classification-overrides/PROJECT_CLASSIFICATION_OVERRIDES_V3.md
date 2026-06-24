@@ -1,8 +1,8 @@
-# Project Classification Overrides v3
+# Project Profile Visibility Overrides v3
 
 ## Purpose
 
-The classification rules need to support defaults, overrides, and exceptions.
+Project Profile visibility rules need to support defaults, overrides, and exceptions.
 
 The system must recommend trades intelligently without becoming rigid.
 
@@ -10,7 +10,12 @@ A trade may be:
 - visible by system default
 - added by company default
 - added by project-specific override
+- triggered by sector
+- triggered by facility type / subsector
+- triggered by work type
 - triggered by context tag
+- triggered by building attributes
+- triggered by package-level decisions
 - triggered by selected CSI evidence
 - manually hidden or promoted by the estimator
 
@@ -26,9 +31,9 @@ Final trade visibility should resolve in this order:
 
 1. Start with system default visibility.
 2. Apply company default overrides.
-3. Apply sector/work type/context rules.
+3. Apply Project Profile classification rules: sector, facility type / subsector, work type, and context tags.
 4. Apply selected CSI tag evidence.
-5. Apply project-specific overrides.
+5. Apply building attribute, package-level decision, and project-specific overrides.
 6. Return final visibility and explanation trail.
 
 Project-specific overrides should win over company and system defaults.
@@ -36,6 +41,23 @@ Project-specific overrides should win over company and system defaults.
 Company defaults should win over system defaults.
 
 Selected CSI evidence should be able to reveal a hidden trade as Suggested or Contextual, but if the estimator explicitly hides it for the project, the project override wins.
+
+## Override Inputs
+
+Visibility overrides can apply to:
+
+- sector
+- facility type / subsector
+- work type
+- context tag
+- building attributes
+- package-level decisions
+- selected CSI evidence
+- project-specific override
+
+Building attributes include global Project Profile facts such as structure type, occupied / active operations status, sitework scope flag, exterior envelope scope flag, floor count, high-rise status, secure facility status, and similar profile attributes.
+
+Package-level decisions include reviewed bid package include/exclude decisions, split/combine decisions, CSI tag roles, package-specific finish level, package-specific intensity assumptions, and package-specific clarifications or exclusions.
 
 ## Visibility Levels
 
@@ -91,7 +113,7 @@ The Project Setup / Bid Package Builder should eventually support:
 Removes the project-specific override for one trade and recalculates from:
 - system defaults
 - company defaults
-- classification rules
+- Project Profile classification rules
 - CSI evidence
 
 ### Reset All to Company Defaults
@@ -119,7 +141,7 @@ Company-level examples:
 
 ## Project Setup Future UI
 
-After project classification is selected:
+After Project Profile classification is selected:
 
 - Core Trades
 - Suggested Trades

@@ -4,6 +4,8 @@
 
 Bid-Leveler needs a professional, sector-sensitive classification system that keeps the app clean for simple projects while preserving deep trade coverage for complex GC work.
 
+Project Classification is not a competing model separate from Project Profile. It is the classification section inside Project Profile.
+
 The system must walk the line between:
 
 - **overly inclusive**: showing every obscure trade for every project
@@ -23,18 +25,19 @@ Base common trades
 
 ## Core Principle
 
-Do not treat Sector, Work Type, and Context Tags as independent flat lists.
+Do not treat Sector, Subsector / Facility Type, Work Type, and Context Tags as independent flat lists.
 
 They are dependent:
 
 ```text
 Sector selected first
-→ Work Type labels/options adapt to sector
-→ Context Tags are filtered by sector and work type
-→ Trade visibility is assembled from all three
+-> Facility Type options filter by sector
+-> Work Type labels/options adapt to sector and facility type
+-> Context Tags are filtered by sector, facility type, and work type
+-> Trade visibility is assembled from classification, selected CSI evidence, and overrides
 ```
 
-## Three Classification Layers
+## Four Classification Layers
 
 ### 1. Sector
 
@@ -45,7 +48,57 @@ Sector answers:
 Examples:
 Office, Retail, Restaurant, Healthcare, Education, Industrial, Warehouse, Laboratory, Cleanroom, Multifamily, Residential, Civil/Sitework, Government, Detention, Transportation, Airport, Marine, Sports, Mission Critical, Renewable Energy, Agricultural.
 
-### 2. Work Type
+### 2. Subsector / Facility Type
+
+Subsector / Facility Type answers:
+
+> What specific facility or operational subtype is this project?
+
+Facility type is selected after Sector. It does not replace Sector, and it should not be modeled as a broad context tag when it identifies the basic facility type.
+
+Examples:
+
+Office:
+- General Office
+- Corporate Office
+- Professional Office
+- Bank Branch
+- Call Center
+- Coworking
+
+Healthcare:
+- Medical Office
+- Clinic
+- Surgery Center
+- Imaging Center
+- Hospital
+- Dental
+- Veterinary
+
+Restaurant:
+- Quick Service
+- Full Service
+- Bar / Lounge
+- Cafe
+- Ghost Kitchen
+- Commercial Kitchen Only
+
+Warehouse:
+- Dry Warehouse
+- Cold Storage
+- Distribution Center
+- Flex Warehouse
+- Manufacturing Warehouse
+
+Residential / Multifamily:
+- Single Family
+- Townhouse
+- Apartment Unit
+- Common Area
+- Clubhouse / Amenity
+- Mixed-Use Residential
+
+### 3. Work Type
 
 Work Type answers:
 
@@ -67,7 +120,7 @@ Canonical work types:
 | Maintenance / Repair | Repair, service, replacement, or smaller corrective scope. |
 | Specialty Systems Installation | Narrow project focused primarily on a system, equipment package, or specialty scope. |
 
-### 3. Context Tags
+### 4. Context Tags
 
 Context Tags answer:
 
@@ -75,6 +128,10 @@ Context Tags answer:
 
 Examples:
 Occupied Site, Phased Work, Night Work, Public Bid, Prevailing Wage, Secure Facility, High-Rise, Medical Office, Hospital, Surgery Center, Imaging, Infection Control / ICRA, Commercial Kitchen, Cold Storage, Food Processing, Data Center, Lab, Cleanroom, Structural Retrofit, Change of Use, Tilt-Up, Precast, PEMB, Airport Secure Area, Marine / Waterfront.
+
+Facility type should not be duplicated as a context tag unless it also acts as a scope trigger. For example, `Imaging Center` can be a healthcare facility type, while `Imaging` can remain a context tag when imaging work triggers radiation shielding, lead-lined construction, or equipment support.
+
+Context tags are modifiers. They are not a junk drawer for global project attributes, logistics, procurement requirements, pricing metrics, or package-specific review decisions.
 
 ## Work Type Consolidation
 
