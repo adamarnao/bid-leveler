@@ -1032,7 +1032,7 @@ function CrossTradeMappingSection({ mappings }: { mappings: CrossTradeMapping[] 
     <section className="app-panel">
       <div className="panel-header">
         <div>
-          <p className="label-text">Cross-Trade Mapping</p>
+          <p className="label-text">Cross-Trade Mapping Diagnostics</p>
           <h2>Ambiguous Scope Rules</h2>
           <p className="muted-text">
             These rules keep one conservative primary suggestion while showing possible
@@ -1138,26 +1138,32 @@ export default async function TradeTaxonomyWorkbenchPage({
   ].filter((label): label is string => Boolean(label));
 
   return (
-    <AppShell title="Trade Taxonomy Workbench">
+    <AppShell title="Master Trade Library Workbench">
       <div className="dashboard-shell taxonomy-workbench">
         <div className="page-header">
           <div>
             <p className="label-text">Internal Dev Tool</p>
+            <h1>Master Trade Library Workbench</h1>
             <p className="page-subtitle">
-              Internal inspection page for company trade taxonomy and CSI-to-trade package
-              suggestions.
+              Inspect the full company trade taxonomy, specializations, CSI mapping behavior,
+              cross-trade rules, and hidden/sector-specific trade metadata.
             </p>
           </div>
-          <Link href="/" className="button-secondary">
-            Dashboard
-          </Link>
+          <div className="header-actions">
+            <Link href="/dev/project-profile" className="button-primary">
+              Open Project Profile Workbench
+            </Link>
+            <Link href="/" className="button-secondary">
+              Dashboard
+            </Link>
+          </div>
         </div>
 
         <section className="app-panel taxonomy-workbench-note">
           <p>
-            This is a read-only workbench for inspecting the company trade taxonomy,
-            sector visibility rules, cross-trade mappings, and CSI-to-trade package
-            suggestions. Editing will be handled later in Trade Taxonomy Settings.
+            This page is for taxonomy debugging and master trade library review. It is not
+            the project setup workflow. Use Project Profile Workbench to preview
+            project-specific trade visibility, setup requirements, and pricing metrics.
           </p>
         </section>
 
@@ -1166,11 +1172,12 @@ export default async function TradeTaxonomyWorkbenchPage({
         <section className="app-panel">
           <div className="panel-header">
             <div>
-              <p className="label-text">Classification Controls</p>
-              <h2>Selected Project Classification</h2>
+              <p className="label-text">Diagnostic Filters</p>
+              <h2>Taxonomy Visibility Filter</h2>
               <p className="muted-text">
-                Choose one sector and one work type. Context tags are filtered from the
-                source-rule availability table for the selected classification.
+                These filters are for taxonomy inspection only. They approximate how
+                sector, work type, context tags, and hidden-trade settings affect master
+                library visibility, but they are not the final Project Setup flow.
               </p>
             </div>
             <div className="taxonomy-meta-list">
@@ -1191,7 +1198,7 @@ export default async function TradeTaxonomyWorkbenchPage({
 
           {activeFilterLabel.length ? (
             <div className="stack gap-2" style={{ marginTop: 16 }}>
-              <span className="label-text">Active Classification Filters</span>
+              <span className="label-text">Active Diagnostic Filters</span>
               <div className="taxonomy-meta-list">
                 {activeFilterLabel.map((label) => (
                   <span key={label} className="taxonomy-meta-chip">
@@ -1206,12 +1213,13 @@ export default async function TradeTaxonomyWorkbenchPage({
         <section className="app-panel">
           <div className="panel-header">
             <div>
-              <p className="label-text">Current Project Visibility</p>
-              <h2>Classification-Based Trade Relevance</h2>
+              <p className="label-text">Diagnostic Visibility Preview</p>
+              <h2>Taxonomy Visibility by Filter</h2>
               <p className="muted-text">
                 Active means a trade exists in the master library. Core, Suggested,
-                Contextual, Hidden, and Excluded describe relevance to the selected project
-                classification.
+                Contextual, Hidden, and Excluded here are diagnostic relevance buckets for
+                the selected filters. Use Project Profile Workbench for the primary
+                project-specific setup/profile preview.
               </p>
             </div>
           </div>
@@ -1279,8 +1287,8 @@ export default async function TradeTaxonomyWorkbenchPage({
               <p className="label-text">Fixture Inspection Guide</p>
               <h2>How to Read Generated Results</h2>
               <p className="muted-text">
-                Fixture data shows how sample selected project scope tags move through the
-                taxonomy generator.
+                Fixture data shows how sample selected scope tags move through CSI mapping
+                and taxonomy generation diagnostics.
               </p>
             </div>
           </div>

@@ -142,7 +142,7 @@ export default function TradeTaxonomyClassificationControls({
                   </label>
                 ))
               ) : (
-                <p className="muted-text">No context tags are available for this classification.</p>
+                <p className="muted-text">No context tags are available for these diagnostic filters.</p>
               )}
             </div>
           </details>
@@ -162,7 +162,7 @@ export default function TradeTaxonomyClassificationControls({
 
       <div className="taxonomy-control-actions">
         <button type="submit" className="button-primary">
-          Apply Classification
+          Apply Diagnostic Filters
         </button>
         <Link href="/dev/trade-taxonomy" className="button-secondary">
           Reset
