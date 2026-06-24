@@ -26,14 +26,17 @@ import {
   ProjectProfile,
   ProjectProfileContextTagId,
   ProjectProfileFacilityTypeId,
+  ProjectProfileOption,
   ProjectProfileSectorId,
   ProjectProfileWorkTypeId,
   ProjectSetupRuleEffect,
+  PricingMetric,
   publicPrivateStatusOptions,
   scopeFlagOptions,
   siteWalkStatusOptions,
   structureTypeOptions,
   taxStatusOptions,
+  universalPricingMetrics,
 } from "@/features/project-profile";
 
 type Scenario = {
@@ -153,12 +156,61 @@ const requiredBeforePackageReview = [
   "Bid package include / exclude candidates available",
 ];
 
+const fieldLabels = new Map<string, string>([
+  ["project.name", "Project name"],
+  ["project.addressOrMarketLocation", "Address / market location"],
+  ["project.clientOwnerOrBidSolicitor", "Client / owner / bid solicitor"],
+  ["project.estimatorOrInternalBidContact", "Estimator / internal bid contact"],
+  ["project.bidDueDates", "Bid due dates"],
+  ["itbInstructions.documentAccessInstructions", "Document access instructions"],
+  ["classification.sector", "Sector"],
+  ["classification.facilityType", "Subsector / facility type"],
+  ["classification.workType", "Work type"],
+  ["classification.contextTags", "Context tags"],
+  ["globalAttributes.squareFeet", "Square footage"],
+  ["globalAttributes.floors", "Floors / stories"],
+  ["globalAttributes.buildingCondition", "Building condition"],
+  ["globalAttributes.projectCsiVersion", "Project CSI version"],
+  ["globalAttributes.siteScope", "Sitework scope flag"],
+  ["globalAttributes.envelopeScope", "Exterior envelope scope flag"],
+  ["logistics.siteWalkStatus", "Site walk status"],
+  ["procurement.publicPrivate", "Public / private bid"],
+  ["procurement.prevailingWage", "Prevailing wage status"],
+]);
+
+const requiredFieldGroups = [
+  {
+    title: "Project Intake",
+    prefixes: ["project.", "itbInstructions."],
+  },
+  {
+    title: "Classification",
+    prefixes: ["classification."],
+  },
+  {
+    title: "Global Attributes",
+    prefixes: ["globalAttributes."],
+  },
+  {
+    title: "Logistics",
+    prefixes: ["logistics."],
+  },
+  {
+    title: "Procurement",
+    prefixes: ["procurement."],
+  },
+];
+
 function optionLabel<TId extends string>(
   id: TId | undefined,
   options: readonly { id: TId; label: string }[],
 ): string | undefined {
   if (!id) return undefined;
   return options.find((option) => option.id === id)?.label ?? id;
+}
+
+function fieldLabel(fieldPath: string): string {
+  return fieldLabels.get(fieldPath) ?? fieldPath;
 }
 
 function formatEffectType(type: string): string {
@@ -168,7 +220,15 @@ function formatEffectType(type: string): string {
     .join(" ");
 }
 
-function FieldList({ items, emptyText }: { items: readonly string[]; emptyText: string }) {
+function FieldList({
+  items,
+  emptyText,
+  formatItem = (item) => item,
+}: {
+  items: readonly string[];
+  emptyText: string;
+  formatItem?: (item: string) => string;
+}) {
   if (!items.length) {
     return <p className="muted-text">{emptyText}</p>;
   }
@@ -176,9 +236,79 @@ function FieldList({ items, emptyText }: { items: readonly string[]; emptyText: 
   return (
     <ul className="taxonomy-warning-list">
       {items.map((item) => (
-        <li key={item}>{item}</li>
+        <li key={item}>{formatItem(item)}</li>
       ))}
     </ul>
+  );
+}
+
+function GroupedRequiredFieldList({ fields }: { fields: readonly string[] }) {
+  const remainingFields = new Set(fields);
+
+  return (
+    <div className="stack gap-3">
+      {requiredFieldGroups.map((group) => {
+        const groupFields = fields.filter((field) =>
+          group.prefixes.some((prefix) => field.startsWith(prefix)),
+        );
+        groupFields.forEach((field) => remainingFields.delete(field));
+
+        if (!groupFields.length) {
+          return null;
+        }
+
+        return (
+          <details key={group.title} className="project-csi-selected-group" open>
+            <summary className="cluster-between gap-3">
+              <strong>{group.title}</strong>
+              <span className="taxonomy-meta-chip">{groupFields.length}</span>
+            </summary>
+            <FieldList
+              items={groupFields}
+              emptyText="No fields."
+              formatItem={fieldLabel}
+            />
+          </details>
+        );
+      })}
+
+      {remainingFields.size ? (
+        <details className="project-csi-selected-group" open>
+          <summary className="cluster-between gap-3">
+            <strong>Other</strong>
+            <span className="taxonomy-meta-chip">{remainingFields.size}</span>
+          </summary>
+          <FieldList
+            items={[...remainingFields]}
+            emptyText="No fields."
+            formatItem={fieldLabel}
+          />
+        </details>
+      ) : null}
+    </div>
+  );
+}
+
+function OptionDetailList<TId extends string>({
+  options,
+  emptyText,
+}: {
+  options: readonly ProjectProfileOption<TId>[];
+  emptyText: string;
+}) {
+  if (!options.length) {
+    return <p className="muted-text">{emptyText}</p>;
+  }
+
+  return (
+    <div className="stack gap-2">
+      {options.map((option) => (
+        <div key={option.id} className="project-csi-selected-group">
+          <strong>{option.label}</strong>
+          <p className="muted-text">{option.description}</p>
+        </div>
+      ))}
+    </div>
   );
 }
 
@@ -194,7 +324,14 @@ function EffectList({ effects }: { effects: readonly ProjectSetupRuleEffect[] })
           <div className="cluster-between gap-3 align-start">
             <div>
               <strong>{effect.label ?? effect.targetId ?? effect.targetFieldPath ?? effect.id}</strong>
-              {effect.description ? <p className="muted-text">{effect.description}</p> : null}
+              <p className="muted-text">
+                <span className="label-text">Target</span>{" "}
+                {effect.targetFieldPath ?? effect.targetId ?? "Profile-level effect"}
+              </p>
+              <p className="muted-text">
+                <span className="label-text">Reason</span>{" "}
+                {effect.description ?? "Derived from the matching setup rule conditions."}
+              </p>
               <p className="muted-text">
                 <span className="label-text">Impact</span>{" "}
                 {effect.impactCategories.join(", ")}
@@ -206,6 +343,46 @@ function EffectList({ effects }: { effects: readonly ProjectSetupRuleEffect[] })
       ))}
     </div>
   );
+}
+
+function MetricList({
+  metrics,
+  profile,
+}: {
+  metrics: readonly PricingMetric[];
+  profile: ProjectProfile;
+}) {
+  const universalMetricIds = new Set(universalPricingMetrics.map((metric) => metric.id));
+  const sectorLabel = optionLabel(profile.classification.sector, projectProfileSectorOptions);
+  const facilityLabel = optionLabel(profile.classification.facilityType, facilityTypeOptionsForProfile(profile));
+
+  return (
+    <div className="stack gap-2">
+      {metrics.map((metric) => (
+        <div key={metric.id} className="project-csi-selected-group">
+          <div className="cluster-between gap-3 align-start">
+            <div>
+              <strong>{metric.label}</strong>
+              <p className="muted-text">
+                <span className="label-text">Applies to</span>{" "}
+                {universalMetricIds.has(metric.id)
+                  ? "All project profiles"
+                  : [sectorLabel, facilityLabel].filter(Boolean).join(" / ")}
+              </p>
+              {metric.description ? <p className="muted-text">{metric.description}</p> : null}
+            </div>
+            <span className="taxonomy-meta-chip">{metric.unit}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function facilityTypeOptionsForProfile(
+  profile: ProjectProfile,
+): ProjectProfileOption<ProjectProfileFacilityTypeId>[] {
+  return getFacilityTypeOptionsForSector(profile.classification.sector);
 }
 
 export default function ProjectProfileWorkbenchPage() {
@@ -491,6 +668,53 @@ export default function ProjectProfileWorkbenchPage() {
               <strong>{csiVersionOptions.length} options</strong>
             </div>
           </div>
+
+          <div className="stack gap-3" style={{ marginTop: 18 }}>
+            <details className="project-csi-selected-group" open>
+              <summary className="cluster-between gap-3">
+                <strong>Building Condition Options</strong>
+                <span className="taxonomy-meta-chip">{buildingConditionOptions.length}</span>
+              </summary>
+              <OptionDetailList
+                options={buildingConditionOptions}
+                emptyText="No building condition options."
+              />
+            </details>
+            <details className="project-csi-selected-group">
+              <summary className="cluster-between gap-3">
+                <strong>Structure Type Options</strong>
+                <span className="taxonomy-meta-chip">{structureTypeOptions.length}</span>
+              </summary>
+              <OptionDetailList options={structureTypeOptions} emptyText="No structure type options." />
+            </details>
+            <details className="project-csi-selected-group">
+              <summary className="cluster-between gap-3">
+                <strong>Occupancy Condition Options</strong>
+                <span className="taxonomy-meta-chip">{occupancyConditionOptions.length}</span>
+              </summary>
+              <OptionDetailList
+                options={occupancyConditionOptions}
+                emptyText="No occupancy condition options."
+              />
+            </details>
+            <details className="project-csi-selected-group">
+              <summary className="cluster-between gap-3">
+                <strong>Site / Envelope Scope Flags</strong>
+                <span className="taxonomy-meta-chip">{scopeFlagOptions.length}</span>
+              </summary>
+              <OptionDetailList options={scopeFlagOptions} emptyText="No scope flag options." />
+            </details>
+            <details className="project-csi-selected-group">
+              <summary className="cluster-between gap-3">
+                <strong>Project CSI Version Options</strong>
+                <span className="taxonomy-meta-chip">{csiVersionOptions.length}</span>
+              </summary>
+              <FieldList
+                items={csiVersionOptions.map((option) => option.label)}
+                emptyText="No CSI version options."
+              />
+            </details>
+          </div>
         </section>
 
         <section className="app-panel">
@@ -535,6 +759,66 @@ export default function ProjectProfileWorkbenchPage() {
               <strong>{ownerVendorScopeOptions.length} options</strong>
             </div>
           </div>
+
+          <div className="stack gap-3" style={{ marginTop: 18 }}>
+            <details className="project-csi-selected-group" open>
+              <summary className="cluster-between gap-3">
+                <strong>Site Walk Status Options</strong>
+                <span className="taxonomy-meta-chip">{siteWalkStatusOptions.length}</span>
+              </summary>
+              <OptionDetailList
+                options={siteWalkStatusOptions}
+                emptyText="No site walk status options."
+              />
+            </details>
+            <details className="project-csi-selected-group">
+              <summary className="cluster-between gap-3">
+                <strong>Logistics Condition Toggles</strong>
+                <span className="taxonomy-meta-chip">{logisticsConditionOptions.length}</span>
+              </summary>
+              <OptionDetailList
+                options={logisticsConditionOptions}
+                emptyText="No logistics conditions."
+              />
+            </details>
+            <details className="project-csi-selected-group">
+              <summary className="cluster-between gap-3">
+                <strong>Public / Private Options</strong>
+                <span className="taxonomy-meta-chip">{publicPrivateStatusOptions.length}</span>
+              </summary>
+              <OptionDetailList
+                options={publicPrivateStatusOptions}
+                emptyText="No public/private options."
+              />
+            </details>
+            <details className="project-csi-selected-group">
+              <summary className="cluster-between gap-3">
+                <strong>Tax Status Options</strong>
+                <span className="taxonomy-meta-chip">{taxStatusOptions.length}</span>
+              </summary>
+              <OptionDetailList options={taxStatusOptions} emptyText="No tax status options." />
+            </details>
+            <details className="project-csi-selected-group">
+              <summary className="cluster-between gap-3">
+                <strong>Contract Type Options</strong>
+                <span className="taxonomy-meta-chip">{contractTypeOptions.length}</span>
+              </summary>
+              <OptionDetailList
+                options={contractTypeOptions}
+                emptyText="No contract type options."
+              />
+            </details>
+            <details className="project-csi-selected-group">
+              <summary className="cluster-between gap-3">
+                <strong>Owner / Vendor Scope Options</strong>
+                <span className="taxonomy-meta-chip">{ownerVendorScopeOptions.length}</span>
+              </summary>
+              <OptionDetailList
+                options={ownerVendorScopeOptions}
+                emptyText="No owner/vendor scope options."
+              />
+            </details>
+          </div>
         </section>
 
         <section className="app-panel">
@@ -551,12 +835,29 @@ export default function ProjectProfileWorkbenchPage() {
               </p>
             </div>
             <div className="taxonomy-meta-list">
-              {visibleContextTags.map((tag) => (
-                <span key={tag} className="taxonomy-meta-chip">
-                  {optionLabel(tag, projectProfileContextTagOptions)}
-                </span>
-              ))}
+              <span className="taxonomy-meta-chip">{visibleContextTags.length} selected context tags</span>
+              <span className="taxonomy-meta-chip">{contextTagOptions.length} available context tags</span>
             </div>
+          </div>
+          <div className="dashboard-grid" style={{ marginTop: 16 }}>
+            <div className="project-csi-selected-group">
+              <div className="cluster-between gap-3">
+                <strong>Selected Context Tags</strong>
+                <span className="taxonomy-meta-chip">{visibleContextTags.length}</span>
+              </div>
+              <FieldList
+                items={visibleContextTags}
+                emptyText="No context tags selected."
+                formatItem={(tag) => optionLabel(tag as ProjectProfileContextTagId, projectProfileContextTagOptions) ?? tag}
+              />
+            </div>
+            <details className="project-csi-selected-group" open>
+              <summary className="cluster-between gap-3">
+                <strong>Available Context Tags</strong>
+                <span className="taxonomy-meta-chip">{contextTagOptions.length}</span>
+              </summary>
+              <OptionDetailList options={contextTagOptions} emptyText="No context tags available." />
+            </details>
           </div>
         </section>
 
@@ -569,7 +870,7 @@ export default function ProjectProfileWorkbenchPage() {
               </div>
               <span className="taxonomy-meta-chip">{itbFields.length} fields</span>
             </div>
-            <FieldList items={itbFields} emptyText="No ITB requirements matched." />
+            <GroupedRequiredFieldList fields={itbFields} />
           </section>
 
           <section className="app-panel">
@@ -580,7 +881,11 @@ export default function ProjectProfileWorkbenchPage() {
               </div>
               <span className="taxonomy-meta-chip">{requiredFields.length} fields</span>
             </div>
-            <FieldList items={requiredFields} emptyText="No required setup fields matched." />
+            <FieldList
+              items={requiredFields}
+              emptyText="No required setup fields matched."
+              formatItem={fieldLabel}
+            />
           </section>
         </div>
 
@@ -618,9 +923,12 @@ export default function ProjectProfileWorkbenchPage() {
           <div className="taxonomy-meta-list" style={{ marginTop: 16 }}>
             {pricingMetrics.map((metric) => (
               <span key={metric.id} className="taxonomy-meta-chip">
-                {metric.label} ({metric.unit})
+                {metric.label}
               </span>
             ))}
+          </div>
+          <div style={{ marginTop: 18 }}>
+            <MetricList metrics={pricingMetrics} profile={profile} />
           </div>
         </section>
 
