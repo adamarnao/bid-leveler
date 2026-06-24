@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
+import ContextHelp from "@/components/ui/ContextHelp";
 import {
   getContextTagOptionsForClassification,
   getProjectSectorOptions,
@@ -134,7 +135,10 @@ export default function TradeTaxonomyClassificationControls({
                       checked={selectedValidContextTags.includes(option.id)}
                       onChange={() => toggleContextTag(option.id)}
                     />
-                    <span>{option.label}</span>
+                    <span className="taxonomy-context-option-label">
+                      {option.label}
+                      <ContextHelp label={option.label} content={option.description} />
+                    </span>
                   </label>
                 ))
               ) : (
