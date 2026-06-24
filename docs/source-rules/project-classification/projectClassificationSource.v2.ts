@@ -124,7 +124,9 @@ export type ClassificationOption<TId extends string> = {
   id: TId;
   label: string;
   description: string;
+  // Aliases are search/parsing/help metadata only. They are never runtime IDs and must not create alternate behavior paths.
   aliases?: string[];
+  searchKeywords?: string[];
   sortOrder: number;
 };
 
@@ -132,7 +134,9 @@ export type SectorWorkTypeLabel = {
   sector: ProjectSectorTag;
   workType: ProjectWorkTypeTag;
   label: string;
+  // Optional search/help metadata. UI should display one best sector-specific label, not all aliases.
   aliases?: string[];
+  searchKeywords?: string[];
 };
 
 export type FacilityTypeAvailability = {
@@ -265,7 +269,19 @@ export const PROJECT_WORK_TYPES: ClassificationOption<ProjectWorkTypeTag>[] = [
     id: "interior_fit_out_renovation",
     label: "Interior Fit-Out / Renovation",
     description: "Interior work inside an existing building or shell. Includes tenant improvement, fit-out, build-out, interior renovation, remodel, and similar work.",
-    aliases: ["tenant improvement", "TI", "fit-out", "build-out", "interior renovation", "remodel", "tenant buildout"],
+    aliases: [
+      "Tenant Improvement",
+      "TI",
+      "Tenant Build-Out",
+      "Build-Out",
+      "Buildout",
+      "Fit-Out",
+      "Fitout",
+      "Interior Renovation",
+      "Interior Remodel",
+      "Remodel",
+    ],
+    searchKeywords: ["tenant suite", "interior work", "existing building", "interior construction", "build out", "tenant finish"],
     sortOrder: 10,
   },
   { id: "ground_up_new_construction", label: "Ground-Up / New Construction", description: "New building construction from site/foundation through completed project.", sortOrder: 20 },
@@ -279,7 +295,13 @@ export const PROJECT_WORK_TYPES: ClassificationOption<ProjectWorkTypeTag>[] = [
 ];
 
 export const SECTOR_WORK_TYPE_LABELS: SectorWorkTypeLabel[] = [
-  { sector: "office", workType: "interior_fit_out_renovation", label: "Tenant Improvement / Interior Fit-Out", aliases: ["Office TI", "Office Build-Out", "Tenant Fit-Out"] },
+  {
+    sector: "office",
+    workType: "interior_fit_out_renovation",
+    label: "Tenant Improvement / Interior Fit-Out",
+    aliases: ["Office TI", "Office Build-Out", "Tenant Fit-Out"],
+    searchKeywords: ["tenant build-out", "fit-out", "interior renovation"],
+  },
   { sector: "retail", workType: "interior_fit_out_renovation", label: "Store Build-Out / Renovation", aliases: ["Retail Fit-Out", "Store Fit-Out"] },
   { sector: "restaurant", workType: "interior_fit_out_renovation", label: "Restaurant Build-Out / Renovation", aliases: ["Restaurant Fit-Out", "Restaurant TI"] },
   { sector: "healthcare", workType: "interior_fit_out_renovation", label: "Medical Office TI / Renovation", aliases: ["Clinic TI", "Medical Office Build-Out"] },

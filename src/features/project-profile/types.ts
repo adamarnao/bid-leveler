@@ -378,3 +378,27 @@ export type SectorPricingMetricGroup = {
   facilityTypeIds?: ProjectProfileFacilityTypeId[];
   metrics: PricingMetric[];
 };
+
+export type ProjectProfileTradeVisibilityLevel =
+  | "CORE"
+  | "SUGGESTED"
+  | "CONTEXTUAL"
+  | "HIDDEN"
+  | "EXCLUDED";
+
+export type ProjectProfileTradeVisibilityResult = {
+  tradeId: string;
+  tradeName: string;
+  visibility: ProjectProfileTradeVisibilityLevel;
+  explanations: string[];
+  isTriggeredByContext?: boolean;
+  isHiddenByDefault?: boolean;
+};
+
+export type ProjectProfileTradeVisibilityGroups = {
+  core: ProjectProfileTradeVisibilityResult[];
+  suggested: ProjectProfileTradeVisibilityResult[];
+  contextual: ProjectProfileTradeVisibilityResult[];
+  hidden: ProjectProfileTradeVisibilityResult[];
+  excluded: ProjectProfileTradeVisibilityResult[];
+};

@@ -106,6 +106,8 @@ Work Type answers:
 
 Keep this list short and canonical. Similar industry terms should be aliases, not separate canonical work types.
 
+Canonical IDs are the only runtime IDs. Aliases are never stored as alternate IDs and must not create alternate behavior paths. Aliases are used only for search, parsing/imports, help text, context tooltips, and optional future company-preferred display labels.
+
 Canonical work types:
 
 | Canonical Work Type | Meaning |
@@ -139,20 +141,24 @@ The following are not separate canonical work types:
 
 ```text
 Tenant Improvement
+TI
+Tenant Build-Out
 Build-Out
+Buildout
 Fit-Out
+Fitout
 Interior Renovation
 Interior Remodel
 Remodel
-Tenant Buildout
-Office Buildout
 ```
 
-They are aliases/display labels for:
+They are aliases only for:
 
 ```text
 Interior Fit-Out / Renovation
 ```
+
+They must not be stored, normalized into alternate runtime IDs, or used to branch behavior. Common aliases may appear in help text, for example: "Also commonly called TI, tenant build-out, fit-out, or interior renovation."
 
 ### Why
 
@@ -184,6 +190,7 @@ It does not define the construction work type by itself.
 ## Sector-Specific Work Type Labels
 
 The same canonical work type can display differently by sector.
+Only one visible label should be shown at a time. Dropdowns and primary UI labels should display the best sector-specific label, not a list of aliases.
 
 | Sector | Canonical Work Type | Display Label |
 |---|---|---|
@@ -197,6 +204,8 @@ The same canonical work type can display differently by sector.
 | Warehouse | Interior Fit-Out / Renovation | Warehouse Tenant Build-Out |
 | Laboratory | Interior Fit-Out / Renovation | Lab Renovation / Fit-Out |
 | Cleanroom | Interior Fit-Out / Renovation | Cleanroom Fit-Out / Renovation |
+
+Search indexes should include the canonical label, the selected sector-specific label, aliases, and search keywords. The UI should still display only the best selected label.
 
 ## Sector-Dependent Context Tags
 
@@ -361,6 +370,8 @@ Core:
 - Wall Finishes
 - Doors / Frames / Hardware
 - Glass / Glazing
+- Finish Carpentry / Millwork / Casework
+- Countertops
 - Basic Specialties
 - Fire Protection
 - Plumbing
@@ -369,8 +380,6 @@ Core:
 - Low Voltage / Technology
 
 Suggested:
-- Finish Carpentry / Millwork
-- Countertops
 - Window Treatments
 - Furnishings / FF&E
 - Access Control / Security

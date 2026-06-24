@@ -133,7 +133,7 @@ Settings
 → Package Split/Combine Defaults
 
 Company-level examples:
-- For Office TI, always show Millwork as Suggested.
+- For Office TI, Millwork / Casework and Countertops are already Core by default; company settings may still rename, split, or add related finish trades.
 - For Healthcare, always show Infection Control as Core.
 - For Restaurant + Commercial Kitchen, always show Food Service Equipment as Core.
 - For Residential Remodel, always show Appliances as Suggested.

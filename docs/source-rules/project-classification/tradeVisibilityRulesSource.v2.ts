@@ -43,6 +43,9 @@ export const OFFICE_TI_PROFILE: TradeVisibilityProfile = {
     "wall-finishes",
     "doors-frames-hardware",
     "glass-glazing",
+    "finish-carpentry-millwork",
+    "cabinets-casework",
+    "countertops",
     "basic-specialties",
     "fire-protection",
     "plumbing",
@@ -51,8 +54,6 @@ export const OFFICE_TI_PROFILE: TradeVisibilityProfile = {
     "low-voltage-technology",
   ],
   suggestedTradeIds: [
-    "finish-carpentry-millwork",
-    "countertops",
     "window-treatments",
     "furnishings-ffe",
     "access-control-security",

@@ -15,6 +15,7 @@ import {
   getPackageReviewRequirements,
   getPricingMetricsForProfile,
   getRequiredProjectProfileFields,
+  getTradeVisibilityForProjectProfile,
   getWorkTypeLabelForSector,
   getWorkTypeOptionsForSector,
   logisticsConditionOptions,
@@ -28,6 +29,7 @@ import {
   ProjectProfileFacilityTypeId,
   ProjectProfileOption,
   ProjectProfileSectorId,
+  ProjectProfileTradeVisibilityResult,
   ProjectProfileWorkTypeId,
   ProjectSetupRuleEffect,
   PricingMetric,
@@ -38,6 +40,7 @@ import {
   taxStatusOptions,
   universalPricingMetrics,
 } from "@/features/project-profile";
+import { getDefaultTradeTaxonomy } from "@/features/trade-taxonomy";
 
 type Scenario = {
   id: string;
@@ -379,6 +382,46 @@ function MetricList({
   );
 }
 
+function TradeVisibilityGroup({
+  title,
+  description,
+  trades,
+}: {
+  title: string;
+  description: string;
+  trades: readonly ProjectProfileTradeVisibilityResult[];
+}) {
+  return (
+    <section className="taxonomy-visibility-group">
+      <div className="cluster-between gap-3 align-start">
+        <div>
+          <h3>{title}</h3>
+          <p className="muted-text">{description}</p>
+        </div>
+        <span className="taxonomy-meta-chip">{trades.length}</span>
+      </div>
+
+      {trades.length ? (
+        <div className="taxonomy-visibility-list">
+          {trades.map((trade) => (
+            <div key={`${title}-${trade.tradeId}`} className="taxonomy-visibility-card">
+              <strong>{trade.tradeName}</strong>
+              <p className="muted-text">{trade.explanations.join(" ")}</p>
+              {trade.isHiddenByDefault ? (
+                <span className="taxonomy-status-chip taxonomy-status-hidden">
+                  Hidden By Default
+                </span>
+              ) : null}
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p className="muted-text">No trades in this group for the selected profile.</p>
+      )}
+    </section>
+  );
+}
+
 function facilityTypeOptionsForProfile(
   profile: ProjectProfile,
 ): ProjectProfileOption<ProjectProfileFacilityTypeId>[] {
@@ -387,6 +430,7 @@ function facilityTypeOptionsForProfile(
 
 export default function ProjectProfileWorkbenchPage() {
   const [profile, setProfile] = useState<ProjectProfile>(defaultProfile);
+  const masterTradeLibrary = useMemo(() => getDefaultTradeTaxonomy(), []);
 
   const facilityTypeOptions = useMemo(
     () => getFacilityTypeOptionsForSector(profile.classification.sector),
@@ -406,6 +450,17 @@ export default function ProjectProfileWorkbenchPage() {
   );
   const ruleEvaluation = useMemo(() => evaluateProjectSetupRules(profile), [profile]);
   const pricingMetrics = useMemo(() => getPricingMetricsForProfile(profile), [profile]);
+  const tradeVisibility = useMemo(
+    () => getTradeVisibilityForProjectProfile(profile, masterTradeLibrary),
+    [masterTradeLibrary, profile],
+  );
+  const packageableMasterTrades = useMemo(
+    () =>
+      masterTradeLibrary
+        .filter((trade) => trade.isActive && trade.canBeBidPackage)
+        .sort((leftTrade, rightTrade) => leftTrade.sortOrder - rightTrade.sortOrder),
+    [masterTradeLibrary],
+  );
   const profileLabel = buildProjectProfileLabel(profile);
   const requiredFields = getRequiredProjectProfileFields(profile);
   const itbFields = getFieldsRequiredBeforeItb(profile);
@@ -860,6 +915,84 @@ export default function ProjectProfileWorkbenchPage() {
             </details>
           </div>
         </section>
+
+        <section className="app-panel">
+          <div className="panel-header">
+            <div>
+              <p className="label-text">Current Project Visibility</p>
+              <h2>Trade Visibility From Project Profile</h2>
+              <p className="muted-text">
+                These groups are derived from the selected sector, facility type, work type,
+                context tags, and modeled global attributes. The master library remains separate
+                below.
+              </p>
+            </div>
+            <div className="taxonomy-meta-list">
+              <span className="taxonomy-meta-chip">
+                {tradeVisibility.core.length} core
+              </span>
+              <span className="taxonomy-meta-chip">
+                {tradeVisibility.suggested.length} suggested
+              </span>
+              <span className="taxonomy-meta-chip">
+                {tradeVisibility.contextual.length} contextual
+              </span>
+            </div>
+          </div>
+
+          <div className="taxonomy-visibility-grid">
+            <TradeVisibilityGroup
+              title="Core Trades"
+              description="Expected and normally reviewed for this Project Profile."
+              trades={tradeVisibility.core}
+            />
+            <TradeVisibilityGroup
+              title="Suggested Trades"
+              description="Often relevant, but the estimator should confirm before ITB use."
+              trades={tradeVisibility.suggested}
+            />
+            <TradeVisibilityGroup
+              title="Contextual Trades"
+              description="Shown because context tags, global attributes, or taxonomy triggers made them relevant."
+              trades={tradeVisibility.contextual}
+            />
+            <TradeVisibilityGroup
+              title="Hidden but Available"
+              description="Available in the master library but not normally active for this Project Profile."
+              trades={tradeVisibility.hidden}
+            />
+            <TradeVisibilityGroup
+              title="Excluded / Not Normally Relevant"
+              description="Explicitly not expected for this profile unless estimator scope evidence overrides it."
+              trades={tradeVisibility.excluded}
+            />
+          </div>
+        </section>
+
+        <details className="app-panel taxonomy-master-library">
+          <summary>
+            <span>
+              <span className="label-text">Master Trade Library</span>
+              <strong>Full Active Packageable Trade List</strong>
+              <span className="muted-text">
+                This is the full master library, not the current project visibility result.
+              </span>
+            </span>
+            <span className="taxonomy-meta-chip">{packageableMasterTrades.length} trades</span>
+          </summary>
+          <div className="taxonomy-visibility-list" style={{ marginTop: 16 }}>
+            {packageableMasterTrades.map((trade) => (
+              <div key={trade.id} className="taxonomy-visibility-card">
+                <strong>{trade.name}</strong>
+                <p className="muted-text">
+                  {trade.defaultHidden
+                    ? "Hidden by default unless project context or CSI evidence triggers it."
+                    : "Active in the master trade library."}
+                </p>
+              </div>
+            ))}
+          </div>
+        </details>
 
         <div className="dashboard-grid">
           <section className="app-panel">
