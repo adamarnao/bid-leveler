@@ -72,7 +72,7 @@ export const csiTradeMappingFixtureScenarios: CsiTradeMappingFixtureScenario[] =
   },
   {
     id: "fire-alarm-ambiguous",
-    title: "Project MF: 2004+ / 50-Division | Ambiguous Fire Alarm Mapping",
+    title: "Ambiguous mapping | Fire Alarm",
     projectCsiVersion: "MASTERFORMAT_2004_PLUS",
     subcontractorCoverageVersion: "MASTERFORMAT_2004_PLUS",
     csiItems: [fireAlarmItem],
@@ -80,7 +80,7 @@ export const csiTradeMappingFixtureScenarios: CsiTradeMappingFixtureScenario[] =
   },
   {
     id: "insulation-ambiguous",
-    title: "Project MF: 2004+ / 50-Division | Ambiguous Insulation Mapping",
+    title: "Ambiguous mapping | Insulation",
     projectCsiVersion: "MASTERFORMAT_2004_PLUS",
     subcontractorCoverageVersion: "MASTERFORMAT_2004_PLUS",
     csiItems: [acousticInsulationItem],

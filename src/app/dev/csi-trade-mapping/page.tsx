@@ -5,7 +5,12 @@ import { useMemo, useState } from "react";
 
 import AppShell from "@/components/layout/AppShell";
 import ContextHelp from "@/components/ui/ContextHelp";
-import { resolveCsiCatalogItem, searchCsiCatalog } from "@/lib/csiCatalog";
+import {
+  getCsiAncestors,
+  getCsiCatalog,
+  resolveCsiCatalogItem,
+  searchCsiCatalog,
+} from "@/lib/csiCatalog";
 import {
   assignCsiItemToTrade,
   createSubcontractorDualCoverage,
@@ -70,8 +75,15 @@ type AssignmentPreview = {
   warning?: string;
 };
 
+type CatalogCoverageSummary = {
+  totalItems: number;
+  mappedItems: number;
+  unmappedItems: number;
+};
+
 const taxonomy = getDefaultTradeTaxonomy();
 const mappingRules = getCsiTradeMappingRules();
+const csiVersions = csiVersionOptions.map((option) => option.id);
 
 function getScenarioById(scenarioId: string): CsiTradeMappingFixtureScenario {
   return (
@@ -104,6 +116,10 @@ function formatCsiItem(item: CsiTradeMappingItem): string {
   return `${item.number} - ${item.name}`;
 }
 
+function formatCsiCatalogItem(item: CsiCatalogItem): string {
+  return `${item.number} - ${item.name}`;
+}
+
 function toMappingItem(item: CsiCatalogItem): CsiTradeMappingItem {
   return {
     id: item.id,
@@ -128,6 +144,42 @@ function resolveEquivalentAsMappingItem(equivalent: EquivalentCsiCoverage): CsiT
 
 function getAlternateVersion(version: CsiVersionId): CsiVersionId {
   return version === "MASTERFORMAT_2004_PLUS" ? "MASTERFORMAT_1995" : "MASTERFORMAT_2004_PLUS";
+}
+
+function getCsiParentPath(item: CsiCatalogItem): string {
+  const ancestors = getCsiAncestors(item.version, item.id);
+  if (!ancestors.length) return "Top-level catalog item";
+
+  return ancestors.map(formatCsiCatalogItem).join(" / ");
+}
+
+function getCsiDivisionPath(item: CsiCatalogItem): string {
+  const ancestors = getCsiAncestors(item.version, item.id);
+  const division = ancestors.find((ancestor) => ancestor.level === 1) ?? (item.level === 1 ? item : undefined);
+
+  return division ? formatCsiCatalogItem(division) : "Division not resolved";
+}
+
+function getCatalogCoverageSummary(version: CsiVersionId): CatalogCoverageSummary {
+  const catalog = getCsiCatalog(version);
+  let unmappedItems = 0;
+
+  catalog.forEach((item) => {
+    const assignment = assignCsiItemToTrade({
+      csiItem: toMappingItem(item),
+      projectCsiVersion: version,
+    });
+
+    if (assignment.source === "UNASSIGNED") {
+      unmappedItems += 1;
+    }
+  });
+
+  return {
+    totalItems: catalog.length,
+    mappedItems: catalog.length - unmappedItems,
+    unmappedItems,
+  };
 }
 
 function isTopLevelTrade(trade: TradeTaxonomyNode): boolean {
@@ -256,6 +308,16 @@ function MappingCoverageSummary() {
   const ambiguousRuleCount = mappingRules.filter(
     (rule) => rule.matchStrength === "POSSIBLE" || Boolean(rule.possibleTradeIds?.length),
   ).length;
+  const catalogCoverage = useMemo(
+    () =>
+      csiVersions.map((version) => ({
+        version,
+        ...getCatalogCoverageSummary(version),
+      })),
+    [],
+  );
+  const totalCsiItems = catalogCoverage.reduce((total, summary) => total + summary.totalItems, 0);
+  const unmappedCsiItems = catalogCoverage.reduce((total, summary) => total + summary.unmappedItems, 0);
   const rulesByTrade = getRulesByTradeCount();
   const unmappedTrades = getUnmappedTopLevelTrades();
 
@@ -268,6 +330,10 @@ function MappingCoverageSummary() {
           <p className="muted-text">
             This summary describes the partial CSI-to-trade mapping library currently loaded
             in code. It does not claim full MasterFormat coverage.
+          </p>
+          <p className="muted-text">
+            Fixtures are test scenarios only. The mapping universe is the full CSI catalog,
+            crosswalk, trade taxonomy, and mapping rule library.
           </p>
         </div>
       </div>
@@ -289,9 +355,28 @@ function MappingCoverageSummary() {
           <span className="label-text">Ambiguous / Cross-Trade</span>
           <strong>{ambiguousRuleCount}</strong>
         </div>
+        <div>
+          <span className="label-text">Full CSI Catalog Items</span>
+          <strong>{totalCsiItems}</strong>
+        </div>
+        <div>
+          <span className="label-text">Unmapped CSI Items</span>
+          <strong>{unmappedCsiItems}</strong>
+        </div>
       </div>
 
       <div className="setup-summary-grid" style={{ marginTop: 16 }}>
+        <div>
+          <span className="label-text">Catalog Assignment Coverage</span>
+          <div className="taxonomy-meta-list" style={{ marginTop: 8 }}>
+            {catalogCoverage.map((summary) => (
+              <span key={summary.version} className="taxonomy-meta-chip">
+                {getVersionShortLabel(summary.version)}: {summary.mappedItems} mapped /{" "}
+                {summary.unmappedItems} unmapped
+              </span>
+            ))}
+          </div>
+        </div>
         <div>
           <span className="label-text">Rules By Trade</span>
           <div className="taxonomy-meta-list" style={{ marginTop: 8 }}>
@@ -583,6 +668,52 @@ function AssignmentCard({ preview }: { preview: AssignmentPreview }) {
   );
 }
 
+function EquivalentCoverageList({
+  selectedItem,
+  equivalentItems,
+}: {
+  selectedItem: CsiCatalogItem;
+  equivalentItems: EquivalentCsiCoverage[];
+}) {
+  return (
+    <div className="project-csi-selected-group">
+      <div className="cluster-between align-start gap-3">
+        <div>
+          <p className="label-text">Crosswalk Equivalent</p>
+          <h3>{getVersionShortLabel(getAlternateVersion(selectedItem.version))}</h3>
+          <p className="muted-text">
+            Alternate MasterFormat coverage derived from the selected canonical CSI item.
+          </p>
+        </div>
+        <span className="taxonomy-meta-chip">{equivalentItems.length} equivalents</span>
+      </div>
+
+      {equivalentItems.length ? (
+        <div className="stack gap-2" style={{ marginTop: 14 }}>
+          {equivalentItems.map((equivalent) => (
+            <div
+              key={`${equivalent.version}-${equivalent.csiItemId}`}
+              className="cluster-between gap-3"
+            >
+              <span>
+                {equivalent.csiNumber ?? equivalent.csiItemId} -{" "}
+                {equivalent.csiTitle ?? "Untitled equivalent"}
+              </span>
+              <span className="taxonomy-meta-chip">
+                {getVersionShortLabel(equivalent.version)} / {equivalent.confidence}
+              </span>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p className="form-error" style={{ marginTop: 14 }}>
+          No clean crosswalk equivalent exists for this CSI item in the development dataset.
+        </p>
+      )}
+    </div>
+  );
+}
+
 function CsiAssignmentInspector() {
   const [selectedVersion, setSelectedVersion] = useState<CsiVersionId>("MASTERFORMAT_2004_PLUS");
   const [projectCsiVersion, setProjectCsiVersion] = useState<CsiVersionId>("MASTERFORMAT_2004_PLUS");
@@ -598,6 +729,16 @@ function CsiAssignmentInspector() {
     undefined;
   const preview = selectedItem
     ? buildAssignmentPreview(toMappingItem(selectedItem), projectCsiVersion, "csi-search")
+    : undefined;
+  const selectedItemDualCoverage = selectedItem
+    ? createSubcontractorDualCoverage({
+        subcontractorId: "catalog-browser",
+        sourceVersion: selectedItem.version,
+        sourceCsiItemId: selectedItem.id,
+        sourceCsiNumber: selectedItem.number,
+        sourceCsiTitle: selectedItem.name,
+        now: "2026-01-01T00:00:00.000Z",
+      })
     : undefined;
 
   return (
@@ -668,10 +809,45 @@ function CsiAssignmentInspector() {
           </select>
         </label>
       </div>
+      <p className="muted-text" style={{ marginTop: 10 }}>
+        {searchResults.length} canonical CSI results shown. Search finds items; the selected
+        dropdown value is the canonical CSI identity used for assignment.
+      </p>
 
       <div className="stack gap-3" style={{ marginTop: 16 }}>
-        {preview ? (
-          <AssignmentCard preview={preview} />
+        {preview && selectedItem ? (
+          <>
+            <div className="project-csi-selected-group">
+              <div className="cluster-between align-start gap-3">
+                <div>
+                  <p className="label-text">Selected Canonical CSI Item</p>
+                  <h3>{formatCsiCatalogItem(selectedItem)}</h3>
+                  <p className="muted-text">{getVersionLabel(selectedItem.version)}</p>
+                </div>
+                <span className="taxonomy-meta-chip">Level {selectedItem.level}</span>
+              </div>
+
+              <div className="setup-summary-grid" style={{ marginTop: 14 }}>
+                <div>
+                  <span className="label-text">Division</span>
+                  <p className="muted-text">{getCsiDivisionPath(selectedItem)}</p>
+                </div>
+                <div>
+                  <span className="label-text">Parent Path</span>
+                  <p className="muted-text">{getCsiParentPath(selectedItem)}</p>
+                </div>
+              </div>
+            </div>
+
+            <AssignmentCard preview={preview} />
+
+            {selectedItemDualCoverage ? (
+              <EquivalentCoverageList
+                selectedItem={selectedItem}
+                equivalentItems={selectedItemDualCoverage.equivalentCsiItems}
+              />
+            ) : null}
+          </>
         ) : (
           <p className="muted-text">No CSI catalog item is selected.</p>
         )}
@@ -758,6 +934,9 @@ function CrosswalkReview() {
           </select>
         </label>
       </div>
+      <p className="muted-text" style={{ marginTop: 10 }}>
+        {searchResults.length} canonical CSI results shown for crosswalk review.
+      </p>
 
       {selectedItem && dualCoverage ? (
         <div className="project-csi-selected-group" style={{ marginTop: 16 }}>
@@ -766,6 +945,7 @@ function CrosswalkReview() {
               <span className="label-text">Source Coverage Item</span>
               <h3>{selectedItem.number} - {selectedItem.name}</h3>
               <p className="muted-text">{getVersionLabel(selectedItem.version)}</p>
+              <p className="muted-text">{getCsiDivisionPath(selectedItem)}</p>
             </div>
             <span className="taxonomy-meta-chip">
               Target: {getVersionShortLabel(getAlternateVersion(selectedItem.version))}
@@ -785,10 +965,22 @@ function CrosswalkReview() {
                     {equivalent.csiTitle ?? "Untitled equivalent"}
                   </span>
                   <span className="taxonomy-meta-chip">
-                    {getVersionShortLabel(equivalent.version)} / {equivalent.confidence}
+                    {getVersionShortLabel(equivalent.version)} / {equivalent.confidence} /{" "}
+                    {formatEnumLabel(equivalent.source)}
                   </span>
                 </div>
               ))}
+              {dualCoverage.equivalentCsiItems.some((equivalent) => equivalent.notes) ? (
+                <div className="stack gap-1">
+                  {dualCoverage.equivalentCsiItems.map((equivalent) =>
+                    equivalent.notes ? (
+                      <p key={`${equivalent.version}-${equivalent.csiItemId}-notes`} className="muted-text">
+                        {equivalent.notes}
+                      </p>
+                    ) : null,
+                  )}
+                </div>
+              ) : null}
             </div>
           ) : (
             <p className="form-error" style={{ marginTop: 14 }}>
@@ -924,6 +1116,21 @@ function FixtureTests() {
       <div className="stack gap-2" style={{ marginTop: 16 }}>
         <span className="label-text">Expected Behavior</span>
         <p className="muted-text">{selectedScenario.expectedBehavior}</p>
+      </div>
+
+      <div className="setup-summary-grid" style={{ marginTop: 16 }}>
+        <div>
+          <span className="label-text">Project MasterFormat</span>
+          <strong>{getVersionLabel(projectCsiVersion)}</strong>
+        </div>
+        <div>
+          <span className="label-text">Subcontractor Coverage MasterFormat</span>
+          <strong>{getVersionLabel(selectedScenario.subcontractorCoverageVersion)}</strong>
+        </div>
+        <div>
+          <span className="label-text">Input CSI Items</span>
+          <strong>{selectedScenario.csiItems.length}</strong>
+        </div>
       </div>
 
       <div className="stack gap-3" style={{ marginTop: 16 }}>
