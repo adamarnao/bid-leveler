@@ -5,9 +5,11 @@ import { useMemo, useState } from "react";
 
 import AppShell from "@/components/layout/AppShell";
 import ContextHelp from "@/components/ui/ContextHelp";
+import { csiCrosswalkEntries } from "@/data/csiCrosswalk";
 import {
   getCsiAncestors,
   getCsiCatalog,
+  getCsiDivisions,
   resolveCsiCatalogItem,
   searchCsiCatalog,
 } from "@/lib/csiCatalog";
@@ -32,6 +34,12 @@ import {
   formatCsiMasterFormatVersionShort,
   type CsiCatalogItem,
 } from "@/types/Csi";
+import type {
+  CsiCrosswalkEntry,
+  CsiCrosswalkMappingConfidence,
+  CsiCrosswalkRelationship,
+  CsiCrosswalkSection,
+} from "@/types/CsiCrosswalk";
 
 const csiVersionOptions: { id: CsiVersionId; label: string }[] = [
   { id: "MASTERFORMAT_2004_PLUS", label: "MasterFormat 2004+ / 50-Division" },
@@ -81,9 +89,95 @@ type CatalogCoverageSummary = {
   unmappedItems: number;
 };
 
+type WorkbenchTab =
+  | "crosswalk"
+  | "csi-to-trade"
+  | "trade-to-csi"
+  | "coverage-gaps"
+  | "test-scenarios";
+
+type CrosswalkDirection = "1995_TO_2004_PLUS" | "2004_PLUS_TO_1995";
+
+type CrosswalkCardinalityFilter =
+  | "ALL"
+  | CsiCrosswalkRelationship
+  | "NO_MATCH";
+
+type CrosswalkRelationshipType =
+  | "DIRECT_EQUIVALENT"
+  | "BROADER_THAN_TARGET"
+  | "NARROWER_THAN_TARGET"
+  | "SPLIT_INTO_MULTIPLE_CODES"
+  | "CONSOLIDATED_FROM_MULTIPLE_CODES"
+  | "RELATED_OPERATIONAL_MATCH"
+  | "NO_CLEAR_MATCH";
+
+type CrosswalkRelationshipTypeFilter = "ALL" | CrosswalkRelationshipType;
+
+type CrosswalkReviewStatus = "CLEAN" | "NEEDS_REVIEW" | "AMBIGUOUS" | "UNMAPPED";
+type CrosswalkReviewStatusFilter = "ALL" | CrosswalkReviewStatus;
+
+type CrosswalkSourceRow = {
+  sourceItem: CsiCatalogItem;
+  entries: CsiCrosswalkEntry[];
+  targetItems: CsiCatalogItem[];
+  cardinality: CrosswalkCardinalityFilter;
+  relationshipType: CrosswalkRelationshipType;
+  reviewStatus: CrosswalkReviewStatus;
+  sourceBasis: string;
+  warnings: string[];
+};
+
+type CrosswalkTargetGroup = {
+  label: string;
+  targetItems: CsiCatalogItem[];
+};
+
 const taxonomy = getDefaultTradeTaxonomy();
 const mappingRules = getCsiTradeMappingRules();
 const csiVersions = csiVersionOptions.map((option) => option.id);
+
+const workbenchTabs: { id: WorkbenchTab; label: string }[] = [
+  { id: "crosswalk", label: "Crosswalk Explorer" },
+  { id: "csi-to-trade", label: "CSI to Trade" },
+  { id: "trade-to-csi", label: "Trade to CSI" },
+  { id: "coverage-gaps", label: "Coverage / Gaps" },
+  { id: "test-scenarios", label: "Test Scenarios" },
+];
+
+const crosswalkCardinalityOptions: { value: CrosswalkCardinalityFilter; label: string }[] = [
+  { value: "ALL", label: "All" },
+  { value: "ONE_TO_ONE", label: "One-to-one" },
+  { value: "ONE_TO_MANY", label: "One-to-many" },
+  { value: "MANY_TO_ONE", label: "Many-to-one" },
+  { value: "MANY_TO_MANY", label: "Many-to-many" },
+  { value: "NO_MATCH", label: "No match" },
+];
+
+const crosswalkRelationshipTypeOptions: {
+  value: CrosswalkRelationshipTypeFilter;
+  label: string;
+}[] = [
+  { value: "ALL", label: "All" },
+  { value: "DIRECT_EQUIVALENT", label: "Direct Equivalent" },
+  { value: "BROADER_THAN_TARGET", label: "Broader Than Target" },
+  { value: "NARROWER_THAN_TARGET", label: "Narrower Than Target" },
+  { value: "SPLIT_INTO_MULTIPLE_CODES", label: "Split Into Multiple Codes" },
+  { value: "CONSOLIDATED_FROM_MULTIPLE_CODES", label: "Consolidated From Multiple Codes" },
+  { value: "RELATED_OPERATIONAL_MATCH", label: "Related / Operational Match" },
+  { value: "NO_CLEAR_MATCH", label: "No Clear Match" },
+];
+
+const crosswalkReviewStatusOptions: {
+  value: CrosswalkReviewStatusFilter;
+  label: string;
+}[] = [
+  { value: "ALL", label: "All" },
+  { value: "CLEAN", label: "Clean" },
+  { value: "NEEDS_REVIEW", label: "Needs Review" },
+  { value: "AMBIGUOUS", label: "Ambiguous" },
+  { value: "UNMAPPED", label: "Unmapped" },
+];
 
 function getScenarioById(scenarioId: string): CsiTradeMappingFixtureScenario {
   return (
@@ -182,6 +276,183 @@ function getCatalogCoverageSummary(version: CsiVersionId): CatalogCoverageSummar
   };
 }
 
+function getCrosswalkSourceVersion(direction: CrosswalkDirection): CsiVersionId {
+  return direction === "1995_TO_2004_PLUS" ? "MASTERFORMAT_1995" : "MASTERFORMAT_2004_PLUS";
+}
+
+function getCrosswalkTargetVersion(direction: CrosswalkDirection): CsiVersionId {
+  return direction === "1995_TO_2004_PLUS" ? "MASTERFORMAT_2004_PLUS" : "MASTERFORMAT_1995";
+}
+
+function getCrosswalkDirectionLabel(direction: CrosswalkDirection): string {
+  return direction === "1995_TO_2004_PLUS"
+    ? "1995 / 16-Division to 2004+ / 50-Division"
+    : "2004+ / 50-Division to 1995 / 16-Division";
+}
+
+function getSourceSection(entry: CsiCrosswalkEntry, direction: CrosswalkDirection): CsiCrosswalkSection {
+  return direction === "1995_TO_2004_PLUS" ? entry.sourceSection : entry.targetSection;
+}
+
+function getTargetSection(entry: CsiCrosswalkEntry, direction: CrosswalkDirection): CsiCrosswalkSection {
+  return direction === "1995_TO_2004_PLUS" ? entry.targetSection : entry.sourceSection;
+}
+
+function invertCrosswalkRelationship(
+  relationship: CsiCrosswalkRelationship,
+  direction: CrosswalkDirection,
+): CsiCrosswalkRelationship {
+  if (direction === "1995_TO_2004_PLUS") return relationship;
+  if (relationship === "ONE_TO_MANY") return "MANY_TO_ONE";
+  if (relationship === "MANY_TO_ONE") return "ONE_TO_MANY";
+  return relationship;
+}
+
+function getCrosswalkCardinality(
+  entries: CsiCrosswalkEntry[],
+  direction: CrosswalkDirection,
+): CrosswalkCardinalityFilter {
+  if (!entries.length) return "NO_MATCH";
+
+  const relationships = new Set(
+    entries.map((entry) => invertCrosswalkRelationship(entry.relationship, direction)),
+  );
+
+  if (relationships.has("MANY_TO_MANY")) return "MANY_TO_MANY";
+  if (relationships.has("ONE_TO_MANY") && relationships.has("MANY_TO_ONE")) return "MANY_TO_MANY";
+  if (relationships.has("ONE_TO_MANY")) return "ONE_TO_MANY";
+  if (relationships.has("MANY_TO_ONE")) return "MANY_TO_ONE";
+  if (relationships.has("INCOMPLETE")) return "NO_MATCH";
+  return "ONE_TO_ONE";
+}
+
+function getCrosswalkRelationshipType(
+  cardinality: CrosswalkCardinalityFilter,
+  mappingConfidence: CsiCrosswalkMappingConfidence | undefined,
+): CrosswalkRelationshipType {
+  if (cardinality === "NO_MATCH" || mappingConfidence === "INCOMPLETE") return "NO_CLEAR_MATCH";
+  if (cardinality === "ONE_TO_ONE" && mappingConfidence === "DIRECT") return "DIRECT_EQUIVALENT";
+  if (cardinality === "ONE_TO_MANY") return "SPLIT_INTO_MULTIPLE_CODES";
+  if (cardinality === "MANY_TO_ONE") return "CONSOLIDATED_FROM_MULTIPLE_CODES";
+  if (cardinality === "MANY_TO_MANY") return "RELATED_OPERATIONAL_MATCH";
+  if (mappingConfidence === "SPECIAL_CASE") return "RELATED_OPERATIONAL_MATCH";
+  if (mappingConfidence === "EXPANDED") return "RELATED_OPERATIONAL_MATCH";
+  return "DIRECT_EQUIVALENT";
+}
+
+function getCrosswalkReviewStatus(
+  cardinality: CrosswalkCardinalityFilter,
+  relationshipType: CrosswalkRelationshipType,
+  mappingConfidence: CsiCrosswalkMappingConfidence | undefined,
+): CrosswalkReviewStatus {
+  if (cardinality === "NO_MATCH" || relationshipType === "NO_CLEAR_MATCH") return "UNMAPPED";
+  if (mappingConfidence === "SPECIAL_CASE") return "AMBIGUOUS";
+  if (cardinality === "ONE_TO_ONE" && mappingConfidence === "DIRECT") return "CLEAN";
+  return "NEEDS_REVIEW";
+}
+
+function getPrimaryMappingConfidence(entries: CsiCrosswalkEntry[]): CsiCrosswalkMappingConfidence | undefined {
+  if (!entries.length) return undefined;
+  if (entries.some((entry) => entry.mappingConfidence === "SPECIAL_CASE")) return "SPECIAL_CASE";
+  if (entries.some((entry) => entry.mappingConfidence === "INCOMPLETE")) return "INCOMPLETE";
+  if (entries.some((entry) => entry.mappingConfidence === "EXPANDED")) return "EXPANDED";
+  return "DIRECT";
+}
+
+function formatCrosswalkCardinality(value: CrosswalkCardinalityFilter): string {
+  return crosswalkCardinalityOptions.find((option) => option.value === value)?.label ?? formatEnumLabel(value);
+}
+
+function formatCrosswalkRelationshipType(value: CrosswalkRelationshipType): string {
+  return crosswalkRelationshipTypeOptions.find((option) => option.value === value)?.label ?? formatEnumLabel(value);
+}
+
+function formatCrosswalkReviewStatus(value: CrosswalkReviewStatus): string {
+  return crosswalkReviewStatusOptions.find((option) => option.value === value)?.label ?? formatEnumLabel(value);
+}
+
+function getCrosswalkEntriesForSourceItem(
+  sourceItem: CsiCatalogItem,
+  direction: CrosswalkDirection,
+): CsiCrosswalkEntry[] {
+  const normalizedSourceNumber = normalizeCrosswalkSectionNumber(sourceItem.number);
+
+  return csiCrosswalkEntries.filter((entry) => {
+    const sourceSection = getSourceSection(entry, direction);
+    return normalizeCrosswalkSectionNumber(sourceSection.sectionNumber ?? "") === normalizedSourceNumber;
+  });
+}
+
+function getTargetItemsForCrosswalkEntries(
+  entries: CsiCrosswalkEntry[],
+  direction: CrosswalkDirection,
+): CsiCatalogItem[] {
+  const targetVersion = getCrosswalkTargetVersion(direction);
+  const seenIds = new Set<string>();
+
+  return entries.flatMap((entry) => {
+    const targetSection = getTargetSection(entry, direction);
+    if (!targetSection.sectionNumber) return [];
+
+    const targetItem = resolveCsiCatalogItem(targetVersion, targetSection.sectionNumber);
+    if (!targetItem || seenIds.has(targetItem.id)) return [];
+
+    seenIds.add(targetItem.id);
+    return [targetItem];
+  });
+}
+
+function buildCrosswalkSourceRow(sourceItem: CsiCatalogItem, direction: CrosswalkDirection): CrosswalkSourceRow {
+  const entries = getCrosswalkEntriesForSourceItem(sourceItem, direction);
+  const targetItems = getTargetItemsForCrosswalkEntries(entries, direction);
+  const cardinality = getCrosswalkCardinality(entries, direction);
+  const primaryConfidence = getPrimaryMappingConfidence(entries);
+  const relationshipType = getCrosswalkRelationshipType(cardinality, primaryConfidence);
+  const reviewStatus = getCrosswalkReviewStatus(cardinality, relationshipType, primaryConfidence);
+  const warnings: string[] = [];
+
+  if (!targetItems.length) warnings.push("No linked target CSI item is available in the crosswalk data.");
+  if (reviewStatus === "AMBIGUOUS") warnings.push("Crosswalk source data marks this relationship as a special case.");
+  if (reviewStatus === "NEEDS_REVIEW") warnings.push("Relationship is derived from expanded or multi-code crosswalk data.");
+
+  return {
+    sourceItem,
+    entries,
+    targetItems,
+    cardinality,
+    relationshipType,
+    reviewStatus,
+    sourceBasis: entries.length
+      ? "Sourced from CSI crosswalk data; relationship fields are derived for inspection."
+      : "No crosswalk row found for this canonical source item.",
+    warnings,
+  };
+}
+
+function groupCrosswalkTargets(row: CrosswalkSourceRow): CrosswalkTargetGroup[] {
+  if (!row.targetItems.length) {
+    return [{ label: "No Clear Match", targetItems: [] }];
+  }
+
+  if (row.reviewStatus === "AMBIGUOUS" || row.reviewStatus === "NEEDS_REVIEW") {
+    return [{ label: "Needs Review", targetItems: row.targetItems }];
+  }
+
+  if (row.cardinality === "ONE_TO_ONE") {
+    return [{ label: "Direct / Primary", targetItems: row.targetItems }];
+  }
+
+  if (row.cardinality === "MANY_TO_ONE") {
+    return [{ label: "Consolidated", targetItems: row.targetItems }];
+  }
+
+  return [{ label: "Split / Related", targetItems: row.targetItems }];
+}
+
+function normalizeCrosswalkSectionNumber(value: string): string {
+  return value.replace(/\u00a0/g, " ").trim();
+}
+
 function isTopLevelTrade(trade: TradeTaxonomyNode): boolean {
   return !trade.parentId && trade.canBeBidPackage && trade.isActive;
 }
@@ -235,6 +506,368 @@ function getUnmappedTopLevelTrades(): TradeTaxonomyNode[] {
 function getRuleCapabilityLabel(rule: CsiToTradeMappingRule, selectedVersion: CsiVersionId): string {
   if (rule.csiVersion === selectedVersion) return "Direct version rule";
   return `Crosswalk/fallback candidate from ${getVersionLabel(rule.csiVersion)}`;
+}
+
+function CrosswalkExplorer() {
+  const [direction, setDirection] = useState<CrosswalkDirection>("1995_TO_2004_PLUS");
+  const [searchQuery, setSearchQuery] = useState("gypsum board");
+  const [divisionFilter, setDivisionFilter] = useState("ALL");
+  const [cardinalityFilter, setCardinalityFilter] = useState<CrosswalkCardinalityFilter>("ALL");
+  const [relationshipTypeFilter, setRelationshipTypeFilter] =
+    useState<CrosswalkRelationshipTypeFilter>("ALL");
+  const [reviewStatusFilter, setReviewStatusFilter] = useState<CrosswalkReviewStatusFilter>("ALL");
+  const [viewMode, setViewMode] = useState<"INSPECTOR" | "TABLE">("INSPECTOR");
+  const [selectedSourceItemId, setSelectedSourceItemId] = useState("");
+  const sourceVersion = getCrosswalkSourceVersion(direction);
+  const targetVersion = getCrosswalkTargetVersion(direction);
+  const divisionOptions = useMemo(() => getCsiDivisions(sourceVersion), [sourceVersion]);
+  const sourceRows = useMemo(() => {
+    const normalizedQuery = searchQuery.trim().toLowerCase();
+
+    return getCsiCatalog(sourceVersion)
+      .filter((item) => {
+        if (divisionFilter !== "ALL" && item.divisionId !== divisionFilter) return false;
+        if (!normalizedQuery) return true;
+        return `${item.number} ${item.name}`.toLowerCase().includes(normalizedQuery);
+      })
+      .map((item) => buildCrosswalkSourceRow(item, direction))
+      .filter((row) => {
+        if (cardinalityFilter !== "ALL" && row.cardinality !== cardinalityFilter) return false;
+        if (relationshipTypeFilter !== "ALL" && row.relationshipType !== relationshipTypeFilter) {
+          return false;
+        }
+        if (reviewStatusFilter !== "ALL" && row.reviewStatus !== reviewStatusFilter) return false;
+        return true;
+      })
+      .slice(0, 250);
+  }, [cardinalityFilter, direction, divisionFilter, relationshipTypeFilter, reviewStatusFilter, searchQuery, sourceVersion]);
+  const selectedRow =
+    sourceRows.find((row) => row.sourceItem.id === selectedSourceItemId) ?? sourceRows[0];
+  const groupedSourceRows = useMemo(() => {
+    return sourceRows.reduce((groups, row) => {
+      const divisionLabel = getCsiDivisionPath(row.sourceItem);
+      const rows = groups.get(divisionLabel) ?? [];
+      groups.set(divisionLabel, [...rows, row]);
+      return groups;
+    }, new Map<string, CrosswalkSourceRow[]>());
+  }, [sourceRows]);
+  const targetGroups = selectedRow ? groupCrosswalkTargets(selectedRow) : [];
+  const sourceAssignment = selectedRow
+    ? assignCsiItemToTrade({
+        csiItem: toMappingItem(selectedRow.sourceItem),
+        projectCsiVersion: selectedRow.sourceItem.version,
+      })
+    : undefined;
+
+  function handleDirectionChange(nextDirection: CrosswalkDirection) {
+    setDirection(nextDirection);
+    setDivisionFilter("ALL");
+    setSelectedSourceItemId("");
+  }
+
+  return (
+    <section className="app-panel">
+      <div className="panel-header">
+        <div>
+          <p className="label-text">Crosswalk Explorer</p>
+          <h2>MasterFormat Version Conversion</h2>
+          <p className="muted-text">
+            Inspect how canonical CSI items convert between MasterFormat 1995 / 16-Division
+            and MasterFormat 2004+ / 50-Division. Relationship fields are derived from the
+            source crosswalk where explicit metadata is not available.
+          </p>
+        </div>
+        <span className="taxonomy-meta-chip">{getCrosswalkDirectionLabel(direction)}</span>
+      </div>
+
+      <div className="taxonomy-control-grid">
+        <label className="field-stack">
+          <span>Direction</span>
+          <select
+            value={direction}
+            onChange={(event) => handleDirectionChange(event.target.value as CrosswalkDirection)}
+          >
+            <option value="1995_TO_2004_PLUS">1995 to 2004+</option>
+            <option value="2004_PLUS_TO_1995">2004+ to 1995</option>
+          </select>
+        </label>
+        <label className="field-stack">
+          <span>Search CSI Code / Title</span>
+          <input
+            value={searchQuery}
+            onChange={(event) => {
+              setSearchQuery(event.target.value);
+              setSelectedSourceItemId("");
+            }}
+            placeholder="Search canonical source items"
+          />
+        </label>
+        <label className="field-stack">
+          <span>Division</span>
+          <select
+            value={divisionFilter}
+            onChange={(event) => {
+              setDivisionFilter(event.target.value);
+              setSelectedSourceItemId("");
+            }}
+          >
+            <option value="ALL">All divisions</option>
+            {divisionOptions.map((division) => (
+              <option key={division.id} value={division.id}>
+                Division {division.number} - {division.name}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="field-stack">
+          <span>Cardinality</span>
+          <select
+            value={cardinalityFilter}
+            onChange={(event) => setCardinalityFilter(event.target.value as CrosswalkCardinalityFilter)}
+          >
+            {crosswalkCardinalityOptions.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="field-stack">
+          <span>Relationship Type</span>
+          <select
+            value={relationshipTypeFilter}
+            onChange={(event) =>
+              setRelationshipTypeFilter(event.target.value as CrosswalkRelationshipTypeFilter)
+            }
+          >
+            {crosswalkRelationshipTypeOptions.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="field-stack">
+          <span>Review Status</span>
+          <select
+            value={reviewStatusFilter}
+            onChange={(event) =>
+              setReviewStatusFilter(event.target.value as CrosswalkReviewStatusFilter)
+            }
+          >
+            {crosswalkReviewStatusOptions.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="field-stack">
+          <span>Mode</span>
+          <select
+            value={viewMode}
+            onChange={(event) => setViewMode(event.target.value as "INSPECTOR" | "TABLE")}
+          >
+            <option value="INSPECTOR">Side-by-side inspector</option>
+            <option value="TABLE">Crosswalk table</option>
+          </select>
+        </label>
+      </div>
+
+      <p className="muted-text" style={{ marginTop: 10 }}>
+        {sourceRows.length} canonical source items shown from {getVersionLabel(sourceVersion)}.
+        Search filters the source catalog; clicking a result selects the canonical CSI item.
+      </p>
+
+      {viewMode === "TABLE" ? (
+        <div className="table-shell" style={{ marginTop: 16 }}>
+          <table className="data-table">
+            <thead>
+              <tr>
+                <th>Source Code</th>
+                <th>Source Title</th>
+                <th>Target Code(s)</th>
+                <th>Cardinality</th>
+                <th>Relationship Type</th>
+                <th>Review Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {sourceRows.map((row) => (
+                <tr
+                  key={row.sourceItem.id}
+                  onClick={() => {
+                    setSelectedSourceItemId(row.sourceItem.id);
+                    setViewMode("INSPECTOR");
+                  }}
+                  style={{ cursor: "pointer" }}
+                >
+                  <td>{row.sourceItem.number}</td>
+                  <td>{row.sourceItem.name}</td>
+                  <td>
+                    {row.targetItems.length
+                      ? row.targetItems.map((item) => item.number).join(", ")
+                      : "No match"}
+                  </td>
+                  <td>{formatCrosswalkCardinality(row.cardinality)}</td>
+                  <td>{formatCrosswalkRelationshipType(row.relationshipType)}</td>
+                  <td>{formatCrosswalkReviewStatus(row.reviewStatus)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ) : (
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "minmax(280px, 0.9fr) minmax(320px, 1.1fr)",
+            gap: 16,
+            alignItems: "start",
+            marginTop: 16,
+          }}
+        >
+          <div className="project-csi-selected-group">
+            <div className="cluster-between align-start gap-3">
+              <div>
+                <p className="label-text">Source Catalog</p>
+                <h3>{getVersionShortLabel(sourceVersion)}</h3>
+                <p className="muted-text">Canonical source CSI items grouped by division.</p>
+              </div>
+              <span className="taxonomy-meta-chip">{sourceRows.length} rows</span>
+            </div>
+
+            <div className="stack gap-3" style={{ marginTop: 14, maxHeight: 560, overflowY: "auto" }}>
+              {Array.from(groupedSourceRows.entries()).map(([divisionLabel, rows]) => (
+                <div key={divisionLabel} className="stack gap-2">
+                  <span className="label-text">{divisionLabel}</span>
+                  {rows.slice(0, 30).map((row) => (
+                    <button
+                      key={row.sourceItem.id}
+                      type="button"
+                      className={
+                        selectedRow?.sourceItem.id === row.sourceItem.id
+                          ? "button-primary"
+                          : "button-secondary"
+                      }
+                      onClick={() => setSelectedSourceItemId(row.sourceItem.id)}
+                      style={{ justifyContent: "flex-start", textAlign: "left", width: "100%" }}
+                    >
+                      {row.sourceItem.number} - {row.sourceItem.name}
+                    </button>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="stack gap-3">
+            {selectedRow ? (
+              <>
+                <div className="project-csi-selected-group">
+                  <div className="cluster-between align-start gap-3">
+                    <div>
+                      <p className="label-text">Mapped Target Codes</p>
+                      <h3>{getVersionShortLabel(targetVersion)}</h3>
+                      <p className="muted-text">
+                        Target codes grouped by derived relationship bucket.
+                      </p>
+                    </div>
+                    <span className="taxonomy-meta-chip">
+                      {formatCrosswalkReviewStatus(selectedRow.reviewStatus)}
+                    </span>
+                  </div>
+
+                  <div className="stack gap-3" style={{ marginTop: 14 }}>
+                    {targetGroups.map((group) => (
+                      <div key={group.label} className="stack gap-2">
+                        <span className="label-text">{group.label}</span>
+                        {group.targetItems.length ? (
+                          group.targetItems.map((item) => (
+                            <div key={item.id} className="cluster-between gap-3">
+                              <span>
+                                {item.number} - {item.name}
+                              </span>
+                              <span className="taxonomy-meta-chip">{getCsiDivisionPath(item)}</span>
+                            </div>
+                          ))
+                        ) : (
+                          <p className="form-error">No linked target code is available.</p>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="project-csi-selected-group">
+                  <p className="label-text">Selected Source Details</p>
+                  <h3>{formatCsiCatalogItem(selectedRow.sourceItem)}</h3>
+                  <p className="muted-text">{getVersionLabel(selectedRow.sourceItem.version)}</p>
+
+                  <div className="setup-summary-grid" style={{ marginTop: 14 }}>
+                    <div>
+                      <span className="label-text">Division</span>
+                      <p className="muted-text">{getCsiDivisionPath(selectedRow.sourceItem)}</p>
+                    </div>
+                    <div>
+                      <span className="label-text">Parent Path</span>
+                      <p className="muted-text">{getCsiParentPath(selectedRow.sourceItem)}</p>
+                    </div>
+                    <div>
+                      <span className="label-text">Cardinality</span>
+                      <strong>{formatCrosswalkCardinality(selectedRow.cardinality)}</strong>
+                    </div>
+                    <div>
+                      <span className="label-text">Relationship Type</span>
+                      <strong>{formatCrosswalkRelationshipType(selectedRow.relationshipType)}</strong>
+                    </div>
+                    <div>
+                      <span className="label-text">Review Status</span>
+                      <strong>{formatCrosswalkReviewStatus(selectedRow.reviewStatus)}</strong>
+                    </div>
+                    <div>
+                      <span className="label-text">Source Basis</span>
+                      <p className="muted-text">{selectedRow.sourceBasis}</p>
+                    </div>
+                  </div>
+
+                  {sourceAssignment ? (
+                    <div className="stack gap-2" style={{ marginTop: 14 }}>
+                      <span className="label-text">Trade Impact Preview</span>
+                      <p className="muted-text">
+                        {getTradeName(sourceAssignment.tradeId)}
+                        {sourceAssignment.specializationId
+                          ? ` / ${getTradeName(sourceAssignment.specializationId)}`
+                          : ""}{" "}
+                        via {formatEnumLabel(sourceAssignment.source)}
+                      </p>
+                    </div>
+                  ) : null}
+
+                  {selectedRow.warnings.length ? (
+                    <div className="stack gap-1" style={{ marginTop: 14 }}>
+                      <span className="label-text">Notes / Warnings</span>
+                      {selectedRow.warnings.map((warning) => (
+                        <p key={warning} className="form-error">
+                          {warning}
+                        </p>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="muted-text" style={{ marginTop: 14 }}>
+                      No review warning for this derived crosswalk row.
+                    </p>
+                  )}
+                </div>
+              </>
+            ) : (
+              <p className="muted-text">No source CSI item matches the current filters.</p>
+            )}
+          </div>
+        </div>
+      )}
+    </section>
+  );
 }
 
 function buildAssignmentPreviews(
@@ -856,147 +1489,6 @@ function CsiAssignmentInspector() {
   );
 }
 
-function CrosswalkReview() {
-  const [sourceVersion, setSourceVersion] = useState<CsiVersionId>("MASTERFORMAT_2004_PLUS");
-  const [searchQuery, setSearchQuery] = useState("gypsum board");
-  const searchResults = useMemo(
-    () => searchCsiCatalog(sourceVersion, searchQuery).slice(0, 40),
-    [searchQuery, sourceVersion],
-  );
-  const [selectedItemId, setSelectedItemId] = useState("");
-  const selectedItem =
-    searchResults.find((item) => item.id === selectedItemId) ??
-    searchResults[0] ??
-    undefined;
-  const dualCoverage = selectedItem
-    ? createSubcontractorDualCoverage({
-        subcontractorId: "crosswalk-review",
-        sourceVersion: selectedItem.version,
-        sourceCsiItemId: selectedItem.id,
-        sourceCsiNumber: selectedItem.number,
-        sourceCsiTitle: selectedItem.name,
-        now: "2026-01-01T00:00:00.000Z",
-      })
-    : undefined;
-
-  return (
-    <section className="app-panel" id="crosswalk-review">
-      <div className="panel-header">
-        <div>
-          <p className="label-text">Crosswalk Review</p>
-          <h2>Version Equivalent Coverage</h2>
-          <p className="muted-text">
-            Select a canonical CSI item and inspect the equivalent item in the other
-            MasterFormat version. This is read-only crosswalk diagnostics.
-          </p>
-        </div>
-      </div>
-
-      <div className="taxonomy-control-grid">
-        <label className="field-stack">
-          <span>Source CSI Version</span>
-          <select
-            value={sourceVersion}
-            onChange={(event) => {
-              setSourceVersion(event.target.value as CsiVersionId);
-              setSelectedItemId("");
-            }}
-          >
-            {csiVersionOptions.map((option) => (
-              <option key={option.id} value={option.id}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label className="field-stack">
-          <span>Search CSI Catalog</span>
-          <input
-            value={searchQuery}
-            onChange={(event) => {
-              setSearchQuery(event.target.value);
-              setSelectedItemId("");
-            }}
-            placeholder="Search by code or title"
-          />
-        </label>
-        <label className="field-stack">
-          <span>CSI Item</span>
-          <select
-            value={selectedItem?.id ?? ""}
-            onChange={(event) => setSelectedItemId(event.target.value)}
-          >
-            {searchResults.map((item) => (
-              <option key={item.id} value={item.id}>
-                {item.number} - {item.name}
-              </option>
-            ))}
-          </select>
-        </label>
-      </div>
-      <p className="muted-text" style={{ marginTop: 10 }}>
-        {searchResults.length} canonical CSI results shown for crosswalk review.
-      </p>
-
-      {selectedItem && dualCoverage ? (
-        <div className="project-csi-selected-group" style={{ marginTop: 16 }}>
-          <div className="cluster-between align-start gap-3">
-            <div>
-              <span className="label-text">Source Coverage Item</span>
-              <h3>{selectedItem.number} - {selectedItem.name}</h3>
-              <p className="muted-text">{getVersionLabel(selectedItem.version)}</p>
-              <p className="muted-text">{getCsiDivisionPath(selectedItem)}</p>
-            </div>
-            <span className="taxonomy-meta-chip">
-              Target: {getVersionShortLabel(getAlternateVersion(selectedItem.version))}
-            </span>
-          </div>
-
-          {dualCoverage.equivalentCsiItems.length ? (
-            <div className="stack gap-2" style={{ marginTop: 14 }}>
-              <span className="label-text">Equivalent Item</span>
-              {dualCoverage.equivalentCsiItems.map((equivalent) => (
-                <div
-                  key={`${equivalent.version}-${equivalent.csiItemId}`}
-                  className="cluster-between gap-3"
-                >
-                  <span>
-                    {equivalent.csiNumber ?? equivalent.csiItemId} -{" "}
-                    {equivalent.csiTitle ?? "Untitled equivalent"}
-                  </span>
-                  <span className="taxonomy-meta-chip">
-                    {getVersionShortLabel(equivalent.version)} / {equivalent.confidence} /{" "}
-                    {formatEnumLabel(equivalent.source)}
-                  </span>
-                </div>
-              ))}
-              {dualCoverage.equivalentCsiItems.some((equivalent) => equivalent.notes) ? (
-                <div className="stack gap-1">
-                  {dualCoverage.equivalentCsiItems.map((equivalent) =>
-                    equivalent.notes ? (
-                      <p key={`${equivalent.version}-${equivalent.csiItemId}-notes`} className="muted-text">
-                        {equivalent.notes}
-                      </p>
-                    ) : null,
-                  )}
-                </div>
-              ) : null}
-            </div>
-          ) : (
-            <p className="form-error" style={{ marginTop: 14 }}>
-              No clean crosswalk equivalent exists for this CSI item in the development dataset.
-            </p>
-          )}
-        </div>
-      ) : (
-        <p className="muted-text" style={{ marginTop: 16 }}>
-          No CSI catalog item is selected.
-        </p>
-      )}
-    </section>
-  );
-}
-
 function DualCoveragePreview({ scenario }: { scenario: CsiTradeMappingFixtureScenario }) {
   return (
     <div className="stack gap-3">
@@ -1151,6 +1643,8 @@ function FixtureTests() {
 }
 
 export default function CsiTradeMappingWorkbenchPage() {
+  const [activeTab, setActiveTab] = useState<WorkbenchTab>("crosswalk");
+
   return (
     <AppShell title="CSI Trade Mapping Workbench">
       <div className="dashboard-shell taxonomy-workbench">
@@ -1159,9 +1653,7 @@ export default function CsiTradeMappingWorkbenchPage() {
             <p className="label-text">Internal Dev Tool</p>
             <h1>CSI Trade Mapping Workbench</h1>
             <p className="page-subtitle">
-              Inspect MasterFormat 1995 / 16-Division and MasterFormat 2004+ /
-              50-Division CSI mapping, trade assignment, crosswalk fallback, and
-              subcontractor dual coverage behavior.
+              Inspect CSI crosswalks, trade mappings, assignment logic, and mapping coverage gaps.
             </p>
           </div>
           <div className="header-actions">
@@ -1176,44 +1668,33 @@ export default function CsiTradeMappingWorkbenchPage() {
 
         <section className="app-panel taxonomy-workbench-note">
           <p>
-            This workbench inspects the CSI-to-trade mapping rule library. A trade
-            may have no direct rules yet. Fixture tests prove assignment behavior, while the
-            mapping inspector shows actual rule coverage.
+            This is a read-only developer/admin data inspection console. It uses the full CSI
+            catalogs, crosswalk, trade taxonomy, and CSI-to-trade mapping rule library.
           </p>
           <p>
-            System mapping rules are read-only in this workbench for now. Later, this page
-            should support controlled system rule drafts, company overrides, and project
-            overrides.
-          </p>
-          <p>
-            The 2004+ / 50-Division catalog is a development dataset and must support
-            replacement by a licensed MasterFormat import before launch.
+            System mapping rules are read-only here for now. Future versions should support
+            controlled system rule drafts, company overrides, and project overrides.
           </p>
         </section>
 
-        <nav className="taxonomy-meta-list" aria-label="CSI trade mapping workbench sections">
-          <a href="#mapping-coverage-summary" className="button-secondary">
-            Mapping Coverage Summary
-          </a>
-          <a href="#csi-catalog-browser" className="button-secondary">
-            CSI Catalog Browser
-          </a>
-          <a href="#trade-mapping-browser" className="button-secondary">
-            Trade Mapping Browser
-          </a>
-          <a href="#crosswalk-review" className="button-secondary">
-            Crosswalk Review
-          </a>
-          <a href="#fixture-tests" className="button-secondary">
-            Fixture Tests
-          </a>
+        <nav className="taxonomy-meta-list" aria-label="CSI trade mapping workbench tabs">
+          {workbenchTabs.map((tab) => (
+            <button
+              key={tab.id}
+              type="button"
+              className={activeTab === tab.id ? "button-primary" : "button-secondary"}
+              onClick={() => setActiveTab(tab.id)}
+            >
+              {tab.label}
+            </button>
+          ))}
         </nav>
 
-        <MappingCoverageSummary />
-        <CsiAssignmentInspector />
-        <TradeRulesInspector />
-        <CrosswalkReview />
-        <FixtureTests />
+        {activeTab === "crosswalk" ? <CrosswalkExplorer /> : null}
+        {activeTab === "csi-to-trade" ? <CsiAssignmentInspector /> : null}
+        {activeTab === "trade-to-csi" ? <TradeRulesInspector /> : null}
+        {activeTab === "coverage-gaps" ? <MappingCoverageSummary /> : null}
+        {activeTab === "test-scenarios" ? <FixtureTests /> : null}
 
         <section className="app-panel">
           <div className="panel-header">
