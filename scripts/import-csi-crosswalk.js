@@ -38,7 +38,7 @@ const entries = parsedRows.map((row, index) => {
   return {
     id: `csi-crosswalk-${String(index + 1).padStart(4, "0")}`,
     sourceVersion: "MASTERFORMAT_1995",
-    targetVersion: "MASTERFORMAT_CURRENT",
+    targetVersion: "MASTERFORMAT_2004_PLUS",
     sourceSection: {
       sectionNumber: row.sourceSectionNumber,
       title: row.sourceTitle,

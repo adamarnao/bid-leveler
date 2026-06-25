@@ -13,7 +13,7 @@ The CSV was parsed with these columns:
 - `2004 TITLE`
 - `2004 LEVEL`
 
-Current section numbers contain nonbreaking spaces in the source file, so section numbers were normalized to regular spaces for analysis and examples.
+2004+ / 50-Division section numbers contain nonbreaking spaces in the source file, so section numbers were normalized to regular spaces for analysis and examples.
 
 ## Summary Counts
 
@@ -21,7 +21,7 @@ Current section numbers contain nonbreaking spaces in the source file, so sectio
 | --- | ---: |
 | Total rows | 3,041 |
 | Unique 1995 sections | 1,011 |
-| Unique current sections | 2,558 |
+| Unique 2004+ / 50-Division sections | 2,558 |
 | Rows with missing values | 9 |
 
 ## Mapping Shape
@@ -40,30 +40,30 @@ Unique section-level mapping counts:
 
 | Mapping type | Count |
 | --- | ---: |
-| 1995 sections mapping to multiple current sections | 451 |
-| Current sections receiving multiple 1995 sections | 141 |
+| 1995 sections mapping to multiple 2004+ / 50-Division sections | 451 |
+| 2004+ / 50-Division sections receiving multiple 1995 sections | 141 |
 
 Notes:
 
-- "One-to-many" means a 1995 section maps to more than one current section.
-- "Many-to-one" means a current section receives more than one 1995 section.
+- "One-to-many" means a 1995 section maps to more than one 2004+ / 50-Division section.
+- "Many-to-one" means a 2004+ / 50-Division section receives more than one 1995 section.
 - Some rows participate in both patterns, so they are classified as many-to-many overlap at the row level.
 
 ## Missing Values
 
-Nine rows have at least one missing field. The missing values are mostly missing current section or current level data.
+Nine rows have at least one missing field. The missing values are mostly missing 2004+ / 50-Division section or level data.
 
-| 1995 section | 1995 title | Current section | Current title | Missing issue |
+| 1995 section | 1995 title | 2004+ / 50-Division section | 2004+ / 50-Division title | Missing issue |
 | --- | --- | --- | --- | --- |
-| 02285 | Rebuilt Miscellaneous Structures | 33 05 16 | Utility Structures | Missing current level |
-| 13200 | Ground Storage Tanks | | See 13200 Storage Tanks | Missing current section and current level |
-| 13200 | Tank Cleaning Procedures | | | Missing current section, title, and level |
-| 13200 | Tank Lining | 09 97 00 | Special Coatings | Missing current level |
-| 15105 | Pipes and Tubes | | See 15100 BUILDING SERVICES PIPING | Missing current section and current level |
-| 15200 | PROCESS PIPING | 40 20 00 | Liquids Process Piping | Missing current level |
-| 15440 | Base-Mounted Pumps | | See 15410 Plumbing Pumps | Missing current section and current level |
-| 16130 | Cutout Boxes | 26 05 33 | Raceway and Boxes for Electrical Systems | Missing current level |
-| 16340 | Medium-Voltage Vacuum Interrupter Switchgear | 26 13 19 | Medium-Voltage Vacuum Interrupter Switchgear | Missing current level |
+| 02285 | Rebuilt Miscellaneous Structures | 33 05 16 | Utility Structures | Missing 2004+ / 50-Division level |
+| 13200 | Ground Storage Tanks | | See 13200 Storage Tanks | Missing 2004+ / 50-Division section and level |
+| 13200 | Tank Cleaning Procedures | | | Missing 2004+ / 50-Division section, title, and level |
+| 13200 | Tank Lining | 09 97 00 | Special Coatings | Missing 2004+ / 50-Division level |
+| 15105 | Pipes and Tubes | | See 15100 BUILDING SERVICES PIPING | Missing 2004+ / 50-Division section and level |
+| 15200 | PROCESS PIPING | 40 20 00 | Liquids Process Piping | Missing 2004+ / 50-Division level |
+| 15440 | Base-Mounted Pumps | | See 15410 Plumbing Pumps | Missing 2004+ / 50-Division section and level |
+| 16130 | Cutout Boxes | 26 05 33 | Raceway and Boxes for Electrical Systems | Missing 2004+ / 50-Division level |
+| 16340 | Medium-Voltage Vacuum Interrupter Switchgear | 26 13 19 | Medium-Voltage Vacuum Interrupter Switchgear | Missing 2004+ / 50-Division level |
 
 ## Duplicate And Conflict Checks
 
@@ -73,8 +73,8 @@ Exact duplicates were checked using this full key:
 
 - 1995 section
 - 1995 title
-- Current section
-- Current title
+- 2004+ / 50-Division section
+- 2004+ / 50-Division title
 
 Result: no exact duplicate mapping groups were found.
 
@@ -85,13 +85,13 @@ Result: no exact duplicate mapping groups were found.
 
 ### Conflicting Mappings
 
-The CSV contains repeated section numbers with different titles and repeated 1995/current section pairs with inconsistent level values. Some of these are probably intentional crosswalk granularity, but they should be treated as review cases before generating strongly typed lookup data.
+The CSV contains repeated section numbers with different titles and repeated 1995 / 16-Division to 2004+ / 50-Division section pairs with inconsistent level values. Some of these are probably intentional crosswalk granularity, but they should be treated as review cases before generating strongly typed lookup data.
 
 | Conflict check | Count |
 | --- | ---: |
 | Same 1995 section number with multiple titles | 418 section groups |
-| Same current section number with multiple titles | 3 section groups |
-| Same 1995/current section pair with inconsistent level values | 117 pair groups |
+| Same 2004+ / 50-Division section number with multiple titles | 3 section groups |
+| Same 1995 / 16-Division to 2004+ / 50-Division section pair with inconsistent level values | 117 pair groups |
 
 #### Same 1995 Section Number With Materially Different Titles
 
@@ -106,51 +106,51 @@ These appear to represent legacy section-number buckets that contain multiple to
 | 00800 | 14 | 14 | Anti-Pollution Measures; Assigned Contracts; Equal Employment Opportunity Requirements; Insurance Requirements; Letter of Assent; SUPPLEMENTARY CONDITIONS |
 | 14550 | 12 | 19 | Belt Conveyors; Bucket Conveyors; Container Conveyors; Conveyors; Monorail Conveyors; Pneumatic Conveyors |
 
-#### Same Current Section Number With Different Titles
+#### Same 2004+ / 50-Division Section Number With Different Titles
 
-These should be reviewed because current section numbers are usually expected to have stable labels.
+These should be reviewed because 2004+ / 50-Division section numbers are usually expected to have stable labels.
 
-| Current section | Distinct titles | Rows | Titles |
+| 2004+ / 50-Division section | Distinct titles | Rows | Titles |
 | --- | ---: | ---: | --- |
 | 41 00 00 | 2 | 2 | Material Processing and Handling Equipment (Division); Material Processing and Handling Equipment |
 | 04 05 19.16 | 2 | 4 | Masonry Anchors; Masonry Embedded Flashing |
 | 04 05 19.13 | 2 | 3 | Continuous Joint Reinforcing; Masonry Control and Expansion Joints |
 
-#### Same 1995/Current Pair With Inconsistent LEVEL Values
+#### Same 1995 / 16-Division to 2004+ / 50-Division Pair With Inconsistent LEVEL Values
 
-These pairs repeat the same 1995 section and current section but disagree on either 1995 level, current level, or both.
+These pairs repeat the same 1995 section and 2004+ / 50-Division section but disagree on either 1995 level, 2004+ / 50-Division level, or both.
 
 | Pair | Rows | LEVEL values | Examples |
 | --- | ---: | --- | --- |
-| 00450 -> 00 45 00 | 2 | 1995: 4, 3; current: 3, 2 | Qualification Statement for Waste Disposal -> Representations and Certifications; Representations and Certifications -> Representations and Certifications |
-| 00800 -> 00 73 00 | 3 | 1995: 4, 2; current: 2 | Letter of Assent -> Supplementary Conditions; Specific Project Requirements -> Supplementary Conditions; SUPPLEMENTARY CONDITIONS -> Supplementary Conditions |
-| 00890 -> 00 31 43 | 2 | 1995: 4, 3; current: 3 | Notices -> Permit Application; Permits -> Permit Application |
-| 01120 -> 01 12 00 | 2 | 1995: 4, 3; current: 2 | Construction By Owner -> Multiple Contract Summary; Multiple Contract Summary -> Multiple Contract Summary |
-| 01420 -> 01 42 00 | 2 | 1995: 3, 4; current: 2 | References -> References; Symbols -> References |
-| 01630 -> 01 25 00 | 2 | 1995: 3, 4; current: 2 | Product Substitution Procedures -> Substitution Procedures; Substitution Procedures During Construction -> Substitution Procedures |
+| 00450 -> 00 45 00 | 2 | 1995: 4, 3; 2004+: 3, 2 | Qualification Statement for Waste Disposal -> Representations and Certifications; Representations and Certifications -> Representations and Certifications |
+| 00800 -> 00 73 00 | 3 | 1995: 4, 2; 2004+: 2 | Letter of Assent -> Supplementary Conditions; Specific Project Requirements -> Supplementary Conditions; SUPPLEMENTARY CONDITIONS -> Supplementary Conditions |
+| 00890 -> 00 31 43 | 2 | 1995: 4, 3; 2004+: 3 | Notices -> Permit Application; Permits -> Permit Application |
+| 01120 -> 01 12 00 | 2 | 1995: 4, 3; 2004+: 2 | Construction By Owner -> Multiple Contract Summary; Multiple Contract Summary -> Multiple Contract Summary |
+| 01420 -> 01 42 00 | 2 | 1995: 3, 4; 2004+: 2 | References -> References; Symbols -> References |
+| 01630 -> 01 25 00 | 2 | 1995: 3, 4; 2004+: 2 | Product Substitution Procedures -> Substitution Procedures; Substitution Procedures During Construction -> Substitution Procedures |
 
 ## Unmapped And Incomplete Rows
 
-### 1995 Rows With No Current Section
+### 1995 Rows With No 2004+ / 50-Division Section
 
-Four rows have a 1995 section but no current section.
+Four rows have a 1995 section but no 2004+ / 50-Division section.
 
-| 1995 section | 1995 title | Current title / note |
+| 1995 section | 1995 title | 2004+ / 50-Division title / note |
 | --- | --- | --- |
 | 13200 | Ground Storage Tanks | See 13200 Storage Tanks |
 | 13200 | Tank Cleaning Procedures | |
 | 15105 | Pipes and Tubes | See 15100 BUILDING SERVICES PIPING |
 | 15440 | Base-Mounted Pumps | See 15410 Plumbing Pumps |
 
-### Current Rows With No 1995 Section
+### 2004+ / 50-Division Rows With No 1995 Section
 
-No rows were found with a current section but no 1995 section.
+No rows were found with a 2004+ / 50-Division section but no 1995 section.
 
 ### "See ..." Rows With Missing Target Section
 
-Three rows have a `See ...` note but no current section value.
+Three rows have a `See ...` note but no 2004+ / 50-Division section value.
 
-| 1995 section | 1995 title | Current title / note |
+| 1995 section | 1995 title | 2004+ / 50-Division title / note |
 | --- | --- | --- |
 | 13200 | Ground Storage Tanks | See 13200 Storage Tanks |
 | 15105 | Pipes and Tubes | See 15100 BUILDING SERVICES PIPING |
@@ -167,7 +167,7 @@ Three rows have a `See ...` note but no current section value.
 | 3 | 847 |
 | 4 | 1,900 |
 
-### Current LEVEL
+### 2004+ / 50-Division LEVEL
 
 | LEVEL | Rows |
 | --- | ---: |
@@ -179,7 +179,7 @@ Three rows have a `See ...` note but no current section value.
 
 ### Most Common LEVEL Pairs
 
-| 1995 LEVEL -> Current LEVEL | Rows |
+| 1995 LEVEL -> 2004+ / 50-Division LEVEL | Rows |
 | --- | ---: |
 | 4 -> 3 | 1,267 |
 | 3 -> 2 | 540 |
@@ -196,9 +196,9 @@ Three rows have a `See ...` note but no current section value.
 
 Expansion is calculated as:
 
-`unique current sections mapped from division - unique 1995 sections in division`
+`unique 2004+ / 50-Division sections mapped from division - unique 1995 sections in division`
 
-| 1995 division | Unique 1995 sections | Unique current sections | Expansion | Ratio |
+| 1995 division | Unique 1995 sections | Unique 2004+ / 50-Division sections | Expansion | Ratio |
 | --- | ---: | ---: | ---: | ---: |
 | 02 | 119 | 453 | 334 | 3.81 |
 | 15 | 71 | 220 | 149 | 3.10 |
@@ -217,7 +217,7 @@ Division 02 has the largest absolute expansion by a wide margin.
 
 ### Clean One-to-One Examples
 
-| 1995 section | 1995 title | Current section | Current title |
+| 1995 section | 1995 title | 2004+ / 50-Division section | 2004+ / 50-Division title |
 | --- | --- | --- | --- |
 | 00001 | PROJECT TITLE PAGE | 00 01 01 | Project Title Page |
 | 00005 | CERTIFICATIONS PAGE | 00 01 05 | Certifications Page |
@@ -227,7 +227,7 @@ Division 02 has the largest absolute expansion by a wide margin.
 
 ### One-to-Many Examples
 
-| 1995 section | 1995 title | Example current mappings |
+| 1995 section | 1995 title | Example 2004+ / 50-Division mappings |
 | --- | --- | --- |
 | 14550 | Belt Conveyors | 41 12 13.19 Belt Bulk Material Conveyors; 41 21 23.13 Belt Piece Material Conveyors; 41 12 16 Bucket Elevators; 41 12 13.23 Container Bulk Material Conveyors |
 | 13200 | Elevated Storage Tanks | 21 41 16 Elevated Storage Tanks for Fire-Suppression Water; 22 12 16 Facility Elevated, Potable-Water Storage Tanks; 33 16 19 Elevated Water Utility Storage Tanks |
@@ -237,7 +237,7 @@ Division 02 has the largest absolute expansion by a wide margin.
 
 ### Many-to-One Examples
 
-| Current section | Current title | Example 1995 sources |
+| 2004+ / 50-Division section | 2004+ / 50-Division title | Example 1995 sources |
 | --- | --- | --- |
 | 04 40 00 | Stone Assemblies | 04400 STONE; 04410 Bluestone; 04410 Granite; 04410 Limestone; 04410 Marble |
 | 08 71 00 | Door Hardware | 08710 Controlling Hardware; 08710 Door Hardware; 08710 Door Trim; 08710 Hanging Hardware; 08710 Latching Hardware |
@@ -251,7 +251,7 @@ Division 02 has the largest absolute expansion by a wide margin.
 export type CsiCrosswalkEntry = {
   id: string;
   sourceVersion: "MASTERFORMAT_1995";
-  targetVersion: "MASTERFORMAT_CURRENT";
+  targetVersion: "MASTERFORMAT_2004_PLUS";
   sourceSection: {
     sectionNumber: string;
     title: string;
@@ -277,15 +277,15 @@ Recommended lookup types:
 ```ts
 export type CsiCrosswalkBy1995Section = Record<string, CsiCrosswalkEntry[]>;
 
-export type CsiCrosswalkByCurrentSection = Record<string, CsiCrosswalkEntry[]>;
+export type CsiCrosswalkBy2004PlusSection = Record<string, CsiCrosswalkEntry[]>;
 ```
 
 For section numbers, store normalized section strings:
 
 - 1995 example: `"14550"`
-- Current example: `"41 12 13.19"`
+- 2004+ / 50-Division example: `"41 12 13.19"`
 
-For entries with missing current sections, use `null` for `targetSection.sectionNumber` rather than an empty string.
+For entries with missing 2004+ / 50-Division sections, use `null` for `targetSection.sectionNumber` rather than an empty string.
 
 ## Storage Recommendation
 
@@ -298,14 +298,14 @@ export const csiCrosswalkEntries: CsiCrosswalkEntry[] = [];
 
 export const csiCrosswalkBy1995Section: CsiCrosswalkBy1995Section = {};
 
-export const csiCrosswalkByCurrentSection: CsiCrosswalkByCurrentSection = {};
+export const csiCrosswalkBy2004PlusSection: CsiCrosswalkBy2004PlusSection = {};
 ```
 
 Why both:
 
 - Flat array is best for validation, display, import checks, and debugging.
 - Lookup by 1995 section is needed when converting old project data forward.
-- Lookup by current section is needed when explaining migrated/current sections or tracing back to old specs.
+- Lookup by 2004+ / 50-Division section is needed when explaining migrated sections or tracing back to old specs.
 - One-to-many and many-to-one patterns mean single-value maps would lose information, so both lookup maps should return arrays.
 
 For generated code later, the safest approach is:

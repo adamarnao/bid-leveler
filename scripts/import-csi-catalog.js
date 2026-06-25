@@ -19,8 +19,8 @@ const versionConfig = {
     titleHeader: "1995 TITLE",
     levelHeader: "1995 LEVEL",
   },
-  MASTERFORMAT_CURRENT: {
-    prefix: "current",
+  MASTERFORMAT_2004_PLUS: {
+    prefix: "2004-plus",
     sectionHeader: "2012 SECTION",
     titleHeader: "2012 TITLE",
     levelHeader: "2012 LEVEL",
@@ -50,8 +50,8 @@ const catalog1995 = buildCatalog(
 );
 const catalogCurrent = buildCatalog(
   catalogCurrentRows,
-  "MASTERFORMAT_CURRENT",
-  versionConfig.MASTERFORMAT_CURRENT
+  "MASTERFORMAT_2004_PLUS",
+  versionConfig.MASTERFORMAT_2004_PLUS
 );
 const crosswalkEntries = buildCrosswalkEntries(crosswalkRows);
 
@@ -78,12 +78,12 @@ writeTypeScriptDataFile(
 );
 
 console.log(`Generated ${catalog1995.length} 1995 CSI catalog items.`);
-console.log(`Generated ${catalogCurrent.length} current CSI catalog items.`);
+console.log(`Generated ${catalogCurrent.length} 2004+ / 50-Division CSI catalog items.`);
 console.log(`Generated ${crosswalkEntries.length} CSI crosswalk entries.`);
 console.log(
   `Generated ${countDivisions(catalog1995)} 1995 divisions and ${countDivisions(
     catalogCurrent
-  )} current divisions.`
+  )} 2004+ / 50-Division divisions.`
 );
 
 function findSheetName(...patterns) {
@@ -192,7 +192,7 @@ function buildCrosswalkEntries(rows) {
     return {
       id: `csi-crosswalk-${String(index + 1).padStart(4, "0")}`,
       sourceVersion: "MASTERFORMAT_1995",
-      targetVersion: "MASTERFORMAT_CURRENT",
+      targetVersion: "MASTERFORMAT_2004_PLUS",
       sourceSection: {
         sectionNumber: row.sourceSectionNumber,
         title: row.sourceTitle,
@@ -250,7 +250,7 @@ function normalizeLevel(value) {
 }
 
 function getCatalogItemId(version, sectionNumber) {
-  const prefix = version === "MASTERFORMAT_1995" ? "1995" : "current";
+  const prefix = version === "MASTERFORMAT_1995" ? "1995" : "2004-plus";
   const normalizedNumber = normalizeSection(sectionNumber);
 
   if (version === "MASTERFORMAT_1995") return `${prefix}-${normalizedNumber}`;
@@ -267,7 +267,7 @@ function getUniqueCatalogItemId(baseId, idCounts) {
 }
 
 function getDivisionIdFromSectionNumber(version, sectionNumber) {
-  const prefix = version === "MASTERFORMAT_1995" ? "1995" : "current";
+  const prefix = version === "MASTERFORMAT_1995" ? "1995" : "2004-plus";
   const divisionNumber = normalizeSection(sectionNumber).slice(0, 2);
 
   return `${prefix}-${divisionNumber}`;
