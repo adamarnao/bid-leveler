@@ -2,11 +2,11 @@
 
 ## Purpose
 
-Bid-Leveler must support projects and subcontractor coverage using either MasterFormat Current or MasterFormat 1995.
+Bid-Leveler must support projects and subcontractor coverage using either MasterFormat 2004+ / 50-Division or MasterFormat 1995 / 16-Division.
 
 The app already has:
-- MasterFormat Current catalog
-- MasterFormat 1995 catalog
+- MasterFormat 2004+ / 50-Division catalog
+- MasterFormat 1995 / 16-Division catalog
 - a CSI crosswalk/conversion matrix between the versions
 
 The missing layer is the rule system that uses those catalogs and the crosswalk correctly when:
@@ -28,7 +28,7 @@ CSI should power the system, but the estimator should operate primarily through 
 ## Company Default and Project Override
 
 Company settings should define the default CSI version:
-- MASTERFORMAT_CURRENT
+- MASTERFORMAT_2004_PLUS
 - MASTERFORMAT_1995
 
 Each project inherits the company default but can override it.
@@ -49,11 +49,11 @@ Changing project CSI version after packages/invites/bids exist should require co
 
 When a subcontractor is assigned CSI coverage in either MasterFormat version, the app should automatically attach equivalent coverage in the alternate version when a reliable crosswalk exists.
 
-Example: Current to 1995:
+Example: 2004+ / 50-Division to 1995 / 16-Division:
 - User selects 09 29 00 Gypsum Board.
 - System derives the 1995 equivalent, such as 09250 Gypsum Board, if mapped.
 
-Example: 1995 to Current:
+Example: 1995 / 16-Division to 2004+ / 50-Division:
 - User selects 09250 Gypsum Board.
 - System derives the current equivalent, such as 09 29 00 Gypsum Board, if mapped.
 
@@ -86,13 +86,13 @@ CSI-to-trade mapping should support:
 
 ## Mapping Priority
 
-For a project using MasterFormat Current:
-1. Project-specific override for current CSI item
-2. Company override for current CSI item
-3. Exact current CSI mapping rule
-4. Current CSI code pattern rule
-5. Current CSI title keyword rule
-6. Crosswalk current to 1995, then check 1995 mapping
+For a project using MasterFormat 2004+ / 50-Division:
+1. Project-specific override for 2004+ / 50-Division CSI item
+2. Company override for 2004+ / 50-Division CSI item
+3. Exact 2004+ / 50-Division CSI mapping rule
+4. 2004+ / 50-Division CSI code pattern rule
+5. 2004+ / 50-Division CSI title keyword rule
+6. Crosswalk 2004+ / 50-Division to 1995 / 16-Division, then check 1995 mapping
 7. Generic fallback keyword/pattern
 8. Unassigned / estimator review required
 
@@ -102,7 +102,7 @@ For a project using MasterFormat 1995:
 3. Exact 1995 CSI mapping rule
 4. 1995 CSI code pattern rule
 5. 1995 CSI title keyword rule
-6. Crosswalk 1995 to current, then check current mapping
+6. Crosswalk 1995 / 16-Division to 2004+ / 50-Division, then check 2004+ mapping
 7. Generic fallback keyword/pattern
 8. Unassigned / estimator review required
 
@@ -153,8 +153,8 @@ Drywall / Framing:
 If the project uses 1995:
 - bid package CSI tags are displayed in 1995 MasterFormat.
 
-If the project uses Current:
-- bid package CSI tags are displayed in current MasterFormat.
+If the project uses 2004+ / 50-Division:
+- bid package CSI tags are displayed in MasterFormat 2004+ / 50-Division.
 
 The trade package stays the same. Only the CSI representation changes.
 
@@ -169,7 +169,7 @@ For a project using the selected CSI version:
 
 The UI should explain the source:
 - Matched directly on 09 29 00 Gypsum Board.
-- Matched through 1995/current CSI crosswalk from 09250 Gypsum Board.
+- Matched through 1995 / 16-Division to 2004+ / 50-Division CSI crosswalk from 09250 Gypsum Board.
 
 ## Estimate Review / Bid Leveling Grouping
 
@@ -192,7 +192,7 @@ Division 26 - Electrical
 - Bid Package: Electrical
 
 If the project uses 1995, use 1995 top-level divisions.  
-If the project uses Current, use Current top-level divisions.
+If the project uses 2004+ / 50-Division, use 2004+ / 50-Division top-level divisions.
 
 ## Bid Package Ownership vs Reporting Division
 
@@ -222,7 +222,7 @@ Primary Division Rules:
 
 Subcontractor profile should show:
 - CSI Coverage
-- Current MasterFormat coverage
+- MasterFormat 2004+ / 50-Division coverage
 - 1995 MasterFormat equivalent coverage
 - mapping status/confidence
 
@@ -257,19 +257,19 @@ Implementation should follow this sequence:
 
 ## Required Test Scenarios
 
-1. Current project + current subcontractor coverage:
-- Project uses current MasterFormat.
-- Sub has current gypsum board coverage.
+1. Project MF: 2004+ / 50-Division + subcontractor coverage: 2004+ / 50-Division:
+- Project uses MasterFormat 2004+ / 50-Division.
+- Sub has 2004+ / 50-Division gypsum board coverage.
 - Drywall package matches directly.
 
-2. Current project + 1995 subcontractor coverage:
-- Project uses current MasterFormat.
+2. Project MF: 2004+ / 50-Division + subcontractor coverage: 1995 / 16-Division:
+- Project uses MasterFormat 2004+ / 50-Division.
 - Sub has 1995 gypsum board coverage.
 - Drywall package matches through crosswalk.
 
-3. 1995 project + current subcontractor coverage:
+3. Project MF: 1995 / 16-Division + subcontractor coverage: 2004+ / 50-Division:
 - Project uses 1995 MasterFormat.
-- Sub has current gypsum board coverage.
+- Sub has 2004+ / 50-Division gypsum board coverage.
 - Drywall package matches through crosswalk.
 
 4. 1995 project + 1995 subcontractor coverage:
@@ -284,4 +284,4 @@ Implementation should follow this sequence:
 6. Package grouping:
 - Project uses 1995.
 - Estimate review groups packages by 1995 divisions.
-- Same packages in current project group by current divisions.
+- Same packages in a 2004+ / 50-Division project group by 2004+ / 50-Division divisions.

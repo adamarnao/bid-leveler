@@ -45,12 +45,12 @@ const divisionNameFallbacks: Record<string, string> = {
 
 const catalogByVersion: Record<CsiMasterFormatVersion, CsiCatalogItem[]> = {
   MASTERFORMAT_1995: csiCatalog1995,
-  MASTERFORMAT_CURRENT: csiCatalogCurrent,
+  MASTERFORMAT_2004_PLUS: csiCatalogCurrent,
 };
 
 const catalogIndexesByVersion: Record<CsiMasterFormatVersion, CsiCatalogIndex> = {
   MASTERFORMAT_1995: buildCatalogIndex(csiCatalog1995),
-  MASTERFORMAT_CURRENT: buildCatalogIndex(csiCatalogCurrent),
+  MASTERFORMAT_2004_PLUS: buildCatalogIndex(csiCatalogCurrent),
 };
 
 export function getCsiCatalog(version: CsiMasterFormatVersion): CsiCatalogItem[] {
@@ -583,7 +583,7 @@ function sortItems<T extends { sortOrder?: number; number: string }>(items: T[])
 }
 
 function getLegacyCurrentAlias(item: CsiCatalogItem) {
-  if (item.version !== "MASTERFORMAT_CURRENT") return undefined;
+  if (item.version !== "MASTERFORMAT_2004_PLUS") return undefined;
 
   const match = item.id.match(/^current-(\d{2})-(\d{2})-(\d{2})$/);
 

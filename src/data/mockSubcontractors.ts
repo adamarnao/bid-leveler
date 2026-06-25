@@ -1035,7 +1035,7 @@ function vendor(seed: VendorSeed): Subcontractor {
     ],
     primaryDivisionId: seed.primaryDivisionId,
     csiCoverage: {
-      sourceVersion: seed.sourceVersion ?? "MASTERFORMAT_CURRENT",
+      sourceVersion: seed.sourceVersion ?? "MASTERFORMAT_2004_PLUS",
       divisionIds: seed.divisionIds,
       sectionIds: seed.sectionIds,
       specialtyScopeNotes: seed.specialtyScopeNotes,

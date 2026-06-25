@@ -1516,9 +1516,9 @@ function createBidPackageId(projectId: string) {
 }
 
 function formatCsiMasterFormatVersion(value: string) {
-  if (value === "MASTERFORMAT_1995") return "MasterFormat 1995";
+  if (value === "MASTERFORMAT_1995") return "MasterFormat 1995 / 16-Division";
 
-  return "Current MasterFormat";
+  return "MasterFormat 2004+ / 50-Division";
 }
 
 function formatStatus(value: string) {

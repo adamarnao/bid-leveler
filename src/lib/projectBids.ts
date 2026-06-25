@@ -49,7 +49,7 @@ const bidPackageSources: ProjectBidPackageSource[] = [
 ];
 const csiMasterFormatVersions: CsiMasterFormatVersion[] = [
   "MASTERFORMAT_1995",
-  "MASTERFORMAT_CURRENT",
+  "MASTERFORMAT_2004_PLUS",
 ];
 const pricingItemDirections: BidPricingItemDirection[] = [
   "ADD",

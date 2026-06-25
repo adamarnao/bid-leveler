@@ -377,7 +377,7 @@ export default function SubcontractorsPage() {
           <SelectField
             label="Display CSI as"
             value={listDisplayCsiVersion}
-            options={["MASTERFORMAT_CURRENT", "MASTERFORMAT_1995"]}
+            options={["MASTERFORMAT_2004_PLUS", "MASTERFORMAT_1995"]}
             onChange={handleListDisplayCsiVersionChange}
             getOptionLabel={formatCsiMasterFormatVersion}
           />
@@ -1370,7 +1370,7 @@ function formatPrequalificationFilter(value: string) {
 }
 
 function formatCsiMasterFormatVersion(value: string) {
-  if (value === "MASTERFORMAT_1995") return "MasterFormat 1995";
+  if (value === "MASTERFORMAT_1995") return "MasterFormat 1995 / 16-Division";
 
-  return "Current MasterFormat";
+  return "MasterFormat 2004+ / 50-Division";
 }

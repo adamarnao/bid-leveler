@@ -1,6 +1,18 @@
 export type CsiMasterFormatVersion =
   | "MASTERFORMAT_1995"
-  | "MASTERFORMAT_CURRENT";
+  | "MASTERFORMAT_2004_PLUS";
+
+export function formatCsiMasterFormatVersion(version: CsiMasterFormatVersion): string {
+  return version === "MASTERFORMAT_1995"
+    ? "MasterFormat 1995 / 16-Division"
+    : "MasterFormat 2004+ / 50-Division";
+}
+
+export function formatCsiMasterFormatVersionShort(version: CsiMasterFormatVersion): string {
+  return version === "MASTERFORMAT_1995"
+    ? "1995 / 16-Division"
+    : "2004+ / 50-Division";
+}
 
 export type CsiHierarchyRelationship =
   | "EXACT"

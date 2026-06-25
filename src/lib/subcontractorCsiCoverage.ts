@@ -54,7 +54,7 @@ export type DisplayedSubcontractorCsiCoverage = {
 export function getSubcontractorCsiVersion(
   subcontractor: Subcontractor
 ): CsiMasterFormatVersion {
-  return subcontractor.csiCoverage.sourceVersion ?? "MASTERFORMAT_CURRENT";
+  return subcontractor.csiCoverage.sourceVersion ?? "MASTERFORMAT_2004_PLUS";
 }
 
 export function getDisplayedSubcontractorCoverage(
@@ -180,13 +180,13 @@ export function convertSubcontractorSectionCoverage(
 
   if (
     sourceVersion === "MASTERFORMAT_1995" &&
-    targetVersion === "MASTERFORMAT_CURRENT"
+    targetVersion === "MASTERFORMAT_2004_PLUS"
   ) {
     return uniqueStrings(expandSectionsToCurrent(sourceSectionNumbers));
   }
 
   if (
-    sourceVersion === "MASTERFORMAT_CURRENT" &&
+    sourceVersion === "MASTERFORMAT_2004_PLUS" &&
     targetVersion === "MASTERFORMAT_1995"
   ) {
     return uniqueStrings(expandSectionsTo1995(sourceSectionNumbers));
@@ -218,7 +218,7 @@ function getCrosswalkDisplayedSections(
   return sourceSectionNumbers.flatMap((sourceSectionNumber) => {
     const entries =
       sourceVersion === "MASTERFORMAT_1995" &&
-      targetVersion === "MASTERFORMAT_CURRENT"
+      targetVersion === "MASTERFORMAT_2004_PLUS"
         ? getCrosswalkEntriesFor1995(sourceSectionNumber)
         : getCrosswalkEntriesForCurrent(sourceSectionNumber);
     const matchingEntries = entries.filter((entry) =>

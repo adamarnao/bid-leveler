@@ -22,7 +22,7 @@ export type CsiCrosswalkSection = {
 export type CsiCrosswalkEntry = {
   id: string;
   sourceVersion: Extract<CsiMasterFormatVersion, "MASTERFORMAT_1995">;
-  targetVersion: Extract<CsiMasterFormatVersion, "MASTERFORMAT_CURRENT">;
+  targetVersion: Extract<CsiMasterFormatVersion, "MASTERFORMAT_2004_PLUS">;
   sourceSection: CsiCrosswalkSection;
   targetSection: CsiCrosswalkSection;
   relationship: CsiCrosswalkRelationship;

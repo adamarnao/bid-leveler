@@ -7,7 +7,7 @@
 
 export type CsiVersionId =
   | "MASTERFORMAT_1995"
-  | "MASTERFORMAT_CURRENT";
+  | "MASTERFORMAT_2004_PLUS";
 
 export type MappingConfidence =
   | "HIGH"
@@ -143,13 +143,13 @@ export type ProjectBidPackageCsiReporting = {
   explanation?: string;
 };
 
-export const CSI_MAPPING_PRIORITY_CURRENT_PROJECT = [
-  "Project-specific override for current CSI item",
-  "Company override for current CSI item",
-  "Exact current CSI mapping rule",
-  "Current CSI code pattern rule",
-  "Current CSI title keyword rule",
-  "Crosswalk current to 1995, then check 1995 mapping",
+export const CSI_MAPPING_PRIORITY_2004_PLUS_PROJECT = [
+  "Project-specific override for 2004+ / 50-Division CSI item",
+  "Company override for 2004+ / 50-Division CSI item",
+  "Exact 2004+ / 50-Division CSI mapping rule",
+  "2004+ / 50-Division CSI code pattern rule",
+  "2004+ / 50-Division CSI title keyword rule",
+  "Crosswalk 2004+ / 50-Division to 1995 / 16-Division, then check 1995 mapping",
   "Generic fallback keyword/pattern",
   "Unassigned / estimator review required",
 ] as const;
@@ -160,7 +160,7 @@ export const CSI_MAPPING_PRIORITY_1995_PROJECT = [
   "Exact 1995 CSI mapping rule",
   "1995 CSI code pattern rule",
   "1995 CSI title keyword rule",
-  "Crosswalk 1995 to current, then check current mapping",
+  "Crosswalk 1995 / 16-Division to 2004+ / 50-Division, then check 2004+ mapping",
   "Generic fallback keyword/pattern",
   "Unassigned / estimator review required",
 ] as const;

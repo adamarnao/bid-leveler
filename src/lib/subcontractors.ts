@@ -453,8 +453,8 @@ function mergeSubcontractors(
 function getVersionForDivision(
   divisionIdOrNumber: string
 ): CsiMasterFormatVersion | undefined {
-  if (resolveCsiDivision("MASTERFORMAT_CURRENT", divisionIdOrNumber)) {
-    return "MASTERFORMAT_CURRENT";
+  if (resolveCsiDivision("MASTERFORMAT_2004_PLUS", divisionIdOrNumber)) {
+    return "MASTERFORMAT_2004_PLUS";
   }
 
   if (resolveCsiDivision("MASTERFORMAT_1995", divisionIdOrNumber)) {
@@ -467,8 +467,8 @@ function getVersionForDivision(
 function getVersionForSection(
   sectionIdOrNumber: string
 ): CsiMasterFormatVersion | undefined {
-  if (resolveCsiSection("MASTERFORMAT_CURRENT", sectionIdOrNumber)) {
-    return "MASTERFORMAT_CURRENT";
+  if (resolveCsiSection("MASTERFORMAT_2004_PLUS", sectionIdOrNumber)) {
+    return "MASTERFORMAT_2004_PLUS";
   }
 
   if (resolveCsiSection("MASTERFORMAT_1995", sectionIdOrNumber)) {

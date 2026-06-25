@@ -1125,7 +1125,7 @@ export default async function TradeTaxonomyWorkbenchPage({
       sectorTags: scenario.sectorTags ?? [],
       workTypeTags: scenario.workTypeTags ?? [],
       contextTags: scenario.contextTags ?? [],
-      csiVersion: "MASTERFORMAT_CURRENT",
+      csiVersion: "MASTERFORMAT_2004_PLUS",
     }),
   }));
   const activeFilterLabel = [

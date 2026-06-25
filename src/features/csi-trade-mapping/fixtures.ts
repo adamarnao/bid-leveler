@@ -9,9 +9,9 @@ export type CsiTradeMappingFixtureScenario = {
   expectedBehavior: string;
 };
 
-export const currentGypsumBoardItem: CsiTradeMappingItem = {
-  id: "current-09-29-00",
-  version: "MASTERFORMAT_CURRENT",
+export const masterFormat2004PlusGypsumBoardItem: CsiTradeMappingItem = {
+  id: "2004-plus-09-29-00",
+  version: "MASTERFORMAT_2004_PLUS",
   number: "09 29 00",
   name: "Gypsum Board",
 };
@@ -24,47 +24,47 @@ export const legacyGypsumBoardItem: CsiTradeMappingItem = {
 };
 
 export const fireAlarmItem: CsiTradeMappingItem = {
-  id: "current-28-31-00",
-  version: "MASTERFORMAT_CURRENT",
+  id: "2004-plus-28-31-00",
+  version: "MASTERFORMAT_2004_PLUS",
   number: "28 31 00",
   name: "Fire Detection and Alarm",
 };
 
 export const acousticInsulationItem: CsiTradeMappingItem = {
-  id: "current-09-81-16",
-  version: "MASTERFORMAT_CURRENT",
+  id: "2004-plus-09-81-16",
+  version: "MASTERFORMAT_2004_PLUS",
   number: "09 81 16",
   name: "Acoustic Insulation",
 };
 
 export const csiTradeMappingFixtureScenarios: CsiTradeMappingFixtureScenario[] = [
   {
-    id: "current-project-current-gypsum",
-    title: "Current project + current gypsum board coverage",
-    projectCsiVersion: "MASTERFORMAT_CURRENT",
-    subcontractorCoverageVersion: "MASTERFORMAT_CURRENT",
-    csiItems: [currentGypsumBoardItem],
-    expectedBehavior: "Drywall / Framing assignment should match directly on current MasterFormat rule.",
+    id: "2004-plus-project-2004-plus-gypsum",
+    title: "Project MF: 2004+ / 50-Division | Sub coverage: 2004+ / 50-Division | Gypsum Board",
+    projectCsiVersion: "MASTERFORMAT_2004_PLUS",
+    subcontractorCoverageVersion: "MASTERFORMAT_2004_PLUS",
+    csiItems: [masterFormat2004PlusGypsumBoardItem],
+    expectedBehavior: "Drywall / Framing assignment should match directly on the 2004+ / 50-Division rule.",
   },
   {
-    id: "current-project-1995-gypsum",
-    title: "Current project + 1995 gypsum board coverage",
-    projectCsiVersion: "MASTERFORMAT_CURRENT",
+    id: "2004-plus-project-1995-gypsum",
+    title: "Project MF: 2004+ / 50-Division | Sub coverage: 1995 / 16-Division | Gypsum Board",
+    projectCsiVersion: "MASTERFORMAT_2004_PLUS",
     subcontractorCoverageVersion: "MASTERFORMAT_1995",
     csiItems: [legacyGypsumBoardItem],
-    expectedBehavior: "Drywall / Framing assignment should be explainable through 1995/current equivalent coverage.",
+    expectedBehavior: "Drywall / Framing assignment should be explainable through 1995 to 2004+ equivalent coverage.",
   },
   {
-    id: "1995-project-current-gypsum",
-    title: "1995 project + current gypsum board coverage",
+    id: "1995-project-2004-plus-gypsum",
+    title: "Project MF: 1995 / 16-Division | Sub coverage: 2004+ / 50-Division | Gypsum Board",
     projectCsiVersion: "MASTERFORMAT_1995",
-    subcontractorCoverageVersion: "MASTERFORMAT_CURRENT",
-    csiItems: [currentGypsumBoardItem],
-    expectedBehavior: "Drywall / Framing assignment should be explainable through current/1995 equivalent coverage.",
+    subcontractorCoverageVersion: "MASTERFORMAT_2004_PLUS",
+    csiItems: [masterFormat2004PlusGypsumBoardItem],
+    expectedBehavior: "Drywall / Framing assignment should be explainable through 2004+ to 1995 equivalent coverage.",
   },
   {
     id: "1995-project-1995-gypsum",
-    title: "1995 project + 1995 gypsum board coverage",
+    title: "Project MF: 1995 / 16-Division | Sub coverage: 1995 / 16-Division | Gypsum Board",
     projectCsiVersion: "MASTERFORMAT_1995",
     subcontractorCoverageVersion: "MASTERFORMAT_1995",
     csiItems: [legacyGypsumBoardItem],
@@ -72,19 +72,18 @@ export const csiTradeMappingFixtureScenarios: CsiTradeMappingFixtureScenario[] =
   },
   {
     id: "fire-alarm-ambiguous",
-    title: "Fire alarm ambiguous mapping",
-    projectCsiVersion: "MASTERFORMAT_CURRENT",
-    subcontractorCoverageVersion: "MASTERFORMAT_CURRENT",
+    title: "Project MF: 2004+ / 50-Division | Ambiguous Fire Alarm Mapping",
+    projectCsiVersion: "MASTERFORMAT_2004_PLUS",
+    subcontractorCoverageVersion: "MASTERFORMAT_2004_PLUS",
     csiItems: [fireAlarmItem],
     expectedBehavior: "Fire alarm should default conservatively while preserving possible electrical/fire protection trades.",
   },
   {
     id: "insulation-ambiguous",
-    title: "Insulation ambiguous mapping",
-    projectCsiVersion: "MASTERFORMAT_CURRENT",
-    subcontractorCoverageVersion: "MASTERFORMAT_CURRENT",
+    title: "Project MF: 2004+ / 50-Division | Ambiguous Insulation Mapping",
+    projectCsiVersion: "MASTERFORMAT_2004_PLUS",
+    subcontractorCoverageVersion: "MASTERFORMAT_2004_PLUS",
     csiItems: [acousticInsulationItem],
     expectedBehavior: "Insulation should produce a low-confidence possible assignment requiring estimator review.",
   },
 ];
-

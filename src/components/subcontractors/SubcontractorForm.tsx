@@ -86,7 +86,7 @@ type StagedResponsibilitiesDraft = {
 };
 
 const csiSourceVersions: CsiMasterFormatVersion[] = [
-  "MASTERFORMAT_CURRENT",
+  "MASTERFORMAT_2004_PLUS",
   "MASTERFORMAT_1995",
 ];
 const contactRoleContexts: SubcontractorContactRoleContext[] = [
@@ -137,7 +137,7 @@ export default function SubcontractorForm({
     return primaryLocation ? [primaryLocation.id] : [];
   });
   const savedCsiSourceVersion =
-    draft.csiCoverage.sourceVersion ?? "MASTERFORMAT_CURRENT";
+    draft.csiCoverage.sourceVersion ?? "MASTERFORMAT_2004_PLUS";
   const [pickerDisplayVersion, setPickerDisplayVersion] =
     useState<CsiMasterFormatVersion>(savedCsiSourceVersion);
   const isViewingEquivalentCoverage =
@@ -207,7 +207,7 @@ export default function SubcontractorForm({
   const [showAllResponsibilityCsi, setShowAllResponsibilityCsi] =
     useState(false);
   const responsibilityCsiVersion =
-    draft.csiCoverage.sourceVersion ?? "MASTERFORMAT_CURRENT";
+    draft.csiCoverage.sourceVersion ?? "MASTERFORMAT_2004_PLUS";
   const responsibilitySectionOptions = useMemo(
     () => getCsiSectionOptions(responsibilityCsiVersion),
     [responsibilityCsiVersion]
@@ -241,7 +241,7 @@ export default function SubcontractorForm({
   const effectiveStagedPickerDisplayVersion =
     stagedPickerDisplayVersion ?? pickerDisplayVersion;
   const stagedSavedCsiSourceVersion =
-    stagedCsiDraft?.csiCoverage.sourceVersion ?? "MASTERFORMAT_CURRENT";
+    stagedCsiDraft?.csiCoverage.sourceVersion ?? "MASTERFORMAT_2004_PLUS";
   const isStagedViewingEquivalentCoverage =
     effectiveStagedPickerDisplayVersion !== stagedSavedCsiSourceVersion;
   const stagedCsiDivisionOptions = useMemo(
@@ -342,7 +342,7 @@ export default function SubcontractorForm({
       contacts: normalizeContacts(draft.contacts, validLocationIds),
       csiCoverage: {
         sourceVersion:
-          draft.csiCoverage.sourceVersion ?? "MASTERFORMAT_CURRENT",
+          draft.csiCoverage.sourceVersion ?? "MASTERFORMAT_2004_PLUS",
         divisionIds: normalizedDivisionIds,
         sectionIds: normalizedSectionIds,
         specialtyScopeNotes: emptyToUndefined(

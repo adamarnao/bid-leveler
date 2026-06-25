@@ -552,7 +552,7 @@ function getMatchConfidence(
   );
   const relatedEntries = sourceSectionNumbers.flatMap((sourceSectionNumber) =>
     sourceVersion === "MASTERFORMAT_1995" &&
-    projectCsiVersion === "MASTERFORMAT_CURRENT"
+    projectCsiVersion === "MASTERFORMAT_2004_PLUS"
       ? getCrosswalkEntriesFor1995(sourceSectionNumber).filter(
           (entry) =>
             normalizeNullableSectionNumber(entry.targetSection.sectionNumber) ===

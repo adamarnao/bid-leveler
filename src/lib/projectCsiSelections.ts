@@ -211,7 +211,7 @@ function resolveProjectDivisionCatalogItem(
   if (!division) return undefined;
 
   const divisionCatalogNumber =
-    version === "MASTERFORMAT_CURRENT"
+    version === "MASTERFORMAT_2004_PLUS"
       ? `${division.number} 00 00`
       : `${division.number}000`;
 

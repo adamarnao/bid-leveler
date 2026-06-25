@@ -124,7 +124,7 @@ export type ProjectProfileContextTagId =
   | "siding_exterior_cladding"
   | "windows_exterior_doors";
 
-export type ProjectCsiVersionId = "MASTERFORMAT_CURRENT" | "MASTERFORMAT_1995";
+export type ProjectCsiVersionId = "MASTERFORMAT_2004_PLUS" | "MASTERFORMAT_1995";
 
 export type ProjectProfileBuildingCondition =
   | "new_construction"

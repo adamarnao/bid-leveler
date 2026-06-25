@@ -1,8 +1,8 @@
 # Bid-Leveler CSI Version + Trade Mapping Source Files
 
 This package defines the source-of-truth rules for how Bid-Leveler should handle:
-- MasterFormat Current
-- MasterFormat 1995
+- MasterFormat 2004+ / 50-Division
+- MasterFormat 1995 / 16-Division
 - the existing CSI version crosswalk
 - CSI-to-trade mapping
 - subcontractor dual CSI coverage tagging

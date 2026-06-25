@@ -2,6 +2,7 @@ import {
   get1995SectionsForCurrent,
   getCurrentSectionsFor1995,
 } from "@/lib/csiCrosswalk";
+import { formatCsiMasterFormatVersion } from "@/types/Csi";
 
 import { defaultCsiTradeMappingRules } from "./defaultCsiTradeMappingRules";
 import type {
@@ -87,7 +88,7 @@ export function deriveEquivalentCsiCoverage(
 ): EquivalentCsiCoverage[] {
   const targetVersion = getAlternateVersion(input.sourceVersion);
   const sections =
-    input.sourceVersion === "MASTERFORMAT_CURRENT"
+    input.sourceVersion === "MASTERFORMAT_2004_PLUS"
       ? get1995SectionsForCurrent(input.sourceCsiNumber)
       : getCurrentSectionsFor1995(input.sourceCsiNumber);
 
@@ -162,15 +163,15 @@ function findCrosswalkAssignment(
       ...assignment,
       csiItemId: input.csiItem.id,
       csiVersion: input.csiItem.version,
-      confidence: lowerConfidence(assignment.confidence),
+      confidence: getCrosswalkAssignmentConfidence(assignment.confidence, equivalentItem.confidence),
       crosswalkedFromCsiItemId: crosswalkedCsiItem.id,
       crosswalkedFromVersion: crosswalkedCsiItem.version,
       crosswalkedFromCsiNumber: crosswalkedCsiItem.number,
-      reason: `No direct ${input.csiItem.version} rule matched ${formatCsiItem(
+      reason: `No direct ${formatCsiMasterFormatVersion(input.csiItem.version)} rule matched ${formatCsiItem(
         input.csiItem,
-      )}. Crosswalked to ${crosswalkedCsiItem.version} ${crosswalkedCsiItem.number} and matched rule ${
+      )}. Crosswalked to ${formatCsiMasterFormatVersion(crosswalkedCsiItem.version)} ${crosswalkedCsiItem.number} and matched rule ${
         rule.id
-      } for ${projectCsiVersion} project evaluation.`,
+      } for ${formatCsiMasterFormatVersion(projectCsiVersion)} project evaluation.`,
     };
   }
 
@@ -256,7 +257,7 @@ function assignmentFromRule(
 }
 
 function getAlternateVersion(version: CsiVersionId): CsiVersionId {
-  return version === "MASTERFORMAT_CURRENT" ? "MASTERFORMAT_1995" : "MASTERFORMAT_CURRENT";
+  return version === "MASTERFORMAT_2004_PLUS" ? "MASTERFORMAT_1995" : "MASTERFORMAT_2004_PLUS";
 }
 
 function confidenceForSource(source: CsiTradeAssignment["source"]): MappingConfidence {
@@ -271,9 +272,13 @@ function confidenceForSource(source: CsiTradeAssignment["source"]): MappingConfi
   return "LOW";
 }
 
-function lowerConfidence(confidence: MappingConfidence): MappingConfidence {
-  if (confidence === "HIGH") return "MEDIUM";
-  return confidence;
+function getCrosswalkAssignmentConfidence(
+  assignmentConfidence: MappingConfidence,
+  crosswalkConfidence: MappingConfidence,
+): MappingConfidence {
+  if (assignmentConfidence === "LOW" || crosswalkConfidence === "LOW") return "LOW";
+  if (assignmentConfidence === "MEDIUM" || crosswalkConfidence === "MEDIUM") return "MEDIUM";
+  return "HIGH";
 }
 
 function getCrosswalkConfidence(targetNumber: string | undefined, sourceNumber: string): MappingConfidence {
@@ -284,7 +289,7 @@ function getCrosswalkConfidence(targetNumber: string | undefined, sourceNumber: 
 }
 
 function createDerivedCsiItemId(version: CsiVersionId, sectionNumber: string | null): string {
-  const prefix = version === "MASTERFORMAT_CURRENT" ? "current" : "1995";
+  const prefix = version === "MASTERFORMAT_2004_PLUS" ? "2004-plus" : "1995";
   return `${prefix}-${slugify(sectionNumber ?? "unknown")}`;
 }
 

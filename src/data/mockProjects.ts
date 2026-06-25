@@ -33,7 +33,7 @@ export const mockProjects: Project[] = [
     archived: false,
     createdDate: "2026-06-09",
 
-    csiVersion: "MASTERFORMAT_CURRENT",
+    csiVersion: "MASTERFORMAT_2004_PLUS",
 
     setupStatus: "IN_PROGRESS",
     setupProgress: {

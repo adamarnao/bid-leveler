@@ -19,7 +19,7 @@ import {
 type LevelFilter = "ALL" | "1" | "2" | "3" | "4";
 
 const csiVersionOptions: CsiMasterFormatVersion[] = [
-  "MASTERFORMAT_CURRENT",
+  "MASTERFORMAT_2004_PLUS",
   "MASTERFORMAT_1995",
 ];
 
@@ -412,8 +412,8 @@ function getExpandableTreeNodeIds(nodes: CsiCatalogTreeNode[]) {
 
 function formatCsiVersion(version: CsiMasterFormatVersion) {
   return version === "MASTERFORMAT_1995"
-    ? "MasterFormat 1995"
-    : "Current MasterFormat";
+    ? "MasterFormat 1995 / 16-Division"
+    : "MasterFormat 2004+ / 50-Division";
 }
 
 function formatLevelFilter(filter: LevelFilter) {

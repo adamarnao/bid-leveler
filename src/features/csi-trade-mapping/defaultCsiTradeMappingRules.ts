@@ -1,11 +1,11 @@
 import type { CsiToTradeMappingRule } from "./types";
 
-export const CSI_MAPPING_PRIORITY_CURRENT_PROJECT = [
+export const CSI_MAPPING_PRIORITY_2004_PLUS_PROJECT = [
   "project override",
   "company override",
-  "direct current rule",
-  "current code pattern",
-  "current keyword",
+  "direct 2004+ rule",
+  "2004+ code pattern",
+  "2004+ keyword",
   "crosswalk to 1995 fallback",
   "generic fallback",
   "unassigned",
@@ -17,7 +17,7 @@ export const CSI_MAPPING_PRIORITY_1995_PROJECT = [
   "direct 1995 rule",
   "1995 code pattern",
   "1995 keyword",
-  "crosswalk to current fallback",
+  "crosswalk to 2004+ fallback",
   "generic fallback",
   "unassigned",
 ] as const;
@@ -34,8 +34,8 @@ export const VERSION_AWARE_CSI_MAPPING_REQUIREMENTS = {
 
 export const defaultCsiTradeMappingRules: CsiToTradeMappingRule[] = [
   {
-    id: "current-gypsum-board",
-    csiVersion: "MASTERFORMAT_CURRENT",
+    id: "2004-plus-gypsum-board",
+    csiVersion: "MASTERFORMAT_2004_PLUS",
     csiCodePatterns: ["09 29"],
     titleKeywords: ["gypsum board", "drywall"],
     tradeId: "drywall-framing",
@@ -54,8 +54,8 @@ export const defaultCsiTradeMappingRules: CsiToTradeMappingRule[] = [
     confidence: "HIGH",
   },
   {
-    id: "current-non-structural-metal-framing",
-    csiVersion: "MASTERFORMAT_CURRENT",
+    id: "2004-plus-non-structural-metal-framing",
+    csiVersion: "MASTERFORMAT_2004_PLUS",
     csiCodePatterns: ["09 22"],
     titleKeywords: ["non-structural metal framing", "metal stud", "metal support assemblies"],
     tradeId: "drywall-framing",
@@ -74,8 +74,8 @@ export const defaultCsiTradeMappingRules: CsiToTradeMappingRule[] = [
     confidence: "HIGH",
   },
   {
-    id: "current-acoustical-ceilings",
-    csiVersion: "MASTERFORMAT_CURRENT",
+    id: "2004-plus-acoustical-ceilings",
+    csiVersion: "MASTERFORMAT_2004_PLUS",
     csiCodePatterns: ["09 51"],
     titleKeywords: ["acoustical ceilings", "acoustic ceilings", "act"],
     tradeId: "ceilings",
@@ -94,8 +94,8 @@ export const defaultCsiTradeMappingRules: CsiToTradeMappingRule[] = [
     confidence: "HIGH",
   },
   {
-    id: "current-carpet",
-    csiVersion: "MASTERFORMAT_CURRENT",
+    id: "2004-plus-carpet",
+    csiVersion: "MASTERFORMAT_2004_PLUS",
     csiCodePatterns: ["09 68"],
     titleKeywords: ["carpet", "carpeting", "carpet tile"],
     tradeId: "flooring",
@@ -114,8 +114,8 @@ export const defaultCsiTradeMappingRules: CsiToTradeMappingRule[] = [
     confidence: "HIGH",
   },
   {
-    id: "current-resilient-flooring",
-    csiVersion: "MASTERFORMAT_CURRENT",
+    id: "2004-plus-resilient-flooring",
+    csiVersion: "MASTERFORMAT_2004_PLUS",
     csiCodePatterns: ["09 65"],
     titleKeywords: ["resilient flooring", "lvt", "vinyl flooring", "sheet vinyl"],
     tradeId: "flooring",
@@ -134,8 +134,8 @@ export const defaultCsiTradeMappingRules: CsiToTradeMappingRule[] = [
     confidence: "HIGH",
   },
   {
-    id: "current-tile",
-    csiVersion: "MASTERFORMAT_CURRENT",
+    id: "2004-plus-tile",
+    csiVersion: "MASTERFORMAT_2004_PLUS",
     csiCodePatterns: ["09 30"],
     titleKeywords: ["tiling", "tile"],
     tradeId: "flooring",
@@ -154,8 +154,8 @@ export const defaultCsiTradeMappingRules: CsiToTradeMappingRule[] = [
     confidence: "HIGH",
   },
   {
-    id: "current-painting-coatings",
-    csiVersion: "MASTERFORMAT_CURRENT",
+    id: "2004-plus-painting-coatings",
+    csiVersion: "MASTERFORMAT_2004_PLUS",
     csiCodePatterns: ["09 90"],
     titleKeywords: ["painting", "coatings", "paint"],
     tradeId: "painting-coatings",
@@ -174,8 +174,8 @@ export const defaultCsiTradeMappingRules: CsiToTradeMappingRule[] = [
     confidence: "HIGH",
   },
   {
-    id: "current-plumbing",
-    csiVersion: "MASTERFORMAT_CURRENT",
+    id: "2004-plus-plumbing",
+    csiVersion: "MASTERFORMAT_2004_PLUS",
     csiCodePatterns: ["22"],
     titleKeywords: ["plumbing", "domestic water", "sanitary", "fixtures"],
     tradeId: "plumbing",
@@ -193,8 +193,8 @@ export const defaultCsiTradeMappingRules: CsiToTradeMappingRule[] = [
     notes: "1995 Division 15 also includes mechanical/HVAC scope; estimator review may be needed.",
   },
   {
-    id: "current-hvac",
-    csiVersion: "MASTERFORMAT_CURRENT",
+    id: "2004-plus-hvac",
+    csiVersion: "MASTERFORMAT_2004_PLUS",
     csiCodePatterns: ["23"],
     titleKeywords: ["hvac", "mechanical", "duct", "air distribution"],
     tradeId: "hvac",
@@ -212,8 +212,8 @@ export const defaultCsiTradeMappingRules: CsiToTradeMappingRule[] = [
     notes: "1995 Division 15 also includes plumbing scope; estimator review may be needed.",
   },
   {
-    id: "current-electrical",
-    csiVersion: "MASTERFORMAT_CURRENT",
+    id: "2004-plus-electrical",
+    csiVersion: "MASTERFORMAT_2004_PLUS",
     csiCodePatterns: ["26"],
     titleKeywords: ["electrical", "lighting", "power", "panels"],
     tradeId: "electrical",
@@ -230,8 +230,8 @@ export const defaultCsiTradeMappingRules: CsiToTradeMappingRule[] = [
     confidence: "HIGH",
   },
   {
-    id: "current-low-voltage",
-    csiVersion: "MASTERFORMAT_CURRENT",
+    id: "2004-plus-low-voltage",
+    csiVersion: "MASTERFORMAT_2004_PLUS",
     csiCodePatterns: ["27", "28"],
     titleKeywords: ["communications", "low voltage", "security", "access control", "data"],
     tradeId: "low-voltage-technology",
@@ -248,8 +248,8 @@ export const defaultCsiTradeMappingRules: CsiToTradeMappingRule[] = [
     confidence: "MEDIUM",
   },
   {
-    id: "current-fire-alarm",
-    csiVersion: "MASTERFORMAT_CURRENT",
+    id: "2004-plus-fire-alarm",
+    csiVersion: "MASTERFORMAT_2004_PLUS",
     csiCodePatterns: ["28 31"],
     titleKeywords: ["fire alarm"],
     tradeId: "low-voltage-technology",
@@ -272,8 +272,8 @@ export const defaultCsiTradeMappingRules: CsiToTradeMappingRule[] = [
     notes: "Fire alarm may be carried by low voltage, electrical, or fire protection depending company practice.",
   },
   {
-    id: "current-medical-gas",
-    csiVersion: "MASTERFORMAT_CURRENT",
+    id: "2004-plus-medical-gas",
+    csiVersion: "MASTERFORMAT_2004_PLUS",
     csiCodePatterns: ["22 62"],
     titleKeywords: ["medical gas", "med gas"],
     tradeId: "plumbing",
@@ -296,8 +296,8 @@ export const defaultCsiTradeMappingRules: CsiToTradeMappingRule[] = [
     contextTags: ["medical_office", "hospital", "surgery_center"],
   },
   {
-    id: "current-food-service-equipment",
-    csiVersion: "MASTERFORMAT_CURRENT",
+    id: "2004-plus-food-service-equipment",
+    csiVersion: "MASTERFORMAT_2004_PLUS",
     csiCodePatterns: ["11 40"],
     titleKeywords: ["food service", "kitchen equipment", "commercial kitchen"],
     tradeId: "food-service-systems",
@@ -320,8 +320,8 @@ export const defaultCsiTradeMappingRules: CsiToTradeMappingRule[] = [
     contextTags: ["commercial_kitchen"],
   },
   {
-    id: "current-insulation-ambiguous",
-    csiVersion: "MASTERFORMAT_CURRENT",
+    id: "2004-plus-insulation-ambiguous",
+    csiVersion: "MASTERFORMAT_2004_PLUS",
     csiCodePatterns: ["07 21", "09 81"],
     titleKeywords: ["insulation", "acoustic insulation", "thermal insulation"],
     tradeId: "insulation",
@@ -342,4 +342,3 @@ export const defaultCsiTradeMappingRules: CsiToTradeMappingRule[] = [
     notes: "Insulation may belong to drywall, envelope, roofing, or specialty acoustic scope.",
   },
 ];
-

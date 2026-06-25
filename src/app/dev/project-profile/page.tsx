@@ -117,7 +117,7 @@ const defaultProfile: ProjectProfile = {
     contextTags: [],
   },
   globalAttributes: {
-    projectCsiVersion: "MASTERFORMAT_CURRENT",
+    projectCsiVersion: "MASTERFORMAT_2004_PLUS",
     buildingCondition: "existing_to_renovate",
     occupancyCondition: "unknown",
     siteScope: "tbd",
@@ -147,8 +147,8 @@ const defaultProfile: ProjectProfile = {
 };
 
 const csiVersionOptions: { id: ProjectCsiVersionId; label: string }[] = [
-  { id: "MASTERFORMAT_CURRENT", label: "MasterFormat Current" },
-  { id: "MASTERFORMAT_1995", label: "MasterFormat 1995" },
+  { id: "MASTERFORMAT_2004_PLUS", label: "MasterFormat 2004+ / 50-Division" },
+  { id: "MASTERFORMAT_1995", label: "MasterFormat 1995 / 16-Division" },
 ];
 
 const requiredBeforePackageReview = [

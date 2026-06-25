@@ -22,11 +22,15 @@ import {
   getDefaultTradeTaxonomy,
   type TradeTaxonomyNode,
 } from "@/features/trade-taxonomy";
-import type { CsiCatalogItem } from "@/types/Csi";
+import {
+  formatCsiMasterFormatVersion,
+  formatCsiMasterFormatVersionShort,
+  type CsiCatalogItem,
+} from "@/types/Csi";
 
 const csiVersionOptions: { id: CsiVersionId; label: string }[] = [
-  { id: "MASTERFORMAT_CURRENT", label: "MasterFormat Current" },
-  { id: "MASTERFORMAT_1995", label: "MasterFormat 1995" },
+  { id: "MASTERFORMAT_2004_PLUS", label: "MasterFormat 2004+ / 50-Division" },
+  { id: "MASTERFORMAT_1995", label: "MasterFormat 1995 / 16-Division" },
 ];
 
 const sourceHelp = new Map<string, string>([
@@ -77,7 +81,11 @@ function getScenarioById(scenarioId: string): CsiTradeMappingFixtureScenario {
 }
 
 function getVersionLabel(version: CsiVersionId): string {
-  return csiVersionOptions.find((option) => option.id === version)?.label ?? version;
+  return formatCsiMasterFormatVersion(version);
+}
+
+function getVersionShortLabel(version: CsiVersionId): string {
+  return formatCsiMasterFormatVersionShort(version);
 }
 
 function getTradeName(tradeId: string | undefined): string {
@@ -119,7 +127,7 @@ function resolveEquivalentAsMappingItem(equivalent: EquivalentCsiCoverage): CsiT
 }
 
 function getAlternateVersion(version: CsiVersionId): CsiVersionId {
-  return version === "MASTERFORMAT_CURRENT" ? "MASTERFORMAT_1995" : "MASTERFORMAT_CURRENT";
+  return version === "MASTERFORMAT_2004_PLUS" ? "MASTERFORMAT_1995" : "MASTERFORMAT_2004_PLUS";
 }
 
 function isTopLevelTrade(trade: TradeTaxonomyNode): boolean {
@@ -243,7 +251,7 @@ function buildAssignmentPreview(
 }
 
 function MappingCoverageSummary() {
-  const currentRuleCount = mappingRules.filter((rule) => rule.csiVersion === "MASTERFORMAT_CURRENT").length;
+  const masterFormat2004PlusRuleCount = mappingRules.filter((rule) => rule.csiVersion === "MASTERFORMAT_2004_PLUS").length;
   const legacyRuleCount = mappingRules.filter((rule) => rule.csiVersion === "MASTERFORMAT_1995").length;
   const ambiguousRuleCount = mappingRules.filter(
     (rule) => rule.matchStrength === "POSSIBLE" || Boolean(rule.possibleTradeIds?.length),
@@ -252,11 +260,11 @@ function MappingCoverageSummary() {
   const unmappedTrades = getUnmappedTopLevelTrades();
 
   return (
-    <section className="app-panel">
+    <section className="app-panel" id="mapping-coverage-summary">
       <div className="panel-header">
         <div>
-          <p className="label-text">Mapping Coverage</p>
-          <h2>Current Rule Library Summary</h2>
+          <p className="label-text">Mapping Coverage Summary</p>
+          <h2>Rule Library Summary</h2>
           <p className="muted-text">
             This summary describes the partial CSI-to-trade mapping library currently loaded
             in code. It does not claim full MasterFormat coverage.
@@ -270,11 +278,11 @@ function MappingCoverageSummary() {
           <strong>{mappingRules.length}</strong>
         </div>
         <div>
-          <span className="label-text">Current Rules</span>
-          <strong>{currentRuleCount}</strong>
+          <span className="label-text">2004+ / 50-Division Rules</span>
+          <strong>{masterFormat2004PlusRuleCount}</strong>
         </div>
         <div>
-          <span className="label-text">1995 Rules</span>
+          <span className="label-text">1995 / 16-Division Rules</span>
           <strong>{legacyRuleCount}</strong>
         </div>
         <div>
@@ -381,7 +389,7 @@ function TradeRulesInspector() {
   const [tradeSearch, setTradeSearch] = useState("");
   const [selectedTradeId, setSelectedTradeId] = useState("drywall-framing");
   const [selectedSpecializationId, setSelectedSpecializationId] = useState("");
-  const [selectedVersion, setSelectedVersion] = useState<CsiVersionId>("MASTERFORMAT_CURRENT");
+  const [selectedVersion, setSelectedVersion] = useState<CsiVersionId>("MASTERFORMAT_2004_PLUS");
 
   const tradeOptions = useMemo(() => getFilteredTrades(tradeSearch), [tradeSearch]);
   const specializationOptions = useMemo(() => getSpecializations(selectedTradeId), [selectedTradeId]);
@@ -395,11 +403,11 @@ function TradeRulesInspector() {
   }, [selectedSpecializationId, selectedTradeId, selectedVersion]);
 
   return (
-    <section className="app-panel" id="trade-to-csi-rules">
+    <section className="app-panel" id="trade-mapping-browser">
       <div className="panel-header">
         <div>
-          <p className="label-text">Trade → CSI Rules</p>
-          <h2>Rules Pointing To a Trade</h2>
+          <p className="label-text">Trade Mapping Browser</p>
+          <h2>Trade to CSI Rules</h2>
           <p className="muted-text">
             Select a trade and optional specialization to inspect the actual CSI mapping rules
             that target it. Direct rules match the selected CSI version; opposite-version rules
@@ -576,8 +584,8 @@ function AssignmentCard({ preview }: { preview: AssignmentPreview }) {
 }
 
 function CsiAssignmentInspector() {
-  const [selectedVersion, setSelectedVersion] = useState<CsiVersionId>("MASTERFORMAT_CURRENT");
-  const [projectCsiVersion, setProjectCsiVersion] = useState<CsiVersionId>("MASTERFORMAT_CURRENT");
+  const [selectedVersion, setSelectedVersion] = useState<CsiVersionId>("MASTERFORMAT_2004_PLUS");
+  const [projectCsiVersion, setProjectCsiVersion] = useState<CsiVersionId>("MASTERFORMAT_2004_PLUS");
   const [searchQuery, setSearchQuery] = useState("gypsum board");
   const searchResults = useMemo(
     () => searchCsiCatalog(selectedVersion, searchQuery).slice(0, 40),
@@ -593,14 +601,14 @@ function CsiAssignmentInspector() {
     : undefined;
 
   return (
-    <section className="app-panel" id="csi-to-trade-assignment">
+    <section className="app-panel" id="csi-catalog-browser">
       <div className="panel-header">
         <div>
-          <p className="label-text">CSI → Trade Assignment</p>
-          <h2>Search and Assign a CSI Item</h2>
+          <p className="label-text">CSI Catalog Browser</p>
+          <h2>CSI to Trade Assignment</h2>
           <p className="muted-text">
             Search the actual CSI catalog, select a section, and inspect the trade assignment
-            returned by the current mapping rules and crosswalk fallback behavior.
+            returned by the mapping rules and crosswalk fallback behavior.
           </p>
         </div>
       </div>
@@ -668,6 +676,131 @@ function CsiAssignmentInspector() {
           <p className="muted-text">No CSI catalog item is selected.</p>
         )}
       </div>
+    </section>
+  );
+}
+
+function CrosswalkReview() {
+  const [sourceVersion, setSourceVersion] = useState<CsiVersionId>("MASTERFORMAT_2004_PLUS");
+  const [searchQuery, setSearchQuery] = useState("gypsum board");
+  const searchResults = useMemo(
+    () => searchCsiCatalog(sourceVersion, searchQuery).slice(0, 40),
+    [searchQuery, sourceVersion],
+  );
+  const [selectedItemId, setSelectedItemId] = useState("");
+  const selectedItem =
+    searchResults.find((item) => item.id === selectedItemId) ??
+    searchResults[0] ??
+    undefined;
+  const dualCoverage = selectedItem
+    ? createSubcontractorDualCoverage({
+        subcontractorId: "crosswalk-review",
+        sourceVersion: selectedItem.version,
+        sourceCsiItemId: selectedItem.id,
+        sourceCsiNumber: selectedItem.number,
+        sourceCsiTitle: selectedItem.name,
+        now: "2026-01-01T00:00:00.000Z",
+      })
+    : undefined;
+
+  return (
+    <section className="app-panel" id="crosswalk-review">
+      <div className="panel-header">
+        <div>
+          <p className="label-text">Crosswalk Review</p>
+          <h2>Version Equivalent Coverage</h2>
+          <p className="muted-text">
+            Select a canonical CSI item and inspect the equivalent item in the other
+            MasterFormat version. This is read-only crosswalk diagnostics.
+          </p>
+        </div>
+      </div>
+
+      <div className="taxonomy-control-grid">
+        <label className="field-stack">
+          <span>Source CSI Version</span>
+          <select
+            value={sourceVersion}
+            onChange={(event) => {
+              setSourceVersion(event.target.value as CsiVersionId);
+              setSelectedItemId("");
+            }}
+          >
+            {csiVersionOptions.map((option) => (
+              <option key={option.id} value={option.id}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="field-stack">
+          <span>Search CSI Catalog</span>
+          <input
+            value={searchQuery}
+            onChange={(event) => {
+              setSearchQuery(event.target.value);
+              setSelectedItemId("");
+            }}
+            placeholder="Search by code or title"
+          />
+        </label>
+        <label className="field-stack">
+          <span>CSI Item</span>
+          <select
+            value={selectedItem?.id ?? ""}
+            onChange={(event) => setSelectedItemId(event.target.value)}
+          >
+            {searchResults.map((item) => (
+              <option key={item.id} value={item.id}>
+                {item.number} - {item.name}
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
+
+      {selectedItem && dualCoverage ? (
+        <div className="project-csi-selected-group" style={{ marginTop: 16 }}>
+          <div className="cluster-between align-start gap-3">
+            <div>
+              <span className="label-text">Source Coverage Item</span>
+              <h3>{selectedItem.number} - {selectedItem.name}</h3>
+              <p className="muted-text">{getVersionLabel(selectedItem.version)}</p>
+            </div>
+            <span className="taxonomy-meta-chip">
+              Target: {getVersionShortLabel(getAlternateVersion(selectedItem.version))}
+            </span>
+          </div>
+
+          {dualCoverage.equivalentCsiItems.length ? (
+            <div className="stack gap-2" style={{ marginTop: 14 }}>
+              <span className="label-text">Equivalent Item</span>
+              {dualCoverage.equivalentCsiItems.map((equivalent) => (
+                <div
+                  key={`${equivalent.version}-${equivalent.csiItemId}`}
+                  className="cluster-between gap-3"
+                >
+                  <span>
+                    {equivalent.csiNumber ?? equivalent.csiItemId} -{" "}
+                    {equivalent.csiTitle ?? "Untitled equivalent"}
+                  </span>
+                  <span className="taxonomy-meta-chip">
+                    {getVersionShortLabel(equivalent.version)} / {equivalent.confidence}
+                  </span>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="form-error" style={{ marginTop: 14 }}>
+              No clean crosswalk equivalent exists for this CSI item in the development dataset.
+            </p>
+          )}
+        </div>
+      ) : (
+        <p className="muted-text" style={{ marginTop: 16 }}>
+          No CSI catalog item is selected.
+        </p>
+      )}
     </section>
   );
 }
@@ -819,8 +952,9 @@ export default function CsiTradeMappingWorkbenchPage() {
             <p className="label-text">Internal Dev Tool</p>
             <h1>CSI Trade Mapping Workbench</h1>
             <p className="page-subtitle">
-              Inspect MasterFormat 1995/current CSI mapping, trade assignment, crosswalk
-              fallback, and subcontractor dual coverage behavior.
+              Inspect MasterFormat 1995 / 16-Division and MasterFormat 2004+ /
+              50-Division CSI mapping, trade assignment, crosswalk fallback, and
+              subcontractor dual coverage behavior.
             </p>
           </div>
           <div className="header-actions">
@@ -835,18 +969,33 @@ export default function CsiTradeMappingWorkbenchPage() {
 
         <section className="app-panel taxonomy-workbench-note">
           <p>
-            This workbench inspects the current CSI-to-trade mapping rule library. A trade
+            This workbench inspects the CSI-to-trade mapping rule library. A trade
             may have no direct rules yet. Fixture tests prove assignment behavior, while the
             mapping inspector shows actual rule coverage.
+          </p>
+          <p>
+            System mapping rules are read-only in this workbench for now. Later, this page
+            should support controlled system rule drafts, company overrides, and project
+            overrides.
+          </p>
+          <p>
+            The 2004+ / 50-Division catalog is a development dataset and must support
+            replacement by a licensed MasterFormat import before launch.
           </p>
         </section>
 
         <nav className="taxonomy-meta-list" aria-label="CSI trade mapping workbench sections">
-          <a href="#trade-to-csi-rules" className="button-secondary">
-            Trade → CSI Rules
+          <a href="#mapping-coverage-summary" className="button-secondary">
+            Mapping Coverage Summary
           </a>
-          <a href="#csi-to-trade-assignment" className="button-secondary">
-            CSI → Trade Assignment
+          <a href="#csi-catalog-browser" className="button-secondary">
+            CSI Catalog Browser
+          </a>
+          <a href="#trade-mapping-browser" className="button-secondary">
+            Trade Mapping Browser
+          </a>
+          <a href="#crosswalk-review" className="button-secondary">
+            Crosswalk Review
           </a>
           <a href="#fixture-tests" className="button-secondary">
             Fixture Tests
@@ -854,8 +1003,9 @@ export default function CsiTradeMappingWorkbenchPage() {
         </nav>
 
         <MappingCoverageSummary />
-        <TradeRulesInspector />
         <CsiAssignmentInspector />
+        <TradeRulesInspector />
+        <CrosswalkReview />
         <FixtureTests />
 
         <section className="app-panel">

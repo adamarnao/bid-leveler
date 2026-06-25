@@ -19,7 +19,7 @@ export const defaultCompanySettings: CompanySettings = {
   companyName: "Bid Leveler",
   primaryAccentColor: "#2563eb",
   secondaryAccentColor: "#64748b",
-  defaultCsiVersion: "MASTERFORMAT_CURRENT",
+  defaultCsiVersion: "MASTERFORMAT_2004_PLUS",
 };
 
 export function getUserSettings(): UserSettings {

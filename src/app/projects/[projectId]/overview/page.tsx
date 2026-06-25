@@ -897,7 +897,7 @@ function SubdivisionScopeGroup({
   const subdivisionItems = group.subdivision ? [group.subdivision] : [];
   const scopeItems = [...subdivisionItems, ...group.detailItems];
   const coverage = getProjectScopeBidCoverage(projectId, {
-    version: scopeItems[0]?.version ?? "MASTERFORMAT_CURRENT",
+    version: scopeItems[0]?.version ?? "MASTERFORMAT_2004_PLUS",
     divisionIds: group.subdivision ? [group.subdivision.divisionId] : [],
     sectionIds: scopeItems.map((item) => item.id),
     updatedAt: "",

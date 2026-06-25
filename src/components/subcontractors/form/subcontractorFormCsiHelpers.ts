@@ -38,7 +38,7 @@ export function isRealCsiDivisionId(divisionId: string | undefined) {
   if (divisionId === "unassigned") return false;
 
   return Boolean(
-    resolveCsiDivision("MASTERFORMAT_CURRENT", divisionId) ??
+    resolveCsiDivision("MASTERFORMAT_2004_PLUS", divisionId) ??
       resolveCsiDivision("MASTERFORMAT_1995", divisionId)
   );
 }
@@ -146,7 +146,7 @@ export function getDivisionName(divisionId: string) {
   if (!isRealCsiDivisionId(divisionId)) return "";
 
   const division =
-    resolveCsiDivision("MASTERFORMAT_CURRENT", divisionId) ??
+    resolveCsiDivision("MASTERFORMAT_2004_PLUS", divisionId) ??
     resolveCsiDivision("MASTERFORMAT_1995", divisionId);
 
   return division ? `${division.number} - ${division.name}` : divisionId;
@@ -251,7 +251,7 @@ export function getDisplayedSectionIds(
   visibleSections: CsiPickerSectionOption[]
 ) {
   const sourceVersion =
-    subcontractor.csiCoverage.sourceVersion ?? "MASTERFORMAT_CURRENT";
+    subcontractor.csiCoverage.sourceVersion ?? "MASTERFORMAT_2004_PLUS";
 
   if (sourceVersion === pickerDisplayVersion) {
     return new Set(subcontractor.csiCoverage.sectionIds);
@@ -281,7 +281,7 @@ export function getDisplayedDivisionIds(
   selectedSectionIds: Set<string>
 ) {
   const sourceVersion =
-    subcontractor.csiCoverage.sourceVersion ?? "MASTERFORMAT_CURRENT";
+    subcontractor.csiCoverage.sourceVersion ?? "MASTERFORMAT_2004_PLUS";
 
   if (sourceVersion === pickerDisplayVersion) {
     return new Set(subcontractor.csiCoverage.divisionIds);
@@ -335,7 +335,7 @@ export function getCrosswalkIssueCount(
   pickerDisplayVersion: CsiMasterFormatVersion
 ) {
   const sourceVersion =
-    subcontractor.csiCoverage.sourceVersion ?? "MASTERFORMAT_CURRENT";
+    subcontractor.csiCoverage.sourceVersion ?? "MASTERFORMAT_2004_PLUS";
 
   if (sourceVersion === pickerDisplayVersion) return 0;
 
@@ -415,7 +415,7 @@ export function get1995SectionOptions(): CsiPickerSectionOption[] {
 
 export function getAllCsiSectionOptions(): CsiPickerSectionOption[] {
   return [
-    ...getCsiSectionOptions("MASTERFORMAT_CURRENT"),
+    ...getCsiSectionOptions("MASTERFORMAT_2004_PLUS"),
     ...getCsiSectionOptions("MASTERFORMAT_1995"),
   ];
 }
@@ -425,7 +425,7 @@ function normalizeSectionNumber(value: string) {
 }
 
 function getSubcontractorSourceVersion(subcontractor: Subcontractor) {
-  return subcontractor.csiCoverage.sourceVersion ?? "MASTERFORMAT_CURRENT";
+  return subcontractor.csiCoverage.sourceVersion ?? "MASTERFORMAT_2004_PLUS";
 }
 
 function getVisibleResponsibilityItemIds(

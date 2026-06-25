@@ -17,7 +17,7 @@ import { CsiMasterFormatVersion } from "@/types/Csi";
 import { CompanySettings, UserSettings } from "@/types/Settings";
 
 const csiVersionOptions: CsiMasterFormatVersion[] = [
-  "MASTERFORMAT_CURRENT",
+  "MASTERFORMAT_2004_PLUS",
   "MASTERFORMAT_1995",
 ];
 
@@ -250,9 +250,9 @@ export default function SettingsPage() {
 }
 
 function formatCsiVersion(version: CsiMasterFormatVersion) {
-  if (version === "MASTERFORMAT_1995") return "MasterFormat 1995";
+  if (version === "MASTERFORMAT_1995") return "MasterFormat 1995 / 16-Division";
 
-  return "Current MasterFormat";
+  return "MasterFormat 2004+ / 50-Division";
 }
 
 function ColorField({

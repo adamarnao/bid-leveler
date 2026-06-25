@@ -138,7 +138,7 @@ export function getSubcontractorSnapshot(subcontractor: Subcontractor) {
     primaryDivisionId: subcontractor.primaryDivisionId,
     csiCoverage: {
       sourceVersion:
-        subcontractor.csiCoverage.sourceVersion ?? "MASTERFORMAT_CURRENT",
+        subcontractor.csiCoverage.sourceVersion ?? "MASTERFORMAT_2004_PLUS",
       divisionIds: normalizedDivisionIds,
       sectionIds: normalizedSectionIds,
       specialtyScopeNotes: emptyToUndefined(
@@ -327,8 +327,8 @@ export function formatStatus(value: string) {
 }
 
 export function formatCsiSourceVersion(value: string) {
-  if (value === "MASTERFORMAT_CURRENT") return "Current MasterFormat";
-  if (value === "MASTERFORMAT_1995") return "MasterFormat 1995";
+  if (value === "MASTERFORMAT_2004_PLUS") return "MasterFormat 2004+ / 50-Division";
+  if (value === "MASTERFORMAT_1995") return "MasterFormat 1995 / 16-Division";
 
   return formatStatus(value);
 }
