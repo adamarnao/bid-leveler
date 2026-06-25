@@ -5,17 +5,24 @@ import { useMemo, useState } from "react";
 
 import AppShell from "@/components/layout/AppShell";
 import ContextHelp from "@/components/ui/ContextHelp";
-import { resolveCsiCatalogItem } from "@/lib/csiCatalog";
+import { resolveCsiCatalogItem, searchCsiCatalog } from "@/lib/csiCatalog";
 import {
   assignCsiItemToTrade,
   createSubcontractorDualCoverage,
   csiTradeMappingFixtureScenarios,
+  getCsiTradeMappingRules,
+  type CsiToTradeMappingRule,
   type CsiTradeAssignment,
   type CsiTradeMappingFixtureScenario,
   type CsiTradeMappingItem,
   type CsiVersionId,
   type EquivalentCsiCoverage,
 } from "@/features/csi-trade-mapping";
+import {
+  getDefaultTradeTaxonomy,
+  type TradeTaxonomyNode,
+} from "@/features/trade-taxonomy";
+import type { CsiCatalogItem } from "@/types/Csi";
 
 const csiVersionOptions: { id: CsiVersionId; label: string }[] = [
   { id: "MASTERFORMAT_CURRENT", label: "MasterFormat Current" },
@@ -42,22 +49,13 @@ const confidenceHelp = new Map<string, string>([
 ]);
 
 const csiTagRoleHelp = [
-  {
-    role: "CORE",
-    content: "Expected part of the bid package scope.",
-  },
+  { role: "CORE", content: "Expected part of the bid package scope." },
   {
     role: "OPTIONAL",
     content: "May be requested, selected, or split depending on project requirements.",
   },
-  {
-    role: "POSSIBLE",
-    content: "Ambiguous CSI tag that should be reviewed before ITB use.",
-  },
-  {
-    role: "EXCLUDED",
-    content: "Deliberately not part of the package.",
-  },
+  { role: "POSSIBLE", content: "Ambiguous CSI tag that should be reviewed before ITB use." },
+  { role: "EXCLUDED", content: "Deliberately not part of the package." },
 ];
 
 type AssignmentPreview = {
@@ -67,6 +65,9 @@ type AssignmentPreview = {
   crosswalkEquivalent?: EquivalentCsiCoverage;
   warning?: string;
 };
+
+const taxonomy = getDefaultTradeTaxonomy();
+const mappingRules = getCsiTradeMappingRules();
 
 function getScenarioById(scenarioId: string): CsiTradeMappingFixtureScenario {
   return (
@@ -79,6 +80,11 @@ function getVersionLabel(version: CsiVersionId): string {
   return csiVersionOptions.find((option) => option.id === version)?.label ?? version;
 }
 
+function getTradeName(tradeId: string | undefined): string {
+  if (!tradeId) return "Unassigned";
+  return taxonomy.find((trade) => trade.id === tradeId)?.name ?? tradeId;
+}
+
 function formatEnumLabel(value: string): string {
   return value
     .split("_")
@@ -88,6 +94,15 @@ function formatEnumLabel(value: string): string {
 
 function formatCsiItem(item: CsiTradeMappingItem): string {
   return `${item.number} - ${item.name}`;
+}
+
+function toMappingItem(item: CsiCatalogItem): CsiTradeMappingItem {
+  return {
+    id: item.id,
+    version: item.version,
+    number: item.number,
+    name: item.name,
+  };
 }
 
 function resolveEquivalentAsMappingItem(equivalent: EquivalentCsiCoverage): CsiTradeMappingItem {
@@ -103,65 +118,378 @@ function resolveEquivalentAsMappingItem(equivalent: EquivalentCsiCoverage): CsiT
   };
 }
 
+function getAlternateVersion(version: CsiVersionId): CsiVersionId {
+  return version === "MASTERFORMAT_CURRENT" ? "MASTERFORMAT_1995" : "MASTERFORMAT_CURRENT";
+}
+
+function isTopLevelTrade(trade: TradeTaxonomyNode): boolean {
+  return !trade.parentId && trade.canBeBidPackage && trade.isActive;
+}
+
+function getSpecializations(tradeId: string): TradeTaxonomyNode[] {
+  return taxonomy
+    .filter((trade) => trade.parentId === tradeId && trade.isActive)
+    .sort((left, right) => left.sortOrder - right.sortOrder || left.name.localeCompare(right.name));
+}
+
+function getFilteredTrades(query: string): TradeTaxonomyNode[] {
+  const normalizedQuery = query.trim().toLowerCase();
+  return taxonomy
+    .filter(isTopLevelTrade)
+    .filter((trade) => {
+      if (!normalizedQuery) return true;
+      return `${trade.name} ${trade.id} ${trade.aliases?.join(" ") ?? ""}`
+        .toLowerCase()
+        .includes(normalizedQuery);
+    })
+    .sort((left, right) => left.sortOrder - right.sortOrder || left.name.localeCompare(right.name));
+}
+
+function getRulesForTrade(
+  tradeId: string,
+  specializationId: string,
+): CsiToTradeMappingRule[] {
+  return mappingRules.filter((rule) => {
+    if (rule.tradeId !== tradeId) return false;
+    if (!specializationId) return true;
+    return rule.specializationId === specializationId;
+  });
+}
+
+function getRulesByTradeCount(): { tradeId: string; count: number }[] {
+  return Array.from(
+    mappingRules.reduce((counts, rule) => {
+      counts.set(rule.tradeId, (counts.get(rule.tradeId) ?? 0) + 1);
+      return counts;
+    }, new Map<string, number>()),
+  )
+    .map(([tradeId, count]) => ({ tradeId, count }))
+    .sort((left, right) => right.count - left.count || getTradeName(left.tradeId).localeCompare(getTradeName(right.tradeId)));
+}
+
+function getUnmappedTopLevelTrades(): TradeTaxonomyNode[] {
+  const mappedTradeIds = new Set(mappingRules.map((rule) => rule.tradeId));
+  return taxonomy.filter(isTopLevelTrade).filter((trade) => !mappedTradeIds.has(trade.id));
+}
+
+function getRuleCapabilityLabel(rule: CsiToTradeMappingRule, selectedVersion: CsiVersionId): string {
+  if (rule.csiVersion === selectedVersion) return "Direct version rule";
+  return `Crosswalk/fallback candidate from ${getVersionLabel(rule.csiVersion)}`;
+}
+
 function buildAssignmentPreviews(
   scenario: CsiTradeMappingFixtureScenario,
   projectCsiVersion: CsiVersionId,
 ): AssignmentPreview[] {
-  return scenario.csiItems.map((inputItem) => {
-    const dualCoverage = createSubcontractorDualCoverage({
-      subcontractorId: `fixture-${scenario.id}`,
-      sourceVersion: inputItem.version,
-      sourceCsiItemId: inputItem.id,
-      sourceCsiNumber: inputItem.number,
-      sourceCsiTitle: inputItem.name,
-      now: "2026-01-01T00:00:00.000Z",
-    });
-    const crosswalkEquivalent = dualCoverage.equivalentCsiItems.find(
-      (equivalent) => equivalent.version === projectCsiVersion,
-    );
+  return scenario.csiItems.map((inputItem) =>
+    buildAssignmentPreview(inputItem, projectCsiVersion, `fixture-${scenario.id}`),
+  );
+}
 
-    if (inputItem.version !== projectCsiVersion) {
-      if (!crosswalkEquivalent) {
-        return {
-          inputItem,
-          assignmentItem: inputItem,
-          assignment: assignCsiItemToTrade({ csiItem: inputItem, projectCsiVersion }),
-          warning: `No ${getVersionLabel(projectCsiVersion)} crosswalk equivalent was found for this fixture item.`,
-        };
-      }
+function buildAssignmentPreview(
+  inputItem: CsiTradeMappingItem,
+  projectCsiVersion: CsiVersionId,
+  subcontractorId = "workbench",
+): AssignmentPreview {
+  const dualCoverage = createSubcontractorDualCoverage({
+    subcontractorId,
+    sourceVersion: inputItem.version,
+    sourceCsiItemId: inputItem.id,
+    sourceCsiNumber: inputItem.number,
+    sourceCsiTitle: inputItem.name,
+    now: "2026-01-01T00:00:00.000Z",
+  });
+  const crosswalkEquivalent = dualCoverage.equivalentCsiItems.find(
+    (equivalent) => equivalent.version === projectCsiVersion,
+  );
 
-      const assignmentItem = resolveEquivalentAsMappingItem(crosswalkEquivalent);
+  if (inputItem.version !== projectCsiVersion) {
+    if (!crosswalkEquivalent) {
       return {
         inputItem,
-        assignmentItem,
-        crosswalkEquivalent,
-        assignment: {
-          ...assignCsiItemToTrade({ csiItem: assignmentItem, projectCsiVersion }),
-          source: "CROSSWALK_RULE",
-          crosswalkedFromCsiItemId: inputItem.id,
-          crosswalkedFromVersion: inputItem.version,
-          crosswalkedFromCsiNumber: inputItem.number,
-          reason: `Fixture input ${formatCsiItem(inputItem)} is ${getVersionLabel(
-            inputItem.version,
-          )}. Project version is ${getVersionLabel(
-            projectCsiVersion,
-          )}, so the workbench used crosswalk equivalent ${formatCsiItem(
-            assignmentItem,
-          )} before assigning the trade.`,
-        },
+        assignmentItem: inputItem,
+        assignment: assignCsiItemToTrade({ csiItem: inputItem, projectCsiVersion }),
+        warning: `No ${getVersionLabel(projectCsiVersion)} crosswalk equivalent was found for this CSI item.`,
       };
     }
 
+    const assignmentItem = resolveEquivalentAsMappingItem(crosswalkEquivalent);
     return {
       inputItem,
-      assignmentItem: inputItem,
-      assignment: assignCsiItemToTrade({ csiItem: inputItem, projectCsiVersion }),
+      assignmentItem,
+      crosswalkEquivalent,
+      assignment: {
+        ...assignCsiItemToTrade({ csiItem: assignmentItem, projectCsiVersion }),
+        source: "CROSSWALK_RULE",
+        crosswalkedFromCsiItemId: inputItem.id,
+        crosswalkedFromVersion: inputItem.version,
+        crosswalkedFromCsiNumber: inputItem.number,
+        reason: `Input ${formatCsiItem(inputItem)} is ${getVersionLabel(
+          inputItem.version,
+        )}. Project version is ${getVersionLabel(
+          projectCsiVersion,
+        )}, so the workbench used crosswalk equivalent ${formatCsiItem(
+          assignmentItem,
+        )} before assigning the trade.`,
+      },
     };
-  });
+  }
+
+  return {
+    inputItem,
+    assignmentItem: inputItem,
+    assignment: assignCsiItemToTrade({ csiItem: inputItem, projectCsiVersion }),
+  };
+}
+
+function MappingCoverageSummary() {
+  const currentRuleCount = mappingRules.filter((rule) => rule.csiVersion === "MASTERFORMAT_CURRENT").length;
+  const legacyRuleCount = mappingRules.filter((rule) => rule.csiVersion === "MASTERFORMAT_1995").length;
+  const ambiguousRuleCount = mappingRules.filter(
+    (rule) => rule.matchStrength === "POSSIBLE" || Boolean(rule.possibleTradeIds?.length),
+  ).length;
+  const rulesByTrade = getRulesByTradeCount();
+  const unmappedTrades = getUnmappedTopLevelTrades();
+
+  return (
+    <section className="app-panel">
+      <div className="panel-header">
+        <div>
+          <p className="label-text">Mapping Coverage</p>
+          <h2>Current Rule Library Summary</h2>
+          <p className="muted-text">
+            This summary describes the partial CSI-to-trade mapping library currently loaded
+            in code. It does not claim full MasterFormat coverage.
+          </p>
+        </div>
+      </div>
+
+      <div className="setup-summary-grid">
+        <div>
+          <span className="label-text">Total Rules</span>
+          <strong>{mappingRules.length}</strong>
+        </div>
+        <div>
+          <span className="label-text">Current Rules</span>
+          <strong>{currentRuleCount}</strong>
+        </div>
+        <div>
+          <span className="label-text">1995 Rules</span>
+          <strong>{legacyRuleCount}</strong>
+        </div>
+        <div>
+          <span className="label-text">Ambiguous / Cross-Trade</span>
+          <strong>{ambiguousRuleCount}</strong>
+        </div>
+      </div>
+
+      <div className="setup-summary-grid" style={{ marginTop: 16 }}>
+        <div>
+          <span className="label-text">Rules By Trade</span>
+          <div className="taxonomy-meta-list" style={{ marginTop: 8 }}>
+            {rulesByTrade.slice(0, 12).map((entry) => (
+              <span key={entry.tradeId} className="taxonomy-meta-chip">
+                {getTradeName(entry.tradeId)}: {entry.count}
+              </span>
+            ))}
+          </div>
+        </div>
+        <div>
+          <span className="label-text">Unmapped Trade Categories</span>
+          <p className="muted-text" style={{ marginTop: 8 }}>
+            {unmappedTrades.length} active top-level trade categories have zero direct rules.
+          </p>
+          <details style={{ marginTop: 8 }}>
+            <summary className="button-secondary">Show unmapped trades</summary>
+            <div className="taxonomy-meta-list" style={{ marginTop: 10 }}>
+              {unmappedTrades.slice(0, 40).map((trade) => (
+                <span key={trade.id} className="taxonomy-meta-chip">
+                  {trade.name}
+                </span>
+              ))}
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function RuleCard({
+  rule,
+  selectedVersion,
+}: {
+  rule: CsiToTradeMappingRule;
+  selectedVersion: CsiVersionId;
+}) {
+  return (
+    <div className="project-csi-selected-group">
+      <div className="cluster-between align-start gap-3">
+        <div>
+          <h3>{rule.id}</h3>
+          <p className="muted-text">
+            {getTradeName(rule.tradeId)}
+            {rule.specializationId ? ` / ${getTradeName(rule.specializationId)}` : ""}
+          </p>
+        </div>
+        <div className="taxonomy-meta-list">
+          <span className="taxonomy-meta-chip">{getVersionLabel(rule.csiVersion)}</span>
+          <span className="taxonomy-meta-chip">{getRuleCapabilityLabel(rule, selectedVersion)}</span>
+        </div>
+      </div>
+
+      <div className="setup-summary-grid" style={{ marginTop: 14 }}>
+        <div>
+          <span className="label-text">Exact CSI IDs</span>
+          <p className="muted-text">{rule.exactCsiIds?.join(", ") || "None"}</p>
+        </div>
+        <div>
+          <span className="label-text">Code Patterns</span>
+          <p className="muted-text">{rule.csiCodePatterns?.join(", ") || "None"}</p>
+        </div>
+        <div>
+          <span className="label-text">Title Keywords</span>
+          <p className="muted-text">{rule.titleKeywords?.join(", ") || "None"}</p>
+        </div>
+        <div>
+          <span className="label-text">Strength / Confidence</span>
+          <p className="muted-text">
+            {formatEnumLabel(rule.matchStrength)} / {rule.confidence ?? "Default"}
+          </p>
+        </div>
+      </div>
+
+      {rule.possibleTradeIds?.length ? (
+        <div className="stack gap-2" style={{ marginTop: 14 }}>
+          <span className="label-text">Possible Alternate Trades</span>
+          <div className="taxonomy-meta-list">
+            {rule.possibleTradeIds.map((tradeId) => (
+              <span key={tradeId} className="taxonomy-meta-chip">
+                {getTradeName(tradeId)}
+              </span>
+            ))}
+          </div>
+        </div>
+      ) : null}
+
+      {rule.notes ? <p className="muted-text" style={{ marginTop: 14 }}>{rule.notes}</p> : null}
+    </div>
+  );
+}
+
+function TradeRulesInspector() {
+  const [tradeSearch, setTradeSearch] = useState("");
+  const [selectedTradeId, setSelectedTradeId] = useState("drywall-framing");
+  const [selectedSpecializationId, setSelectedSpecializationId] = useState("");
+  const [selectedVersion, setSelectedVersion] = useState<CsiVersionId>("MASTERFORMAT_CURRENT");
+
+  const tradeOptions = useMemo(() => getFilteredTrades(tradeSearch), [tradeSearch]);
+  const specializationOptions = useMemo(() => getSpecializations(selectedTradeId), [selectedTradeId]);
+  const selectedTrade = taxonomy.find((trade) => trade.id === selectedTradeId);
+  const selectedSpecialization = taxonomy.find((trade) => trade.id === selectedSpecializationId);
+  const matchingRules = useMemo(() => {
+    const rules = getRulesForTrade(selectedTradeId, selectedSpecializationId);
+    const directRules = rules.filter((rule) => rule.csiVersion === selectedVersion);
+    const fallbackRules = rules.filter((rule) => rule.csiVersion === getAlternateVersion(selectedVersion));
+    return [...directRules, ...fallbackRules];
+  }, [selectedSpecializationId, selectedTradeId, selectedVersion]);
+
+  return (
+    <section className="app-panel" id="trade-to-csi-rules">
+      <div className="panel-header">
+        <div>
+          <p className="label-text">Trade → CSI Rules</p>
+          <h2>Rules Pointing To a Trade</h2>
+          <p className="muted-text">
+            Select a trade and optional specialization to inspect the actual CSI mapping rules
+            that target it. Direct rules match the selected CSI version; opposite-version rules
+            can participate in crosswalk fallback.
+          </p>
+        </div>
+        <span className="taxonomy-meta-chip">{matchingRules.length} rules</span>
+      </div>
+
+      <div className="taxonomy-control-grid">
+        <label className="field-stack">
+          <span>Search Trade</span>
+          <input
+            value={tradeSearch}
+            onChange={(event) => setTradeSearch(event.target.value)}
+            placeholder="Search trade category"
+          />
+        </label>
+        <label className="field-stack">
+          <span>Trade Category</span>
+          <select
+            value={selectedTradeId}
+            onChange={(event) => {
+              setSelectedTradeId(event.target.value);
+              setSelectedSpecializationId("");
+            }}
+          >
+            {tradeOptions.map((trade) => (
+              <option key={trade.id} value={trade.id}>
+                {trade.name}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="field-stack">
+          <span>Specialization</span>
+          <select
+            value={selectedSpecializationId}
+            onChange={(event) => setSelectedSpecializationId(event.target.value)}
+          >
+            <option value="">All specializations</option>
+            {specializationOptions.map((trade) => (
+              <option key={trade.id} value={trade.id}>
+                {trade.name}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="field-stack">
+          <span>CSI Version</span>
+          <select
+            value={selectedVersion}
+            onChange={(event) => setSelectedVersion(event.target.value as CsiVersionId)}
+          >
+            {csiVersionOptions.map((option) => (
+              <option key={option.id} value={option.id}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
+
+      <div className="stack gap-2" style={{ marginTop: 16 }}>
+        <span className="label-text">Selected Trade</span>
+        <p className="muted-text">
+          {selectedTrade?.name ?? selectedTradeId}
+          {selectedSpecialization ? ` / ${selectedSpecialization.name}` : ""}
+        </p>
+      </div>
+
+      <div className="stack gap-3" style={{ marginTop: 16 }}>
+        {matchingRules.length ? (
+          matchingRules.map((rule) => (
+            <RuleCard key={rule.id} rule={rule} selectedVersion={selectedVersion} />
+          ))
+        ) : (
+          <p className="muted-text">No CSI mapping rules have been defined for this trade yet.</p>
+        )}
+      </div>
+    </section>
+  );
 }
 
 function AssignmentCard({ preview }: { preview: AssignmentPreview }) {
   const { assignment, inputItem, assignmentItem, crosswalkEquivalent, warning } = preview;
+  const isAmbiguous =
+    assignment.source === "UNASSIGNED" ||
+    assignment.confidence === "LOW" ||
+    Boolean(assignment.possibleTradeIds?.length);
 
   return (
     <div className="project-csi-selected-group">
@@ -192,11 +520,11 @@ function AssignmentCard({ preview }: { preview: AssignmentPreview }) {
       <div className="setup-summary-grid" style={{ marginTop: 14 }}>
         <div>
           <span className="label-text">Mapped Trade</span>
-          <strong>{assignment.tradeId ?? "Unassigned"}</strong>
+          <strong>{getTradeName(assignment.tradeId)}</strong>
         </div>
         <div>
           <span className="label-text">Mapped Specialization</span>
-          <strong>{assignment.specializationId ?? "None"}</strong>
+          <strong>{getTradeName(assignment.specializationId)}</strong>
         </div>
         <div>
           <span className="label-text">Source</span>
@@ -228,7 +556,7 @@ function AssignmentCard({ preview }: { preview: AssignmentPreview }) {
           <div className="taxonomy-meta-list">
             {assignment.possibleTradeIds.map((tradeId) => (
               <span key={tradeId} className="taxonomy-meta-chip">
-                {tradeId}
+                {getTradeName(tradeId)}
               </span>
             ))}
           </div>
@@ -238,9 +566,109 @@ function AssignmentCard({ preview }: { preview: AssignmentPreview }) {
       <div className="stack gap-2" style={{ marginTop: 14 }}>
         <span className="label-text">Explanation</span>
         <p className="muted-text">{assignment.reason}</p>
+        {isAmbiguous ? (
+          <p className="form-error">Estimator review recommended before using this assignment.</p>
+        ) : null}
         {warning ? <p className="form-error">{warning}</p> : null}
       </div>
     </div>
+  );
+}
+
+function CsiAssignmentInspector() {
+  const [selectedVersion, setSelectedVersion] = useState<CsiVersionId>("MASTERFORMAT_CURRENT");
+  const [projectCsiVersion, setProjectCsiVersion] = useState<CsiVersionId>("MASTERFORMAT_CURRENT");
+  const [searchQuery, setSearchQuery] = useState("gypsum board");
+  const searchResults = useMemo(
+    () => searchCsiCatalog(selectedVersion, searchQuery).slice(0, 40),
+    [searchQuery, selectedVersion],
+  );
+  const [selectedItemId, setSelectedItemId] = useState("");
+  const selectedItem =
+    searchResults.find((item) => item.id === selectedItemId) ??
+    searchResults[0] ??
+    undefined;
+  const preview = selectedItem
+    ? buildAssignmentPreview(toMappingItem(selectedItem), projectCsiVersion, "csi-search")
+    : undefined;
+
+  return (
+    <section className="app-panel" id="csi-to-trade-assignment">
+      <div className="panel-header">
+        <div>
+          <p className="label-text">CSI → Trade Assignment</p>
+          <h2>Search and Assign a CSI Item</h2>
+          <p className="muted-text">
+            Search the actual CSI catalog, select a section, and inspect the trade assignment
+            returned by the current mapping rules and crosswalk fallback behavior.
+          </p>
+        </div>
+      </div>
+
+      <div className="taxonomy-control-grid">
+        <label className="field-stack">
+          <span>Input CSI Version</span>
+          <select
+            value={selectedVersion}
+            onChange={(event) => {
+              setSelectedVersion(event.target.value as CsiVersionId);
+              setSelectedItemId("");
+            }}
+          >
+            {csiVersionOptions.map((option) => (
+              <option key={option.id} value={option.id}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="field-stack">
+          <span>Project CSI Version</span>
+          <select
+            value={projectCsiVersion}
+            onChange={(event) => setProjectCsiVersion(event.target.value as CsiVersionId)}
+          >
+            {csiVersionOptions.map((option) => (
+              <option key={option.id} value={option.id}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="field-stack">
+          <span>Search CSI Catalog</span>
+          <input
+            value={searchQuery}
+            onChange={(event) => {
+              setSearchQuery(event.target.value);
+              setSelectedItemId("");
+            }}
+            placeholder="Search by code or title"
+          />
+        </label>
+        <label className="field-stack">
+          <span>CSI Item</span>
+          <select
+            value={selectedItem?.id ?? ""}
+            onChange={(event) => setSelectedItemId(event.target.value)}
+          >
+            {searchResults.map((item) => (
+              <option key={item.id} value={item.id}>
+                {item.number} - {item.name}
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
+
+      <div className="stack gap-3" style={{ marginTop: 16 }}>
+        {preview ? (
+          <AssignmentCard preview={preview} />
+        ) : (
+          <p className="muted-text">No CSI catalog item is selected.</p>
+        )}
+      </div>
+    </section>
   );
 }
 
@@ -272,7 +700,10 @@ function DualCoveragePreview({ scenario }: { scenario: CsiTradeMappingFixtureSce
               <div className="stack gap-2" style={{ marginTop: 14 }}>
                 <span className="label-text">Equivalent Alternate-Version Coverage</span>
                 {dualCoverage.equivalentCsiItems.map((equivalent) => (
-                  <div key={`${item.id}-${equivalent.version}-${equivalent.csiItemId}`} className="cluster-between gap-3">
+                  <div
+                    key={`${item.id}-${equivalent.version}-${equivalent.csiItemId}`}
+                    className="cluster-between gap-3"
+                  >
                     <span>
                       {equivalent.csiNumber ?? equivalent.csiItemId} -{" "}
                       {equivalent.csiTitle ?? "Untitled equivalent"}
@@ -293,7 +724,7 @@ function DualCoveragePreview({ scenario }: { scenario: CsiTradeMappingFixtureSce
   );
 }
 
-export default function CsiTradeMappingWorkbenchPage() {
+function FixtureTests() {
   const [selectedScenarioId, setSelectedScenarioId] = useState(
     csiTradeMappingFixtureScenarios[0]?.id ?? "",
   );
@@ -313,6 +744,73 @@ export default function CsiTradeMappingWorkbenchPage() {
     setProjectCsiVersion(nextScenario.projectCsiVersion);
   }
 
+  return (
+    <section className="app-panel" id="fixture-tests">
+      <div className="panel-header">
+        <div>
+          <p className="label-text">Fixture Tests</p>
+          <h2>Known Mapping Scenarios</h2>
+          <p className="muted-text">
+            Fixture tests prove assignment behavior for direct version matches,
+            crosswalk-derived matches, and ambiguous scope.
+          </p>
+        </div>
+        <span className="taxonomy-meta-chip">{csiTradeMappingFixtureScenarios.length} scenarios</span>
+      </div>
+
+      <div className="taxonomy-control-grid">
+        <label className="field-stack">
+          <span>CSI Version</span>
+          <select
+            value={projectCsiVersion}
+            onChange={(event) => setProjectCsiVersion(event.target.value as CsiVersionId)}
+          >
+            {csiVersionOptions.map((option) => (
+              <option key={option.id} value={option.id}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        <label className="field-stack">
+          <span>Fixture Scenario</span>
+          <select
+            value={selectedScenario.id}
+            onChange={(event) => handleScenarioChange(event.target.value)}
+          >
+            {csiTradeMappingFixtureScenarios.map((scenario) => (
+              <option key={scenario.id} value={scenario.id}>
+                {scenario.title}
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
+
+      <div className="stack gap-2" style={{ marginTop: 16 }}>
+        <span className="label-text">Expected Behavior</span>
+        <p className="muted-text">{selectedScenario.expectedBehavior}</p>
+      </div>
+
+      <div className="stack gap-3" style={{ marginTop: 16 }}>
+        {assignmentPreviews.map((preview) => (
+          <AssignmentCard
+            key={`${preview.inputItem.id}-${preview.assignmentItem.id}`}
+            preview={preview}
+          />
+        ))}
+      </div>
+
+      <div className="stack gap-3" style={{ marginTop: 16 }}>
+        <span className="label-text">Subcontractor Dual Coverage Preview</span>
+        <DualCoveragePreview scenario={selectedScenario} />
+      </div>
+    </section>
+  );
+}
+
+export default function CsiTradeMappingWorkbenchPage() {
   return (
     <AppShell title="CSI Trade Mapping Workbench">
       <div className="dashboard-shell taxonomy-workbench">
@@ -337,96 +835,28 @@ export default function CsiTradeMappingWorkbenchPage() {
 
         <section className="app-panel taxonomy-workbench-note">
           <p>
-            This is a read-only diagnostics page. It does not write project data, change
-            subcontractor coverage, or alter bid package generation.
+            This workbench inspects the current CSI-to-trade mapping rule library. A trade
+            may have no direct rules yet. Fixture tests prove assignment behavior, while the
+            mapping inspector shows actual rule coverage.
           </p>
         </section>
 
-        <section className="app-panel">
-          <div className="panel-header">
-            <div>
-              <p className="label-text">Controls</p>
-              <h2>Fixture Scenario</h2>
-              <p className="muted-text">
-                Select a project CSI version and source fixture to inspect direct mapping,
-                crosswalk fallback, and ambiguity handling.
-              </p>
-            </div>
-          </div>
+        <nav className="taxonomy-meta-list" aria-label="CSI trade mapping workbench sections">
+          <a href="#trade-to-csi-rules" className="button-secondary">
+            Trade → CSI Rules
+          </a>
+          <a href="#csi-to-trade-assignment" className="button-secondary">
+            CSI → Trade Assignment
+          </a>
+          <a href="#fixture-tests" className="button-secondary">
+            Fixture Tests
+          </a>
+        </nav>
 
-          <div className="taxonomy-control-grid">
-            <label className="field-stack">
-              <span>CSI Version</span>
-              <select
-                value={projectCsiVersion}
-                onChange={(event) => setProjectCsiVersion(event.target.value as CsiVersionId)}
-              >
-                {csiVersionOptions.map((option) => (
-                  <option key={option.id} value={option.id}>
-                    {option.label}
-                  </option>
-                ))}
-              </select>
-            </label>
-
-            <label className="field-stack">
-              <span>Fixture Scenario</span>
-              <select
-                value={selectedScenario.id}
-                onChange={(event) => handleScenarioChange(event.target.value)}
-              >
-                {csiTradeMappingFixtureScenarios.map((scenario) => (
-                  <option key={scenario.id} value={scenario.id}>
-                    {scenario.title}
-                  </option>
-                ))}
-              </select>
-            </label>
-          </div>
-
-          <div className="stack gap-2" style={{ marginTop: 16 }}>
-            <span className="label-text">Expected Behavior</span>
-            <p className="muted-text">{selectedScenario.expectedBehavior}</p>
-          </div>
-        </section>
-
-        <section className="app-panel">
-          <div className="panel-header">
-            <div>
-              <p className="label-text">Fixture Output</p>
-              <h2>CSI-to-Trade Assignment</h2>
-              <p className="muted-text">
-                Assignment output includes the source, confidence, explanation trail, and
-                possible alternate trades where the scope is ambiguous.
-              </p>
-            </div>
-            <span className="taxonomy-meta-chip">{assignmentPreviews.length} input items</span>
-          </div>
-
-          <div className="stack gap-3" style={{ marginTop: 16 }}>
-            {assignmentPreviews.map((preview) => (
-              <AssignmentCard
-                key={`${preview.inputItem.id}-${preview.assignmentItem.id}`}
-                preview={preview}
-              />
-            ))}
-          </div>
-        </section>
-
-        <section className="app-panel">
-          <div className="panel-header">
-            <div>
-              <p className="label-text">Dual Coverage Preview</p>
-              <h2>Subcontractor CSI Coverage</h2>
-              <p className="muted-text">
-                Source coverage remains intact while equivalent alternate-version coverage is
-                derived when the CSI crosswalk has enough information.
-              </p>
-            </div>
-          </div>
-
-          <DualCoveragePreview scenario={selectedScenario} />
-        </section>
+        <MappingCoverageSummary />
+        <TradeRulesInspector />
+        <CsiAssignmentInspector />
+        <FixtureTests />
 
         <section className="app-panel">
           <div className="panel-header">
