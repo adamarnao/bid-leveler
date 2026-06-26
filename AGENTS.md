@@ -28,12 +28,40 @@ These are standing instructions for Codex agents working in this repository.
 - When replacing a wrong model, remove the old model rather than maintaining parallel models.
 - If a compatibility layer is truly needed, stop and ask before adding it.
 
+## No Parallel Truth Sources
+
+- Do not maintain two competing implementations of the same concept.
+- If a new model replaces an old model, migrate consumers to the new model and delete the old one.
+- Do not keep aliases, adapters, duplicate fixtures, duplicate mock datasets, duplicate type definitions, or duplicate source paths unless explicitly requested.
+- Prefer one canonical type, one canonical fixture source, one canonical normalization path, and one runtime source of truth per concept.
+- Do not add temporary compatibility wrappers without asking first.
+- If a task reveals two competing concepts, stop and identify which one should survive.
+
+## Trade Package First
+
+- CSI is classification and reporting infrastructure.
+- `TradePackage` / `BidPackage` is the operational unit for estimating, invitations, bid leveling, subcontractor workflows, scope review, and proposal assembly.
+- Do not make CSI divisions the primary operational workflow when trade packages are the correct model.
+- CSI codes may support search, classification, reporting, historical pricing, and trade mapping, but they should not replace trade-package workflow concepts.
+- Subcontractor-facing bid scopes should be organized around trade/bid packages, with CSI remaining attached as classification metadata.
+
+## Security Boundary Rule
+
+- Internal project data and subcontractor-facing project data must be modeled separately.
+- Subcontractor-facing views must not expose internal estimates, internal notes, leveling decisions, budget assumptions, private subcontractor data, unpublished bid comparisons, internal review comments, or internal trade coverage analysis.
+- Do not create public/project-share routes without explicit access-control assumptions.
+- Treat public/subcontractor-facing project pages as separate surfaces with allowlisted fields, not filtered copies of internal project objects.
+- When adding permissions, default to least privilege.
+- If a feature crosses the internal/external boundary, stop and identify what data is exposed and why.
+
 ## Verification Expectations
 
 - After every task, confirm expected files were created or updated.
 - Confirm whether runtime app files were modified.
 - Run `npm run lint` when available.
 - Run `npm run build` when available and appropriate.
+- Run project-specific verifier scripts when the task touches the area they verify.
+- For CSI source-rule work, run `.\scripts\verify-csi-source-rules.ps1`.
 - Fix failures caused by the current task.
 - Do not fix unrelated pre-existing failures unless explicitly asked.
 - End every task with this summary:
@@ -70,6 +98,18 @@ Verification Summary:
 - Do not fix EPERM errors by broadening the task scope.
 - If a file is locked, report the locked file and continue only after the user stops the locking process.
 - Prefer source files, fixtures, docs, and typed model files over generated output.
+- Do not delete `node_modules` unless explicitly requested.
+- It is acceptable to delete `.next` only when troubleshooting local Next.js build/dev-server issues and the user has approved that cleanup.
+
+## No Vibe-Code Shortcuts
+
+- Do not create placeholder architecture that will need to be torn out for obvious next-step requirements.
+- Prefer correct domain model, permission boundaries, source-of-truth rules, validation, and typed data contracts over quick UI-only patches.
+- If a requested implementation would create obvious technical debt, call it out and propose the cleaner model.
+- Avoid just-enough-for-the-demo code when the missing foundation is already known.
+- Do not hardcode around domain-model problems.
+- Do not silence TypeScript errors with broad `any`, unsafe casts, or ignored checks unless explicitly justified.
+- Do not create fake data structures to make the UI compile if the canonical model already exists.
 
 ## CSI Catalog Normalization
 
