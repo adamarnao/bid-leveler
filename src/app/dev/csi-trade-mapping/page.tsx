@@ -25,7 +25,16 @@ import {
   type CsiVersionId,
   type EquivalentCsiCoverage,
 } from "@/features/csi-trade-mapping";
-import { correctedSidewalkCrosswalkRelationship } from "@/features/csi-normalization/fixtures";
+import {
+  correctedSidewalkCrosswalkRelationship,
+  division32SidewalkFixture,
+} from "@/features/csi-normalization/fixtures";
+import {
+  validateCsiNormalizationFixture,
+  type CsiCrosswalkRelationship as NormalizedCsiCrosswalkRelationship,
+  type CsiNormalizationValidationIssue,
+  type CsiNormalizationValidationResult,
+} from "@/features/csi-normalization";
 import {
   getDefaultTradeTaxonomy,
   type TradeTaxonomyNode,
@@ -555,6 +564,123 @@ function buildCorrectedSidewalkSampleRow(): CrosswalkSourceRow | undefined {
   };
 }
 
+function ValidationIssueSeverity({ issue }: { issue: CsiNormalizationValidationIssue }) {
+  if (issue.severity === "error") {
+    return <span className="form-error">Error</span>;
+  }
+
+  return <span className="taxonomy-meta-chip">Warning</span>;
+}
+
+function CsiNormalizationValidationPanel({
+  result,
+  correction,
+}: {
+  result?: CsiNormalizationValidationResult;
+  correction?: NormalizedCsiCrosswalkRelationship;
+}) {
+  return (
+    <div className="project-csi-selected-group" style={{ marginTop: 16 }}>
+      <div className="cluster-between align-start gap-3">
+        <div>
+          <p className="label-text">Validation Results</p>
+          <h3>Normalized CSI Fixture Validation</h3>
+          <p className="muted-text">
+            Validates the currently loaded normalized fixture or sample against the
+            source-agnostic catalog, metadata, crosswalk, and trade mapping rules.
+          </p>
+        </div>
+        {result ? (
+          <div className="taxonomy-meta-list">
+            <span className="taxonomy-meta-chip">{result.errorCount} errors</span>
+            <span className="taxonomy-meta-chip">{result.warningCount} warnings</span>
+          </div>
+        ) : (
+          <span className="taxonomy-meta-chip">No sample loaded</span>
+        )}
+      </div>
+
+      {correction ? (
+        <div className="setup-summary-grid" style={{ marginTop: 14 }}>
+          <div>
+            <span className="label-text">Raw Target</span>
+            <strong>
+              {correction.rawTargetCode} - {correction.rawTargetTitle}
+            </strong>
+          </div>
+          <div>
+            <span className="label-text">Resolved Target</span>
+            <strong>
+              {correction.resolvedTargetCode} - {correction.resolvedTargetTitle}
+            </strong>
+          </div>
+          <div>
+            <span className="label-text">Issue Type</span>
+            <strong>{formatEnumLabel(correction.issueType)}</strong>
+          </div>
+          <div>
+            <span className="label-text">Review Status</span>
+            <strong>{formatEnumLabel(correction.reviewStatus)}</strong>
+          </div>
+          <div>
+            <span className="label-text">Parent Context</span>
+            <strong>
+              {correction.parentContextCode} - {correction.parentContextTitle}
+            </strong>
+          </div>
+          <div>
+            <span className="label-text">Relationship</span>
+            <strong>
+              {formatEnumLabel(correction.relationshipRole)} /{" "}
+              {formatEnumLabel(correction.relationshipType)} /{" "}
+              {formatEnumLabel(correction.cardinality)}
+            </strong>
+          </div>
+        </div>
+      ) : null}
+
+      {!result ? (
+        <p className="muted-text" style={{ marginTop: 14 }}>
+          Select a canonical CSI item or load the sidewalk crosswalk sample to validate
+          normalized fixture data. Search text is only a filter and is not validated as
+          canonical identity.
+        </p>
+      ) : result.issues.length === 0 ? (
+        <p className="muted-text" style={{ marginTop: 14 }}>
+          No validation issues found.
+        </p>
+      ) : (
+        <div className="table-shell" style={{ marginTop: 14 }}>
+          <table className="data-table">
+            <thead>
+              <tr>
+                <th>Severity</th>
+                <th>Code</th>
+                <th>Message</th>
+                <th>Related</th>
+              </tr>
+            </thead>
+            <tbody>
+              {result.issues.map((issue, index) => (
+                <tr key={`${issue.code}-${issue.relatedId ?? issue.relatedCode ?? index}`}>
+                  <td>
+                    <ValidationIssueSeverity issue={issue} />
+                  </td>
+                  <td>{issue.code}</td>
+                  <td>{issue.message}</td>
+                  <td>
+                    {[issue.relatedCode, issue.relatedId].filter(Boolean).join(" / ") || "None"}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function CrosswalkExplorer() {
   const [direction, setDirection] = useState<CrosswalkDirection>("1995_TO_2004_PLUS");
   const [searchQuery, setSearchQuery] = useState("");
@@ -594,6 +720,15 @@ function CrosswalkExplorer() {
     selectedSampleId === "SIDEWALKS_02775"
       ? sidewalkSampleRow
       : sourceRows.find((row) => row.sourceItem.id === selectedSourceItemId);
+  const validationResult = useMemo(
+    () =>
+      selectedSampleId === "SIDEWALKS_02775"
+        ? validateCsiNormalizationFixture(division32SidewalkFixture)
+        : undefined,
+    [selectedSampleId],
+  );
+  const validationCorrection =
+    selectedSampleId === "SIDEWALKS_02775" ? correctedSidewalkCrosswalkRelationship : undefined;
   const groupedSourceRows = useMemo(() => {
     return sourceRows.reduce((groups, row) => {
       const divisionLabel = getCsiDivisionPath(row.sourceItem);
@@ -969,6 +1104,11 @@ function CrosswalkExplorer() {
           </div>
         </div>
       )}
+
+      <CsiNormalizationValidationPanel
+        result={validationResult}
+        correction={validationCorrection}
+      />
     </section>
   );
 }
