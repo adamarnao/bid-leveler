@@ -25,6 +25,7 @@ import {
   type CsiVersionId,
   type EquivalentCsiCoverage,
 } from "@/features/csi-trade-mapping";
+import { correctedSidewalkCrosswalkRelationship } from "@/features/csi-normalization/fixtures";
 import {
   getDefaultTradeTaxonomy,
   type TradeTaxonomyNode,
@@ -126,6 +127,9 @@ type CrosswalkSourceRow = {
   reviewStatus: CrosswalkReviewStatus;
   sourceBasis: string;
   warnings: string[];
+  issueType?: string;
+  relationshipRole?: string;
+  notes?: string;
 };
 
 type CrosswalkTargetGroup = {
@@ -179,11 +183,8 @@ const crosswalkReviewStatusOptions: {
   { value: "UNMAPPED", label: "Unmapped" },
 ];
 
-function getScenarioById(scenarioId: string): CsiTradeMappingFixtureScenario {
-  return (
-    csiTradeMappingFixtureScenarios.find((scenario) => scenario.id === scenarioId) ??
-    csiTradeMappingFixtureScenarios[0]
-  );
+function getScenarioById(scenarioId: string): CsiTradeMappingFixtureScenario | undefined {
+  return csiTradeMappingFixtureScenarios.find((scenario) => scenario.id === scenarioId);
 }
 
 function getVersionLabel(version: CsiVersionId): string {
@@ -212,6 +213,10 @@ function formatCsiItem(item: CsiTradeMappingItem): string {
 
 function formatCsiCatalogItem(item: CsiCatalogItem): string {
   return `${item.number} - ${item.name}`;
+}
+
+function formatCsiOption(item: CsiCatalogItem): string {
+  return `${item.number} — ${item.name}`;
 }
 
 function toMappingItem(item: CsiCatalogItem): CsiTradeMappingItem {
@@ -508,9 +513,51 @@ function getRuleCapabilityLabel(rule: CsiToTradeMappingRule, selectedVersion: Cs
   return `Crosswalk/fallback candidate from ${getVersionLabel(rule.csiVersion)}`;
 }
 
+function mapNormalizedReviewStatus(status: string): CrosswalkReviewStatus {
+  if (status === "clean" || status === "corrected") return "CLEAN";
+  if (status === "ambiguous") return "AMBIGUOUS";
+  if (status === "unmapped" || status === "rejected") return "UNMAPPED";
+  return "NEEDS_REVIEW";
+}
+
+function mapNormalizedRelationshipType(type: string): CrosswalkRelationshipType {
+  if (type === "direct_equivalent") return "DIRECT_EQUIVALENT";
+  if (type === "broader_than_target") return "BROADER_THAN_TARGET";
+  if (type === "narrower_than_target") return "NARROWER_THAN_TARGET";
+  if (type === "split_into_multiple_codes") return "SPLIT_INTO_MULTIPLE_CODES";
+  if (type === "consolidated_from_multiple_codes") return "CONSOLIDATED_FROM_MULTIPLE_CODES";
+  if (type === "related_operational_match") return "RELATED_OPERATIONAL_MATCH";
+  return "NO_CLEAR_MATCH";
+}
+
+function buildCorrectedSidewalkSampleRow(): CrosswalkSourceRow | undefined {
+  const sourceItem = resolveCsiCatalogItem("MASTERFORMAT_1995", correctedSidewalkCrosswalkRelationship.sourceCode);
+  const targetItem = resolveCsiCatalogItem(
+    "MASTERFORMAT_2004_PLUS",
+    correctedSidewalkCrosswalkRelationship.resolvedTargetCode,
+  );
+
+  if (!sourceItem || !targetItem) return undefined;
+
+  return {
+    sourceItem,
+    entries: [],
+    targetItems: [targetItem],
+    cardinality: "ONE_TO_ONE",
+    relationshipType: mapNormalizedRelationshipType(correctedSidewalkCrosswalkRelationship.relationshipType),
+    reviewStatus: mapNormalizedReviewStatus(correctedSidewalkCrosswalkRelationship.reviewStatus),
+    sourceBasis:
+      "Normalized fixture correction. Raw target is preserved separately from the resolved target.",
+    warnings: correctedSidewalkCrosswalkRelationship.warnings ?? [],
+    issueType: correctedSidewalkCrosswalkRelationship.issueType,
+    relationshipRole: correctedSidewalkCrosswalkRelationship.relationshipRole,
+    notes: correctedSidewalkCrosswalkRelationship.notes,
+  };
+}
+
 function CrosswalkExplorer() {
   const [direction, setDirection] = useState<CrosswalkDirection>("1995_TO_2004_PLUS");
-  const [searchQuery, setSearchQuery] = useState("gypsum board");
+  const [searchQuery, setSearchQuery] = useState("");
   const [divisionFilter, setDivisionFilter] = useState("ALL");
   const [cardinalityFilter, setCardinalityFilter] = useState<CrosswalkCardinalityFilter>("ALL");
   const [relationshipTypeFilter, setRelationshipTypeFilter] =
@@ -518,9 +565,11 @@ function CrosswalkExplorer() {
   const [reviewStatusFilter, setReviewStatusFilter] = useState<CrosswalkReviewStatusFilter>("ALL");
   const [viewMode, setViewMode] = useState<"INSPECTOR" | "TABLE">("INSPECTOR");
   const [selectedSourceItemId, setSelectedSourceItemId] = useState("");
+  const [selectedSampleId, setSelectedSampleId] = useState<"SIDEWALKS_02775" | "">("");
   const sourceVersion = getCrosswalkSourceVersion(direction);
   const targetVersion = getCrosswalkTargetVersion(direction);
   const divisionOptions = useMemo(() => getCsiDivisions(sourceVersion), [sourceVersion]);
+  const sidewalkSampleRow = useMemo(() => buildCorrectedSidewalkSampleRow(), []);
   const sourceRows = useMemo(() => {
     const normalizedQuery = searchQuery.trim().toLowerCase();
 
@@ -542,7 +591,9 @@ function CrosswalkExplorer() {
       .slice(0, 250);
   }, [cardinalityFilter, direction, divisionFilter, relationshipTypeFilter, reviewStatusFilter, searchQuery, sourceVersion]);
   const selectedRow =
-    sourceRows.find((row) => row.sourceItem.id === selectedSourceItemId) ?? sourceRows[0];
+    selectedSampleId === "SIDEWALKS_02775"
+      ? sidewalkSampleRow
+      : sourceRows.find((row) => row.sourceItem.id === selectedSourceItemId);
   const groupedSourceRows = useMemo(() => {
     return sourceRows.reduce((groups, row) => {
       const divisionLabel = getCsiDivisionPath(row.sourceItem);
@@ -563,6 +614,19 @@ function CrosswalkExplorer() {
     setDirection(nextDirection);
     setDivisionFilter("ALL");
     setSelectedSourceItemId("");
+    setSelectedSampleId("");
+  }
+
+  function loadSidewalkSample() {
+    setDirection("1995_TO_2004_PLUS");
+    setSearchQuery("");
+    setDivisionFilter("ALL");
+    setCardinalityFilter("ALL");
+    setRelationshipTypeFilter("ALL");
+    setReviewStatusFilter("ALL");
+    setViewMode("INSPECTOR");
+    setSelectedSourceItemId("");
+    setSelectedSampleId("SIDEWALKS_02775");
   }
 
   return (
@@ -577,7 +641,12 @@ function CrosswalkExplorer() {
             source crosswalk where explicit metadata is not available.
           </p>
         </div>
-        <span className="taxonomy-meta-chip">{getCrosswalkDirectionLabel(direction)}</span>
+        <div className="header-actions">
+          <button type="button" className="button-secondary" onClick={loadSidewalkSample}>
+            Load sidewalk crosswalk sample
+          </button>
+          <span className="taxonomy-meta-chip">{getCrosswalkDirectionLabel(direction)}</span>
+        </div>
       </div>
 
       <div className="taxonomy-control-grid">
@@ -598,6 +667,7 @@ function CrosswalkExplorer() {
             onChange={(event) => {
               setSearchQuery(event.target.value);
               setSelectedSourceItemId("");
+              setSelectedSampleId("");
             }}
             placeholder="Search canonical source items"
           />
@@ -609,6 +679,7 @@ function CrosswalkExplorer() {
             onChange={(event) => {
               setDivisionFilter(event.target.value);
               setSelectedSourceItemId("");
+              setSelectedSampleId("");
             }}
           >
             <option value="ALL">All divisions</option>
@@ -676,7 +747,7 @@ function CrosswalkExplorer() {
 
       <p className="muted-text" style={{ marginTop: 10 }}>
         {sourceRows.length} canonical source items shown from {getVersionLabel(sourceVersion)}.
-        Search filters the source catalog; clicking a result selects the canonical CSI item.
+        Search filters the source catalog only; clicking a result selects the canonical CSI item.
       </p>
 
       {viewMode === "TABLE" ? (
@@ -698,6 +769,7 @@ function CrosswalkExplorer() {
                   key={row.sourceItem.id}
                   onClick={() => {
                     setSelectedSourceItemId(row.sourceItem.id);
+                    setSelectedSampleId("");
                     setViewMode("INSPECTOR");
                   }}
                   style={{ cursor: "pointer" }}
@@ -738,7 +810,7 @@ function CrosswalkExplorer() {
             </div>
 
             <div className="stack gap-3" style={{ marginTop: 14, maxHeight: 560, overflowY: "auto" }}>
-              {Array.from(groupedSourceRows.entries()).map(([divisionLabel, rows]) => (
+              {Array.from(groupedSourceRows.entries()).length ? Array.from(groupedSourceRows.entries()).map(([divisionLabel, rows]) => (
                 <div key={divisionLabel} className="stack gap-2">
                   <span className="label-text">{divisionLabel}</span>
                   {rows.slice(0, 30).map((row) => (
@@ -747,17 +819,25 @@ function CrosswalkExplorer() {
                       type="button"
                       className={
                         selectedRow?.sourceItem.id === row.sourceItem.id
+                          && selectedSampleId === ""
                           ? "button-primary"
                           : "button-secondary"
                       }
-                      onClick={() => setSelectedSourceItemId(row.sourceItem.id)}
+                      onClick={() => {
+                        setSelectedSourceItemId(row.sourceItem.id);
+                        setSelectedSampleId("");
+                      }}
                       style={{ justifyContent: "flex-start", textAlign: "left", width: "100%" }}
                     >
-                      {row.sourceItem.number} - {row.sourceItem.name}
+                      {formatCsiOption(row.sourceItem)}
                     </button>
                   ))}
                 </div>
-              ))}
+              )) : (
+                <p className="muted-text">
+                  No canonical CSI items match the current filters. Adjust filters or load a sample scenario.
+                </p>
+              )}
             </div>
           </div>
 
@@ -826,10 +906,25 @@ function CrosswalkExplorer() {
                       <strong>{formatCrosswalkReviewStatus(selectedRow.reviewStatus)}</strong>
                     </div>
                     <div>
+                      <span className="label-text">Relationship Role</span>
+                      <strong>{selectedRow.relationshipRole ? formatEnumLabel(selectedRow.relationshipRole) : "Derived"}</strong>
+                    </div>
+                    <div>
+                      <span className="label-text">Issue Type</span>
+                      <strong>{selectedRow.issueType ? formatEnumLabel(selectedRow.issueType) : "None"}</strong>
+                    </div>
+                    <div>
                       <span className="label-text">Source Basis</span>
                       <p className="muted-text">{selectedRow.sourceBasis}</p>
                     </div>
                   </div>
+
+                  {selectedRow.notes ? (
+                    <div className="stack gap-2" style={{ marginTop: 14 }}>
+                      <span className="label-text">Notes</span>
+                      <p className="muted-text">{selectedRow.notes}</p>
+                    </div>
+                  ) : null}
 
                   {sourceAssignment ? (
                     <div className="stack gap-2" style={{ marginTop: 14 }}>
@@ -861,7 +956,15 @@ function CrosswalkExplorer() {
                 </div>
               </>
             ) : (
-              <p className="muted-text">No source CSI item matches the current filters.</p>
+              <div className="project-csi-selected-group">
+                <p className="label-text">Empty State</p>
+                <h3>Select a canonical CSI item</h3>
+                <p className="muted-text">
+                  Choose a canonical CSI code from the source catalog or load the sidewalk sample
+                  scenario. Search text only filters options and is not treated as a selected CSI
+                  identity.
+                </p>
+              </div>
             )}
           </div>
         </div>
@@ -1105,7 +1208,7 @@ function RuleCard({
 
 function TradeRulesInspector() {
   const [tradeSearch, setTradeSearch] = useState("");
-  const [selectedTradeId, setSelectedTradeId] = useState("drywall-framing");
+  const [selectedTradeId, setSelectedTradeId] = useState("");
   const [selectedSpecializationId, setSelectedSpecializationId] = useState("");
   const [selectedVersion, setSelectedVersion] = useState<CsiVersionId>("MASTERFORMAT_2004_PLUS");
 
@@ -1153,6 +1256,7 @@ function TradeRulesInspector() {
               setSelectedSpecializationId("");
             }}
           >
+            <option value="">Select a trade category...</option>
             {tradeOptions.map((trade) => (
               <option key={trade.id} value={trade.id}>
                 {trade.name}
@@ -1191,14 +1295,23 @@ function TradeRulesInspector() {
 
       <div className="stack gap-2" style={{ marginTop: 16 }}>
         <span className="label-text">Selected Trade</span>
-        <p className="muted-text">
-          {selectedTrade?.name ?? selectedTradeId}
-          {selectedSpecialization ? ` / ${selectedSpecialization.name}` : ""}
-        </p>
+        {selectedTrade ? (
+          <p className="muted-text">
+            {selectedTrade.name}
+            {selectedSpecialization ? ` / ${selectedSpecialization.name}` : ""}
+          </p>
+        ) : (
+          <p className="muted-text">
+            Select a canonical trade category to inspect CSI rule coverage. Search only filters
+            the trade options.
+          </p>
+        )}
       </div>
 
       <div className="stack gap-3" style={{ marginTop: 16 }}>
-        {matchingRules.length ? (
+        {!selectedTradeId ? (
+          <p className="muted-text">No trade category is selected.</p>
+        ) : matchingRules.length ? (
           matchingRules.map((rule) => (
             <RuleCard key={rule.id} rule={rule} selectedVersion={selectedVersion} />
           ))
@@ -1350,16 +1463,13 @@ function EquivalentCoverageList({
 function CsiAssignmentInspector() {
   const [selectedVersion, setSelectedVersion] = useState<CsiVersionId>("MASTERFORMAT_2004_PLUS");
   const [projectCsiVersion, setProjectCsiVersion] = useState<CsiVersionId>("MASTERFORMAT_2004_PLUS");
-  const [searchQuery, setSearchQuery] = useState("gypsum board");
+  const [searchQuery, setSearchQuery] = useState("");
   const searchResults = useMemo(
     () => searchCsiCatalog(selectedVersion, searchQuery).slice(0, 40),
     [searchQuery, selectedVersion],
   );
   const [selectedItemId, setSelectedItemId] = useState("");
-  const selectedItem =
-    searchResults.find((item) => item.id === selectedItemId) ??
-    searchResults[0] ??
-    undefined;
+  const selectedItem = searchResults.find((item) => item.id === selectedItemId);
   const preview = selectedItem
     ? buildAssignmentPreview(toMappingItem(selectedItem), projectCsiVersion, "csi-search")
     : undefined;
@@ -1431,20 +1541,21 @@ function CsiAssignmentInspector() {
         <label className="field-stack">
           <span>CSI Item</span>
           <select
-            value={selectedItem?.id ?? ""}
+            value={selectedItemId}
             onChange={(event) => setSelectedItemId(event.target.value)}
           >
+            <option value="">Select a CSI item...</option>
             {searchResults.map((item) => (
               <option key={item.id} value={item.id}>
-                {item.number} - {item.name}
+                {formatCsiOption(item)}
               </option>
             ))}
           </select>
         </label>
       </div>
       <p className="muted-text" style={{ marginTop: 10 }}>
-        {searchResults.length} canonical CSI results shown. Search finds items; the selected
-        dropdown value is the canonical CSI identity used for assignment.
+        {searchResults.length} canonical CSI results shown. Search filters options only; the
+        dropdown value must be a canonical CSI identity before assignment runs.
       </p>
 
       <div className="stack gap-3" style={{ marginTop: 16 }}>
@@ -1482,7 +1593,14 @@ function CsiAssignmentInspector() {
             ) : null}
           </>
         ) : (
-          <p className="muted-text">No CSI catalog item is selected.</p>
+          <div className="project-csi-selected-group">
+            <p className="label-text">Empty State</p>
+            <h3>Choose a canonical CSI code</h3>
+            <p className="muted-text">
+              Select a canonical CSI item from the dropdown to inspect trade assignment. Search
+              text is only a filter and cannot create a selected CSI record.
+            </p>
+          </div>
         )}
       </div>
     </section>
@@ -1542,21 +1660,27 @@ function DualCoveragePreview({ scenario }: { scenario: CsiTradeMappingFixtureSce
 }
 
 function FixtureTests() {
-  const [selectedScenarioId, setSelectedScenarioId] = useState(
-    csiTradeMappingFixtureScenarios[0]?.id ?? "",
-  );
-  const selectedScenario = getScenarioById(selectedScenarioId);
-  const [projectCsiVersion, setProjectCsiVersion] = useState<CsiVersionId>(
-    selectedScenario.projectCsiVersion,
-  );
+  const [selectedScenarioId, setSelectedScenarioId] = useState("");
+  const selectedScenario = selectedScenarioId ? getScenarioById(selectedScenarioId) : undefined;
+  const [projectCsiVersion, setProjectCsiVersion] = useState<CsiVersionId>("MASTERFORMAT_2004_PLUS");
 
   const assignmentPreviews = useMemo(
-    () => buildAssignmentPreviews(selectedScenario, projectCsiVersion),
+    () => (selectedScenario ? buildAssignmentPreviews(selectedScenario, projectCsiVersion) : []),
     [projectCsiVersion, selectedScenario],
   );
 
   function handleScenarioChange(scenarioId: string) {
+    if (!scenarioId) {
+      setSelectedScenarioId("");
+      return;
+    }
+
     const nextScenario = getScenarioById(scenarioId);
+    if (!nextScenario) {
+      setSelectedScenarioId("");
+      return;
+    }
+
     setSelectedScenarioId(nextScenario.id);
     setProjectCsiVersion(nextScenario.projectCsiVersion);
   }
@@ -1593,9 +1717,10 @@ function FixtureTests() {
         <label className="field-stack">
           <span>Fixture Scenario</span>
           <select
-            value={selectedScenario.id}
+            value={selectedScenarioId}
             onChange={(event) => handleScenarioChange(event.target.value)}
           >
+            <option value="">Select a sample scenario...</option>
             {csiTradeMappingFixtureScenarios.map((scenario) => (
               <option key={scenario.id} value={scenario.id}>
                 {scenario.title}
@@ -1607,37 +1732,54 @@ function FixtureTests() {
 
       <div className="stack gap-2" style={{ marginTop: 16 }}>
         <span className="label-text">Expected Behavior</span>
-        <p className="muted-text">{selectedScenario.expectedBehavior}</p>
+        <p className="muted-text">
+          {selectedScenario
+            ? selectedScenario.expectedBehavior
+            : "Select a sample scenario to compare expected and actual mapping behavior."}
+        </p>
       </div>
 
-      <div className="setup-summary-grid" style={{ marginTop: 16 }}>
-        <div>
-          <span className="label-text">Project MasterFormat</span>
-          <strong>{getVersionLabel(projectCsiVersion)}</strong>
-        </div>
-        <div>
-          <span className="label-text">Subcontractor Coverage MasterFormat</span>
-          <strong>{getVersionLabel(selectedScenario.subcontractorCoverageVersion)}</strong>
-        </div>
-        <div>
-          <span className="label-text">Input CSI Items</span>
-          <strong>{selectedScenario.csiItems.length}</strong>
-        </div>
-      </div>
+      {selectedScenario ? (
+        <>
+          <div className="setup-summary-grid" style={{ marginTop: 16 }}>
+            <div>
+              <span className="label-text">Project MasterFormat</span>
+              <strong>{getVersionLabel(projectCsiVersion)}</strong>
+            </div>
+            <div>
+              <span className="label-text">Subcontractor Coverage MasterFormat</span>
+              <strong>{getVersionLabel(selectedScenario.subcontractorCoverageVersion)}</strong>
+            </div>
+            <div>
+              <span className="label-text">Input CSI Items</span>
+              <strong>{selectedScenario.csiItems.length}</strong>
+            </div>
+          </div>
 
-      <div className="stack gap-3" style={{ marginTop: 16 }}>
-        {assignmentPreviews.map((preview) => (
-          <AssignmentCard
-            key={`${preview.inputItem.id}-${preview.assignmentItem.id}`}
-            preview={preview}
-          />
-        ))}
-      </div>
+          <div className="stack gap-3" style={{ marginTop: 16 }}>
+            {assignmentPreviews.map((preview) => (
+              <AssignmentCard
+                key={`${preview.inputItem.id}-${preview.assignmentItem.id}`}
+                preview={preview}
+              />
+            ))}
+          </div>
 
-      <div className="stack gap-3" style={{ marginTop: 16 }}>
-        <span className="label-text">Subcontractor Dual Coverage Preview</span>
-        <DualCoveragePreview scenario={selectedScenario} />
-      </div>
+          <div className="stack gap-3" style={{ marginTop: 16 }}>
+            <span className="label-text">Subcontractor Dual Coverage Preview</span>
+            <DualCoveragePreview scenario={selectedScenario} />
+          </div>
+        </>
+      ) : (
+        <div className="project-csi-selected-group" style={{ marginTop: 16 }}>
+          <p className="label-text">Empty State</p>
+          <h3>Select a sample scenario</h3>
+          <p className="muted-text">
+            Test scenarios are explicit samples only. Nothing is loaded until a scenario is
+            selected.
+          </p>
+        </div>
+      )}
     </section>
   );
 }
