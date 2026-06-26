@@ -13,6 +13,21 @@ These are standing instructions for Codex agents working in this repository.
 - Do not commit.
 - Do not push.
 
+## Pre-Launch Canonical Model Policy
+
+- This app has not launched.
+- There is no production database.
+- There is no customer data.
+- Backward compatibility is not a goal unless explicitly requested.
+- Do not preserve incorrect legacy behavior, old IDs, stale mock data, obsolete localStorage shapes, or compatibility aliases.
+- Use the new canonical model as the only runtime standard.
+- If old code breaks, fix the broken code by converting it to the new model.
+- Do not reintroduce old IDs or duct-tape compatibility layers just to keep stale mock data working.
+- Delete wrong concepts completely.
+- Update imports, types, fixtures, mock data, workbench data, and route logic until the app compiles cleanly against the correct model.
+- When replacing a wrong model, remove the old model rather than maintaining parallel models.
+- If a compatibility layer is truly needed, stop and ask before adding it.
+
 ## Verification Expectations
 
 - After every task, confirm expected files were created or updated.
@@ -38,11 +53,23 @@ Verification Summary:
 - Raw PDFs, OCR PDFs, scanned files, Excel source files, and source experiments are evidence only.
 - Runtime app code must consume normalized structured data, not raw source files.
 - Maintain one normalized active catalog per supported MasterFormat version.
+- CSI source files used during development are temporary extraction and validation material only.
 - Development CSI source files are temporary and must be replaceable with licensed production source material later.
 - Production release must use properly licensed CSI / MasterFormat source material.
+- Production release must use properly licensed source material.
 - The CSI data model must remain source-agnostic.
+- The application must not depend on raw PDFs, OCR artifacts, or source-specific formatting.
+- All runtime CSI behavior must be driven from normalized canonical catalog records, metadata records, crosswalk relationships, and trade mapping records.
 - Do not place raw PDFs, OCR experiments, scanned files, or licensed source documents in runtime app paths.
 - The importer may be source-specific; app runtime behavior must be source-agnostic.
+
+## Generated and Locked File Policy
+
+- Do not edit `.next`, `node_modules`, `package-lock.json`, build output, cache folders, or generated artifacts unless explicitly requested.
+- Do not use generated build output as source truth.
+- Do not fix EPERM errors by broadening the task scope.
+- If a file is locked, report the locked file and continue only after the user stops the locking process.
+- Prefer source files, fixtures, docs, and typed model files over generated output.
 
 ## CSI Catalog Normalization
 
