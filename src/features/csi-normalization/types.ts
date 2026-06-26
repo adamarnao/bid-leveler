@@ -22,9 +22,7 @@ export type CsiCatalogRecordType =
   | "division"
   | "subdivision"
   | "section"
-  | "section_group"
-  | "included_topic"
-  | "placeholder";
+  | "section_group";
 
 export type CsiCatalogMetadataType =
   | "alternate_term"
@@ -78,6 +76,26 @@ export type CsiCrosswalkIssueType =
   | "ocr_uncertain"
   | "trade_impacting";
 
+export type CsiCatalogIssueType =
+  | "none"
+  | "missing_code"
+  | "missing_title"
+  | "duplicate_code"
+  | "conflicting_title"
+  | "source_incomplete"
+  | "ocr_uncertain"
+  | "metadata_term_misclassified_as_record";
+
+export type CsiCrosswalkSourceBasis =
+  | "raw_crosswalk_excel"
+  | "exact_code_and_title_match"
+  | "exact_code_match_with_title_correction"
+  | "specific_child_correction"
+  | "parent_context_preserved"
+  | "manual_review_correction"
+  | "normalized_catalog_resolution"
+  | "unresolved_raw_evidence";
+
 export type CsiTradeMappingMatchStrength =
   | "strong"
   | "moderate"
@@ -109,15 +127,20 @@ export type CsiCatalogItem = {
   normalizedCode: string;
   title: string;
   normalizedTitle: string;
+  divisionId?: string;
   divisionCode: string;
   divisionTitle: string;
   subgroupTitle?: string;
+  parentId?: string;
   parentCode?: string;
   hierarchyLevel: number;
   recordType: CsiCatalogRecordType;
+  sortOrder?: number;
   description?: string;
   sourceTrace: CsiSourceTrace;
+  sourceMetadataReference?: string;
   reviewStatus: CsiNormalizationReviewStatus;
+  issueTypes?: CsiCatalogIssueType[];
   notes?: string;
 };
 
@@ -179,10 +202,11 @@ export type CsiCrosswalkRelationship = {
   cardinality: CsiCrosswalkCardinality;
   reviewStatus: CsiNormalizationReviewStatus;
   issueType: CsiCrosswalkIssueType;
-  sourceBasis: string;
+  sourceBasis: CsiCrosswalkSourceBasis;
   parentContextCode?: string;
   parentContextTitle?: string;
   notes?: string;
+  warnings?: string[];
   sourceTrace: CsiSourceTrace;
 };
 
