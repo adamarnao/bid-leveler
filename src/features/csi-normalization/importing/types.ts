@@ -116,7 +116,7 @@ export type ImportNormalizationResult = {
   catalogItems: CsiCatalogItem[];
   metadata: CsiCatalogMetadata[];
   crosswalkRelationships: CsiCrosswalkRelationship[];
-  validation: CsiNormalizationValidationResult;
+  validation?: CsiNormalizationValidationResult;
 };
 
 export function toCsiSourceTrace(trace: ImportedSourceTrace): CsiSourceTrace {

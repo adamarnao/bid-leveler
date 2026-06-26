@@ -1,5 +1,4 @@
 import type { CsiNormalizedDataSet } from "../types";
-import { validateCsiNormalizationFixture } from "../validation";
 import { buildNormalizedCatalogItems } from "./buildNormalizedCatalogItems";
 import { buildNormalizedCrosswalkRelationships } from "./buildNormalizedCrosswalkRelationships";
 import type {
@@ -208,5 +207,4 @@ export const division32ImportPrototype: ImportNormalizationResult = {
   catalogItems: division32ImportPrototypeDataSet.catalogItems,
   metadata: division32ImportPrototypeDataSet.metadata,
   crosswalkRelationships: division32ImportPrototypeDataSet.crosswalkRelationships,
-  validation: validateCsiNormalizationFixture(division32ImportPrototypeDataSet),
 };
